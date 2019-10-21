@@ -10,3 +10,5 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
+/Internship_Tutor/nbproject/private/
+/Internship_Tutor/build/
