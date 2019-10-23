@@ -6,6 +6,14 @@
         <param-name>view.template_directory</param-name>
         <param-value>templates</param-value>
     </context-param>
+    <context-param>
+        <param-name>view.outline_template</param-name>
+        <param-value>outline.ftl.html</param-value>
+    </context-param>
+    <context-param>
+        <param-name>view.date_format</param-name>
+        <param-value>dd/MM/yyyy hh:mm:ss</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>it.univaq.web_engineering.internship_tutor.controller.Home</servlet-class>
@@ -13,6 +21,22 @@
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Aziende</servlet-name>
+        <servlet-class>it.univaq.web_engineering.internship_tutor.controller.ListaAziende</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Aziende</servlet-name>
+        <url-pattern>/aziende</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Tirocini</servlet-name>
+        <servlet-class>it.univaq.web_engineering.internship_tutor.controller.ListaTirocini</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Tirocini</servlet-name>
+        <url-pattern>/tirocini</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -22,4 +46,10 @@
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+    <resource-ref>
+        <res-ref-name>jdbc/itdb</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>

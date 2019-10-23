@@ -114,7 +114,7 @@ public class TemplateResult {
         //initialize the container for default data
         Map default_data_model = new HashMap();
 
-        //se è stata specificata una classe filler, facciamole riempire il default data model
+        //se � stata specificata una classe filler, facciamole riempire il default data model
         //if a filler class has been specified, let it fill the default data model
         if (filler != null) {
             filler.fillDataModel(default_data_model);
@@ -173,7 +173,7 @@ public class TemplateResult {
         String outline_name = (String) localdatamodel.get("outline_tpl");
         try {
             if (outline_name == null || outline_name.isEmpty()) {
-                //se non c'è un outline, carichiamo semplicemente il template specificato
+                //se non c'� un outline, carichiamo semplicemente il template specificato
                 //if an outline has not been set, load the specified template
                 t = cfg.getTemplate(tplname);
             } else {
