@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author steph
  */
-public class ListaTirocini extends InternshipTutorBaseController {
+public class Registrazione extends InternshipTutorBaseController {
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -32,10 +32,16 @@ public class ListaTirocini extends InternshipTutorBaseController {
         }
     }
 
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_registrazione_azienda(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Tirocini");
-        res.activate("tirocini.ftl.html", request, response);
+        res.activate("registrazione_azienda.ftl.html", request, response);
+    }
+    
+    private void action_registrazione_studente(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+        TemplateResult res = new TemplateResult(getServletContext());
+        request.setAttribute("page_title", "Tirocini");
+        res.activate("registrazione_studente.ftl.html", request, response);
     }
     
     @Override
@@ -43,8 +49,10 @@ public class ListaTirocini extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
-            action_default(request, response);
-
+            if (request.getParameter("tipo").equals("azienda"))
+                action_registrazione_azienda(request, response);
+            else if (request.getParameter("tipo").equals("studente"))
+                    action_registrazione_studente(request, response);
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

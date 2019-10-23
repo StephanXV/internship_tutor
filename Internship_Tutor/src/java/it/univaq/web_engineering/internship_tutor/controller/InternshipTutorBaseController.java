@@ -25,7 +25,8 @@ public abstract class InternshipTutorBaseController extends HttpServlet {
     @Resource(name = "jdbc/itdb")
     private DataSource ds;
     
-    protected abstract void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException;
+    protected abstract void processRequest(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException;
 
     private void processBaseRequest(HttpServletRequest request, HttpServletResponse response) {
         //WARNING: never declare DB-related objects including references to Connection and Statement (as our data layer)

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
         <param-name>view.template_directory</param-name>
         <param-value>templates</param-value>
@@ -23,20 +21,28 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>Aziende</servlet-name>
+        <servlet-name>ListaAziende</servlet-name>
         <servlet-class>it.univaq.web_engineering.internship_tutor.controller.ListaAziende</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Aziende</servlet-name>
+        <servlet-name>ListaAziende</servlet-name>
         <url-pattern>/aziende</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>Tirocini</servlet-name>
-        <servlet-class>it.univaq.web_engineering.internship_tutor.controller.ListaTirocini</servlet-class>
+        <servlet-name>RicercaTirocini</servlet-name>
+        <servlet-class>it.univaq.web_engineering.internship_tutor.controller.RicercaTirocini</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Tirocini</servlet-name>
+        <servlet-name>RicercaTirocini</servlet-name>
         <url-pattern>/tirocini</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Registrazione</servlet-name>
+        <servlet-class>it.univaq.web_engineering.internship_tutor.controller.Registrazione</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Registrazione</servlet-name>
+        <url-pattern>/registrazione</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

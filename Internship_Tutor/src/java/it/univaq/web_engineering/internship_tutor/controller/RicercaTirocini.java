@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author steph
  */
-public class ListaAziende extends InternshipTutorBaseController {
+public class RicercaTirocini extends InternshipTutorBaseController {
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -34,8 +34,8 @@ public class ListaAziende extends InternshipTutorBaseController {
 
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
-        request.setAttribute("page_title", "Aziende");
-        res.activate("lista_aziende.ftl.html", request, response);
+        request.setAttribute("page_title", "Tirocini");
+        res.activate("ricerca_tirocini.ftl.html", request, response);
     }
     
     @Override
