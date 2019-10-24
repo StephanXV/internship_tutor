@@ -75,7 +75,10 @@ create table offerta_tirocinio (
     titolo varchar(200),
     obiettivi text not null,
     modalita text not null,
-    facilitazioni text not null    
+    facilitazioni text not null,
+    id_azienda integer unsigned not null,
+    constraint offerte_azienda foreign key(id_azienda)
+		references azienda(id) on delete cascade on update cascade
 );
 
 create table tutore_uni (
@@ -119,9 +122,7 @@ create table resoconto (
 create table valutazione (
 	id_studente integer unsigned not null,
     id_azienda integer unsigned not null, 
-    ore_effettive integer(3) not null,
-    descrizione_attivita text not null,
-    giudizio text not null,
+    stelle integer(1) unsigned not null,
     constraint studente_valutazione foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,
 	constraint azienda_valutazione foreign key(id_azienda) 
