@@ -6,8 +6,10 @@ package it.univaq.web_engineering.internship_tutor.data.proxy;
 
 import it.univaq.web_engineering.framework.data.DataException;
 import it.univaq.web_engineering.framework.data.DataLayer;
+import it.univaq.web_engineering.internship_tutor.data.dao.OffertaTirocinioDAO;
 import it.univaq.web_engineering.internship_tutor.data.dao.RespTirociniDAO;
 import it.univaq.web_engineering.internship_tutor.data.dao.UtenteDAO;
+import it.univaq.web_engineering.internship_tutor.data.dao.ValutazioneDAO;
 import it.univaq.web_engineering.internship_tutor.data.impl.AziendaImpl;
 import it.univaq.web_engineering.internship_tutor.data.model.OffertaTirocinio;
 import it.univaq.web_engineering.internship_tutor.data.model.RespTirocini;
@@ -162,8 +164,14 @@ public class AziendaProxy extends AziendaImpl {
     
     @Override
     public List<OffertaTirocinio> getOfferteTirocinio() {
-        //implementare
-        return null;
+        if (super.getOfferteTirocinio() == null) {
+            try {
+                super.setOfferteTirocinio(((OffertaTirocinioDAO) dataLayer.getDAO(OffertaTirocinio.class)).getOfferteTirocinio(this));
+            } catch (DataException ex) {
+                Logger.getLogger(AziendaProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getOfferteTirocinio();
     }
 
     @Override
@@ -174,8 +182,14 @@ public class AziendaProxy extends AziendaImpl {
     
     @Override
     public List<Valutazione> getValutazioni() {
-        //implementare
-        return null;
+        if (super.getValutazioni() == null) {
+            try {
+                super.setValutazioni(((ValutazioneDAO) dataLayer.getDAO(Valutazione.class)).getValutazioni(this));
+            } catch (DataException ex) {
+                Logger.getLogger(AziendaProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getValutazioni();
     }
 
     @Override
