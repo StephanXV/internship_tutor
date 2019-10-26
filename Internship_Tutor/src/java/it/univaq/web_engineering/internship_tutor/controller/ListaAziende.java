@@ -11,8 +11,6 @@ import it.univaq.web_engineering.framework.result.TemplateManagerException;
 import it.univaq.web_engineering.framework.result.TemplateResult;
 import it.univaq.web_engineering.internship_tutor.data.dao.RespTirociniDAO;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

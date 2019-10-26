@@ -18,6 +18,10 @@ public interface Utente {
     
     void setEmail(String em);
     
+    String getUsername();
+    
+    void setUsername(String un);
+    
     String getPw();
     
     void setPw(String pw);

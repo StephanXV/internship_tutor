@@ -37,7 +37,7 @@ create table responsabile_tirocini (
 );
 
 create table azienda (
-	id integer unsigned not null primary key auto_increment,
+	id_utente integer unsigned not null primary key,
     ragione_sociale varchar(150) not null,
     indirizzo varchar(200) not null,
     citta varchar(100) not null,
@@ -55,7 +55,9 @@ create table azienda (
     id_responsabile integer unsigned not null,
     constraint responsabile_azienda foreign key(id_responsabile)
 		references responsabile_tirocini(id) on delete cascade
-        on update cascade
+        on update cascade,
+	constraint azienda_utente foreign key(id_utente)
+		references utente(id) on delete cascade on update cascade
 );
 
 create table tutore_tirocinio (
@@ -78,7 +80,7 @@ create table offerta_tirocinio (
     facilitazioni text not null,
     id_azienda integer unsigned not null,
     constraint offerte_azienda foreign key(id_azienda)
-		references azienda(id) on delete cascade on update cascade
+		references azienda(id_utente) on delete cascade on update cascade
 );
 
 create table tutore_uni (
@@ -128,7 +130,7 @@ create table valutazione (
     constraint studente_valutazione foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,
 	constraint azienda_valutazione foreign key(id_azienda) 
-		references azienda(id) on update cascade on delete cascade
+		references azienda(id_utente) on update cascade on delete cascade
  );
 	
     

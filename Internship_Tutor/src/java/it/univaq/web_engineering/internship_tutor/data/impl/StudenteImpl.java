@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class StudenteImpl implements Studente {
     private Utente utente;

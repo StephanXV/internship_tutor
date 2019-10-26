@@ -13,9 +13,9 @@ import java.util.List;
  */
 public interface Azienda {
     
-    int getId();
+    Utente getUtente();
     
-    void setId(int id);
+    void setUtente(Utente ut);
     
     String getRagioneSociale();
     

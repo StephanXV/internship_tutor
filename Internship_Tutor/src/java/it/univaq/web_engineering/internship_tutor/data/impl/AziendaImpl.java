@@ -3,17 +3,18 @@ package it.univaq.web_engineering.internship_tutor.data.impl;
 import it.univaq.web_engineering.internship_tutor.data.model.Azienda;
 import it.univaq.web_engineering.internship_tutor.data.model.OffertaTirocinio;
 import it.univaq.web_engineering.internship_tutor.data.model.RespTirocini;
+import it.univaq.web_engineering.internship_tutor.data.model.Utente;
 import it.univaq.web_engineering.internship_tutor.data.model.Valutazione;
 import java.util.Date;
 import java.util.List;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class AziendaImpl implements Azienda {
     
-    private int id;
+    private Utente utente;
     private String ragioneSociale;
     private String indirizzo;
     private String citta;
@@ -33,7 +34,7 @@ public class AziendaImpl implements Azienda {
     private List<Valutazione> valutazioni;
 
     public AziendaImpl(){
-        this.id = 0;
+        this.utente = null;
         this.ragioneSociale = "";
         this.indirizzo = "";
         this.citta = "";
@@ -54,13 +55,13 @@ public class AziendaImpl implements Azienda {
     }
     
     @Override
-    public int getId() {
-        return id;
+    public Utente getUtente() {
+        return utente;
     }
 
     @Override
-    public void setId(int id) {
-        this.id = id;
+    public void setUtente(Utente ut) {
+        this.utente = ut;
     }
 
     @Override

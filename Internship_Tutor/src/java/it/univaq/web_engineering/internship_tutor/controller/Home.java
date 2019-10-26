@@ -37,16 +37,9 @@ public class Home extends InternshipTutorBaseController {
     
     private void action_anonymous(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
-        try {
-            TutoreUni tu = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(1);
-            request.setAttribute("tutore_uni", tu);
-            request.setAttribute("page_title", "Home anonimo");
-            TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("home_anonimo.ftl.html", request, response);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Data access exception: " + ex.getMessage());
-            action_error(request, response);
-        }
+        request.setAttribute("page_title", "Home anonimo");
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("home_anonimo.ftl.html", request, response);
     }
     
     private void action_admin(HttpServletRequest request, HttpServletResponse response) throws IOException {

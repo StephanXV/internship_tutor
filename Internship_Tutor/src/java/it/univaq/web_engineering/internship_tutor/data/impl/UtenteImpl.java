@@ -10,10 +10,11 @@ import it.univaq.web_engineering.internship_tutor.data.model.Utente;
  *
  * @author steph
  */
-public class UtenteImpl implements Utente{
+public class UtenteImpl implements Utente {
     
     private int id;
     private String email;
+    private String username;
     private String pw;
     private String tipologia;
 
@@ -42,6 +43,16 @@ public class UtenteImpl implements Utente{
     @Override
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    @Override
+    public String getUsername() {
+        return username;
+    }
+    
+    @Override
+    public void setUsername(String un){
+        this.username = un;
     }
 
     @Override
