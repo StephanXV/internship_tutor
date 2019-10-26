@@ -19,6 +19,7 @@ public class ResocontoImpl implements Resoconto {
     private int oreEffettive;
     private String descAttivita;
     private String giudizio;
+    private String srcDocResoconto;
 
     public ResocontoImpl() {
         this.studente = null;
@@ -76,5 +77,15 @@ public class ResocontoImpl implements Resoconto {
     @Override
     public void setGiudizio(String giudizio) {
         this.giudizio = giudizio;
+    }
+    
+    @Override
+    public String getSrcDocResoconto() {
+        return srcDocResoconto;
+    }
+
+    @Override
+    public void setSrcDocResoconto(String srcDocResoconto) {
+        this.srcDocResoconto = srcDocResoconto;
     }
 }

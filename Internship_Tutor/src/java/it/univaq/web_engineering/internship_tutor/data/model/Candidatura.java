@@ -32,6 +32,10 @@ public interface Candidatura {
     
     void setOreTirocinio(int ot);
     
+    String getSrcDocCandidatura();
+    
+    void setSrcDocCandidatura(String src);
+    
     int getStatoCandidatura();
     
     void setStatoCandidatura(int sc);

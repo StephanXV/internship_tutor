@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package it.univaq.web_engineering.internship_tutor.data.impl;
 
 import it.univaq.web_engineering.internship_tutor.data.model.Candidatura;
@@ -12,7 +8,7 @@ import java.util.Date;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class CandidaturaImpl implements Candidatura {
     
@@ -22,6 +18,7 @@ public class CandidaturaImpl implements Candidatura {
     private int cfu;
     private int oreTirocinio;
     private int statoCandidatura;
+    private String srcDocCandidatura;
     private Date inizioTirocinio;
     private Date fineTirocinio;
     private Date tms;
@@ -88,6 +85,16 @@ public class CandidaturaImpl implements Candidatura {
         this.oreTirocinio = oreTirocinio;
     }
 
+    @Override
+    public String getSrcDocCandidatura() {
+        return srcDocCandidatura;
+    }
+
+    @Override
+    public void setSrcDocCandidatura(String srcDocCandidatura) {
+        this.srcDocCandidatura = srcDocCandidatura;
+    }
+    
     @Override
     public int getStatoCandidatura() {
         return statoCandidatura;

@@ -6,11 +6,11 @@
  * that can be called within a Freemarker template. See the MakeArticle class for
  * an example.
  */
-package it.univaq.web_engineering.internship_tutor.result;
+package it.univaq.web_engineering.framework.result;
 
 import freemarker.template.TemplateMethodModelEx;
 import freemarker.template.TemplateModelException;
-import it.univaq.web_engineering.internship_tutor.security.SecurityLayer;
+import it.univaq.web_engineering.framework.security.SecurityLayer;
 import java.util.List;
 
 /**

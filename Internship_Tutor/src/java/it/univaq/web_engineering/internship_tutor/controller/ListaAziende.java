@@ -5,11 +5,11 @@
  */
 package it.univaq.web_engineering.internship_tutor.controller;
 
-import it.univaq.web_engineering.internship_tutor.data.DataException;
 import it.univaq.web_engineering.internship_tutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.web_engineering.internship_tutor.result.FailureResult;
-import it.univaq.web_engineering.internship_tutor.result.TemplateManagerException;
-import it.univaq.web_engineering.internship_tutor.result.TemplateResult;
+import it.univaq.web_engineering.framework.result.FailureResult;
+import it.univaq.web_engineering.framework.result.TemplateManagerException;
+import it.univaq.web_engineering.framework.result.TemplateResult;
+import it.univaq.web_engineering.internship_tutor.data.dao.RespTirociniDAO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +32,8 @@ public class ListaAziende extends InternshipTutorBaseController {
         }
     }
 
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Aziende");
         res.activate("lista_aziende.ftl.html", request, response);
@@ -56,14 +57,4 @@ public class ListaAziende extends InternshipTutorBaseController {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
-  
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }   
 }

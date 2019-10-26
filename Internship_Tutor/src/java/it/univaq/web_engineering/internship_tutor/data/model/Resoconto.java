@@ -30,4 +30,8 @@ public interface Resoconto {
     
     void setGiudizio(String g);
     
+    String getSrcDocResoconto();
+    
+    void setSrcDocResoconto(String src);
+    
 }

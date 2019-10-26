@@ -46,7 +46,7 @@ create table azienda (
     rappresentante_legale varchar(200) not null,
     piva varchar(16) not null unique,
     foro_competente varchar(100) not null,
-    src_documento_convenzione varchar(250) not null,
+    src_documento_convenzione varchar(250),
     tematiche text not null,
     stato_convenzione integer(1) not null default 0,
     corso_studio varchar(200) not null,
@@ -96,6 +96,7 @@ create table candidatura (
     cfu integer(2) not null,
     ore_tirocinio integer(3) not null,
     stato_candidatura integer(1) not null default 0,
+    src_documento_candidatura varchar(250),
     data_inizio date,
     data_fine date,
     tms timestamp default current_timestamp,
@@ -113,6 +114,7 @@ create table resoconto (
     ore_effettive integer(3) not null,
     descrizione_attivita text not null,
     giudizio text not null,
+    src_documento_resoconto varchar(250),
     constraint studente_resoconto foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,
 	constraint offerta_tirocinio_resoconto foreign key(id_offerta_tirocinio) 

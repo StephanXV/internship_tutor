@@ -6,7 +6,7 @@
 package it.univaq.web_engineering.internship_tutor.controller;
 
 import it.univaq.web_engineering.internship_tutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.web_engineering.internship_tutor.result.FailureResult;
+import it.univaq.web_engineering.framework.result.FailureResult;
 import java.io.IOException;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -17,11 +17,10 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public abstract class InternshipTutorBaseController extends HttpServlet {
 
-  
     @Resource(name = "jdbc/itdb")
     private DataSource ds;
     

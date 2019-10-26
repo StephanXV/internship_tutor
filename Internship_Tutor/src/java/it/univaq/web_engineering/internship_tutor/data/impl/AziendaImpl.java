@@ -1,7 +1,3 @@
-/*
- * Here comes the text of your license
- * Each line should be prefixed with  * 
- */
 package it.univaq.web_engineering.internship_tutor.data.impl;
 
 import it.univaq.web_engineering.internship_tutor.data.model.Azienda;

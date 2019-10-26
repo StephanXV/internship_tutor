@@ -1,4 +1,4 @@
-package it.univaq.web_engineering.internship_tutor.data;
+package it.univaq.web_engineering.framework.data;
 
 import java.sql.Connection;
 

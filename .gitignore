@@ -12,3 +12,4 @@ buildNumber.properties
 !/.mvn/wrapper/maven-wrapper.jar
 /Internship_Tutor/nbproject/private/
 /Internship_Tutor/build/
+/Internship_Tutor/dist/

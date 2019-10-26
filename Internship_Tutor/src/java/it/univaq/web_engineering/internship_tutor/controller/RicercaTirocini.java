@@ -4,12 +4,10 @@
  * and open the template in the editor.
  */
 package it.univaq.web_engineering.internship_tutor.controller;
-
-import it.univaq.web_engineering.internship_tutor.data.DataException;
 import it.univaq.web_engineering.internship_tutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.web_engineering.internship_tutor.result.FailureResult;
-import it.univaq.web_engineering.internship_tutor.result.TemplateManagerException;
-import it.univaq.web_engineering.internship_tutor.result.TemplateResult;
+import it.univaq.web_engineering.framework.result.FailureResult;
+import it.univaq.web_engineering.framework.result.TemplateManagerException;
+import it.univaq.web_engineering.framework.result.TemplateResult;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,14 +54,4 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }
-  
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        processRequest(req, resp);
-    }   
 }

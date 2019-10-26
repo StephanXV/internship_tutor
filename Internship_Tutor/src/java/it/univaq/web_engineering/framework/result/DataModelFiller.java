@@ -17,7 +17,7 @@
  * context parameter view.model_filler.
  * 
  */
-package it.univaq.web_engineering.internship_tutor.result;
+package it.univaq.web_engineering.framework.result;
 
 import java.util.Map;
 

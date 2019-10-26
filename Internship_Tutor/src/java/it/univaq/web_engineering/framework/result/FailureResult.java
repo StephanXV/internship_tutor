@@ -13,7 +13,7 @@
  * the class uses simple http errors.
  * 
  */
-package it.univaq.web_engineering.internship_tutor.result;
+package it.univaq.web_engineering.framework.result;
 
 import java.io.IOException;
 import java.util.logging.Level;

@@ -8,7 +8,7 @@
  * (as downloadable files)
  * 
  */
-package it.univaq.web_engineering.internship_tutor.result;
+package it.univaq.web_engineering.framework.result;
 
 import java.io.File;
 import java.io.FileInputStream;

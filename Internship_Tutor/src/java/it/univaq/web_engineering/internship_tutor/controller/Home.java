@@ -5,19 +5,18 @@
  */
 package it.univaq.web_engineering.internship_tutor.controller;
 
-import it.univaq.web_engineering.internship_tutor.data.DataException;
+import it.univaq.web_engineering.framework.data.DataException;
 import it.univaq.web_engineering.internship_tutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.web_engineering.internship_tutor.result.FailureResult;
-import it.univaq.web_engineering.internship_tutor.result.TemplateManagerException;
-import it.univaq.web_engineering.internship_tutor.result.TemplateResult;
-import it.univaq.web_engineering.internship_tutor.security.SecurityLayer;
+import it.univaq.web_engineering.internship_tutor.data.model.TutoreUni;
+import it.univaq.web_engineering.framework.result.FailureResult;
+import it.univaq.web_engineering.framework.result.TemplateManagerException;
+import it.univaq.web_engineering.framework.result.TemplateResult;
+import it.univaq.web_engineering.framework.security.SecurityLayer;
+import it.univaq.web_engineering.internship_tutor.data.dao.TutoreUniDAO;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,13 +36,16 @@ public class Home extends InternshipTutorBaseController {
     }
     
     private void action_anonymous(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        TemplateResult res = new TemplateResult(getServletContext());
-        request.setAttribute("page_title", "Home anonimo");
+            throws IOException, ServletException, TemplateManagerException {
         try {
+            TutoreUni tu = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(1);
+            request.setAttribute("tutore_uni", tu);
+            request.setAttribute("page_title", "Home anonimo");
+            TemplateResult res = new TemplateResult(getServletContext());
             res.activate("home_anonimo.ftl.html", request, response);
-        } catch (TemplateManagerException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (DataException ex) {
+            request.setAttribute("message", "Data access exception: " + ex.getMessage());
+            action_error(request, response);
         }
     }
     
@@ -102,19 +104,10 @@ public class Home extends InternshipTutorBaseController {
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
+        } catch (TemplateManagerException ex) {
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        processRequest(req, resp);
-    }
-  
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        processRequest(req, resp);
-    }
 }

@@ -1,4 +1,4 @@
-package it.univaq.web_engineering.internship_tutor.result;
+package it.univaq.web_engineering.framework.result;
 
 /**
  *
