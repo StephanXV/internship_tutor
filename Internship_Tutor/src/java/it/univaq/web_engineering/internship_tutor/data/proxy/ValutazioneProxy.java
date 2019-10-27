@@ -5,10 +5,12 @@
  */
 package it.univaq.web_engineering.internship_tutor.data.proxy;
 
+import it.univaq.web_engineering.internship_tutor.data.impl.ValutazioneImpl;
+
 /**
  *
  * @author Stefano Florio
  */
-public class ValutazioneProxy {
+public class ValutazioneProxy extends ValutazioneImpl {
     
 }

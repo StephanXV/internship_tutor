@@ -49,7 +49,7 @@ public class AziendaProxy extends AziendaImpl {
             try {
                 super.setUtente(((UtenteDAO) dataLayer.getDAO(Utente.class)).getUtente(id_utente));
             } catch (DataException ex) {
-                Logger.getLogger(UtenteProxy.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AziendaProxy.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         //attenzione: l'utente caricato viene legato all'oggetto in modo da non 
@@ -73,7 +73,7 @@ public class AziendaProxy extends AziendaImpl {
             try {
                 super.setRespTirocini(((RespTirociniDAO) dataLayer.getDAO(RespTirocini.class)).getRespTirocini(id_resp_tirocini));
             } catch (DataException ex) {
-                Logger.getLogger(UtenteProxy.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AziendaProxy.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         //attenzione: l'oggetto caricato viene legato all'oggetto in modo da non 
@@ -213,6 +213,11 @@ public class AziendaProxy extends AziendaImpl {
         //resettiamo la cache dell'autore
         //reset author cache
         super.setUtente(null);
+    }
+    
+    public void setIdRespTirocini(int id) {
+        this.id_resp_tirocini = id;
+        super.setRespTirocini(null);
     }
     
 }

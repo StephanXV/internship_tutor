@@ -10,6 +10,7 @@ import it.univaq.web_engineering.internship_tutor.data.model.Candidatura;
 import it.univaq.web_engineering.internship_tutor.data.model.OffertaTirocinio;
 import it.univaq.web_engineering.internship_tutor.data.model.Studente;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
@@ -21,9 +22,9 @@ public interface CandidaturaDAO {
     
     Candidatura createCandidatura(ResultSet rs) throws DataException;
     
-    Candidatura getCandidature(Studente st) throws DataException;
+    List<Candidatura> getCandidature(Studente st) throws DataException;
     
-    Candidatura getCandidature(OffertaTirocinio ot) throws DataException;
+    List<Candidatura> getCandidature(OffertaTirocinio ot) throws DataException;
     
     Candidatura getCandidatura(Studente st, OffertaTirocinio ot) throws DataException;
     
