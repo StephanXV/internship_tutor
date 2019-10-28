@@ -36,9 +36,9 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
         try {
             super.init();
             sAziendaById = connection.prepareStatement("SELECT * FROM azienda WHERE id_utente=?");
-            sAziendeConvenzionate = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato=1");
-            sAziendeInAttesa = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato=0");
-            sAziendeRifiutate = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato=2");
+            sAziendeConvenzionate = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=1");
+            sAziendeInAttesa = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=0");
+            sAziendeRifiutate = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=2");
             iAzienda = connection.prepareStatement ("INSERT INTO azienda (id_utente, ragione_sociale, indirizzo, citta, cap,"
                     + " provincia, rappresentante_legale, piva, foro_competente, tematiche, corso_studio, durata_convenzione,"
                     + " id_responsabile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -72,7 +72,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     public AziendaProxy createAzienda(ResultSet rs) throws DataException {
         AziendaProxy a = createAzienda();
         try {
-            a.setIdUtente(rs.getInt("id_utente"));
+            a.setId_utente(rs.getInt("id_utente"));
             a.setRagioneSociale(rs.getString("ragione_sociale"));
             a.setIndirizzo(rs.getString("indirizzo"));
             a.setCitta(rs.getString("citta"));
@@ -81,12 +81,13 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             a.setRappresentanteLegale(rs.getString("rappresentante_legale"));
             a.setPiva(rs.getString("piva"));
             a.setForoCompetente(rs.getString("foro_competente"));
-            a.setSrcDocConvenzionamento(rs.getString("src_documento_convenzionamento"));
+            a.setSrcDocConvenzione(rs.getString("src_documento_convenzione"));
             a.setTematiche(rs.getString("tematiche"));
             a.setStatoConvenzione(rs.getInt("stato_convenzione"));
             a.setCorsoStudio(rs.getString("corso_studio"));
             a.setInizioConvenzione(rs.getDate("inizio_convenzione"));
             a.setDurataConvenzione(rs.getInt("durata_convenzione"));
+            a.setId_respTirocini(rs.getInt("id_responsabile"));
             
         } catch(SQLException ex) {
             throw new DataException("Unable to create Azienda object from resultset", ex);
@@ -116,7 +117,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
         try {
             try (ResultSet rs = sAziendeConvenzionate.executeQuery()) {
                 while (rs.next()) {
-                    result.add((Azienda) getAzienda(rs.getInt("id")));
+                    result.add((Azienda) getAzienda(rs.getInt("id_utente")));
                 }
             }
         } catch (SQLException ex) {
@@ -132,7 +133,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
         try {
             try (ResultSet rs = sAziendeInAttesa.executeQuery()) {
                 while (rs.next()) {
-                    result.add((Azienda) getAzienda(rs.getInt("id")));
+                    result.add((Azienda) getAzienda(rs.getInt("id_utente")));
                 }
             }
         } catch (SQLException ex) {
@@ -148,7 +149,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
         try {
             try (ResultSet rs = sAziendeRifiutate.executeQuery()) {
                 while (rs.next()) {
-                    result.add((Azienda) getAzienda(rs.getInt("id")));
+                    result.add((Azienda) getAzienda(rs.getInt("id_utente")));
                 }
             }
         } catch (SQLException ex) {

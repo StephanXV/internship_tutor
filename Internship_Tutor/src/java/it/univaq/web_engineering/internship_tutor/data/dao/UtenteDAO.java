@@ -20,4 +20,6 @@ public interface UtenteDAO {
     Utente createUtente(ResultSet rs)  throws DataException;
  
     Utente getUtente(int id) throws DataException;
+    
+    void insertUtente(Utente ut) throws DataException;
 }

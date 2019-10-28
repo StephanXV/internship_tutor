@@ -20,5 +20,7 @@ public interface StudenteDAO {
     Studente createStudente(ResultSet rs) throws DataException;
     
     Studente getStudente(int id) throws DataException;
+    
+    void insertStudente(Studente st) throws DataException;
        
 }

@@ -14,6 +14,7 @@ import it.univaq.web_engineering.internship_tutor.data.proxy.TutoreUniProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -23,6 +24,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
     
     private PreparedStatement sTutoreUniById;
+    private PreparedStatement iTutoreUni;
 
     public TutoreUniDAO_MySQL(DataLayer d) 
     {
@@ -37,6 +39,8 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
             sTutoreUniById = connection.prepareStatement("SELECT * FROM tutore_uni WHERE id=?");
+            iTutoreUni = connection.prepareStatement("INSERT INTO tutore_uni (nome, cognome, email, telefono)"
+                    + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -48,6 +52,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
         //also closing PreparedStamenents is a good practice...
         try {
             sTutoreUniById.close();
+            iTutoreUni.close();
           
         } catch (SQLException ex) {
             //
@@ -95,6 +100,40 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             throw new DataException("Unable to load TutoreUni by ID", ex);
         }
         return null;
+    }
+    
+    @Override
+    public void insertTutoreUni(TutoreUni tt) throws DataException {
+        try {
+            iTutoreUni.setString(1, tt.getNome());
+            iTutoreUni.setString(2, tt.getCognome());
+            iTutoreUni.setString(3, tt.getEmail());
+            iTutoreUni.setString(4, tt.getTelefono());
+            if (iTutoreUni.executeUpdate() == 1) {
+                    //per leggere la chiave generata dal database
+                    //per il record appena inserito, usiamo il metodo
+                    //getGeneratedKeys sullo statement.
+                    //to read the generated record key from the database
+                    //we use the getGeneratedKeys method on the same statement
+                    try (ResultSet keys = iTutoreUni.getGeneratedKeys()) {
+                        //il valore restituito è un ResultSet con un record
+                        //per ciascuna chiave generata (uno solo nel nostro caso)
+                        //the returned value is a ResultSet with a distinct record for
+                        //each generated key (only one in our case)
+                        if (keys.next()) {
+                            //i campi del record sono le componenti della chiave
+                            //(nel nostro caso, un solo intero)
+                            //the record fields are the key componenets
+                            //(a single integer in our case)
+                            tt.setId(keys.getInt(1));
+                            //aggiornaimo la chiave in caso di inserimento
+                            //after an insert, uopdate the object key
+                        }
+                    }
+                }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to insert new tutore università", ex);
+        }
     }
     
 }

@@ -28,8 +28,9 @@ public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
     
     protected DataLayer dataLayer;
 
-    public OffertaTirocinioProxy() {
+    public OffertaTirocinioProxy(DataLayer d) {
         super();
+        this.dataLayer = d;
         this.dirty = false;
         this.id_azienda = 0;
     }

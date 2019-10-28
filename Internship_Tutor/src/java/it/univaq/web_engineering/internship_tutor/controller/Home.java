@@ -5,14 +5,10 @@
  */
 package it.univaq.web_engineering.internship_tutor.controller;
 
-import it.univaq.web_engineering.framework.data.DataException;
-import it.univaq.web_engineering.internship_tutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.web_engineering.internship_tutor.data.model.TutoreUni;
 import it.univaq.web_engineering.framework.result.FailureResult;
 import it.univaq.web_engineering.framework.result.TemplateManagerException;
 import it.univaq.web_engineering.framework.result.TemplateResult;
 import it.univaq.web_engineering.framework.security.SecurityLayer;
-import it.univaq.web_engineering.internship_tutor.data.dao.TutoreUniDAO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +35,7 @@ public class Home extends InternshipTutorBaseController {
             throws IOException, ServletException, TemplateManagerException {
         request.setAttribute("page_title", "Home anonimo");
         TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("home_anonimo.ftl.html", request, response);
+        res.activate("home_anonimo.ftl.html", request, response);    
     }
     
     private void action_admin(HttpServletRequest request, HttpServletResponse response) throws IOException {

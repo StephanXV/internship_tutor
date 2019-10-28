@@ -13,6 +13,7 @@ import it.univaq.web_engineering.internship_tutor.data.proxy.UtenteProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -21,6 +22,7 @@ import java.sql.SQLException;
 public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     
     private PreparedStatement sUtenteById;
+    private PreparedStatement iUtente;
     
     public UtenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -34,6 +36,8 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
             sUtenteById = connection.prepareStatement("SELECT * FROM utente WHERE id=?");
+            iUtente = connection.prepareStatement("INSERT INTO utente (email, username, pw, tipologia)"
+                    + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -45,9 +49,10 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
         //also closing PreparedStamenents is a good practice...
         try {
             sUtenteById.close();
+            iUtente.close();
           
         } catch (SQLException ex) {
-            //
+            throw new DataException("Error closing statements", ex);
         }
         super.destroy();
     }
@@ -79,12 +84,9 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             try (ResultSet rs = sUtenteById.executeQuery()) {
                 if (rs.next()) {
                     //notare come utilizziamo il costrutture
-                    //"helper" della classe AuthorImpl
+                    //"helper" della classe UtenteImpl
                     //per creare rapidamente un'istanza a
                     //partire dal record corrente
-                    //note how we use here the helper constructor
-                    //of the AuthorImpl class to quickly
-                    //create an instance from the current record
                     return createUtente(rs);
                 }
             }
@@ -93,5 +95,43 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
         }
         return null;
     }
+
+    @Override
+    public void insertUtente(Utente ut) throws DataException {
+        int id = 0;
+        try {
+            iUtente.setString(1, ut.getEmail());
+            iUtente.setString(2, ut.getUsername());
+            iUtente.setString(3, ut.getPw());
+            iUtente.setString(4, ut.getTipologia());
+            if (iUtente.executeUpdate() == 1) {
+                    //per leggere la chiave generata dal database
+                    //per il record appena inserito, usiamo il metodo
+                    //getGeneratedKeys sullo statement.
+                    //to read the generated record key from the database
+                    //we use the getGeneratedKeys method on the same statement
+                   /* try (ResultSet keys = iUtente.getGeneratedKeys()) {
+                        //il valore restituito è un ResultSet con un record
+                        //per ciascuna chiave generata (uno solo nel nostro caso)
+                        //the returned value is a ResultSet with a distinct record for
+                        //each generated key (only one in our case)
+                        if (keys.next()) {
+                            //i campi del record sono le componenti della chiave
+                            //(nel nostro caso, un solo intero)
+                            //the record fields are the key componenets
+                            //(a single integer in our case)
+                            id = keys.getInt(1);
+                            //aggiornaimo la chiave in caso di inserimento
+                            //after an insert, uopdate the object key
+                        }
+                    }
+                    ut.setId(id);*/
+                }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to insert new utente", ex);
+        }
+    }
+    
+    
     
 }

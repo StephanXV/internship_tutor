@@ -43,7 +43,7 @@ public class AziendaProxy extends AziendaImpl {
 
     @Override
     public Utente getUtente() {
-        //notare come l'autore in relazione venga caricato solo su richiesta
+        //notare come l'utente in relazione venga caricato solo su richiesta
         //note how the related author is loaded only after it is requested
         if (super.getUtente() == null && id_utente > 0) {
             try {
@@ -133,8 +133,8 @@ public class AziendaProxy extends AziendaImpl {
     }
 
     @Override
-    public void setSrcDocConvenzionamento(String srcDocConvenzionamento) {
-        super.setSrcDocConvenzionamento(srcDocConvenzionamento);
+    public void setSrcDocConvenzione(String srcDocConvenzione) {
+        super.setSrcDocConvenzione(srcDocConvenzione);
     }
 
     @Override
@@ -208,14 +208,12 @@ public class AziendaProxy extends AziendaImpl {
         return dirty;
     }
 
-    public void setIdUtente(int id) {
+    public void setId_utente(int id) {
         this.id_utente = id;
-        //resettiamo la cache dell'autore
-        //reset author cache
         super.setUtente(null);
     }
     
-    public void setIdRespTirocini(int id) {
+    public void setId_respTirocini(int id) {
         this.id_resp_tirocini = id;
         super.setRespTirocini(null);
     }

@@ -49,9 +49,9 @@ public interface Azienda {
     
     void setForoCompetente(String fc);
     
-    String getSrcDocConvenzionamento();
+    String getSrcDocConvenzione();
     
-    void setSrcDocConvenzionamento(String src);
+    void setSrcDocConvenzione(String src);
     
     String getTematiche();
     

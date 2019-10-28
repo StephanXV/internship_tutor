@@ -27,8 +27,10 @@ public class ResocontoProxy extends ResocontoImpl {
     
     protected DataLayer dataLayer;
 
-    public ResocontoProxy() {
+    public ResocontoProxy(DataLayer d) {
+        super();
         this.dirty = false;
+        this.dataLayer = d;
         this.id_studente = 0;
         this.id_offerta_tirocinio = 0;
     }

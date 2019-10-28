@@ -3,9 +3,16 @@ package it.univaq.web_engineering.internship_tutor.data.dao;
 ;
 import it.univaq.web_engineering.framework.data.DataException;
 import it.univaq.web_engineering.framework.data.DataLayer;
+import it.univaq.web_engineering.internship_tutor.data.model.Azienda;
+import it.univaq.web_engineering.internship_tutor.data.model.Candidatura;
+import it.univaq.web_engineering.internship_tutor.data.model.OffertaTirocinio;
+import it.univaq.web_engineering.internship_tutor.data.model.Resoconto;
 import it.univaq.web_engineering.internship_tutor.data.model.RespTirocini;
+import it.univaq.web_engineering.internship_tutor.data.model.Studente;
 import it.univaq.web_engineering.internship_tutor.data.model.TutoreTirocinio;
 import it.univaq.web_engineering.internship_tutor.data.model.TutoreUni;
+import it.univaq.web_engineering.internship_tutor.data.model.Utente;
+import it.univaq.web_engineering.internship_tutor.data.model.Valutazione;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 
@@ -25,6 +32,13 @@ public class InternshipTutorDataLayer extends DataLayer {
         registerDAO(RespTirocini.class, new RespTirociniDAO_MySQL(this));
         registerDAO(TutoreTirocinio.class, new TutoreTirocinioDAO_MySQL(this));
         registerDAO(TutoreUni.class, new TutoreUniDAO_MySQL(this));
+        registerDAO(Azienda.class, new AziendaDAO_MySQL(this));
+        registerDAO(Utente.class, new UtenteDAO_MySQL(this));
+        /*registerDAO(Studente.class, new StudenteDAO_MySQL(this));
+        registerDAO(Valutazione.class, new ValutazioneDAO_MySQL(this));
+        registerDAO(Candidatura.class, new CandidaturaDAO_MySQL(this));
+        registerDAO(OffertaTirocinio.class, new OffertaTirocinioDAO_MySQL(this));
+        registerDAO(Resoconto.class, new ResocontoDAO_MySQL(this));*/
     }
         
     //helpers    
@@ -38,5 +52,13 @@ public class InternshipTutorDataLayer extends DataLayer {
 
     public TutoreUniDAO getTutoreUniDAO() {
         return (TutoreUniDAO) getDAO(TutoreUni.class);
+    }
+    
+    public AziendaDAO getAziendaDAO() {
+        return (AziendaDAO) getDAO(Azienda.class);
+    }
+    
+    public UtenteDAO getUtenteDAO() {
+        return (UtenteDAO) getDAO(Utente.class);
     }
 }

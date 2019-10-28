@@ -23,7 +23,7 @@ public class AziendaImpl implements Azienda {
     private String rappresentanteLegale;
     private String piva;
     private String foroCompetente;
-    private String srcDocConvenzionamento;
+    private String srcDocConvenzione;
     private String tematiche;
     private String corsoStudio;
     private int statoConvenzione; // 0=in attesa, 1=convenzionata, 2=rifiutata, 3=scaduta
@@ -43,7 +43,7 @@ public class AziendaImpl implements Azienda {
         this.rappresentanteLegale = "";
         this.piva = "";
         this.foroCompetente = "";
-        this.srcDocConvenzionamento = "";
+        this.srcDocConvenzione = "";
         this.tematiche = "";
         this.corsoStudio = "";
         this.statoConvenzione = 0;
@@ -145,13 +145,13 @@ public class AziendaImpl implements Azienda {
     }
 
     @Override
-    public String getSrcDocConvenzionamento() {
-        return srcDocConvenzionamento;
+    public String getSrcDocConvenzione() {
+        return srcDocConvenzione;
     }
 
     @Override
-    public void setSrcDocConvenzionamento(String srcDocConvenzionamento) {
-        this.srcDocConvenzionamento = srcDocConvenzionamento;
+    public void setSrcDocConvenzione(String srcDocConvenzione) {
+        this.srcDocConvenzione = srcDocConvenzione;
     }
 
     @Override

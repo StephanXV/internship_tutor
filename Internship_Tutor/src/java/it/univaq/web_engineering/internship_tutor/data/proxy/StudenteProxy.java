@@ -30,7 +30,9 @@ public class StudenteProxy  extends StudenteImpl {
     
     protected DataLayer dataLayer;
 
-    public StudenteProxy() {
+    public StudenteProxy(DataLayer d) {
+        super();
+        this.dataLayer = d;
         this.dirty = false;
         this.id_utente = 0;
     }
