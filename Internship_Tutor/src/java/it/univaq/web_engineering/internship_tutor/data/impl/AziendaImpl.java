@@ -26,7 +26,7 @@ public class AziendaImpl implements Azienda {
     private String srcDocConvenzionamento;
     private String tematiche;
     private String corsoStudio;
-    private int statoConvenzione;
+    private int statoConvenzione; // 0=in attesa, 1=convenzionata, 2=rifiutata, 3=scaduta
     private Date inizioConvenzione;
     private int durataConvenzione;
     private RespTirocini respTirocini;
