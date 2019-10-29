@@ -35,7 +35,8 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
             sStudenteById = connection.prepareStatement("SELECT * FROM studente WHERE id_utente=?");
             iStudente = connection.prepareStatement("INSERT INTO studente (id_utente, nome, cognome, "
                     + "codice_fiscale, data_nascita, citta_nascita, provincia_nascita, citta_residenza, "
-                    + "provincia_residenza, cap_residenza, telefono, corso_laurea, handicap)");
+                    + "provincia_residenza, cap_residenza, telefono, corso_laurea, handicap) values "
+                    + "(?,?,?,?,?,?,?,?,?,?,?,?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -117,7 +118,7 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
             iStudente.executeUpdate();
             
         } catch (SQLException ex) {
-            throw new DataException("Unable to insert new azienda", ex);
+            throw new DataException("Unable to insert new studente", ex);
         }
     }
     

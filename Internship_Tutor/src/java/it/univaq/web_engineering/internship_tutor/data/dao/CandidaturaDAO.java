@@ -26,6 +26,8 @@ public interface CandidaturaDAO {
     
     List<Candidatura> getCandidature(OffertaTirocinio ot) throws DataException;
     
-    Candidatura getCandidatura(Studente st, OffertaTirocinio ot) throws DataException;
+    Candidatura getCandidatura(int id_st, int id_ot) throws DataException;
+    
+    void insertCandidatura(Candidatura c) throws DataException;
     
 }

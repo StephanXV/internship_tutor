@@ -138,5 +138,5 @@ public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
         this.id_azienda = id_azienda;
         super.setAzienda(null);
     }  
-    
+
 }

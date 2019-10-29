@@ -26,5 +26,7 @@ public interface ValutazioneDAO {
     
     List<Valutazione> getValutazioni(Studente st) throws DataException;
     
-    Valutazione getValutazione(Azienda az, Studente st) throws DataException;
+    Valutazione getValutazione(int id_az, int id_st) throws DataException;
+    
+    void insertValutazione(Valutazione v) throws DataException;
 }

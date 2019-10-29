@@ -27,5 +27,7 @@ public interface ResocontoDAO {
     
     List<Resoconto> getResoconti(OffertaTirocinio ot) throws DataException;
     
-    Resoconto getResoconto(Studente st, OffertaTirocinio ot) throws DataException;
+    Resoconto getResoconto(int id_st, int id_ot) throws DataException;
+    
+    void insertResoconto(Resoconto r) throws DataException;
 }

@@ -110,7 +110,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
                     //getGeneratedKeys sullo statement.
                     //to read the generated record key from the database
                     //we use the getGeneratedKeys method on the same statement
-                   /* try (ResultSet keys = iUtente.getGeneratedKeys()) {
+                    try (ResultSet keys = iUtente.getGeneratedKeys()) {
                         //il valore restituito è un ResultSet con un record
                         //per ciascuna chiave generata (uno solo nel nostro caso)
                         //the returned value is a ResultSet with a distinct record for
@@ -125,7 +125,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
                             //after an insert, uopdate the object key
                         }
                     }
-                    ut.setId(id);*/
+                    ut.setId(id);
                 }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new utente", ex);
