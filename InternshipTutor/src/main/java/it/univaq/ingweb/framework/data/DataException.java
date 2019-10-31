@@ -1,0 +1,25 @@
+package it.univaq.ingweb.framework.data;
+
+/**
+ *
+ * @author Giuseppe Della Penna
+ */
+public class DataException extends Exception {
+
+    public DataException(String message) {
+        super(message);
+    }
+
+    public DataException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public DataException(Throwable cause) {
+        super(cause);
+    }
+
+    @Override
+    public String getMessage() {
+        return super.getMessage() + (getCause()!=null?" ("+getCause().getMessage()+")":"");                
+    }
+}
