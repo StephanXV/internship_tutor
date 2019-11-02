@@ -115,8 +115,8 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     public List<Candidatura> getCandidature(OffertaTirocinio ot) throws DataException {
         List<Candidatura> result = new ArrayList();
         try {
-            sCandidatureByStudente.setInt(1, ot.getId());
-            try (ResultSet rs = sCandidatureByStudente.executeQuery()) {
+            sCandidatureByTirocinio.setInt(1, ot.getId());
+            try (ResultSet rs = sCandidatureByTirocinio.executeQuery()) {
                 while (rs.next()) {
                     result.add(getCandidatura(rs.getInt("id_studente"), rs.getInt("id_offerta_tirocinio")));
                 }

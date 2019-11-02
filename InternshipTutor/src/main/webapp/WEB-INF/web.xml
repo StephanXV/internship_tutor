@@ -48,6 +48,14 @@
         <servlet-name>Registrazione</servlet-name>
         <url-pattern>/registrazione</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Test</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.Test</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Test</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

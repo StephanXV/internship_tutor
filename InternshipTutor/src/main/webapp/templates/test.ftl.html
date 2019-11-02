@@ -1,0 +1,34 @@
+<h1>Pagina di test, in cui sto provando che le query funzionino</h1>
+<#if (aziende_convenzionate?size>0)>
+<h2>Lista aziende con stato 1 (convenzionate)</h2>
+<ul>
+    <#list aziende_convenzionate as azienda>
+    <li>
+        <b>${azienda.ragioneSociale}</b>
+    </li>
+    </#list>
+</ul>
+<br>
+<h2>Lista tirocini dell'azienda Microsoft</h2>
+</#if>
+<#if (tirocini?size>0)>
+<ul>
+    <#list tirocini as tirocinio>
+    <li>
+        <b>${tirocinio.titolo}</b>
+    </li>
+    </#list>
+</ul>
+</#if>
+<br>
+<h2>Lista candidati per il tirocinio in AI di Microsoft</h2>
+<#if (candidature?size>0)>
+<ul>
+    <#list candidature as candidatura>
+    <li>
+        <b>${candidatura.tms}</b>
+    </li>
+    </#list>
+</ul>
+</#if>
+

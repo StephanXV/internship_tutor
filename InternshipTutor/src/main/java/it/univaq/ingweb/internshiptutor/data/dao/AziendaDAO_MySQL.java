@@ -23,7 +23,7 @@ import java.util.List;
 public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
     private PreparedStatement sAziendaById;
-    private PreparedStatement sAziendeConvenzionate, sAziendeInAttesa, sAziendeRifiutate;
+    private PreparedStatement sAziendeByStato;
     private PreparedStatement iAzienda, uAziendaStato;
 
     public AziendaDAO_MySQL(DataLayer d) {
@@ -35,9 +35,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
         try {
             super.init();
             sAziendaById = connection.prepareStatement("SELECT * FROM azienda WHERE id_utente=?");
-            sAziendeConvenzionate = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=1");
-            sAziendeInAttesa = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=0");
-            sAziendeRifiutate = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=2");
+            sAziendeByStato = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=?");
             iAzienda = connection.prepareStatement ("INSERT INTO azienda (id_utente, ragione_sociale, indirizzo, citta, cap,"
                     + " provincia, rappresentante_legale, piva, foro_competente, tematiche, corso_studio, durata_convenzione,"
                     + " id_responsabile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -51,9 +49,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     public void destroy() throws DataException {
         try {
             sAziendaById.close();
-            sAziendeConvenzionate.close();
-            sAziendeInAttesa.close();
-            sAziendeRifiutate.close();
+            sAziendeByStato.close();
             iAzienda.close();
             uAziendaStato.close();
         } catch(SQLException ex) {
@@ -110,49 +106,17 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     }
 
     @Override
-    public List<Azienda> getAziendeConvenzionate() throws DataException {
+    public List<Azienda> getAziendeByStato(int stato) throws DataException {
         List<Azienda> result = new ArrayList();
-
         try {
-            try (ResultSet rs = sAziendeConvenzionate.executeQuery()) {
+            sAziendeByStato.setInt(1, stato);
+            try (ResultSet rs = sAziendeByStato.executeQuery()) {
                 while (rs.next()) {
                     result.add((Azienda) getAzienda(rs.getInt("id_utente")));
                 }
             }
         } catch (SQLException ex) {
-            throw new DataException("Unable to load aziende convenzionate", ex);
-        }
-        return result;
-    }
-
-    @Override
-    public List<Azienda> getAziendeInAttesaConvenzione() throws DataException {
-        List<Azienda> result = new ArrayList();
-
-        try {
-            try (ResultSet rs = sAziendeInAttesa.executeQuery()) {
-                while (rs.next()) {
-                    result.add((Azienda) getAzienda(rs.getInt("id_utente")));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new DataException("Unable to load aziende in attesa", ex);
-        }
-        return result;
-    }
-
-    @Override
-    public List<Azienda> getAziendeRifiutate() throws DataException {
-        List<Azienda> result = new ArrayList();
-
-        try {
-            try (ResultSet rs = sAziendeRifiutate.executeQuery()) {
-                while (rs.next()) {
-                    result.add((Azienda) getAzienda(rs.getInt("id_utente")));
-                }
-            }
-        } catch (SQLException ex) {
-            throw new DataException("Unable to load aziende rifiutate", ex);
+            throw new DataException("Unable to load aziende with stato " + stato, ex);
         }
         return result;
     }
