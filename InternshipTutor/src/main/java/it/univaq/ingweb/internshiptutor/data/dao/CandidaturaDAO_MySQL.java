@@ -73,6 +73,11 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             c.setId_tutore_uni(rs.getInt("id_tutore_uni"));
             c.setCfu(rs.getInt("cfu"));
             c.setOreTirocinio(rs.getInt("ore_tirocinio"));
+            c.setStatoCandidatura(rs.getInt("stato_candidatura"));
+            c.setSrcDocCandidatura(rs.getString("src_documento_candidatura"));
+            c.setInizioTirocinio(rs.getDate("data_inizio"));
+            c.setFineTirocinio(rs.getDate("data_fine"));
+            c.setTms(rs.getDate("tms"));
         } catch (SQLException ex) {
             throw new DataException("Unable to create candidatura from resulset", ex);
         }

@@ -1,6 +1,7 @@
 <h1>Pagina di test, in cui sto provando che le query funzionino</h1>
-<#if (aziende_convenzionate?size>0)>
+
 <h2>Lista aziende con stato 1 (convenzionate)</h2>
+<#if (aziende_convenzionate?size>0)>
 <ul>
     <#list aziende_convenzionate as azienda>
     <li>
@@ -8,27 +9,61 @@
     </li>
     </#list>
 </ul>
-<br>
-<h2>Lista tirocini dell'azienda Microsoft</h2>
 </#if>
+
+<h2>Lista tirocini dell'azienda Microsoft</h2>
 <#if (tirocini?size>0)>
 <ul>
     <#list tirocini as tirocinio>
     <li>
-        <b>${tirocinio.titolo}</b>
-    </li>
-    </#list>
-</ul>
-</#if>
-<br>
-<h2>Lista candidati per il tirocinio in AI di Microsoft</h2>
-<#if (candidature?size>0)>
-<ul>
-    <#list candidature as candidatura>
-    <li>
-        <b>${candidatura.tms}</b>
+        <b>${tirocinio.id}: ${tirocinio.titolo}</b>
     </li>
     </#list>
 </ul>
 </#if>
 
+<h2>Lista candidati per il tirocinio in AI di Microsoft</h2>
+<#if (candidature?size>0)>
+<ul>
+    <#list candidature as candidatura>
+    <li>
+        <b>${candidatura.studente.nome} ${candidatura.studente.cognome}</b>
+    </li>
+    </#list>
+</ul>
+</#if>
+
+<h2>Elenco dei resoconti di Giuseppe Gasbarro</h2>
+<#if (resoconti?size>0)>
+<ul>
+    <#list resoconti as resoconto>
+    <li>
+        <b>Tirocinio effettuato:</b> ${resoconto.offertaTirocinio.titolo} <br>
+        <b>Ore di attivita:</b> ${resoconto.oreEffettive} <br>
+        <b>Attivita svolte:</b> ${resoconto.descAttivita} <br>
+        <b>Esito:</b> ${resoconto.giudizio} <br>
+    </li>
+    </#list>
+</ul>
+</#if>
+
+<h2>Elenco delle valutazioni dell'azienda Microsoft</h2>
+<#if (valutazioni?size>0)>
+<ul>
+    <#list valutazioni as valutazione>
+    <li>
+        <b>Studente:</b> ${valutazione.studente.nome} ${valutazione.studente.cognome} <br>
+        <b>Voto:</b> ${valutazione.stelle} stelle<br>
+    </li>
+    </#list>
+</ul>
+</#if>
+
+<h2>Dati dello studente 4</h2>
+<span><b>Dati utente:</b> Email: ${stefano.utente.email} - Username: ${stefano.utente.username} - Pw: ${stefano.utente.pw} - Tipologia: ${stefano.utente.tipologia}</span> <br>
+<span><b>Nome cognome e CF:</b> ${stefano.nome} ${stefano.cognome} - ${stefano.CF}</span> <br>
+<span><b>Nascita:</b> nato a ${stefano.cittaNascita} in provincia di ${stefano.provinciaNascita} il ${stefano.dataNascita}</span> <br>
+<span><b>Residenza:</b> residente a ${stefano.cittaResidenza} (CAP: ${stefano.capResidenza}) in provincia di ${stefano.provinciaResidenza}</span> <br>
+<span><b>Telefono:</b> ${stefano.telefono}</span> <br>
+<span><b>Corso di laurea:</b> ${stefano.corsoLaurea}</span> <br>
+<span><b>Portatore di handicap:</b> <#if (stefano.handicap)> Si <#else> No </#if></span>

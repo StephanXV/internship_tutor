@@ -36,7 +36,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
     public void init() throws DataException {
          try {
             sValutazione = connection.prepareStatement("SELECT * FROM valutazione WHERE id_studente=? AND "
-                    + "id_offerta_tirocinio=?");
+                    + "id_azienda=?");
             sValutazioniByStudente = connection.prepareStatement("SELECT * FROM valutazione WHERE id_studente=?");
             sValutazioniByAzienda = connection.prepareStatement("SELECT * FROM valutazione WHERE id_azienda=?");
             iValutazione = connection.prepareStatement("INSERT INTO valutazione (id_studente, id_azienda, "
@@ -81,7 +81,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
     @Override
     public Valutazione getValutazione(int id_azienda, int id_studente) throws DataException {
         try {
-            sValutazione.setInt(1,id_azienda);
+            sValutazione.setInt(1, id_azienda);
             sValutazione.setInt(2, id_studente);
             try (ResultSet rs = sValutazione.executeQuery()) {
                 if (rs.next())

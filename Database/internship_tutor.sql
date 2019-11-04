@@ -102,6 +102,7 @@ create table candidatura (
     data_inizio date,
     data_fine date,
     tms timestamp default current_timestamp,
+    constraint candidatura_unica unique (id_studente, id_offerta_tirocinio),
     constraint studente_candidatura foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,
 	constraint offerta_tirocinio_candidatura foreign key(id_offerta_tirocinio) 
@@ -117,6 +118,7 @@ create table resoconto (
     descrizione_attivita text not null,
     giudizio text not null,
     src_documento_resoconto varchar(250),
+    constraint resoconto_unico unique (id_studente, id_offerta_tirocinio),
     constraint studente_resoconto foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,
 	constraint offerta_tirocinio_resoconto foreign key(id_offerta_tirocinio) 
@@ -127,6 +129,7 @@ create table valutazione (
 	id_studente integer unsigned not null,
     id_azienda integer unsigned not null, 
     stelle integer(1) unsigned not null,
+    constraint valutazione_unica unique (id_studente, id_azienda),
     constraint studente_valutazione foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,
 	constraint azienda_valutazione foreign key(id_azienda) 
@@ -184,7 +187,7 @@ insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, 
            (6, 1, 1, 4, 25, 0, null, null, null, current_timestamp()),
            (4, 2, 2, 6, 25, 1, null, '2019-12-21', '2020-1-27', current_timestamp()),
            (5, 2, 2, 3, 25, 3, null, '2019-11-21', '2020-1-27', current_timestamp()),
-           (6, 1, 1, 3, 25, 0, null, null, null, current_timestamp());
+           (6, 2, 1, 3, 25, 0, null, null, null, current_timestamp());
            
 insert into resoconto (id_studente, id_offerta_tirocinio, ore_effettive, descrizione_attivita, giudizio, src_documento_resoconto)
 	values (5, 2, 75, 'Il tirocinante ha contribuito correttamente allo sviluppo lato server del sito web, lavorando in un team di sviluppo', 

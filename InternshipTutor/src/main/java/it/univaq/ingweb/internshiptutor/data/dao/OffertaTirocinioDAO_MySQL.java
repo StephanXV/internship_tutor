@@ -69,6 +69,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
     public OffertaTirocinioProxy createOffertaTirocinio(ResultSet rs) throws DataException {
         OffertaTirocinioProxy ot = createOffertaTirocinio();
         try {
+            ot.setId(rs.getInt("id"));
             ot.setLuogo(rs.getString("luogo"));
             ot.setSettore(rs.getString("settore"));
             ot.setOrari(rs.getString("orari"));

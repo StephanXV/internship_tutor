@@ -42,6 +42,12 @@ public class Test extends InternshipTutorBaseController {
             request.setAttribute("tirocini", tirocini);
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(tirocini.get(0));
             request.setAttribute("candidature", candidature);
+            List<Resoconto> resoconti = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconti(candidature.get(1).getStudente());
+            request.setAttribute("resoconti", resoconti);
+            List<Valutazione> valutazioni = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().getValutazioni(azConvenzionate.get(0));
+            request.setAttribute("valutazioni", valutazioni);
+            Studente stefano = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(4);
+            request.setAttribute("stefano", stefano);
         } catch (DataException ex) {
             Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
         }
