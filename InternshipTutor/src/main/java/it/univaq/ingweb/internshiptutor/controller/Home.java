@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class Home extends InternshipTutorBaseController {
     
