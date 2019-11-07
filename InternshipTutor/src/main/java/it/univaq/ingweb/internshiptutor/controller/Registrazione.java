@@ -88,8 +88,7 @@ public class Registrazione extends InternshipTutorBaseController {
             
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
             
-            TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("home_anonimo.ftl.html", request, response);    
+            response.sendRedirect("home");    
             
             
         } catch (DataException ex) {
@@ -133,8 +132,7 @@ public class Registrazione extends InternshipTutorBaseController {
             
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
             
-            TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("home_anonimo.ftl.html", request, response);  
+            response.sendRedirect("home");
             
         } catch (DataException ex) {
             request.setAttribute("exception", ex);

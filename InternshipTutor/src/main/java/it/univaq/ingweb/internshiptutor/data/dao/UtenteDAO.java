@@ -21,5 +21,7 @@ public interface UtenteDAO {
  
     Utente getUtente(int id) throws DataException;
     
+    Utente getUtente(String username, String password) throws DataException;
+    
     void insertUtente(Utente ut) throws DataException;
 }

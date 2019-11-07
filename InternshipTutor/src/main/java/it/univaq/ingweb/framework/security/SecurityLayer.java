@@ -86,7 +86,7 @@ public class SecurityLayer {
         s.setAttribute("ip", request.getRemoteHost());
         s.setAttribute("inizio-sessione", Calendar.getInstance());
         s.setAttribute("userid", userid);
-        s.setAttribute("tipo", tipo);
+        s.setAttribute("tipologia", tipo);
         return s;
     }
 
@@ -220,45 +220,6 @@ public class SecurityLayer {
         }
     }
 
-    
-    //Effettua il check e ne decrementa il valore
-    public static int checkPage(String s) throws SecurityLayerException {
-        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
-        //convert the string to a number, ensuring its validity
-        try {
-            if (s != null) {
-                int page = Integer.parseInt(s);
-
-                if (page <= 0) {
-                    return 0;
-                }
-
-                return page;
-            } else {
-                return 0;
-            }
-        } catch (NumberFormatException ex) {
-            throw new SecurityLayerException("Errore formato");
-        }
-    }
-    
-    //Effettua il check e ne decrementa il valore
-    public static int checkNumericPage(String s) throws NumberFormatException {
-        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
-        //convert the string to a number, ensuring its validity
-
-        if (s != null) {
-            int page = Integer.parseInt(s);
-
-            if (page <= 0) {
-                return 0;
-            }
-
-            return page;
-        } else {
-            return 0;
-        }
-    }
 
     //--------- CONNECTION SECURITY ------------
     //questa funzione verifica se il protocollo HTTPS è attivo

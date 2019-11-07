@@ -21,7 +21,7 @@ import java.sql.Statement;
  */
 public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     
-    private PreparedStatement sUtenteById;
+    private PreparedStatement sUtenteById, sUtenteByLogin;
     private PreparedStatement iUtente;
     
     public UtenteDAO_MySQL(DataLayer d) {
@@ -36,6 +36,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
             sUtenteById = connection.prepareStatement("SELECT * FROM utente WHERE id=?");
+            sUtenteByLogin = connection.prepareStatement("SELECT * FROM utente WHERE username=? AND pw=?");
             iUtente = connection.prepareStatement("INSERT INTO utente (email, username, pw, tipologia)"
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException ex) {
@@ -49,6 +50,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
         //also closing PreparedStamenents is a good practice...
         try {
             sUtenteById.close();
+            sUtenteByLogin.close();
             iUtente.close();
           
         } catch (SQLException ex) {
@@ -70,7 +72,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             ut.setEmail(rs.getString("email"));
             ut.setUsername(rs.getString("username"));
             ut.setPw(rs.getString("pw"));
-            ut.setTipologia(rs.getString("email"));
+            ut.setTipologia(rs.getString("tipologia"));
             return ut;
         } catch (SQLException ex) {
             throw new DataException("Unable to create Utente object form ResultSet", ex);
@@ -92,6 +94,26 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to load Utente by ID", ex);
+        }
+        return null;
+    }
+    
+    @Override
+    public Utente getUtente(String username, String password) throws DataException {
+        try {
+            sUtenteByLogin.setString(1, username);
+            sUtenteByLogin.setString(2, password);
+            try (ResultSet rs = sUtenteByLogin.executeQuery()) {
+                if (rs.next()) {
+                    //notare come utilizziamo il costrutture
+                    //"helper" della classe UtenteImpl
+                    //per creare rapidamente un'istanza a
+                    //partire dal record corrente
+                    return createUtente(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Utente by username and password", ex);
         }
         return null;
     }

@@ -80,7 +80,7 @@ public class Home extends InternshipTutorBaseController {
             if (s == null) {
                 action_anonymous(request, response);
             } else {
-                switch ((String) s.getAttribute("tipo")) {
+                switch ((String) s.getAttribute("tipologia")) {
                     case "ad":
                         action_admin(request, response);
                         break;
