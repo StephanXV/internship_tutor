@@ -1,1 +1,11 @@
 <h1>Ciao sono la lista delle aziende convenzionate</h1>
+<#if (aziende_convenzionate?size>0)>
+<ul>
+    <#list aziende_convenzionate as azienda>
+    <li>
+        <a  href="azienda?n=${azienda.utente.id}"> <button> ${azienda.ragioneSociale} </button>
+        </a>
+    </li>
+    </#list>
+</ul>
+</#if>

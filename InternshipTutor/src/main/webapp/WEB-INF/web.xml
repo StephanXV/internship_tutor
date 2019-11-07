@@ -33,6 +33,14 @@
         <url-pattern>/aziende</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>DettaglioAzienda</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.DettaglioAzienda</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DettaglioAzienda</servlet-name>
+        <url-pattern>/azienda</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>RicercaTirocini</servlet-name>
         <servlet-class>it.univaq.ingweb.internshiptutor.controller.RicercaTirocini</servlet-class>
     </servlet>

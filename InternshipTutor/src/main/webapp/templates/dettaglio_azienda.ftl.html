@@ -1,1 +1,28 @@
-<h1>Qui sono elencati i dettagli di una azienda</h1>
+<#if (azienda?size>0)>
+<h1>Ragione sociale azienda: ${azienda.ragioneSociale}</h1>
+<h3>Indirizzo: ${azienda.indirizzo}, ${azienda.citta} (${azienda.provincia})</h3>
+<h3>Tematiche:</h3>
+<p>${azienda.tematiche}</p>
+<b>Corso di studio: </b> 
+<a>${azienda.corsoStudio}</a> 
+<h2>Offerte di tirocinio:</h2>
+<#if (tirocini?size>0)>
+<ul>
+    <#list tirocini as tirocinio>
+    <li>
+        <h3>${tirocinio.titolo}</h3>
+        <b>Settore:</b>
+        <p>${tirocinio.settore}</p>
+        <b>Modalit&#224; tirocionio:</b>
+        <p>${tirocinio.modalita}</p>
+        <b>Obiettivi:</b>
+        <p>${tirocinio.obiettivi}</p>
+        <b>Luogo di lavoro:</b>
+        <p>${tirocinio.luogo}</p>
+        <b>Orari di lavoro:</b>
+        <p>${tirocinio.orari}</p>
+    </li>
+    </#list>
+</ul>
+</#if>
+</#if>

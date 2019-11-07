@@ -5,10 +5,16 @@
  */
 package it.univaq.ingweb.internshiptutor.controller;
 
+import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
+import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,8 +34,10 @@ public class ListaAziende extends InternshipTutorBaseController {
     }
 
     private void action_default(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, TemplateManagerException {
+            throws IOException, ServletException, TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
+        List<Azienda> azConvenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
+        request.setAttribute("aziende_convenzionate", azConvenzionate);
         request.setAttribute("page_title", "Aziende");
         res.activate("lista_aziende.ftl.html", request, response);
     }
@@ -49,6 +57,8 @@ public class ListaAziende extends InternshipTutorBaseController {
             request.setAttribute("exception", ex);
             action_error(request, response);
 
+        } catch (DataException ex) {
+            Logger.getLogger(ListaAziende.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
