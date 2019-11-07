@@ -2,13 +2,15 @@
 <div>
     <form method="post">
         <!-- Dati di Base -->
-        <div>
-            <input name="ragione_sociale" placeholder="Ragione Sociale" type="text" autofocus required/>
-            <input name="citta" placeholder="Citta" type="text" required/>
-            <input name="cap" placeholder="CAP" type="number" required/>
-            <input name="provincia" placeholder="Provincia (Sigla)" maxlength="2" type="text" required/>
-            <input name="indirizzo" placeholder="Indirizzo" type="text" required/>
-            <input name="piva" placeholder="Partita Iva" type="number"  required/>            
+        <div class="row">
+            <input class="eight columns" name="ragione_sociale" placeholder="Ragione Sociale" type="text" autofocus required/>
+            <input class="seven columns" name="piva" placeholder="Partita Iva" type="number"  required/> 
+        </div>
+        <div class="row">
+            <input class="six columns" name="citta" placeholder="Citta" type="text" required/>
+            <input class="two columns" name="cap" placeholder="CAP" type="number" required/>
+            <input class="two columns" name="provincia" placeholder="Provincia (Sigla)" maxlength="2" type="text" required/>
+            <input class="five columns" name="indirizzo" placeholder="Indirizzo" type="text" required/>         
         </div>
         
         <!-- Informazioni sulle attività -->

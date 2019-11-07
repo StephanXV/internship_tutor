@@ -13,6 +13,7 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
+import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -101,7 +102,44 @@ public class Registrazione extends InternshipTutorBaseController {
     }
     
     private void action_registrazione_studente(HttpServletRequest request, HttpServletResponse response) 
-            throws IOException, ServletException {
+            throws IOException, ServletException, TemplateManagerException {
+        try {
+            Utente ut = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().createUtente();
+            ut.setUsername(request.getParameter("username"));
+            ut.setPw(request.getParameter("pw"));
+            ut.setEmail(request.getParameter("email"));
+            ut.setTipologia("st");          
+            
+            // controlli sull'utente
+            
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+            
+            Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().createStudente();
+            st.setNome(request.getParameter("nome"));
+            st.setCognome(request.getParameter("cognome"));
+            st.setCF(request.getParameter("codice_fiscale"));
+            st.setDataNascita(SecurityLayer.checkDate(request.getParameter("data_nascita")));
+            st.setCittaNascita(request.getParameter("citta_nascita"));
+            st.setProvinciaNascita(request.getParameter("provincia_nascita"));
+            st.setCittaResidenza(request.getParameter("citta_residenza"));
+            st.setCapResidenza(request.getParameter("cap_residenza"));
+            st.setProvinciaResidenza(request.getParameter("provincia_residenza"));
+            st.setTelefono(request.getParameter("telefono"));
+            st.setCorsoLaurea(request.getParameter("corso_laurea"));
+            st.setHandicap(Boolean.valueOf(request.getParameter("handicap")));
+            st.setUtente(ut);
+            
+            // controlli sullo studente
+            
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
+            
+            TemplateResult res = new TemplateResult(getServletContext());
+            res.activate("home_anonimo.ftl.html", request, response);  
+            
+        } catch (DataException ex) {
+            request.setAttribute("exception", ex);
+            action_error(request, response);
+        }
         
     }
         

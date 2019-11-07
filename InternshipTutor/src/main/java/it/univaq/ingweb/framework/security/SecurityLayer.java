@@ -1,6 +1,7 @@
 package it.univaq.ingweb.framework.security;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,10 +11,9 @@ import javax.servlet.http.HttpSession;
 public class SecurityLayer {
 
     //--------- SESSION SECURITY ------------    
-     //questa funzione esegue una serie di controlli di sicurezza
+    //questa funzione esegue una serie di controlli di sicurezza
     //sulla sessione corrente. Se la sessione non è valida, la cancella
     //e ritorna null, altrimenti la aggiorna e la restituisce
-    
     //this method executed a set of standard chacks on the current session.
     //If the session exists and is valid, it is rerutned, otherwise
     //the session is invalidated and the method returns null
@@ -80,12 +80,13 @@ public class SecurityLayer {
         }
     }
 
-    public static HttpSession createSession(HttpServletRequest request, String username, int userid) {
+    public static HttpSession createSession(HttpServletRequest request, String username, long userid, String tipo) {
         HttpSession s = request.getSession(true);
         s.setAttribute("username", username);
         s.setAttribute("ip", request.getRemoteHost());
         s.setAttribute("inizio-sessione", Calendar.getInstance());
         s.setAttribute("userid", userid);
+        s.setAttribute("tipo", tipo);
         return s;
     }
 
@@ -100,7 +101,6 @@ public class SecurityLayer {
     //questa funzione aggiunge un backslash davanti a
     //tutti i caratteri "pericolosi", usati per eseguire
     //SQL injection attraverso i parametri delle form
-    
     //this function adds backslashes in front of
     //all the "malicious" charcaters, usually exploited
     //to perform SQL injection through form parameters
@@ -123,6 +123,140 @@ public class SecurityLayer {
             return Integer.parseInt(s);
         } else {
             throw new NumberFormatException("String argument is null");
+        }
+    }
+
+    public static LocalDate issetDate(String parameter, String date) throws SecurityLayerException {
+        //convertiamo la stringa in data, ma assicuriamoci prima che sia valida
+        if (date != null) {
+            try {
+                return LocalDate.parse(date);
+            } catch (IllegalArgumentException ex) {
+                throw new SecurityLayerException("Formato dati errato");
+            }
+        } else {
+            throw new SecurityLayerException("Parametro obbligatorio: " + parameter);
+        }
+    }
+
+    public static int issetInt(String s) throws SecurityLayerException {
+
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        if (s != null) {
+            //se la conversione fallisce, viene generata un'eccezione
+            try {
+                return Integer.parseInt(s);
+            } catch (NumberFormatException ex) {
+                throw new SecurityLayerException("Formato dati non valido");
+            }
+        } else {
+            //Non specifica il campo di errore
+            throw new SecurityLayerException("Richiesta non valida");
+        }
+    }
+    
+    public static int issetInt(String parameter, String s) throws SecurityLayerException {
+
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        if (s != null) {
+            //se la conversione fallisce, viene generata un'eccezione
+            try {
+                return Integer.parseInt(s);
+            } catch (NumberFormatException ex) {
+                throw new SecurityLayerException("Formato dati non valido");
+            }
+        } else {
+            //Non specifica il campo di errore
+            throw new SecurityLayerException("Parametro obbligatorio: "+ parameter);
+        }
+    }
+
+    public static String issetString(String s) throws SecurityLayerException {
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        //convert the string to a number, ensuring its validity
+        if (s != null) {
+            //se la conversione fallisce, viene generata un'eccezione
+            //if the conversion fails, an exception is raised
+            return s;
+        } else {
+            throw new SecurityLayerException("Richiesta non valida");
+        }
+    }
+
+    public static String issetString(String parameter, String s) throws SecurityLayerException {
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        //convert the string to a number, ensuring its validity
+        if (s != null) {
+            if (!s.isEmpty()) {
+                //se la conversione fallisce, viene generata un'eccezione
+                //if the conversion fails, an exception is raised
+                return s;
+            } else {
+                throw new SecurityLayerException("Parametro vuoto: " + parameter);
+            }
+        } else {
+            throw new SecurityLayerException("Parametro obbligatorio: " + parameter);
+        }
+    }
+
+    public static boolean checkString(String s) throws IllegalArgumentException {
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        //convert the string to a number, ensuring its validity
+        if (s != null) {
+            //se la conversione fallisce, viene generata un'eccezione
+            //if the conversion fails, an exception is raised
+            return true;
+        } else {
+            throw new IllegalArgumentException("String argument is null");
+        }
+    }
+
+    public static LocalDate checkDate(String date) throws IllegalArgumentException {
+        //convertiamo la stringa in data, ma assicuriamoci prima che sia valida
+        if (date != null) {
+            return LocalDate.parse(date);
+        } else {
+            throw new IllegalArgumentException("Date wrong");
+        }
+    }
+
+    
+    //Effettua il check e ne decrementa il valore
+    public static int checkPage(String s) throws SecurityLayerException {
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        //convert the string to a number, ensuring its validity
+        try {
+            if (s != null) {
+                int page = Integer.parseInt(s);
+
+                if (page <= 0) {
+                    return 0;
+                }
+
+                return page;
+            } else {
+                return 0;
+            }
+        } catch (NumberFormatException ex) {
+            throw new SecurityLayerException("Errore formato");
+        }
+    }
+    
+    //Effettua il check e ne decrementa il valore
+    public static int checkNumericPage(String s) throws NumberFormatException {
+        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
+        //convert the string to a number, ensuring its validity
+
+        if (s != null) {
+            int page = Integer.parseInt(s);
+
+            if (page <= 0) {
+                return 0;
+            }
+
+            return page;
+        } else {
+            return 0;
         }
     }
 
@@ -152,7 +286,7 @@ public class SecurityLayer {
 
         //ricostruiamo la url cambiando il protocollo e la porta COME SPECIFICATO NELLA CONFIGURAZIONE DI TOMCAT
         //rebuild the url changing port and protocol AS SPECIFIED IN THE SERVER CONFIGURATION
-        String newUrl = "https://" + server + ":8443" +  context + path + (info != null ? info : "") + (query != null ? "?" + query : "");
+        String newUrl = "https://" + server + ":8443" + context + path + (info != null ? info : "") + (query != null ? "?" + query : "");
         try {
             //ridirigiamo il client
             //redirect

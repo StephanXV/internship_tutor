@@ -4,6 +4,7 @@
  */
 package it.univaq.ingweb.internshiptutor.data.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +30,9 @@ public interface Studente {
     
     void setCF(String cf);
     
-    Date getDataNascita();
+    LocalDate getDataNascita();
     
-    void setDataNascita(Date dn);
+    void setDataNascita(LocalDate dn);
     
     String getCittaNascita();
     

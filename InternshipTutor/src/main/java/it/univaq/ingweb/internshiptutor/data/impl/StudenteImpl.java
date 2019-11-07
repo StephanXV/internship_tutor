@@ -7,6 +7,7 @@ package it.univaq.ingweb.internshiptutor.data.impl;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class StudenteImpl implements Studente {
     private String nome;
     private String cognome;
     private String CF;
-    private Date dataNascita;
+    private LocalDate dataNascita;
     private String cittaNascita;
     private String provinciaNascita;
     private String cittaResidenza;
@@ -88,12 +89,12 @@ public class StudenteImpl implements Studente {
     }
 
     @Override
-    public Date getDataNascita() {
+    public LocalDate getDataNascita() {
         return dataNascita;
     }
 
     @Override
-    public void setDataNascita(Date dataNascita) {
+    public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
 

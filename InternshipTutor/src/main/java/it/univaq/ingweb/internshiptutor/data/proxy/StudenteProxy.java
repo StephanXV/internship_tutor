@@ -12,6 +12,7 @@ import it.univaq.ingweb.internshiptutor.data.dao.UtenteDAO;
 import it.univaq.ingweb.internshiptutor.data.impl.StudenteImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -102,7 +103,7 @@ public class StudenteProxy  extends StudenteImpl {
     }
 
     @Override
-    public void setDataNascita(Date dataNascita) {
+    public void setDataNascita(LocalDate dataNascita) {
         super.setDataNascita(dataNascita);
         this.dirty = true;
     }
