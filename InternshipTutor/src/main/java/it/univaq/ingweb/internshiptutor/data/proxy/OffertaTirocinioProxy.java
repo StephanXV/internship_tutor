@@ -85,6 +85,14 @@ public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
     }
 
     @Override
+    public void setAttiva(boolean attiva) {
+        super.setAttiva(attiva);
+        this.dirty = true;
+    }
+    
+    
+
+    @Override
     public void setObiettivi(String obiettivi) {
         super.setObiettivi(obiettivi);
          this.dirty = true;

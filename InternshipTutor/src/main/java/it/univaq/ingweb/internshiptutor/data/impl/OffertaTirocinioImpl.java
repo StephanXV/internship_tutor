@@ -25,6 +25,7 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
     private String obiettivi;
     private String facilitazioni;
     private String modalita;
+    private boolean attiva;
     private Azienda azienda;
     private List<Candidatura> candidature;
 
@@ -38,6 +39,7 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
         this.obiettivi = "";
         this.facilitazioni = "";
         this.modalita = "";
+        this.attiva = true;
         this.azienda = null;
         this.candidature = null;
     }
@@ -130,6 +132,16 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
     @Override
     public void setModalita(String modalita) {
         this.modalita = modalita;
+    }
+
+    @Override
+    public boolean isAttiva() {
+        return attiva;
+    }
+
+    @Override
+    public void setAttiva(boolean attiva) {
+        this.attiva = attiva;
     }
 
     @Override

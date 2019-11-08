@@ -25,7 +25,7 @@ import java.util.List;
 public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     
     private PreparedStatement sCandidatura;
-    private PreparedStatement sCandidatureByStudente, sCandidatureByTirocinio;
+    private PreparedStatement sCandidatureByStudente, sCandidatureByTirocinio, sCandidatureByTirocinioAndStato;
     private PreparedStatement iCandidatura;
 
     public CandidaturaDAO_MySQL(DataLayer d) {
@@ -37,6 +37,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         try {
             sCandidatura = connection.prepareStatement("SELECT * FROM candidatura WHERE id_studente=? AND id_offerta_tirocinio=?");
             sCandidatureByStudente = connection.prepareStatement("SELECT * FROM candidatura WHERE id_studente=?");
+            sCandidatureByTirocinioAndStato = connection.prepareStatement("SELECT * FROM candidatura WHERE id_offerta_tirocinio=? AND stato_candidatura=?");
             sCandidatureByTirocinio = connection.prepareStatement("SELECT * FROM candidatura WHERE id_offerta_tirocinio=?");
             iCandidatura = connection.prepareStatement("INSERT INTO candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, "
                     + "cfu, ore_tirocinio) VALUES (?,?,?,?,?)");
@@ -52,6 +53,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             sCandidatura.close();
             sCandidatureByStudente.close();
             sCandidatureByTirocinio.close();
+            sCandidatureByTirocinioAndStato.close();
             iCandidatura.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
@@ -116,6 +118,23 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         return result;
     }
 
+    @Override
+    public List<Candidatura> getCandidature(OffertaTirocinio ot, int stato) throws DataException {
+        List<Candidatura> result = new ArrayList();
+        try {
+            sCandidatureByTirocinioAndStato.setInt(1, ot.getId());
+            sCandidatureByTirocinioAndStato.setInt(2, stato);
+            try (ResultSet rs = sCandidatureByTirocinioAndStato.executeQuery()) {
+                while (rs.next()) {
+                    result.add(getCandidatura(rs.getInt("id_studente"), rs.getInt("id_offerta_tirocinio")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load candidature by tirocinio", ex);
+        }
+        return result;
+    }
+    
     @Override
     public List<Candidatura> getCandidature(OffertaTirocinio ot) throws DataException {
         List<Candidatura> result = new ArrayList();

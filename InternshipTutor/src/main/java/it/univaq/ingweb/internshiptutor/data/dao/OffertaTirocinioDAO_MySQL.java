@@ -78,6 +78,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             ot.setObiettivi(rs.getString("obiettivi"));
             ot.setModalita(rs.getString("modalita"));
             ot.setFacilitazioni(rs.getString("facilitazioni"));
+            ot.setAttiva(rs.getBoolean("attiva"));
             ot.setId_azienda(rs.getInt("id_azienda"));
         } catch (SQLException ex) {
             throw new DataException("Unable to create offerta tirocinio from result set", ex);
