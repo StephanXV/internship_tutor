@@ -40,6 +40,14 @@
         <servlet-name>DettaglioAzienda</servlet-name>
         <url-pattern>/azienda</url-pattern>
     </servlet-mapping>
+        <servlet>
+        <servlet-name>RichiestaTirocinio</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.RichiestaTirocinio</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RichiestaTirocinio</servlet-name>
+        <url-pattern>/richiesta_tirocinio</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>RicercaTirocini</servlet-name>
         <servlet-class>it.univaq.ingweb.internshiptutor.controller.RicercaTirocini</servlet-class>
