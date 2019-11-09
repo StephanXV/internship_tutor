@@ -42,6 +42,7 @@ public class Home extends InternshipTutorBaseController {
     
     private void action_anonymous(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
+        
         request.setAttribute("page_title", "Home anonimo");
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("home_anonimo.ftl.html", request, response);    

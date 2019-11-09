@@ -23,7 +23,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
     
     private PreparedStatement sTutoreUniById;
-    private PreparedStatement iTutoreUni;
+    private PreparedStatement iTutoreUni, dTutoreUni;
 
     public TutoreUniDAO_MySQL(DataLayer d) 
     {
@@ -40,6 +40,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             sTutoreUniById = connection.prepareStatement("SELECT * FROM tutore_uni WHERE id=?");
             iTutoreUni = connection.prepareStatement("INSERT INTO tutore_uni (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            dTutoreUni = connection.prepareStatement("DELETE FROM tutore_uni WHERE id=1");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -52,6 +53,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
         try {
             sTutoreUniById.close();
             iTutoreUni.close();
+            dTutoreUni.close();
           
         } catch (SQLException ex) {
             //
@@ -134,5 +136,15 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             throw new DataException("Unable to insert new tutore università", ex);
         }
     }
-    
+
+    @Override
+    public int deleteTutoreUni(int id) throws DataException {
+        try {
+            dTutoreUni.setInt(1, id);
+            return dTutoreUni.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to delete tutore università", ex);
+        }
+    }
+      
 }

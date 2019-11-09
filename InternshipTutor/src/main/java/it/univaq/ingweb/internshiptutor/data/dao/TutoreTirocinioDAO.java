@@ -22,5 +22,7 @@ public interface TutoreTirocinioDAO {
     TutoreTirocinio getTutoreTirocinio(int id) throws DataException;
     
     void insertTutoreTirocinio(TutoreTirocinio tt) throws DataException;
+    
+    int deleteTutoreTirocinio(int id) throws DataException;
 }
 

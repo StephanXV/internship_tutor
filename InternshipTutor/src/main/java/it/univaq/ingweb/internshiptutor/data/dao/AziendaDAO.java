@@ -27,4 +27,6 @@ public interface AziendaDAO {
     Azienda updateAziendaStato(Azienda az, int stato) throws DataException;
     
     void insertAzienda(Azienda az) throws DataException;
+    
+    int deleteAzienda(int id_az) throws DataException;
 }

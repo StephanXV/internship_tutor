@@ -78,6 +78,7 @@ create table offerta_tirocinio (
     obiettivi text not null,
     modalita text not null,
     facilitazioni text,
+    attiva bool not null default true,
     id_azienda integer unsigned not null,
     constraint offerte_azienda foreign key(id_azienda)
 		references azienda(id_utente) on delete cascade on update cascade

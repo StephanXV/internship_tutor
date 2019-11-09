@@ -23,7 +23,7 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
 
     
     private PreparedStatement sRespTirociniById;
-    private PreparedStatement iRespTirocini;
+    private PreparedStatement iRespTirocini, dRespTirocini;
 
     public RespTirociniDAO_MySQL(DataLayer d) {
         super(d);
@@ -39,6 +39,7 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
             sRespTirociniById = connection.prepareStatement("SELECT * FROM responsabile_tirocini WHERE ID=?");
             iRespTirocini = connection.prepareStatement("INSERT INTO responsabile_tirocini (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            dRespTirocini = connection.prepareStatement("DELETE FROM responsabile_tirocini WHERE id=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -131,6 +132,16 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
                 }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new responsabile tirocini", ex);
+        }
+    }
+    
+    @Override
+    public int deleteRespTirocini(int id) throws DataException {
+        try {
+            dRespTirocini.setInt(1, id);
+            return dRespTirocini.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to delete responsabile tirocini", ex);
         }
     }
     
