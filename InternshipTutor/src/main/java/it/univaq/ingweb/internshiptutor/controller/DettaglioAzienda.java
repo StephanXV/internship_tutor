@@ -11,13 +11,16 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import it.univaq.ingweb.internshiptutor.data.impl.CandidaturaImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
+import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,8 +46,11 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
     
     private void action_default(HttpServletRequest request, HttpServletResponse response, int n) throws TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
+        HttpSession s = SecurityLayer.checkSession(request);
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaa"+s.getId());
         Azienda azienda = (Azienda) ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
         List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda);
+        request.setAttribute("session", s);
         request.setAttribute("tirocini", tirocini);
         request.setAttribute("azienda", azienda);
         request.setAttribute("page_title", "Azienda:" + azienda.getRagioneSociale());

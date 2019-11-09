@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1662e192-db16-4531-a207-bc10d4cc2f2a" name="Default Changelist" comment="" />
+    <list default="true" id="0643732a-0826-418f-a09d-62978da9410c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/InternshipTutor/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" beforeDir="false" afterPath="$PROJECT_DIR$/InternshipTutor/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InternshipTutor/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/InternshipTutor/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InternshipTutor/src/main/webapp/templates/dettaglio_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/InternshipTutor/src/main/webapp/templates/dettaglio_azienda.ftl.html" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,7 +15,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1TNqGP2bwtZa0rSXA5ERdUyBEBA" />
+  <component name="ProjectId" id="1TKqcLf7tbJQqyeToJCWkAl5FjX" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -34,12 +38,13 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1662e192-db16-4531-a207-bc10d4cc2f2a" name="Default Changelist" comment="" />
-      <created>1573310804611</created>
+      <changelist id="0643732a-0826-418f-a09d-62978da9410c" name="Default Changelist" comment="" />
+      <created>1573219213010</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1573310804611</updated>
-      <workItem from="1573310805839" duration="109000" />
+      <updated>1573219213010</updated>
+      <workItem from="1573219214572" duration="215000" />
+      <workItem from="1573238931773" duration="226000" />
     </task>
     <servers />
   </component>
@@ -51,7 +56,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
