@@ -66,6 +66,7 @@ public class Test extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
+            request.setAttribute("activeTest", "active");
             action_default(request, response);
 
         } catch (IOException ex) {

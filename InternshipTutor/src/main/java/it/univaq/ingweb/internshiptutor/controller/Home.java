@@ -122,6 +122,8 @@ public class Home extends InternshipTutorBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            request.setAttribute("activeHome", "active");
+
             HttpSession s = SecurityLayer.checkSession(request);
             if (s == null) {
                 action_anonymous(request, response);
