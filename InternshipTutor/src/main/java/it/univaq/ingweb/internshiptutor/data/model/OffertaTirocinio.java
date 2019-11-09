@@ -58,4 +58,8 @@ public interface OffertaTirocinio {
     
     void addCandidatura(Candidatura c);
     
+    boolean isAttiva();
+    
+    void setAttiva(boolean b);
+    
 }

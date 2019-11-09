@@ -16,7 +16,12 @@
                 <div class="subtitle">${page_title!"Untitled page"}</div>
                 </div>
                 <div class="three columns">
-                    <a href="login">Login</a>                    
+                    <#if nome_utente??>
+                        <span>${nome_utente}</span>
+                        <a href="logout"> Disconnettiti</a>
+                    <#else>
+                        <a href="login">Login</a>  
+                    </#if>
                 </div>
                 
             </div>
