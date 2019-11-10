@@ -121,7 +121,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     }
 
     @Override
-    public void insertUtente(Utente ut) throws DataException {
+    public int insertUtente(Utente ut) throws DataException {
         int id = 0;
         try {
             iUtente.setString(1, ut.getEmail());
@@ -150,7 +150,8 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
                         }
                     }
                     ut.setId(id);
-                }
+                    return 1;
+                } else { return 0; }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new utente", ex);
         }

@@ -23,7 +23,7 @@ public interface UtenteDAO {
     
     Utente getUtente(String username, String password) throws DataException;
     
-    void insertUtente(Utente ut) throws DataException;
+    int insertUtente(Utente ut) throws DataException;
     
     int deleteUtente(int id) throws DataException;
 }

@@ -130,7 +130,7 @@ public class ResocontoDAO_MySQL extends DAO implements ResocontoDAO {
     }
 
     @Override
-    public void insertResoconto(Resoconto r) throws DataException {
+    public int insertResoconto(Resoconto r) throws DataException {
         try {
             if(r.getStudente() != null)
                 iResoconto.setInt(1, r.getStudente().getUtente().getId());
@@ -143,7 +143,7 @@ public class ResocontoDAO_MySQL extends DAO implements ResocontoDAO {
             iResoconto.setInt(3, r.getOreEffettive());
             iResoconto.setString(4, r.getDescAttivita());
             iResoconto.setString(5, r.getGiudizio());
-            iResoconto.executeUpdate();
+            return iResoconto.executeUpdate();
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new resoconto", ex);
         }
