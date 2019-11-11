@@ -22,7 +22,7 @@ import java.sql.Statement;
 public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     
     private PreparedStatement sUtenteById, sUtenteByLogin;
-    private PreparedStatement iUtente;
+    private PreparedStatement iUtente, dUtente;
     
     public UtenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -39,6 +39,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             sUtenteByLogin = connection.prepareStatement("SELECT * FROM utente WHERE username=? AND pw=?");
             iUtente = connection.prepareStatement("INSERT INTO utente (email, username, pw, tipologia)"
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            dUtente = connection.prepareStatement("DELETE FROM utente WHERE id=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -52,6 +53,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             sUtenteById.close();
             sUtenteByLogin.close();
             iUtente.close();
+            dUtente.close();
           
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
@@ -119,7 +121,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     }
 
     @Override
-    public void insertUtente(Utente ut) throws DataException {
+    public int insertUtente(Utente ut) throws DataException {
         int id = 0;
         try {
             iUtente.setString(1, ut.getEmail());
@@ -148,12 +150,20 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
                         }
                     }
                     ut.setId(id);
-                }
+                    return 1;
+                } else { return 0; }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new utente", ex);
         }
     }
-    
-    
-    
+
+    @Override
+    public int deleteUtente(int id) throws DataException {
+        try {
+            dUtente.setInt(1, id);
+            return dUtente.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to delete utente", ex);
+        }
+    } 
 }

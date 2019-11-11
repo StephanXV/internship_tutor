@@ -117,7 +117,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
     }
 
     @Override
-    public void insertOffertaTirocinio(OffertaTirocinio ot) throws DataException {
+    public int insertOffertaTirocinio(OffertaTirocinio ot) throws DataException {
         int id = 0;
         try {
             iOffertaTirocinio.setString(1, ot.getLuogo());
@@ -155,7 +155,9 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
                         }
                     }
                     ot.setId(id);
+                    return 1;
                 }
+            else { return 0; }
             
         } catch(SQLException ex) {
             throw new DataException("Unable to insert new offerta tirocinio", ex);

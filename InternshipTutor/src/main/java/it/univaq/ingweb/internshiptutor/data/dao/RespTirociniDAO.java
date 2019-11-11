@@ -16,5 +16,7 @@ public interface RespTirociniDAO {
     
     RespTirocini getRespTirocini(int id) throws DataException;
     
-    void insertRespTirocini(RespTirocini rt) throws DataException;
+    int insertRespTirocini(RespTirocini rt) throws DataException;
+    
+    int deleteRespTirocini(int id) throws DataException;
 }

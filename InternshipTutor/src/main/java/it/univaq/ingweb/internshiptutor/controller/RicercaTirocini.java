@@ -40,6 +40,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
+            request.setAttribute("activeTirocini", "active");
             action_default(request, response);
 
         } catch (IOException ex) {

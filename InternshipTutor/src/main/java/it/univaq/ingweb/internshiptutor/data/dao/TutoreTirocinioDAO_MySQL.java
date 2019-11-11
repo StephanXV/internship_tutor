@@ -24,6 +24,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
     
     private PreparedStatement sTutoreTirocinioById;
     private PreparedStatement iTutoreTirocinio;
+    private PreparedStatement dTutoreTirocinio;
 
     public TutoreTirocinioDAO_MySQL(DataLayer d) {
         super(d);
@@ -39,6 +40,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
             sTutoreTirocinioById = connection.prepareStatement("SELECT * FROM tutore_tirocinio WHERE ID=?");
             iTutoreTirocinio = connection.prepareStatement("INSERT INTO tutore_tirocinio (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            dTutoreTirocinio = connection.prepareStatement("DELETE FROM tutore_tirocinio WHERE id=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -51,6 +53,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
         try {
             sTutoreTirocinioById.close();
             iTutoreTirocinio.close();
+            dTutoreTirocinio.close();
           
         } catch (SQLException ex) {
             //
@@ -101,7 +104,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
     }
     
     @Override
-    public void insertTutoreTirocinio(TutoreTirocinio tt) throws DataException {
+    public int insertTutoreTirocinio(TutoreTirocinio tt) throws DataException {
         try {
             iTutoreTirocinio.setString(1, tt.getNome());
             iTutoreTirocinio.setString(2, tt.getCognome());
@@ -128,11 +131,25 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
                             //after an insert, uopdate the object key
                         }
                     }
-                }
+                return 1;    
+            }
+            else { return 0; }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new tutore tirocinio", ex);
         }
     }
+
+    @Override
+    public int deleteTutoreTirocinio(int id) throws DataException {
+       try {
+           dTutoreTirocinio.setInt(1, id);
+           return dTutoreTirocinio.executeUpdate();
+       } catch (SQLException ex) {
+            throw new DataException("Unable to delete tutore tirocinio", ex);
+        } 
+    }
+    
+    
     
 }
 

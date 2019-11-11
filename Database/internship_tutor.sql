@@ -17,9 +17,9 @@ create table studente (
     codice_fiscale varchar(16) not null unique,
     data_nascita date not null,
     citta_nascita varchar(50) not null,
-    provincia_nascita varchar(50) not null,
+    provincia_nascita varchar(2) not null,
     citta_residenza varchar(50) not null,
-    provincia_residenza varchar(50) not null,
+    provincia_residenza varchar(2) not null,
     cap_residenza varchar(10) not null,
     telefono varchar(20) not null,
     corso_laurea varchar(100) not null,
@@ -32,13 +32,13 @@ create table responsabile_tirocini (
 	id integer unsigned not null primary key auto_increment,
 	nome varchar(50) not null,
 	cognome varchar(50) not null,
-    email varchar(100) not null,
-    telefono varchar(20) not null
+    email varchar(100) not null unique,
+    telefono varchar(20) not null unique
 );
 
 create table azienda (
 	id_utente integer unsigned not null primary key,
-    ragione_sociale varchar(150) not null,
+    ragione_sociale varchar(150) not null unique,
     indirizzo varchar(200) not null,
     citta varchar(100) not null,
     cap varchar(10) not null,
@@ -64,8 +64,8 @@ create table tutore_tirocinio (
 	id integer unsigned not null primary key auto_increment,
     nome varchar(50) not null,
     cognome varchar(50) not null,
-    email varchar(100) not null,
-    telefono varchar(20) not null
+    email varchar(100) not null unique,
+    telefono varchar(20) not null unique
 );
 
 create table offerta_tirocinio (
@@ -78,6 +78,7 @@ create table offerta_tirocinio (
     obiettivi text not null,
     modalita text not null,
     facilitazioni text,
+    attiva bool not null default true,
     id_azienda integer unsigned not null,
     constraint offerte_azienda foreign key(id_azienda)
 		references azienda(id_utente) on delete cascade on update cascade
@@ -87,8 +88,8 @@ create table tutore_uni (
 	id integer unsigned not null primary key auto_increment,
     nome varchar(50) not null,
     cognome varchar(50) not null,
-    email varchar(100) not null,
-    telefono varchar(20) not null
+    email varchar(100) not null unique,
+    telefono varchar(20) not null unique
  ); 
  
 create table candidatura (

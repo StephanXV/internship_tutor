@@ -47,6 +47,7 @@ public class ListaAziende extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
+            request.setAttribute("activeAziende", "active");
             action_default(request, response);
 
         } catch (IOException ex) {

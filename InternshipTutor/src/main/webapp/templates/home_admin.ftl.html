@@ -1,0 +1,87 @@
+<!--Table-->
+<div class="container-fluid table-responsive-lg mt-3">
+    <div class="row">
+        
+        <!-- colonna 1 -->
+        <div class="col">
+            <#if (az_registrate?size>0)>
+            <table id="tabRichieste" class="table table-hover">
+            <!--Table head-->
+            <caption>Richieste di convenzionamento</caption>
+            <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Azienda</th>
+                        <th class="text-white">Richiesta</th>
+                        <th class="text-white">Upload</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr>
+                        <#list az_registrate as az_registrata>
+                        <td>${az_registrata.ragioneSociale}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary text-white">
+                                <i class="fa fa-file-download"></i>
+                            </button>
+                            <button type="button" class="btn bg-danger text-white">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary text-white">
+                                <i class="fa fa-file-upload"></i>
+                            </button>
+                            <button type="button" class="btn bg-success text-white">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </td>
+                        </#list>
+                    </tr>
+
+                </tbody>
+                <!--Table body-->
+            </table>
+            </#if>
+            <!--Table-->
+        </div>
+        
+        <!-- colonna 2 -->
+        <div class="col">
+            <#if (az_convenzionate?size>0)>
+            <table id="tabRichieste" class="table table-hover">
+            <!--Table head-->
+            <caption>Aziende convenzionate</caption>
+            <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Azienda</th>
+                        <th class="text-white">Attiva dal</th>
+                        <th class="text-white">Durata (mesi)</th>
+                        <th class="text-white">Documento</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <tr>
+                        <#list az_convenzionate as az_convenzionata>
+                        <td>${az_convenzionata.ragioneSociale}</td>
+                        <td>${az_convenzionata.inizioConvenzione}</td>
+                        <td>${az_convenzionata.durataConvenzione}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary text-white">
+                                <i class="fa fa-file"></i>
+                            </button>
+                        </td>
+                        </#list>
+                    </tr>
+
+                </tbody>
+                <!--Table body-->
+            </table>
+            </#if>
+            <!--Table-->
+        </div>
+    </div>
+</div>

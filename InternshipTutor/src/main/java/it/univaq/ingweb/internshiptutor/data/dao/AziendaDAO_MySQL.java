@@ -24,7 +24,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
     private PreparedStatement sAziendaById;
     private PreparedStatement sAziendeByStato;
-    private PreparedStatement iAzienda, uAziendaStato;
+    private PreparedStatement iAzienda, uAziendaStato, dAzienda;
 
     public AziendaDAO_MySQL(DataLayer d) {
         super(d);
@@ -40,6 +40,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
                     + " provincia, rappresentante_legale, piva, foro_competente, tematiche, corso_studio, durata_convenzione,"
                     + " id_responsabile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             uAziendaStato = connection.prepareStatement("UPDATE azienda SET stato_convenzione=? WHERE id_utente=?");
+            dAzienda = connection.prepareStatement("DELETE FROM azienda WHERE id_utente=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -138,7 +139,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     }
 
     @Override
-    public void insertAzienda(Azienda az) throws DataException {
+    public int insertAzienda(Azienda az) throws DataException {
         try {
             if (az.getUtente() != null)
                 iAzienda.setInt(1, az.getUtente().getId());
@@ -159,10 +160,20 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
                 iAzienda.setInt(13, az.getRespTirocini().getId());
             else 
                 iAzienda.setNull(13, java.sql.Types.INTEGER);
-            iAzienda.executeUpdate();
+            return iAzienda.executeUpdate();
             
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new azienda", ex);
+        }
+    }
+
+    @Override
+    public int deleteAzienda(int id_azienda) throws DataException {
+        try {
+            dAzienda.setInt(1, id_azienda);
+            return dAzienda.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to delete azienda", ex);
         }
     }
     

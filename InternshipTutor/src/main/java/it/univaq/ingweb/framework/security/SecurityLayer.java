@@ -2,7 +2,9 @@ package it.univaq.ingweb.framework.security;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -125,6 +127,19 @@ public class SecurityLayer {
             throw new NumberFormatException("String argument is null");
         }
     }
+    
+    public static boolean checkDurata(String string) {
+            if (string.length()<4){
+                try {
+                    int d = Integer.parseInt(string);
+                } catch (NumberFormatException | NullPointerException nfe) {
+                    return false;
+                }
+                return true;
+            }
+	    return false;
+    }
+    
 
     public static LocalDate issetDate(String parameter, String date) throws SecurityLayerException {
         //convertiamo la stringa in data, ma assicuriamoci prima che sia valida
@@ -202,7 +217,7 @@ public class SecurityLayer {
     public static boolean checkString(String s) throws IllegalArgumentException {
         //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
         //convert the string to a number, ensuring its validity
-        if (s != null) {
+        if (s != null && s.length() > 0) {
             //se la conversione fallisce, viene generata un'eccezione
             //if the conversion fails, an exception is raised
             return true;
@@ -219,8 +234,59 @@ public class SecurityLayer {
             throw new IllegalArgumentException("Date wrong");
         }
     }
+    
+    public static boolean checkDateString(String date) throws IllegalArgumentException {
+        //convertiamo la stringa in data, ma assicuriamoci prima che sia valida
+        if (date != null) {
+            try {
+                LocalDate.parse(date);
+                
+            } catch (DateTimeParseException ex){
+                throw new IllegalArgumentException("Date wrong");
+            }
+            return true;
+        }
+        return false;
+    }
+    
+     public static boolean checkBoolean(String b) throws IllegalArgumentException {
+        //convertiamo la stringa in data, ma assicuriamoci prima che sia valida
+        if (b != null) {
+            if (b.equals("true") || b.equals("false"))
+                return true;
+        }
+        return false;
+    }
+    
+    // controllo sulla validità di una email
+    public static boolean checkEmail(String email) {
+	String emailRegex = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+	return Pattern.compile(emailRegex).matcher(email).matches();
+    }
+    
+    // controllo che una stringa sia in un range di lunghezza
+    public static boolean hasLength(String string, int minLength, int maxLength) {
+	return string != null && string.length() >= minLength && string.length() <= maxLength;
+    }
 
-
+    // controllo che una stringa sia un numero di telefono valido (to do)
+    public static boolean checkTelefono(String t) {
+        if (t != null && t.length() > 0) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("Telefono argument isn't valid");
+        }
+    }
+    
+    // controllo sul cap
+    public static boolean checkCap(String c) {
+        if (c != null && c.length() == 5) {
+            return true;
+        } else {
+            throw new IllegalArgumentException("Cap argument isn't valid");
+        }
+    }
+    
     //--------- CONNECTION SECURITY ------------
     //questa funzione verifica se il protocollo HTTPS è attivo
     //checks if the HTTPS protocol is in use

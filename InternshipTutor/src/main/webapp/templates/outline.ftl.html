@@ -7,13 +7,66 @@
         <link rel="stylesheet" href="styles/grid.css" type="text/css"/>  
         <link rel="stylesheet" href="styles/default.css" type="text/css"/>
         <script src="http://code.jquery.com/jquery-3.0.0.min.js" type="text/javascript"></script>
+
+        <!-- bootstrap -->
+        <#include "/bootstrap.ftl.html">
         
     </head>
     <body>
-        <div class="container">
-            <div class="row" id="header">
+
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">INTERNSHIP TUTOR</a>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item ${activeHome}">
+                    <a class="nav-link" href="home">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ${activeAziende}">
+                    <a class="nav-link" href="aziende">aziende</a>
+                </li>
+                <li class="nav-item ${activeTirocini}">
+                    <a class="nav-link " href="tirocini">tirocini</a>
+                </li>
+                <li class="nav-item ${activeTest}">
+                    <a class="nav-link " href="test">test</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+
+                <li class="nav-item active float-right dropdown mod" id="user">
+                    <#if nome_utente??>
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-circle"></i>&nbsp;<b> ${nome_utente}</b>&nbsp;
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"  id="ins-1" href="logout" ><i class="fa fa-sign-out"></i>&nbsp;Logout</a>
+                        </div>
+                    <#else>
+                        <a class="nav-link" href="login">Login</a>
+                    </#if>
+
+                </li>
+
+
+            </ul>
+        </div>
+    </nav>
+
+                <!--
+                <li class="nav-item float-right">
+                    <#if nome_utente??>
+                        <a class="nav-link" href="logout">Logout</a>
+                    <#else>
+                        <a class="nav-link" href="login">Login</a>
+                    </#if>
+                </li>
+
                 <div class="thirteen columns">Internship Tutor
-                
+
                 <div class="subtitle">${page_title!"Untitled page"}</div>
                 </div>
                 <div class="three columns">
@@ -21,23 +74,11 @@
                         <span>${nome_utente}</span>
                         <a href="logout"> Disconnettiti</a>
                     <#else>
-                        <a href="login">Login</a>  
+                        <a href="login">Login</a>
                     </#if>
-                </div>
+                </div>-->
                 
             </div>
-            <div class="row" id="body">
-
-                <div class="three columns">
-                    <div class="vertical menu">
-                    <ul>
-                        <li><a href="home">home</a></li>
-                        <li><a href="aziende">aziende</a></li>
-                        <li><a href="tirocini">tirocini</a></li>
-                        <li><a href="test">test</a></li>
-                    </ul>
-                        </div>
-                </div>
                 <div class="thirteen columns" >
                     <#include content_tpl>
                 </div>

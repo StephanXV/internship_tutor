@@ -30,6 +30,6 @@ public interface CandidaturaDAO {
     
     Candidatura getCandidatura(int id_st, int id_ot) throws DataException;
     
-    void insertCandidatura(Candidatura c) throws DataException;
+    int insertCandidatura(Candidatura c) throws DataException;
     
 }

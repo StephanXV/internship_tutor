@@ -20,5 +20,7 @@ public interface TutoreUniDAO {
     
     TutoreUni getTutoreUni(int id) throws DataException;
     
-    void insertTutoreUni(TutoreUni tu) throws DataException;
+    int insertTutoreUni(TutoreUni tu) throws DataException;
+    
+    int deleteTutoreUni(int id) throws DataException;
 }

@@ -100,7 +100,7 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
     }
 
     @Override
-    public void insertStudente(Studente st) throws DataException {
+    public int insertStudente(Studente st) throws DataException {
         try {
             if (st.getUtente() != null)
                 iStudente.setInt(1, st.getUtente().getId());
@@ -118,7 +118,7 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
             iStudente.setString(11, st.getTelefono());
             iStudente.setString(12, st.getCorsoLaurea());
             iStudente.setBoolean(13, st.isHandicap());
-            iStudente.executeUpdate();
+            return iStudente.executeUpdate();
             
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new studente", ex);

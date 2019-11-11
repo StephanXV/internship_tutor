@@ -38,14 +38,19 @@ public class Test extends InternshipTutorBaseController {
         try {
             List<Azienda> azConvenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
             request.setAttribute("aziende_convenzionate", azConvenzionate);
+            
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azConvenzionate.get(0));
             request.setAttribute("tirocini", tirocini);
+            
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(tirocini.get(0));
             request.setAttribute("candidature", candidature);
+            
             List<Resoconto> resoconti = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconti(candidature.get(1).getStudente());
             request.setAttribute("resoconti", resoconti);
+            
             List<Valutazione> valutazioni = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().getValutazioni(azConvenzionate.get(0));
             request.setAttribute("valutazioni", valutazioni);
+            
             Studente stefano = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(4);
             request.setAttribute("stefano", stefano);
         } catch (DataException ex) {
@@ -61,6 +66,7 @@ public class Test extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
+            request.setAttribute("activeTest", "active");
             action_default(request, response);
 
         } catch (IOException ex) {

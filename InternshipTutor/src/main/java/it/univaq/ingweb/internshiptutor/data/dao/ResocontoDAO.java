@@ -29,5 +29,5 @@ public interface ResocontoDAO {
     
     Resoconto getResoconto(int id_st, int id_ot) throws DataException;
     
-    void insertResoconto(Resoconto r) throws DataException;
+    int insertResoconto(Resoconto r) throws DataException;
 }
