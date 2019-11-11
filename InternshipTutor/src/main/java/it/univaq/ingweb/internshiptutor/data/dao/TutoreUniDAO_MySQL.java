@@ -8,12 +8,15 @@ package it.univaq.ingweb.internshiptutor.data.dao;
 import it.univaq.ingweb.framework.data.DAO;
 import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
 import it.univaq.ingweb.internshiptutor.data.proxy.TutoreUniProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,7 +24,7 @@ import java.sql.Statement;
  */
 public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
-    
+    private PreparedStatement allTutoreUni;
     private PreparedStatement sTutoreUniById;
     private PreparedStatement iTutoreUni;
 
@@ -37,6 +40,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
+            allTutoreUni = connection.prepareStatement("SELECT * FROM tutore_uni");
             sTutoreUniById = connection.prepareStatement("SELECT * FROM tutore_uni WHERE id=?");
             iTutoreUni = connection.prepareStatement("INSERT INTO tutore_uni (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -52,6 +56,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
         try {
             sTutoreUniById.close();
             iTutoreUni.close();
+            allTutoreUni.close();
           
         } catch (SQLException ex) {
             //
@@ -99,6 +104,20 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             throw new DataException("Unable to load TutoreUni by ID", ex);
         }
         return null;
+    }
+    
+    @Override
+    public List<TutoreUni> getTutori() throws DataException {
+        List<TutoreUni> result = new ArrayList();
+
+            try (ResultSet rs = allTutoreUni.executeQuery()) {
+                while (rs.next()) {
+                    result.add((TutoreUni) getTutoreUni(rs.getInt("id")));
+                }
+            } catch (SQLException ex) {
+            throw new DataException("Unable to load tutori " + ex);
+        }
+        return result;
     }
     
     @Override

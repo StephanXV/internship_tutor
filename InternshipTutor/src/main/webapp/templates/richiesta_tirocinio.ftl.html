@@ -1,6 +1,6 @@
 <h1>Ciao qui si richiede il tirocigno</h1>
 <div>
-    <form method="post">
+    <form method="post" id="richiestaForm">
         <!-- Dati di Base -->
         <div class="row">
             <input class="eight columns" name="cfu" placeholder="CFU richiesti" type="number" autofocus required/>
@@ -8,22 +8,19 @@
         <div class="row">
             <input class="six columns" name="ore_tirocinio" placeholder="Ore richieste" type="number" required/>        
         </div>
-       <!--
+ 
         <div>
-            <select name="tutore_select" required>
+            <select class="tutore_select" id="selectBox" onchange="change(value);" required>
 		<option value="" disabled selected>Tutore universitario</option>
                 <#list tutori as tutore>
                     <option name="tutore" value="${tutore.id}">${tutore.nome} ${tutore.cognome}</option> 
                 </#list>
                 <option name="tutore" value="new">Aggiungi un nuovo tutore universitario</option>
             </select>
-        </div> -->
+        </div>
+        
+        <div id="new_tutore">
        
-        <div>
-            <input name="nome_tutore" placeholder="Nome" type="text" required/>
-            <input name="cognome_tutore" placeholder="Cognome" type="text" required/>
-            <input name="email_tutore" placeholder="Email" type="email" required/>
-            <input name="telefono_tutore" placeholder="Telefono" type="tel" required/>
         </div>
         
         <!-- Pulsante di Submit -->
