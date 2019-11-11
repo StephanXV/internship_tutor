@@ -3,11 +3,11 @@
     <div class="row">
         
         <!-- colonna 1 -->
-        <div class="col">
+        <div class="col bg-light mx-2">
             <#if (az_registrate?size>0)>
             <table id="tabRichieste" class="table table-hover">
             <!--Table head-->
-            <caption>Richieste di convenzionamento</caption>
+            <caption style="caption-side: top">Richieste di convenzionamento</caption>
             <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Azienda</th>
@@ -21,11 +21,12 @@
                     <tr>
                         <#list az_registrate as az_registrata>
                         <td>${az_registrata.ragioneSociale}</td>
-                        <td>
-                            <button type="button" class="btn btn-primary text-white">
-                                <i class="fa fa-file-download"></i>
-                            </button>
-                            <button type="button" class="btn bg-danger text-white">
+                        <td><a href="docs?tipo=0&az=${az_registrata.utente.id}">
+                                <button type="button" class="btn btn-primary text-white">
+                                    <i class="fa fa-file-download"></i>
+                                </button>
+                            </a>
+                            <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </td>
@@ -43,16 +44,20 @@
                 </tbody>
                 <!--Table body-->
             </table>
+            
+            <#else>
+            <span class="lead">Non ci sono richieste di convenzionamento da visualizzare</span>
             </#if>
+            
             <!--Table-->
         </div>
         
         <!-- colonna 2 -->
-        <div class="col">
+        <div class="col bg-light mx-2">
             <#if (az_convenzionate?size>0)>
             <table id="tabRichieste" class="table table-hover">
             <!--Table head-->
-            <caption>Aziende convenzionate</caption>
+            <caption style="caption-side: top">Aziende convenzionate</caption>
             <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Azienda</th>
@@ -80,6 +85,9 @@
                 </tbody>
                 <!--Table body-->
             </table>
+            
+            <#else>
+            <span class="lead">Non ci sono aziende attualmente convenzionate</span>
             </#if>
             <!--Table-->
         </div>
