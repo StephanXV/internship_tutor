@@ -88,6 +88,14 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Documenti</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.Documenti</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Documenti</servlet-name>
+        <url-pattern>/docs</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

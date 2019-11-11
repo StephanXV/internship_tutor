@@ -50,6 +50,8 @@ public class Registrazione extends InternshipTutorBaseController {
     
     private void action_registrazione_azienda(HttpServletRequest request, HttpServletResponse response) 
             throws IOException, ServletException, TemplateManagerException {
+        String err;
+        String succ;
         try {
             RespTirocini rt = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().createRespTirocini();
             // controlli sul responsabile tirocini
@@ -100,22 +102,24 @@ public class Registrazione extends InternshipTutorBaseController {
                         az.setUtente(ut);
                         az.setDurataConvenzione(SecurityLayer.checkNumeric(request.getParameter("durata")));
                         ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
+                        succ = "Grazie per la registrazione; potrete eseguire l'accesso non appena l'admin confermerà la vostra richiesta di convenzionamento";
                     }  
                 } catch (DataException ex) {
-                    
+                    err = "Dati azienda non validi";
                     // se fallisce l'inserimento dell'azienda, cancella l'utente e il responsabile inseriti prima
                     Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
                 }
             } catch (DataException ex) {
-                
+                err = "Dati utente non validi";
                 // se fallisce l'inserimento dell'utente, cancella il responsabile inserito prima
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
             }
             response.sendRedirect("home");    
         } catch (DataException ex) {
+            err = "Dati responsabile tirocini non validi";
             request.setAttribute("exception", ex);
             action_error(request, response);
         }    

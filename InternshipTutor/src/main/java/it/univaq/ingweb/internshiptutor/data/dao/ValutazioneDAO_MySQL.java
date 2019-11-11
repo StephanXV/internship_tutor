@@ -126,7 +126,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
     }
 
     @Override
-    public void insertValutazione(Valutazione v) throws DataException {
+    public int insertValutazione(Valutazione v) throws DataException {
         try {
             if(v.getStudente() != null)
                 iValutazione.setInt(1, v.getStudente().getUtente().getId());
@@ -137,7 +137,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
             else
                 iValutazione.setNull(2, java.sql.Types.INTEGER);
             iValutazione.setInt(3, v.getStelle());
-            iValutazione.executeUpdate();
+            return iValutazione.executeUpdate();
         } catch(SQLException ex) {
             throw new DataException("Unable to insert new valutazione", ex);
         } 

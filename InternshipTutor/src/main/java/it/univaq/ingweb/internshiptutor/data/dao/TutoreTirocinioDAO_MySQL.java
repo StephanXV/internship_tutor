@@ -104,7 +104,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
     }
     
     @Override
-    public void insertTutoreTirocinio(TutoreTirocinio tt) throws DataException {
+    public int insertTutoreTirocinio(TutoreTirocinio tt) throws DataException {
         try {
             iTutoreTirocinio.setString(1, tt.getNome());
             iTutoreTirocinio.setString(2, tt.getCognome());
@@ -131,7 +131,9 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
                             //after an insert, uopdate the object key
                         }
                     }
-                }
+                return 1;    
+            }
+            else { return 0; }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new tutore tirocinio", ex);
         }

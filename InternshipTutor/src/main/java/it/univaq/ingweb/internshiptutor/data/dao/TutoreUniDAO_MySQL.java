@@ -8,12 +8,15 @@ package it.univaq.ingweb.internshiptutor.data.dao;
 import it.univaq.ingweb.framework.data.DAO;
 import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
 import it.univaq.ingweb.internshiptutor.data.proxy.TutoreUniProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,7 +24,7 @@ import java.sql.Statement;
  */
 public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
-    
+    private PreparedStatement allTutoreUni;
     private PreparedStatement sTutoreUniById;
     private PreparedStatement iTutoreUni, dTutoreUni;
 
@@ -37,6 +40,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
+            allTutoreUni = connection.prepareStatement("SELECT * FROM tutore_uni");
             sTutoreUniById = connection.prepareStatement("SELECT * FROM tutore_uni WHERE id=?");
             iTutoreUni = connection.prepareStatement("INSERT INTO tutore_uni (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -53,6 +57,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
         try {
             sTutoreUniById.close();
             iTutoreUni.close();
+            allTutoreUni.close();
             dTutoreUni.close();
           
         } catch (SQLException ex) {
@@ -104,7 +109,21 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
     }
     
     @Override
-    public void insertTutoreUni(TutoreUni tt) throws DataException {
+    public List<TutoreUni> getTutori() throws DataException {
+        List<TutoreUni> result = new ArrayList();
+
+            try (ResultSet rs = allTutoreUni.executeQuery()) {
+                while (rs.next()) {
+                    result.add((TutoreUni) getTutoreUni(rs.getInt("id")));
+                }
+            } catch (SQLException ex) {
+            throw new DataException("Unable to load tutori " + ex);
+        }
+        return result;
+    }
+    
+    @Override
+    public int insertTutoreUni(TutoreUni tt) throws DataException {
         try {
             iTutoreUni.setString(1, tt.getNome());
             iTutoreUni.setString(2, tt.getCognome());
@@ -131,7 +150,8 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
                             //after an insert, uopdate the object key
                         }
                     }
-                }
+                return 1;
+            } else { return 0; }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new tutore università", ex);
         }

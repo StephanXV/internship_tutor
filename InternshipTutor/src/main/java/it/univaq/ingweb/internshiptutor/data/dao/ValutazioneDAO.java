@@ -28,5 +28,5 @@ public interface ValutazioneDAO {
     
     Valutazione getValutazione(int id_az, int id_st) throws DataException;
     
-    void insertValutazione(Valutazione v) throws DataException;
+    int insertValutazione(Valutazione v) throws DataException;
 }

@@ -54,18 +54,22 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
         Candidatura c = new CandidaturaImpl();
         long l = (long) s.getAttribute("userid");
         int u = (int) l;
+        TutoreUni tu = new TutoreUniImpl();
         
         c.setStudente(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(u));
         c.setOffertaTirocinio(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(SecurityLayer.checkNumeric(request.getParameter("n"))));
         
-        TutoreUni tu = new TutoreUniImpl();
-        tu.setNome(request.getParameter("nome_tutore"));
-        tu.setCognome(request.getParameter("cognome_tutore"));
-        tu.setEmail(request.getParameter("email_tutore"));
-        tu.setTelefono(request.getParameter("telefono_tutore"));
-        ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().insertTutoreUni(tu);
-        c.setTutoreUni(tu);
+        if (!(request.getParameter("id_tutore").equals("add"))) {
+            tu = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(SecurityLayer.checkNumeric(request.getParameter("id_tutore")));
+        } else {
+            tu.setNome(request.getParameter("nome_tutore"));
+            tu.setCognome(request.getParameter("cognome_tutore"));
+            tu.setEmail(request.getParameter("email_tutore"));
+            tu.setTelefono(request.getParameter("telefono_tutore"));
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().insertTutoreUni(tu);
+        }
         
+        c.setTutoreUni(tu);
         c.setCfu(Integer.valueOf(request.getParameter("cfu")));
         c.setOreTirocinio(Integer.valueOf(request.getParameter("ore_tirocinio")));
         
@@ -77,7 +81,9 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
         int n = SecurityLayer.checkNumeric(request.getParameter("n"));
-        OffertaTirocinio tirocinio = (OffertaTirocinio) ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(n);
+        //OffertaTirocinio tirocinio = (OffertaTirocinio) ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(n);
+        List<TutoreUni> tutori = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutori();
+        request.setAttribute("tutori", tutori);
         res.activate("richiesta_tirocinio.ftl.html", request, response);
         
     }

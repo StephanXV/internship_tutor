@@ -139,7 +139,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     }
 
     @Override
-    public void insertAzienda(Azienda az) throws DataException {
+    public int insertAzienda(Azienda az) throws DataException {
         try {
             if (az.getUtente() != null)
                 iAzienda.setInt(1, az.getUtente().getId());
@@ -160,7 +160,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
                 iAzienda.setInt(13, az.getRespTirocini().getId());
             else 
                 iAzienda.setNull(13, java.sql.Types.INTEGER);
-            iAzienda.executeUpdate();
+            return iAzienda.executeUpdate();
             
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new azienda", ex);

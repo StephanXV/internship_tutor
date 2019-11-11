@@ -102,7 +102,7 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
     }
     
     @Override
-    public void insertRespTirocini(RespTirocini rt) throws DataException {
+    public int insertRespTirocini(RespTirocini rt) throws DataException {
         try {
             iRespTirocini.setString(1, rt.getNome());
             iRespTirocini.setString(2, rt.getCognome());
@@ -126,10 +126,11 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
                             //(a single integer in our case)
                             rt.setId(keys.getInt(1));
                             //aggiornaimo la chiave in caso di inserimento
-                            //after an insert, uopdate the object key
+                            //after an insert, uopdate the object key   
                         }
                     }
-                }
+                return 1;
+            } else { return 0; }
         } catch (SQLException ex) {
             throw new DataException("Unable to insert new responsabile tirocini", ex);
         }

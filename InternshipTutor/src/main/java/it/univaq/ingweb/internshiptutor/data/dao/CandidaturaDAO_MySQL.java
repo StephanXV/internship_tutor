@@ -152,7 +152,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     }
 
     @Override
-    public void insertCandidatura(Candidatura c) throws DataException {
+    public int insertCandidatura(Candidatura c) throws DataException {
         try {
             if (c.getStudente() != null)
                 iCandidatura.setInt(1, c.getStudente().getUtente().getId());
@@ -168,7 +168,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
                 iCandidatura.setNull(3, java.sql.Types.INTEGER);
             iCandidatura.setInt(4, c.getCfu());
             iCandidatura.setInt(5, c.getOreTirocinio());
-            iCandidatura.executeUpdate();
+            return iCandidatura.executeUpdate();
         } catch(SQLException ex) {
             throw new DataException("Unable to insert new candidatura", ex);
         }
