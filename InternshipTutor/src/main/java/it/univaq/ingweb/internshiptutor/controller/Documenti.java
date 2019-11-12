@@ -18,7 +18,9 @@ import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -44,7 +46,9 @@ public class Documenti extends InternshipTutorBaseController {
             throws IOException, ServletException, TemplateManagerException {
         try {
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
+            System.out.println(az);
             request.setAttribute("azienda", az);
+           
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("doc_convenzione.ftl.html", request, response);  
         } catch (DataException ex) {

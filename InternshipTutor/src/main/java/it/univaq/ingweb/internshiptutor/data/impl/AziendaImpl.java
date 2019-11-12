@@ -239,5 +239,12 @@ public class AziendaImpl implements Azienda {
     public void setRespTirocini(RespTirocini respTirocini) {
         this.respTirocini = respTirocini;
     }
+
+    @Override
+    public String toString() {
+        return "AziendaImpl{" + "utente=" + utente + ", ragioneSociale=" + ragioneSociale + ", indirizzo=" + indirizzo + ", citta=" + citta + ", cap=" + cap + ", provincia=" + provincia + ", rappresentanteLegale=" + rappresentanteLegale + ", piva=" + piva + ", foroCompetente=" + foroCompetente + ", srcDocConvenzione=" + srcDocConvenzione + ", tematiche=" + tematiche + ", corsoStudio=" + corsoStudio + ", statoConvenzione=" + statoConvenzione + ", inizioConvenzione=" + inizioConvenzione + ", durataConvenzione=" + durataConvenzione + ", respTirocini=" + respTirocini + ", offerteTirocinio=" + offerteTirocinio + ", valutazioni=" + valutazioni + '}';
+    }
+
+    
     
 }

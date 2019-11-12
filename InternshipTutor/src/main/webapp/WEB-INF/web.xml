@@ -96,6 +96,14 @@
         <servlet-name>Documenti</servlet-name>
         <url-pattern>/docs</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>RichiesteConvenzione</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.RichiesteConvenzione</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RichiesteConvenzione</servlet-name>
+        <url-pattern>/richieste_convenzione</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
