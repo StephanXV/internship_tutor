@@ -123,19 +123,14 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     }
 
     @Override
-    public Azienda updateAziendaStato(Azienda az, int stato) throws DataException {
-        int id_utente = az.getUtente().getId();
+    public int updateAziendaStato(int id_azienda, int stato) throws DataException {
         try {
             uAziendaStato.setInt(1, stato);
-            uAziendaStato.setInt(2, id_utente);
-            if (uAziendaStato.executeUpdate() == 1) {
-                az.setStatoConvenzione(stato);
-                return az;
-            }
+            uAziendaStato.setInt(2, id_azienda);
+            return uAziendaStato.executeUpdate();
         } catch (SQLException ex) {
             throw new DataException("Unable to update azienda stato", ex);
         }
-        return null;
     }
 
     @Override
