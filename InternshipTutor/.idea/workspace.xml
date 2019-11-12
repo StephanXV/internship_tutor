@@ -7,14 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/images/logo_it.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/default.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/grid.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/bootstrap.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/bootstrap.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_anonimo.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_anonimo.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/login.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/login.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/registrazione_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/registrazione_azienda.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,7 +58,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/styles" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/templates" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -71,9 +68,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp/templates" />
       <recent name="$PROJECT_DIR$/src/main/webapp/styles" />
       <recent name="$PROJECT_DIR$/src/main/webapp/images" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/templates" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -250,7 +247,8 @@
       <workItem from="1573052830432" duration="306000" />
       <workItem from="1573310944669" duration="10258000" />
       <workItem from="1573401915913" duration="6255000" />
-      <workItem from="1573496552656" duration="4811000" />
+      <workItem from="1573496552656" duration="5200000" />
+      <workItem from="1573593911515" duration="2086000" />
     </task>
     <servers />
   </component>
