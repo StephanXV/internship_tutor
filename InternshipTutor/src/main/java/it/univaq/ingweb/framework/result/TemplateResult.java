@@ -246,7 +246,7 @@ public class TemplateResult {
         activate(tplname, datamodel, response);
     }
 
-    //questa versione di activate pu� essere usata per generare output non diretto verso il browser, ad esempio
+    //questa versione di activate può essere usata per generare output non diretto verso il browser, ad esempio
     //su un file
     //this activate method can be used to generate output and save it to a file
     public void activate(String tplname, Map datamodel, OutputStream out) throws TemplateManagerException {
