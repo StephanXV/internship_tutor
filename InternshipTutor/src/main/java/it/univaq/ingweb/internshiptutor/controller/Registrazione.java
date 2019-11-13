@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -45,7 +46,7 @@ public class Registrazione extends InternshipTutorBaseController {
     private void action_studente(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Tirocini");
-        res.activate("registrazione_studente.ftl.html", request, response);
+        res.activate("registrazione_azienda.ftl.html", request, response);
     }
     
     private void action_registrazione_azienda(HttpServletRequest request, HttpServletResponse response) 
@@ -191,10 +192,18 @@ public class Registrazione extends InternshipTutorBaseController {
                 else if(request.getParameter("submit").equals("Registrati come studente"))
                         action_registrazione_studente(request, response);
             } else {
-                    if (request.getParameter("tipo").equals("azienda"))
+                    if (request.getParameter("tipo").equals("azienda")) {
+                        request.setAttribute("activeAzienda", "active");
+                        request.setAttribute("ariaStudente", "false");
+                        request.setAttribute("ariaAzienda", "true");
                         action_azienda(request, response);
-                    else if (request.getParameter("tipo").equals("studente"))
-                            action_studente(request, response);
+                    }
+                    else if (request.getParameter("tipo").equals("studente")) {
+                        request.setAttribute("activeStudente", "active");
+                        request.setAttribute("ariaStudente", "true");
+                        request.setAttribute("ariaAzienda", "false");
+                        action_studente(request, response);
+                    }
                     }
         } catch (IOException ex) {
             request.setAttribute("exception", ex);

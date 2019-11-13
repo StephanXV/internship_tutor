@@ -8,12 +8,12 @@ body {
 
 .bodyContent{
     flex: 1 0 auto;
-    padding-top: 50px;
+    padding-top: 15vh;
 }
 
 #info {
     padding-top: 70px;
-    margin-top: 230px;
+    margin-top: 40vh;
 }
 
 .divider_menu{

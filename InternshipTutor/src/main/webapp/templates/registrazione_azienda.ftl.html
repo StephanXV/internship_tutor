@@ -59,14 +59,24 @@
         <div class="col-md-9 register-right">
             <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="azienda-tab" data-toggle="tab" href="#azienda" role="tab" aria-controls="home" aria-selected="true">Azienda</a>
+                    <a class="nav-link ${activeAzienda}" id="azienda-tab" data-toggle="tab" href="#azienda" role="tab" aria-controls="home" aria-selected="${ariaAzienda}">
+                        Azienda
+                    </a>
+                    <noscript>
+                        <a href="registrazione?tipo=azienda" style="color: white">vai</a>
+                    </noscript>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="studente-tab" data-toggle="tab" href="#studente" role="tab" aria-controls="profile" aria-selected="false">Studente</a>
+                    <a class="nav-link ${activeStudente}" id="studente-tab" data-toggle="tab" href="#studente" role="tab" aria-controls="profile" aria-selected="${ariaStudente}">
+                        Studente
+                    </a>
+                    <noscript>
+                        <a href="registrazione?tipo=studente" style="color: white">vai</a>
+                    </noscript>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="azienda" role="tabpanel" aria-labelledby="azienda-tab">
+                <div class="tab-pane fade show ${activeAzienda}" id="azienda" role="tabpanel" aria-labelledby="azienda-tab">
                     <h3 class="register-heading">Registrati come Azienda</h3>
                     <form method="post">
                     <div class="row register-form">
@@ -156,7 +166,7 @@
                 </div>
 
 
-                <div class="tab-pane fade show" id="studente" role="tabpanel" aria-labelledby="studente-tab">
+                <div class="tab-pane fade show ${activeStudente}" id="studente" role="tabpanel" aria-labelledby="studente-tab">
                     <h3  class="register-heading">Registrati come Studente</h3>
                     <form method="post">
                     <div class="row register-form">
