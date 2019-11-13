@@ -7,6 +7,8 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import javafx.scene.control.Alert;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,12 +21,26 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stefano Florio
  */
 public class Login extends InternshipTutorBaseController {
+    private String MSG = null;
+    private String TITLE = null;
+    private String ICON = null;
+    private String alertType = null;
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
-            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+            //(new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+            try {
+                request.setAttribute("TITLE", TITLE);
+                request.setAttribute("MSG", MSG);
+                request.setAttribute("alert", alertType);
+                request.setAttribute("ICON", ICON);
+
+                action_default(request,response);
+            } catch (TemplateManagerException | IOException | ServletException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -38,22 +54,37 @@ public class Login extends InternshipTutorBaseController {
     private void action_login(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
         try {
-            Utente ut = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().getUtente(request.getParameter("username"), request.getParameter("pw"));
-            if (ut != null) {
-                SecurityLayer.createSession(request, ut.getUsername(), ut.getId(), ut.getTipologia());
-                    
-                if (request.getParameter("referrer") != null) {
-                    response.sendRedirect(request.getParameter("referrer"));
+            if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString("pw")) {
+                Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtente(request.getParameter("username"), request.getParameter("pw"));
+                if (ut != null) {
+                    SecurityLayer.createSession(request, ut.getUsername(), ut.getId(), ut.getTipologia());
+
+                    if (request.getParameter("referrer") != null) {
+                        response.sendRedirect(request.getParameter("referrer"));
+                    } else {
+                        response.sendRedirect("home");
+                    }
                 } else {
-                    response.sendRedirect("home");
+                    //notifica errore credenziali
+                    TITLE = "ERRORE";
+                    MSG = "Username e/o Password non validi";
+                    alertType = "danger";
+                    ICON = "fas fa-exclamation-triangle";
+                    action_error(request, response);
                 }
             } else {
-                    //notifica errore credenziali
-                    request.setAttribute("message", "User not found");
-                    action_error(request, response);
+                TITLE = "ERRORE";
+                MSG = "I campi inseriti non sono corretti. Riprova!";
+                alertType = "danger";
+                ICON = "fas fa-exclamation-triangle";
+                action_error(request, response);
             }
         } catch (DataException ex) {
-            request.setAttribute("exception", ex);
+            TITLE = "ERRORE";
+            MSG = "I campi inseriti non sono corretti. Riprova!";
+            alertType = "danger";
+            ICON = "fas fa-exclamation-triangle";
+            //request.setAttribute("exception", ex);
             action_error(request, response);
         }
     }

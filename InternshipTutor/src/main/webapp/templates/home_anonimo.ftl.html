@@ -1,4 +1,14 @@
-
+<#if MSG?has_content> <!-- check if content exist and is not empty -->
+<div class="container">
+    <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
+        ${MSG}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+</#if>
 
 <div class="jumbotron container" style="margin-top: 7vh">
     <h1 class="display-4">Benvenuto</h1>
@@ -21,7 +31,7 @@
                     <div class="container" style="margin-top: 30px">
                         <ul class="timeline">
                             <li class="timeline-inverted">
-                                <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                                <div class="timeline-badge"><i class="fas fa-user-plus"></i></div>
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
                                         <h4 class="timeline-title">Mussum ipsum cacilds</h4>
@@ -32,7 +42,7 @@
                                 </div>
                             </li>
                             <li class="timeline-inverted">
-                                <div class="timeline-badge"><i class="glyphicon glyphicon-credit-card"></i></div>
+                                <div class="timeline-badge"><i class="fas fa-handshake"></i></div>
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
                                         <h4 class="timeline-title">Mussum ipsum cacilds</h4>
@@ -43,7 +53,7 @@
                                 </div>
                             </li>
                             <li class="timeline-inverted">
-                                <div class="timeline-badge"><i class="glyphicon glyphicon-credit-card"></i></div>
+                                <div class="timeline-badge"><i class="far fa-clock"></i></div>
                                 <div class="timeline-panel">
                                     <div class="timeline-heading">
                                         <h4 class="timeline-title">Mussum ipsum cacilds</h4>
@@ -56,7 +66,7 @@
 
                         </ul>
                         <div class="text-center" style="margin-top: 35px">
-                            <a href="#" class="btn btn-primary">Registrati</a>
+                            <a href="registrazione?tipo=studente" class="btn btn-primary">Registrati&nbsp;&nbsp;<i class="fas fa-user-graduate"></i></a>
                         </div>
                     </div>
 
@@ -74,7 +84,7 @@
                 <div class="container" style="margin-top: 30px">
                     <ul class="timeline">
                         <li class="timeline-inverted">
-                            <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                            <div class="timeline-badge"><i class="fas fa-user-plus"></i></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
                                     <h4 class="timeline-title">Mussum ipsum cacilds</h4>
@@ -85,7 +95,7 @@
                             </div>
                         </li>
                         <li class="timeline-inverted">
-                            <div class="timeline-badge"><i class="glyphicon glyphicon-credit-card"></i></div>
+                            <div class="timeline-badge"><i class="fas fa-handshake"></i></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
                                     <h4 class="timeline-title">Mussum ipsum cacilds</h4>
@@ -96,7 +106,7 @@
                             </div>
                         </li>
                         <li class="timeline-inverted">
-                            <div class="timeline-badge"><i class="glyphicon glyphicon-credit-card"></i></div>
+                            <div class="timeline-badge"><i class="far fa-clock"></i></div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
                                     <h4 class="timeline-title">Mussum ipsum cacilds</h4>
@@ -109,7 +119,7 @@
 
                     </ul>
                     <div class="text-center" style="margin-top: 35px">
-                        <a href="#" class="btn btn-primary">Registrati</a>
+                        <a href="registrazione?tipo=azienda" class="btn btn-primary">Registrati&nbsp;&nbsp;<i class="fas fa-briefcase"></i></a>
                     </div>
                 </div>
 
@@ -117,12 +127,6 @@
         </div>
     </div>
 </div>
-</div>
-
-<div>
-
-    <a href="registrazione?tipo=azienda">Convenzionamento azienda</a>
-    <a href="registrazione?tipo=studente">Registrazione studente</a>
 </div>
 
 <script src="js/scroll.js"></script>

@@ -15,6 +15,8 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import org.omg.CORBA.PRIVATE_MEMBER;
+
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,31 +30,49 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stefano Florio
  */
 public class Registrazione extends InternshipTutorBaseController {
+
+    private String TYPE = null;
+    private String MSG = null;
+    private String TITLE = null;
+    private String ICON = null;
+    private String alertType = null;
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
-            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+            //(new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+            request.setAttribute("TITLE", TITLE);
+            request.setAttribute("MSG", MSG);
+            request.setAttribute("alert", alertType);
+            request.setAttribute("ICON", ICON);
+            if (TYPE != null && TYPE.equals("STUDENT")) {
+                request.setAttribute("activeStudente", "active");
+                request.setAttribute("ariaStudente", "true");
+                request.setAttribute("ariaAzienda", "false");
+            } else if (TYPE != null && TYPE.equals("AZIENDA")) {
+                request.setAttribute("activeAzienda", "active");
+                request.setAttribute("ariaStudente", "false");
+                request.setAttribute("ariaAzienda", "true");
+            }
+
+            try {
+                action_open_reg(request, response);
+            } catch (IOException | ServletException | TemplateManagerException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void action_azienda(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_open_reg(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
-        request.setAttribute("page_title", "Tirocini");
-        res.activate("registrazione_azienda.ftl.html", request, response);
-    }
-    
-    private void action_studente(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
-        TemplateResult res = new TemplateResult(getServletContext());
-        request.setAttribute("page_title", "Tirocini");
-        res.activate("registrazione_azienda.ftl.html", request, response);
+        request.setAttribute("page_title", "Registrazione");
+        res.activate("registrazione.ftl.html", request, response);
     }
     
     private void action_registrazione_azienda(HttpServletRequest request, HttpServletResponse response) 
             throws IOException, ServletException, TemplateManagerException {
-        String err;
-        String succ;
+
         try {
             RespTirocini rt = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().createRespTirocini();
             // controlli sul responsabile tirocini
@@ -64,6 +84,13 @@ public class Registrazione extends InternshipTutorBaseController {
                 rt.setEmail(request.getParameter("email_rt"));
                 rt.setTelefono(request.getParameter("telefono_rt"));
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().insertRespTirocini(rt);
+            } else {
+                TYPE="AZIENDA";
+                TITLE = "ERRORE";
+                MSG = "I campi inseriti non sono corretti. Riprova!";
+                alertType = "danger";
+                ICON = "fas fa-exclamation-triangle";
+                action_error(request, response);
             }
             
             try {  
@@ -77,6 +104,13 @@ public class Registrazione extends InternshipTutorBaseController {
                     ut.setEmail(request.getParameter("email"));
                     ut.setTipologia("az");
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+                } else {
+                    TYPE="AZIENDA";
+                    TITLE = "ERRORE";
+                    MSG = "I campi utente inseriti non sono validi. Riprova!";
+                    alertType = "danger";
+                    ICON = "fas fa-exclamation-triangle";
+                    action_error(request, response);
                 }
                 
                 try {
@@ -103,25 +137,50 @@ public class Registrazione extends InternshipTutorBaseController {
                         az.setUtente(ut);
                         az.setDurataConvenzione(SecurityLayer.checkNumeric(request.getParameter("durata")));
                         ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
-                        succ = "Grazie per la registrazione; potrete eseguire l'accesso non appena l'admin confermerà la vostra richiesta di convenzionamento";
-                    }  
+
+                        request.setAttribute("MSG", "Grazie per la registrazione. \nPotrai eseguire l'accesso non appena l'admin confermerà la vostra richiesta di convenzionamento");
+                        request.setAttribute("ICON", "fas fa-check");
+                        request.setAttribute("alert", "success");
+                        TemplateResult res = new TemplateResult(getServletContext());
+                        res.activate("home_anonimo.ftl.html", request, response);
+                    }  else {
+                        TYPE="AZIENDA";
+                        TITLE = "ERRORE";
+                        MSG = "I dati aziendali inseriti non sono validi. Riprova!";
+                        alertType = "danger";
+                        ICON = "fas fa-exclamation-triangle";
+                        action_error(request, response);
+                    }
                 } catch (DataException ex) {
-                    err = "Dati azienda non validi";
+                    TYPE="AZIENDA";
+                    TITLE = "ERRORE";
+                    MSG = "I dati aziendali inseriti non sono validi. Riprova!";
+                    alertType = "danger";
+                    ICON = "fas fa-exclamation-triangle";
                     // se fallisce l'inserimento dell'azienda, cancella l'utente e il responsabile inseriti prima
                     Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
+                    action_error(request, response);
                 }
             } catch (DataException ex) {
-                err = "Dati utente non validi";
+                TYPE="AZIENDA";
+                TITLE = "ERRORE";
+                MSG = "I campi utente non sono validi. Riprova!";
+                alertType = "danger";
+                ICON = "fas fa-exclamation-triangle";
                 // se fallisce l'inserimento dell'utente, cancella il responsabile inserito prima
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
+                action_error(request, response);
             }
-            response.sendRedirect("home");    
         } catch (DataException ex) {
-            err = "Dati responsabile tirocini non validi";
-            request.setAttribute("exception", ex);
+            TYPE="AZIENDA";
+            TITLE = "ERRORE";
+            MSG = "I dati del responsabile tirocini inseriti non sono validi. Riprova!";
+            alertType = "danger";
+            ICON = "fas fa-exclamation-triangle";
+            //request.setAttribute("exception", ex);
             action_error(request, response);
         }    
     }
@@ -139,6 +198,13 @@ public class Registrazione extends InternshipTutorBaseController {
                 ut.setEmail(request.getParameter("email"));
                 ut.setTipologia("st");
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+            } else {
+                TYPE="STUDENT";
+                TITLE = "ERRORE";
+                MSG = "I campi inseriti non sono corretti. Riprova!";
+                alertType = "danger";
+                ICON = "fas fa-exclamation-triangle";
+                action_error(request, response);
             }
             
             try {
@@ -165,17 +231,43 @@ public class Registrazione extends InternshipTutorBaseController {
                     st.setHandicap(Boolean.valueOf(request.getParameter("handicap")));
                     st.setUtente(ut);
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
+
+                    request.setAttribute("MSG", "Registrazione effettuata con successo!\nOra puoi accedere ed iniziare ad usare i nostri servizi");
+                    request.setAttribute("ICON", "fas fa-check");
+                    request.setAttribute("alert", "success");
+                    request.setAttribute("TITLE", "OK");
+                    TemplateResult res = new TemplateResult(getServletContext());
+                    res.activate("login.ftl.html", request, response);
+
+                } else {
+                    TYPE="STUDENT";
+                    TITLE = "ERRORE";
+                    MSG = "I campi inseriti non sono corretti. Riprova!";
+                    alertType = "danger";
+                    ICON = "fas fa-exclamation-triangle";
+                    action_error(request, response);
                 }
             } catch (DataException ex) {
                 // se fallisce l'inserimento dello studente, cancella l'utente inserito prima
+
                 Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
+                TYPE="STUDENT";
+                TITLE = "ERRORE";
+                MSG = "I campi inseriti non sono corretti. Riprova!";
+                alertType = "danger";
+                ICON = "fas fa-exclamation-triangle";
+                action_error(request, response);
             }
             
-            response.sendRedirect("home");
-            
         } catch (DataException ex) {
-            request.setAttribute("exception", ex);
+            //request.setAttribute("exception", ex);
+            TYPE="STUDENT";
+            TITLE = "ERRORE";
+            MSG = "I campi inseriti non sono corretti. Riprova!";
+            alertType = "danger";
+            ICON = "fas fa-exclamation-triangle";
+            action_error(request, response);
             action_error(request, response);
         }
         
@@ -186,25 +278,24 @@ public class Registrazione extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
-            if (request.getParameter("submit") != null) {
-                if(request.getParameter("submit").equals("Registrati come azienda"))
-                    action_registrazione_azienda(request, response);
-                else if(request.getParameter("submit").equals("Registrati come studente"))
-                        action_registrazione_studente(request, response);
+            if (request.getParameter("submitStudent") != null) {
+                action_registrazione_studente(request, response);
+            } else if(request.getParameter("submitAzienda") != null) {
+                action_registrazione_azienda(request, response);
             } else {
                     if (request.getParameter("tipo").equals("azienda")) {
                         request.setAttribute("activeAzienda", "active");
                         request.setAttribute("ariaStudente", "false");
                         request.setAttribute("ariaAzienda", "true");
-                        action_azienda(request, response);
+                        action_open_reg(request, response);
                     }
                     else if (request.getParameter("tipo").equals("studente")) {
                         request.setAttribute("activeStudente", "active");
                         request.setAttribute("ariaStudente", "true");
                         request.setAttribute("ariaAzienda", "false");
-                        action_studente(request, response);
+                        action_open_reg(request, response);
                     }
-                    }
+            }
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
