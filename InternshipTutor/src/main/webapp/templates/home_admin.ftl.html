@@ -2,10 +2,10 @@
 <div class="container-fluid table-responsive-lg mt-3">
     <div class="row">
         
+        <#if (az_registrate?size>0)>
         <!-- colonna 1 -->
         <div class="col bg-light mx-2">
-            <#if (az_registrate?size>0)>
-            <table id="tabRichieste" class="table table-hover">
+            <table class="table table-hover">
             <!--Table head-->
             <caption style="caption-side: top">Richieste di convenzionamento</caption>
             <thead>
@@ -18,14 +18,16 @@
                 <!--Table head-->
                 <!--Table body-->
                 <tbody>
+                    <#list az_registrate as az_registrata>
                     <tr>
-                        <#list az_registrate as az_registrata>
+                        
                         <td>${az_registrata.ragioneSociale}</td>
                         <td>
-                            <button type="button" class="btn btn-primary text-white">
-                                <a href="docs?tipo=0&az=${az_registrata.utente.id}"></a>
-                                <i class="fa fa-file-download"></i>
-                            </button>
+                            <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}">
+                                <button type="button" class="btn btn-primary text-white">
+                                    <i class="fa fa-file-download"></i>
+                                </button>
+                            </a>
                             
                             <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white" data-toggle="modal" data-target="#rejectModal">
                                 <i class="fas fa-trash-alt"></i>
@@ -46,7 +48,9 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                    <button type="button" class="btn bg-danger text-white"><a href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}">S&iacute;</a></button>
+                                    <a href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}">
+                                        <button type="button" class="btn bg-danger text-white">S&iacute;</button>
+                                    </a>
                                   </div>
                                 </div>
                               </div>
@@ -60,24 +64,25 @@
                                 <i class="fas fa-check"></i>
                             </button>
                         </td>
-                        </#list>
+                        
                     </tr>
-
+                    </#list>
                 </tbody>
                 <!--Table body-->
             </table>
-            
-            <#else>
-            <span class="lead">Non ci sono richieste di convenzionamento da visualizzare</span>
-            </#if>
-            
             <!--Table-->
         </div>
         
+        <#else>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono richieste di convenzionamento da visualizzare</span>
+        </div>
+        </#if>
+        
+        <#if (az_convenzionate?size>0)>
         <!-- colonna 2 -->
         <div class="col bg-light mx-2">
-            <#if (az_convenzionate?size>0)>
-            <table id="tabRichieste" class="table table-hover">
+            <table class="table table-hover">
             <!--Table head-->
             <caption style="caption-side: top">Aziende convenzionate</caption>
             <thead>
@@ -91,8 +96,9 @@
                 <!--Table head-->
                 <!--Table body-->
                 <tbody>
+                    <#list az_convenzionate as az_convenzionata>
                     <tr>
-                        <#list az_convenzionate as az_convenzionata>
+                        
                         <td>${az_convenzionata.ragioneSociale}</td>
                         <td>${az_convenzionata.inizioConvenzione}</td>
                         <td>${az_convenzionata.durataConvenzione}</td>
@@ -101,17 +107,16 @@
                                 <i class="fa fa-file"></i>
                             </button>
                         </td>
-                        </#list>
+                        
                     </tr>
-
+                    </#list>
                 </tbody>
                 <!--Table body-->
             </table>
-            
-            <#else>
-            <span class="lead">Non ci sono aziende attualmente convenzionate</span>
-            </#if>
             <!--Table-->
         </div>
+        <#else>
+        <span class="lead">Non ci sono aziende attualmente convenzionate</span>
+        </#if>
     </div>
 </div>

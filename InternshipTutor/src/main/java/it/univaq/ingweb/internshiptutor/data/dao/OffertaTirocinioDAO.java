@@ -21,6 +21,8 @@ public interface OffertaTirocinioDAO {
     
     OffertaTirocinio createOffertaTirocinio(ResultSet rs) throws DataException;
     
+    List<OffertaTirocinio> getOfferteTirocinio(Azienda az, boolean attiva) throws DataException;
+    
     List<OffertaTirocinio> getOfferteTirocinio(Azienda az) throws DataException;
     
     OffertaTirocinio getOffertaTirocinio(int id) throws DataException;

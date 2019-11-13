@@ -50,7 +50,7 @@ public class Documenti extends InternshipTutorBaseController {
             request.setAttribute("azienda", az);
            
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("doc_convenzione.ftl.html", request, response);  
+            res.activateNoOutline("doc_convenzione.ftl.html", request, response);  
         } catch (DataException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }

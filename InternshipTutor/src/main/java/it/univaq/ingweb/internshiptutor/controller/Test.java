@@ -39,7 +39,7 @@ public class Test extends InternshipTutorBaseController {
             List<Azienda> azConvenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
             request.setAttribute("aziende_convenzionate", azConvenzionate);
             
-            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azConvenzionate.get(0));
+            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azConvenzionate.get(0), true);
             request.setAttribute("tirocini", tirocini);
             
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(tirocini.get(0));
