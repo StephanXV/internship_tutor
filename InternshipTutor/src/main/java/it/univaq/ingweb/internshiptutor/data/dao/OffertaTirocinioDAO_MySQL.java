@@ -26,7 +26,7 @@ import java.util.List;
 public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDAO {
     
     private PreparedStatement sOffertaTirocinio;
-    private PreparedStatement sOfferteTirocinioByAzienda;
+    private PreparedStatement sOfferteTirocinioByAzienda, sOfferteTirocinioByAttiva;
     private PreparedStatement iOffertaTirocinio;
 
     public OffertaTirocinioDAO_MySQL(DataLayer d) {
@@ -37,6 +37,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
     public void init() throws DataException {
         try {
             sOffertaTirocinio = connection.prepareStatement("SELECT * FROM offerta_tirocinio WHERE id=?");
+            sOfferteTirocinioByAttiva = connection.prepareStatement("SELECT * FROM offerta_tirocinio WHERE id_azienda=? AND attiva=?");
             sOfferteTirocinioByAzienda = connection.prepareStatement("SELECT * FROM offerta_tirocinio WHERE id_azienda=?");
             iOffertaTirocinio = connection.prepareStatement("INSERT INTO offerta_tirocinio (luogo, settore, orari, "
                     + "durata, titolo, obiettivi, modalita, facilitazioni, id_azienda) values (?,?,?,?,?,?,?,?,?)"
@@ -53,6 +54,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
         try {
             sOffertaTirocinio.close();
             sOfferteTirocinioByAzienda.close();
+            sOfferteTirocinioByAttiva.close();
             iOffertaTirocinio.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
@@ -100,6 +102,23 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
         return null;
     }
 
+    @Override
+    public List<OffertaTirocinio> getOfferteTirocinio(Azienda az, boolean attiva) throws DataException {
+        List<OffertaTirocinio> result = new ArrayList();
+        try {
+            sOfferteTirocinioByAttiva.setInt(1, az.getUtente().getId());
+            sOfferteTirocinioByAttiva.setBoolean(2, attiva);
+            try (ResultSet rs = sOfferteTirocinioByAttiva.executeQuery()) {
+                while (rs.next()) {
+                    result.add(getOffertaTirocinio(rs.getInt("id")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load offerte tirocinio by azienda", ex);
+        }
+        return result;
+    }
+    
     @Override
     public List<OffertaTirocinio> getOfferteTirocinio(Azienda az) throws DataException {
         List<OffertaTirocinio> result = new ArrayList();

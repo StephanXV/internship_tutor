@@ -1,1 +1,85 @@
-<h1>Questa è la dashboard di una azienda</h1>
+<!--Table-->
+<div class="container-fluid table-responsive-lg mt-3">
+    <div class="row">
+        
+        <#if (ot_attive?size>0)>
+        <!-- colonna 1 -->
+        <div class="col-8 bg-light mx-2">
+            <table class="table table-hover">
+                <!--Table head-->
+                <caption style="caption-side: top">Offerte di tirocinio attive</caption>
+                <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Titolo</th>
+                        <th class="text-white">Luogo</th>
+                        <th class="text-white">Durata</th>
+                        <th class="text-white">Gestione</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <#list ot_attive as ot_attiva>
+                    <tr>
+                        
+                        <td>${ot_attiva.titolo}</td>
+                        <td>${ot_attiva.luogo}</td>
+                        <td>${ot_attiva.durata}</td>
+                        <td>                      
+                            <a href="">
+                                <button type="button" class="btn bg-danger text-white">Disattiva</button>
+                            </a>
+                        </td>
+                        
+                    </tr>
+                    </#list>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+        <#else>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono offerte di tirocinio attive</span>
+        </div>
+        </#if>
+        
+        <#if (ot_disattive?size>0)>
+        <!-- colonna 2 -->
+        <div class="col bg-light mx-2">
+            <table class="table table-hover">
+            <!--Table head-->
+            <caption style="caption-side: top">Offerte di tirocinio disattive</caption>
+            <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Titolo</th>
+                        <th class="text-white">Gestione</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <#list ot_disattive as ot_disattiva>
+                    <tr>
+                        <td>${ot_disattiva.titolo}</td>
+                        <td>                      
+                            <a href="">
+                                <button type="button" class="btn bg-success text-white">Attiva</button>
+                            </a>
+                        </td>
+                    </tr>
+                    </#list>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+        
+        <#else>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono offerte di tirocinio disattive</span>
+        </div>
+        </#if>
+   
+    </div>
+</div>

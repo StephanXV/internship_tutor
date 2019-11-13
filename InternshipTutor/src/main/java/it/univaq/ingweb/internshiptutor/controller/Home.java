@@ -81,8 +81,12 @@ public class Home extends InternshipTutorBaseController {
             request.setAttribute("nome_utente", az.getRagioneSociale());
             
             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
-            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az);
-            request.setAttribute("tirocini", tirocini);
+            List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
+            request.setAttribute("ot_attive", tirocini_attivi);
+            
+             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
+            List<OffertaTirocinio> tirocini_disattivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, false);
+            request.setAttribute("ot_disattive", tirocini_disattivi);
             
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Home azienda");

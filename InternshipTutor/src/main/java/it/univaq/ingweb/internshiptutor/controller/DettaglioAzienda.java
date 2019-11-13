@@ -49,7 +49,7 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
         HttpSession s = SecurityLayer.checkSession(request);
         System.out.println("aaaaaaaaaaaaaaaaaaaaaa"+s.getId());
         Azienda azienda = (Azienda) ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
-        List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda);
+        List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
         request.setAttribute("session", s);
         request.setAttribute("tirocini", tirocini);
         request.setAttribute("azienda", azienda);
