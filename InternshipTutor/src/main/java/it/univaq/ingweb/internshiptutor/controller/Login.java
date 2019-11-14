@@ -56,9 +56,10 @@ public class Login extends InternshipTutorBaseController {
     private void action_login(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
 
+        /*Per vedere la pass criptata di un utente con pass non criptata
         String password = request.getParameter("pw");
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
-        System.out.println("pass admin " + encryptedPassword);
+        System.out.println("pass admin " + encryptedPassword);*/
 
         try {
             if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString("pw")) {
