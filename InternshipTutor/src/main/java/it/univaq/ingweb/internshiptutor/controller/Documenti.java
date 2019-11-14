@@ -12,15 +12,7 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
-import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
-import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
-import it.univaq.ingweb.internshiptutor.data.model.Studente;
-import it.univaq.ingweb.internshiptutor.data.model.Utente;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -70,6 +62,10 @@ public class Documenti extends InternshipTutorBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
             int id_studente = 0;
             int id_offerta_tirocinio = 0;
             int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));

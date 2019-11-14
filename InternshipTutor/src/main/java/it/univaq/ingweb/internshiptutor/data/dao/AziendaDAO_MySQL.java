@@ -13,6 +13,7 @@ import it.univaq.ingweb.internshiptutor.data.proxy.AziendaProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
     private PreparedStatement sAziendaById;
     private PreparedStatement sAziendeByStato;
-    private PreparedStatement iAzienda, uAziendaStato, dAzienda;
+    private PreparedStatement iAzienda, uAziendaStato, dAzienda, uAziendaDoc;
 
     public AziendaDAO_MySQL(DataLayer d) {
         super(d);
@@ -41,6 +42,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
                     + " id_responsabile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
             uAziendaStato = connection.prepareStatement("UPDATE azienda SET stato_convenzione=? WHERE id_utente=?");
             dAzienda = connection.prepareStatement("DELETE FROM azienda WHERE id_utente=?");
+            uAziendaDoc = connection.prepareStatement("UPDATE azienda SET src_documento_convenzione=?, inizio_convenzione=? WHERE id_utente=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -53,6 +55,8 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             sAziendeByStato.close();
             iAzienda.close();
             uAziendaStato.close();
+            dAzienda.close();
+            uAziendaDoc.close();
         } catch(SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -171,5 +175,20 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             throw new DataException("Unable to delete azienda", ex);
         }
     }
+
+    @Override
+    public int updateAziendaDocumento(int id_az, String src) throws DataException {
+        try {
+            LocalDate localDate = LocalDate.now();
+            uAziendaDoc.setString(1, src);
+            uAziendaDoc.setDate(2, java.sql.Date.valueOf(localDate));
+            uAziendaDoc.setInt(3, id_az);
+            return uAziendaDoc.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to update azienda documento", ex);
+        }
+    }
+    
+    
     
 }

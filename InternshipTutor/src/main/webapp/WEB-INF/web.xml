@@ -3,7 +3,7 @@
     <context-param>
         <param-name>uploads.directory</param-name>
         <!-- Tomcat must have write permissions on this folder -->
-        <param-value>C:\Users\steph\Desktop\Web Engineering\esempi\Servlet\Esempio_Uploader\web\uploads</param-value>
+        <param-value>uploads</param-value>
     </context-param>
     <context-param>
         <param-name>view.template_directory</param-name>
@@ -137,6 +137,14 @@
     <servlet-mapping>
         <servlet-name>GestioneTirocini</servlet-name>
         <url-pattern>/gestione_tirocini</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Download</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.Download</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Download</servlet-name>
+        <url-pattern>/download</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

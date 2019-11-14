@@ -33,6 +33,10 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
             try {
                 if (request.getParameter("submit") != null) {
                     action_request(request, response);
