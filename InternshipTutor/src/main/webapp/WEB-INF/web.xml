@@ -3,7 +3,7 @@
     <context-param>
         <param-name>uploads.directory</param-name>
         <!-- Tomcat must have write permissions on this folder -->
-        <param-value>C:/uploads</param-value>
+        <param-value>uploads</param-value>
     </context-param>
     <context-param>
         <param-name>view.template_directory</param-name>

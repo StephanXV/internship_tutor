@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,14 +34,18 @@ public class Upload extends InternshipTutorBaseController {
     }
 
     private void action_upload_convenzione(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, Exception {
-
+        // current timestamp
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+        String sDate = formatter.format(date);
+        
         int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
         Part file_to_upload = request.getPart("convenzionetoupload");
         if (file_to_upload.getContentType().equals("application/pdf")) {
 
             //create a file (with a unique name) and copy the uploaded file to it
             //creiamo un nuovo file (con nome univoco) e copiamoci il file scaricato
-            File uploaded_file = File.createTempFile("convenzione_",  System.currentTimeMillis() +".pdf", new File(getServletContext().getInitParameter("uploads.directory")));
+            File uploaded_file = File.createTempFile("convenzione_",  sDate +".pdf", new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory")));
             
             try (InputStream is = file_to_upload.getInputStream();
                     OutputStream os = new FileOutputStream(uploaded_file)) {

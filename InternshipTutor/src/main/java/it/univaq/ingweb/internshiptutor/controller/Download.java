@@ -28,7 +28,7 @@ public class Download extends InternshipTutorBaseController {
             throws IOException, NamingException, SQLException {
         String nome_doc = request.getParameter("res");
         StreamResult result = new StreamResult(getServletContext());
-        File downloaded_file = new File(getServletContext().getInitParameter("uploads.directory") + File.separatorChar + nome_doc);
+        File downloaded_file = new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory") + File.separatorChar + nome_doc);
         request.setAttribute("contentType", "application/pdf");
         result.activate(downloaded_file, request, response);
     }
