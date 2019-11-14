@@ -33,6 +33,15 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
     
     private void action_accetta(HttpServletRequest request, HttpServletResponse response, int id_azienda)
             throws IOException, ServletException, TemplateManagerException {
+          try {
+            String src = request.getParameter("src");
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAziendaDocumento(id_azienda, src);
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAziendaStato(id_azienda, 1);
+            response.sendRedirect("home");
+        } catch (DataException ex) {
+            request.setAttribute("exception", ex);
+            action_error(request, response);
+        }
     }
     
     private void action_rifiuta(HttpServletRequest request, HttpServletResponse response, int id_azienda)
@@ -49,6 +58,10 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
      @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
             int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
             if (request.getParameter("convalida").equals("si")) {
                 action_accetta(request, response, id_azienda);

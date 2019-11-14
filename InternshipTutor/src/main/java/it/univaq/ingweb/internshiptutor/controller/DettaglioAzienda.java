@@ -31,6 +31,10 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int n = SecurityLayer.checkNumeric(request.getParameter("n"));
+        HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
         try {
             try {
                 action_default(request, response, n);

@@ -29,4 +29,6 @@ public interface AziendaDAO {
     int insertAzienda(Azienda az) throws DataException;
     
     int deleteAzienda(int id_az) throws DataException;
+    
+    int updateAziendaDocumento(int id_az, String src) throws DataException;
 }

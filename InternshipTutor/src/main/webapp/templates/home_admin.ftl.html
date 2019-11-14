@@ -4,10 +4,11 @@
         
         <#if (az_registrate?size>0)>
         <!-- colonna 1 -->
-        <div class="col bg-light mx-2">
+        <div class="col bg-light mx-2 py-2">
+            <h4>Richieste di convenzionamento</h4> <br>
             <table class="table table-hover" id="myTableConv">
             <!--Table head-->
-            <caption style="caption-side: top">Richieste di convenzionamento</caption>
+
             <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Azienda</th>
@@ -57,15 +58,12 @@
                             </div>
                         </td>
                         <td>
-                            <form method='post' action='upload' enctype='multipart/form-data'>
-                                <input type='file' name='filetoupload'>
-                                    <button type="button" class="btn btn-primary text-white">
-                                        <i class="fa fa-file-upload"></i>
-                                    </button>
-                                <input>
+                            <form method='post' action='upload?az=${az_registrata.utente.id}' enctype='multipart/form-data'>
+                                <input name="tipo" type="hidden" value="convenzione" />
+                                <input type='file' name='convenzionetoupload'/>                         
                           
-                                <button type='submit' name='submit' value='upload' class="btn bg-success text-white">
-                                    <i class="fas fa-check"></i>
+                                <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                                    <i class="fas fa-file-upload"></i>
                                 </button>
                             </form>
                         </td>
@@ -86,10 +84,10 @@
         
         <#if (az_convenzionate?size>0)>
         <!-- colonna 2 -->
-        <div class="col bg-light mx-2">
+        <div class="col bg-light py-2 mx-2">
+            <h4>Aziende convenzionate</h4> <br>
             <table class="table table-hover" id="myTableConvAz">
             <!--Table head-->
-            <caption style="caption-side: top">Aziende convenzionate</caption>
             <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Azienda</th>
@@ -108,9 +106,13 @@
                         <td>${az_convenzionata.inizioConvenzione}</td>
                         <td>${az_convenzionata.durataConvenzione}</td>
                         <td>
-                            <button type="button" class="btn btn-primary text-white">
-                                <i class="fa fa-file"></i>
-                            </button>
+                            <form method="get" action="download">
+                                <input name="tipo" type="hidden" value="convenzione" />
+                                <input width="60px" readonly name="res" value="${az_convenzionata.srcDocConvenzione}"/>
+                                <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white">
+                                    <i class="fa fa-file"></i>
+                                </button>
+                            </form>
                         </td>
                         
                     </tr>
@@ -135,4 +137,15 @@
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     } );
 } );
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("input[name='convenzionetoupload']").change(function(){
+          if ($(this).val())
+          {
+            $("button[name='submit']").removeAttr('disabled');
+          }
+        });
+    } );
 </script>

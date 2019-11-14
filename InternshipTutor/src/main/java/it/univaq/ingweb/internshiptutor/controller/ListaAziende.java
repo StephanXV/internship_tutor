@@ -9,6 +9,7 @@ import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
+import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -47,6 +49,10 @@ public class ListaAziende extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
             request.setAttribute("activeAziende", "active");
             action_default(request, response);
 

@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -55,6 +56,10 @@ public class GestioneTirocini extends InternshipTutorBaseController {
             throws ServletException {
 
         try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
             if(request.getParameter("action").equals("attiva"))
                 action_attiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
             else if(request.getParameter("action").equals("disattiva"))
