@@ -27,7 +27,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
     
     private PreparedStatement sOffertaTirocinio;
     private PreparedStatement sOfferteTirocinioByAzienda, sOfferteTirocinioByAttiva;
-    private PreparedStatement iOffertaTirocinio;
+    private PreparedStatement iOffertaTirocinio, uOffertaTirocinioAttiva;
 
     public OffertaTirocinioDAO_MySQL(DataLayer d) {
         super(d);
@@ -42,6 +42,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             iOffertaTirocinio = connection.prepareStatement("INSERT INTO offerta_tirocinio (luogo, settore, orari, "
                     + "durata, titolo, obiettivi, modalita, facilitazioni, id_azienda) values (?,?,?,?,?,?,?,?,?)"
                     , Statement.RETURN_GENERATED_KEYS);
+            uOffertaTirocinioAttiva = connection.prepareStatement("UPDATE offerta_tirocinio SET attiva=? WHERE id=?");
             
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
@@ -56,6 +57,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             sOfferteTirocinioByAzienda.close();
             sOfferteTirocinioByAttiva.close();
             iOffertaTirocinio.close();
+            uOffertaTirocinioAttiva.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -183,8 +185,14 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
         }
     }
 
-    
-    
-    
-
+    @Override
+    public int updateOffertaTirocinioAttiva(int id_ot, boolean attiva) throws DataException {
+        try {
+            uOffertaTirocinioAttiva.setBoolean(1, attiva);
+            uOffertaTirocinioAttiva.setInt(2, id_ot);
+            return uOffertaTirocinioAttiva.executeUpdate();            
+        } catch (SQLException ex) {
+            throw new DataException("Unable to update offerta tirocinio attiva", ex);
+        }
+    }
 }

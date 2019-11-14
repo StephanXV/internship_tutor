@@ -26,7 +26,7 @@
                         <td>${ot_attiva.luogo}</td>
                         <td>${ot_attiva.durata}</td>
                         <td>                      
-                            <a href="">
+                            <a href="gestione_tirocini?ot=${ot_attiva.id}&action=disattiva">
                                 <button type="button" class="btn bg-danger text-white">Disattiva</button>
                             </a>
                         </td>
@@ -63,7 +63,7 @@
                     <tr>
                         <td>${ot_disattiva.titolo}</td>
                         <td>                      
-                            <a href="">
+                            <a href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
                                 <button type="button" class="btn bg-success text-white">Attiva</button>
                             </a>
                         </td>
@@ -76,7 +76,7 @@
         </div>
         
         <#else>
-        <div class="col bg-light mx-2 pt-4 text-center">
+        <div class="col-8 bg-light mx-2 pt-4 text-center">
             <span class="lead">Non ci sono offerte di tirocinio disattive</span>
         </div>
         </#if>

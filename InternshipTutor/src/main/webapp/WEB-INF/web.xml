@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
+        <param-name>uploads.directory</param-name>
+        <!-- Tomcat must have write permissions on this folder -->
+        <param-value>C:\Users\steph\Desktop\Web Engineering\esempi\Servlet\Esempio_Uploader\web\uploads</param-value>
+    </context-param>
+    <context-param>
         <param-name>view.template_directory</param-name>
         <param-value>templates</param-value>
     </context-param>
@@ -16,6 +21,23 @@
         <param-name>view.data.author</param-name>
         <param-value>Stefano Florio</param-value>
     </context-param>
+    <servlet>
+        <servlet-name>Upload</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.Upload</servlet-class>
+        <multipart-config>
+            <!--
+            <location>/tmp</location> temporary files location (DEF: "") -->
+            <max-file-size>20848820</max-file-size>
+            <!-- max size of accepted uploadd (DEF: unlimited!) -->
+            <max-request-size>418018841</max-request-size>
+            <!-- max size of multipart requests (may contain more files or data) (DEF: ulimited!) -->
+            <!-- <file-size-threshold>1048576</file-size-threshold> max size of files to hold in memory (without writing to temporary disk file) (DEF: 0) -->
+        </multipart-config>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>Upload</servlet-name>
+        <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>it.univaq.ingweb.internshiptutor.controller.Home</servlet-class>
@@ -103,6 +125,14 @@
     <servlet-mapping>
         <servlet-name>RichiesteConvenzione</servlet-name>
         <url-pattern>/richieste_convenzione</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GestioneTirocini</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.GestioneTirocini</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GestioneTirocini</servlet-name>
+        <url-pattern>/gestione_tirocini</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

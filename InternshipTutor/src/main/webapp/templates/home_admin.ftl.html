@@ -57,12 +57,17 @@
                             </div>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-primary text-white">
-                                <i class="fa fa-file-upload"></i>
-                            </button>
-                            <button type="button" class="btn bg-success text-white">
-                                <i class="fas fa-check"></i>
-                            </button>
+                            <form method='post' action='upload' enctype='multipart/form-data'>
+                                <input type='file' name='filetoupload'>
+                                    <button type="button" class="btn btn-primary text-white">
+                                        <i class="fa fa-file-upload"></i>
+                                    </button>
+                                <input>
+                          
+                                <button type='submit' name='submit' value='upload' class="btn bg-success text-white">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                            </form>
                         </td>
 
                     </tr>
