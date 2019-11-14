@@ -14,6 +14,7 @@
           <element id="module-output" name="InternshipTutor" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.jasypt:jasypt:1.9.3" />
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.28" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.18" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.6.1" />

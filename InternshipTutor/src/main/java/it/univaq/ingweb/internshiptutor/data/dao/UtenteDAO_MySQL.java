@@ -21,7 +21,7 @@ import java.sql.Statement;
  */
 public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     
-    private PreparedStatement sUtenteById, sUtenteByLogin;
+    private PreparedStatement sUtenteById, sUtenteByLogin, sUtenteByUser;
     private PreparedStatement iUtente, dUtente;
     
     public UtenteDAO_MySQL(DataLayer d) {
@@ -37,6 +37,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             //precompile all the queries uses in this class
             sUtenteById = connection.prepareStatement("SELECT * FROM utente WHERE id=?");
             sUtenteByLogin = connection.prepareStatement("SELECT * FROM utente WHERE username=? AND pw=?");
+            sUtenteByUser = connection.prepareStatement("SELECT * FROM utente WHERE username=?");
             iUtente = connection.prepareStatement("INSERT INTO utente (email, username, pw, tipologia)"
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dUtente = connection.prepareStatement("DELETE FROM utente WHERE id=?");
@@ -106,6 +107,25 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             sUtenteByLogin.setString(1, username);
             sUtenteByLogin.setString(2, password);
             try (ResultSet rs = sUtenteByLogin.executeQuery()) {
+                if (rs.next()) {
+                    //notare come utilizziamo il costrutture
+                    //"helper" della classe UtenteImpl
+                    //per creare rapidamente un'istanza a
+                    //partire dal record corrente
+                    return createUtente(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Utente by username and password", ex);
+        }
+        return null;
+    }
+
+    @Override
+    public Utente getUtenteByUser(String username) throws DataException {
+        try {
+            sUtenteByUser.setString(1, username);
+            try (ResultSet rs = sUtenteByUser.executeQuery()) {
                 if (rs.next()) {
                     //notare come utilizziamo il costrutture
                     //"helper" della classe UtenteImpl

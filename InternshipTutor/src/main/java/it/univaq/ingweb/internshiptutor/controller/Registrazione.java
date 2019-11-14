@@ -15,6 +15,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.omg.CORBA.PRIVATE_MEMBER;
 
 import java.io.IOException;
@@ -31,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Registrazione extends InternshipTutorBaseController {
 
+    BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
     private String TYPE = null;
     private String MSG = null;
     private String TITLE = null;
@@ -38,6 +40,7 @@ public class Registrazione extends InternshipTutorBaseController {
     private String alertType = null;
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
+
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
@@ -192,9 +195,14 @@ public class Registrazione extends InternshipTutorBaseController {
                 // controlli sull'utente
             if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString(request.getParameter("pw")) &&
                     SecurityLayer.checkEmail(request.getParameter("email"))) {
-                    
+
+
+                /* encrypt pass */
+                String password = request.getParameter("pw");
+                String encryptedPassword = passwordEncryptor.encryptPassword(password);
+
                 ut.setUsername(request.getParameter("username"));
-                ut.setPw(request.getParameter("pw"));
+                ut.setPw(encryptedPassword);
                 ut.setEmail(request.getParameter("email"));
                 ut.setTipologia("st");
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);

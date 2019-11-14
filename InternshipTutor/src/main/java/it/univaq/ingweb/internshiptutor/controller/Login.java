@@ -8,6 +8,7 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import javafx.scene.control.Alert;
+import org.jasypt.util.password.BasicPasswordEncryptor;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Stefano Florio
  */
 public class Login extends InternshipTutorBaseController {
+    BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
     private String MSG = null;
     private String TITLE = null;
     private String ICON = null;
@@ -53,10 +55,18 @@ public class Login extends InternshipTutorBaseController {
     
     private void action_login(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
+
+        String password = request.getParameter("pw");
+        String encryptedPassword = passwordEncryptor.encryptPassword(password);
+        System.out.println("pass admin " + encryptedPassword);
+
         try {
             if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString("pw")) {
-                Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtente(request.getParameter("username"), request.getParameter("pw"));
-                if (ut != null) {
+
+                //Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtente(request.getParameter("username"), request.getParameter("pw"));
+                Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtenteByUser(request.getParameter("username"));
+
+                if (ut != null && passwordEncryptor.checkPassword(request.getParameter("pw"), ut.getPw())) {
                     SecurityLayer.createSession(request, ut.getUsername(), ut.getId(), ut.getTipologia());
 
                     if (request.getParameter("referrer") != null) {

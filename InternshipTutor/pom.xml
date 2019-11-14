@@ -15,7 +15,13 @@
     </properties>
     
     <dependencies>
-        
+        <!-- https://mvnrepository.com/artifact/org.jasypt/jasypt -->
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -44,6 +50,7 @@
             <artifactId>bootstrap</artifactId>
             <version>4.3.1</version>
         </dependency>
+
 
     </dependencies>
 
