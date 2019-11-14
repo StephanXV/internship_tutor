@@ -23,8 +23,8 @@ $(document).ready( function () {
                 },
                 cap: {
                     required: true,
-                    minlength: 6,
-                    maxlength: 6,
+                    minlength: 5,
+                    maxlength: 5,
                     digits: true
                 },
                 provincia: {
@@ -105,8 +105,8 @@ $(document).ready( function () {
                 },
                 cap: {
                     required: "Il CAP &egrave; richiesto",
-                    minlength: "Il cap &egrave; formato da 6 numeri",
-                    maxlength: "Il cap &egrave; formato da 6 numeri"
+                    minlength: "Il cap &egrave; formato da 5 numeri",
+                    maxlength: "Il cap &egrave; formato da 5 numeri"
                 },
                 provincia: {
                     required: "La provincia &egrave; richiesta",
@@ -200,8 +200,8 @@ $( "#regStudente").validate( {
         },
         cap_residenza: {
             required: true,
-            minlength: 6,
-            maxlength: 6,
+            minlength: 5,
+            maxlength: 5,
         },
         provincia_residenza: {
             required: true,
@@ -265,8 +265,8 @@ $( "#regStudente").validate( {
         },
         cap_residenza: {
             required: "Il cap &egrave; richiesto",
-            minlength: "Il cap è formato da 6 cifre",
-            maxlength: "Il cap è formato da 6 cifre"
+            minlength: "Il cap è formato da 5 cifre",
+            maxlength: "Il cap è formato da 5 cifre"
         },
         provincia_residenza: {
             required: "La provincia di residenza &egrave; richiesta",

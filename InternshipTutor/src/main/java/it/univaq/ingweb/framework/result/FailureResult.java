@@ -28,6 +28,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class FailureResult {
 
+    private String MSG = null;
+    private String TITLE = null;
+    private String ICON = null;
+    private String alertType = null;
+    private String ERR = null;
+    private String TITLE_ERR = null;
+
     protected ServletContext context;
     private final TemplateResult template;
 
@@ -36,40 +43,69 @@ public class FailureResult {
         template = new TemplateResult(context);
     }
 
+    /* se c'è un eccezione */
     public void activate(Exception exception, HttpServletRequest request, HttpServletResponse response) {
-        String message;
         if (exception != null && exception.getMessage() != null) {
-            message = exception.getMessage();
+            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, exception.getMessage());
         } else if (exception != null) {
-            message = exception.getClass().getName();
-        } else {
-            message = "Unknown Error";
+            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, exception.getClass().getName());
         }
-        activate(message, request, response);
+
+        try {
+            request.setAttribute("err", "Errore Sconosciuto");
+            request.setAttribute("type_err", "Impossibile completare la richiesta.");
+            template.activate("error.ftl.html", request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+            } catch (IOException ex) {
+                Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
+
     public void activate(String message, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            //se abbiamo registrato un template per i messaggi di errore, proviamo a usare quello
-            //if an error template has been configured, try it
-            if (context.getInitParameter("view.error_template") != null) {
-                request.setAttribute("error", message);
-                request.setAttribute("outline_tpl", "");
-                template.activate(context.getInitParameter("view.error_template"), request, response);
-            } else {
-                //altrimenti, inviamo un errore HTTP
-                //otherwise, use HTTP errors
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message);
-            }
-        } catch (Exception ex) {
-            //se qualcosa va male inviamo un errore HTTP
-            //if anything goue wrong, sent an HTTP error
-            message += ". In addition, the following exception was generated while trying to display the error page: " + ex.getMessage();
+        /* se sono errori di convalidazione */
+        if (request.getAttribute("message").equals("errore_convalida") && request.getAttribute("referrer") != null) {
             try {
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, message);
-            } catch (IOException ex1) {
-                Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, ex1);
+                messageError((String) request.getAttribute("errore"));
+                request.setAttribute("TITLE", TITLE);
+                request.setAttribute("MSG", MSG);
+                request.setAttribute("alert", alertType);
+                request.setAttribute("ICON", ICON);
+
+                template.activate((String) request.getAttribute("referrer"), request, response);
+            } catch (Exception ex) {
+                try {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+                } catch (IOException e) {
+                    Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        } else { /* se sono errori gestiti */
+            try {
+                request.setAttribute("err", (String) request.getAttribute("errore"));
+                request.setAttribute("type_err", (String) request.getAttribute("title"));
+
+                template.activate("error.ftl.html", request, response);
+            } catch (Exception ex) {
+                try {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+                } catch (IOException e) {
+                    Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
+                }
             }
         }
+
+    }
+
+
+    protected void messageError(String msg){
+            TITLE = "ERRORE";
+            MSG = msg;
+            alertType = "danger";
+            ICON = "fas fa-exclamation-triangle";
     }
 }

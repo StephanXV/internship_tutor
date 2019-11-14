@@ -23,7 +23,8 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     
     private PreparedStatement sUtenteById, sUtenteByLogin, sUtenteByUser;
     private PreparedStatement iUtente, dUtente;
-    
+    private PreparedStatement sCheckUtenteExist;
+
     public UtenteDAO_MySQL(DataLayer d) {
         super(d);
     }    
@@ -38,6 +39,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             sUtenteById = connection.prepareStatement("SELECT * FROM utente WHERE id=?");
             sUtenteByLogin = connection.prepareStatement("SELECT * FROM utente WHERE username=? AND pw=?");
             sUtenteByUser = connection.prepareStatement("SELECT * FROM utente WHERE username=?");
+            sCheckUtenteExist = connection.prepareStatement("SELECT * FROM utente WHERE (username=?) or (email=?)");
             iUtente = connection.prepareStatement("INSERT INTO utente (email, username, pw, tipologia)"
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dUtente = connection.prepareStatement("DELETE FROM utente WHERE id=?");
@@ -79,6 +81,23 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             return ut;
         } catch (SQLException ex) {
             throw new DataException("Unable to create Utente object form ResultSet", ex);
+        }
+    }
+
+    @Override
+    public boolean checkUtenteExist(String user, String email) throws DataException {
+        try {
+            sCheckUtenteExist.setString(1, user);
+            sCheckUtenteExist.setString(2, email);
+            try (ResultSet rs = sCheckUtenteExist.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load Utente by ID", ex);
         }
     }
 

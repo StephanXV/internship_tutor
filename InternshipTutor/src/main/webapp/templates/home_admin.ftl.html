@@ -1,4 +1,18 @@
-<!--Table-->
+<noscript>
+    <style>
+        button.butt_js {
+            visibility: hidden!important;
+        }
+
+        a.a_no_js {
+            color: white!important;
+        }
+        a.a_no_js:hover {
+            color: white!important;
+        }
+    </style>
+</noscript>
+
 <div class="container-fluid table-responsive-lg mt-3">
     <div class="row">
         
@@ -29,7 +43,12 @@
                                 </button>
                             </a>
 
-                            <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white" data-toggle="modal" data-target="#rejectModal">
+                            <noscript>
+                                <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_nojs">
+                                    <a class="a_no_js" href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}"><i class="fas fa-trash-alt"></i></a>
+                                </button>
+                            </noscript>
+                            <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
 

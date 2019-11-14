@@ -24,6 +24,8 @@ public interface UtenteDAO {
     Utente getUtente(String username, String password) throws DataException;
 
     Utente getUtenteByUser(String username) throws DataException;
+
+    boolean checkUtenteExist(String user, String email) throws DataException;
     
     int insertUtente(Utente ut) throws DataException;
     

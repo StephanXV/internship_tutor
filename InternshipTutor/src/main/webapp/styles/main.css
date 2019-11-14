@@ -6,6 +6,15 @@ body {
     flex-direction: column;
 }
 
+.a_no_js {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
 .bodyContent{
     flex: 1 0 auto;
     padding-top: 15vh;

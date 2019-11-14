@@ -34,21 +34,14 @@ public class Registrazione extends InternshipTutorBaseController {
 
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
     private String TYPE = null;
-    private String MSG = null;
-    private String TITLE = null;
-    private String ICON = null;
-    private String alertType = null;
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
 
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
-            //(new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
-            request.setAttribute("TITLE", TITLE);
-            request.setAttribute("MSG", MSG);
-            request.setAttribute("alert", alertType);
-            request.setAttribute("ICON", ICON);
+            request.setAttribute("referrer", "registrazione.ftl.html");
+            //per vedere se tornare alla corrispondente pagina studente o azienda
             if (TYPE != null && TYPE.equals("STUDENT")) {
                 request.setAttribute("activeStudente", "active");
                 request.setAttribute("ariaStudente", "true");
@@ -59,11 +52,7 @@ public class Registrazione extends InternshipTutorBaseController {
                 request.setAttribute("ariaAzienda", "true");
             }
 
-            try {
-                action_open_reg(request, response);
-            } catch (IOException | ServletException | TemplateManagerException e) {
-                e.printStackTrace();
-            }
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
 
@@ -86,13 +75,17 @@ public class Registrazione extends InternshipTutorBaseController {
                 rt.setCognome(request.getParameter("cognome_rt"));
                 rt.setEmail(request.getParameter("email_rt"));
                 rt.setTelefono(request.getParameter("telefono_rt"));
-                ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().insertRespTirocini(rt);
+                int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().insertRespTirocini(rt);
+                if (insert != 1) {
+                    TYPE="AZIENDA";
+                    request.setAttribute("message", "errore_convalida");
+                    request.setAttribute("errore", "I campi del responsabile tirocini non sono corretti. Riprova!");
+                    action_error(request, response);
+                }
             } else {
                 TYPE="AZIENDA";
-                TITLE = "ERRORE";
-                MSG = "I campi inseriti non sono corretti. Riprova!";
-                alertType = "danger";
-                ICON = "fas fa-exclamation-triangle";
+                request.setAttribute("message", "errore_convalida");
+                request.setAttribute("errore", "I campi del responsabile tirocini non sono corretti. Riprova!");
                 action_error(request, response);
             }
             
@@ -101,18 +94,26 @@ public class Registrazione extends InternshipTutorBaseController {
                 // controlli sull'utente
                 if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString(request.getParameter("pw")) &&
                         SecurityLayer.checkEmail(request.getParameter("email"))) {
-                    
+
+                    /* encrypt pass */
+                    String password = request.getParameter("pw");
+                    String encryptedPassword = passwordEncryptor.encryptPassword(password);
+
                     ut.setUsername(request.getParameter("username"));
-                    ut.setPw(request.getParameter("pw"));
+                    ut.setPw(encryptedPassword);
                     ut.setEmail(request.getParameter("email"));
                     ut.setTipologia("az");
-                    ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+                    int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+                    if (insert != 1) {
+                        TYPE="AZIENDA";
+                        request.setAttribute("message", "errore_convalida");
+                        request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
+                        action_error(request, response);
+                    }
                 } else {
                     TYPE="AZIENDA";
-                    TITLE = "ERRORE";
-                    MSG = "I campi utente inseriti non sono validi. Riprova!";
-                    alertType = "danger";
-                    ICON = "fas fa-exclamation-triangle";
+                    request.setAttribute("message", "errore_convalida");
+                    request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
                     action_error(request, response);
                 }
                 
@@ -139,7 +140,13 @@ public class Registrazione extends InternshipTutorBaseController {
                         az.setRespTirocini(rt);
                         az.setUtente(ut);
                         az.setDurataConvenzione(SecurityLayer.checkNumeric(request.getParameter("durata")));
-                        ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
+                        int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
+                        if (insert != 1) {
+                            TYPE="AZIENDA";
+                            request.setAttribute("message", "errore_convalida");
+                            request.setAttribute("errore", "I dati aziendali inseriti non sono validi. Riprova!");
+                            action_error(request, response);
+                        }
 
                         request.setAttribute("MSG", "Grazie per la registrazione. \nPotrai eseguire l'accesso non appena l'admin confermerà la vostra richiesta di convenzionamento");
                         request.setAttribute("ICON", "fas fa-check");
@@ -148,42 +155,25 @@ public class Registrazione extends InternshipTutorBaseController {
                         res.activate("home_anonimo.ftl.html", request, response);
                     }  else {
                         TYPE="AZIENDA";
-                        TITLE = "ERRORE";
-                        MSG = "I dati aziendali inseriti non sono validi. Riprova!";
-                        alertType = "danger";
-                        ICON = "fas fa-exclamation-triangle";
+                        request.setAttribute("message", "errore_convalida");
+                        request.setAttribute("errore", "I dati aziendali inseriti non sono validi. Riprova!");
                         action_error(request, response);
                     }
                 } catch (DataException ex) {
-                    TYPE="AZIENDA";
-                    TITLE = "ERRORE";
-                    MSG = "I dati aziendali inseriti non sono validi. Riprova!";
-                    alertType = "danger";
-                    ICON = "fas fa-exclamation-triangle";
                     // se fallisce l'inserimento dell'azienda, cancella l'utente e il responsabile inseriti prima
-                    Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
+                    request.setAttribute("exception", ex);
                     action_error(request, response);
                 }
             } catch (DataException ex) {
-                TYPE="AZIENDA";
-                TITLE = "ERRORE";
-                MSG = "I campi utente non sono validi. Riprova!";
-                alertType = "danger";
-                ICON = "fas fa-exclamation-triangle";
                 // se fallisce l'inserimento dell'utente, cancella il responsabile inserito prima
-                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
+                request.setAttribute("exception", ex);
                 action_error(request, response);
             }
         } catch (DataException ex) {
-            TYPE="AZIENDA";
-            TITLE = "ERRORE";
-            MSG = "I dati del responsabile tirocini inseriti non sono validi. Riprova!";
-            alertType = "danger";
-            ICON = "fas fa-exclamation-triangle";
-            //request.setAttribute("exception", ex);
+            request.setAttribute("exception", ex);
             action_error(request, response);
         }    
     }
@@ -205,16 +195,28 @@ public class Registrazione extends InternshipTutorBaseController {
                 ut.setPw(encryptedPassword);
                 ut.setEmail(request.getParameter("email"));
                 ut.setTipologia("st");
-                ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+                if (((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().checkUtenteExist(request.getParameter("username"), request.getParameter("email"))){
+                    TYPE="STUDENT";
+                    request.setAttribute("message", "errore_convalida");
+                    request.setAttribute("errore", "Email o Password gi&agrave; esistenti. Riprova!");
+                    action_error(request, response);
+                    return;
+                }
+                    int insert = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
+                    if (insert != 1) {
+                        TYPE = "STUDENT";
+                        request.setAttribute("message", "errore_convalida");
+                        request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
+                        action_error(request, response);
+                        return;
+                    }
             } else {
                 TYPE="STUDENT";
-                TITLE = "ERRORE";
-                MSG = "I campi inseriti non sono corretti. Riprova!";
-                alertType = "danger";
-                ICON = "fas fa-exclamation-triangle";
+                request.setAttribute("message", "errore_convalida");
+                request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
                 action_error(request, response);
             }
-            
+
             try {
                 Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().createStudente();
                  // controlli sullo studente
@@ -224,7 +226,7 @@ public class Registrazione extends InternshipTutorBaseController {
                         SecurityLayer.checkString(request.getParameter("provincia_nascita")) && SecurityLayer.checkString(request.getParameter("citta_residenza")) &&
                         SecurityLayer.checkString(request.getParameter("cap_residenza")) && SecurityLayer.checkString(request.getParameter("provincia_residenza")) &&
                         SecurityLayer.checkString(request.getParameter("telefono")) && SecurityLayer.checkString(request.getParameter("corso_laurea")))  {
-                    
+
                     st.setNome(request.getParameter("nome"));
                     st.setCognome(request.getParameter("cognome"));
                     st.setCF(request.getParameter("codice_fiscale"));
@@ -238,7 +240,14 @@ public class Registrazione extends InternshipTutorBaseController {
                     st.setCorsoLaurea(request.getParameter("corso_laurea"));
                     st.setHandicap(Boolean.valueOf(request.getParameter("handicap")));
                     st.setUtente(ut);
-                    ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
+
+                    int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
+                    if (insert != 1){
+                        TYPE="STUDENT";
+                        request.setAttribute("message", "errore_convalida");
+                        request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
+                        action_error(request, response);
+                    }
 
                     request.setAttribute("MSG", "Registrazione effettuata con successo!\nOra puoi accedere ed iniziare ad usare i nostri servizi");
                     request.setAttribute("ICON", "fas fa-check");
@@ -249,33 +258,20 @@ public class Registrazione extends InternshipTutorBaseController {
 
                 } else {
                     TYPE="STUDENT";
-                    TITLE = "ERRORE";
-                    MSG = "I campi inseriti non sono corretti. Riprova!";
-                    alertType = "danger";
-                    ICON = "fas fa-exclamation-triangle";
+                    request.setAttribute("message", "errore_convalida");
+                    request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
                     action_error(request, response);
                 }
             } catch (DataException ex) {
                 // se fallisce l'inserimento dello studente, cancella l'utente inserito prima
-
-                Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
-                TYPE="STUDENT";
-                TITLE = "ERRORE";
-                MSG = "I campi inseriti non sono corretti. Riprova!";
-                alertType = "danger";
-                ICON = "fas fa-exclamation-triangle";
+                request.setAttribute("exception", ex);
                 action_error(request, response);
             }
-            
+
         } catch (DataException ex) {
             //request.setAttribute("exception", ex);
-            TYPE="STUDENT";
-            TITLE = "ERRORE";
-            MSG = "I campi inseriti non sono corretti. Riprova!";
-            alertType = "danger";
-            ICON = "fas fa-exclamation-triangle";
-            action_error(request, response);
+            request.setAttribute("exception", ex);
             action_error(request, response);
         }
         
@@ -315,4 +311,7 @@ public class Registrazione extends InternshipTutorBaseController {
         }
     }
 
-}
+    }
+
+
+

@@ -23,26 +23,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Login extends InternshipTutorBaseController {
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-    private String MSG = null;
-    private String TITLE = null;
-    private String ICON = null;
-    private String alertType = null;
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
-            //(new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
-            try {
-                request.setAttribute("TITLE", TITLE);
-                request.setAttribute("MSG", MSG);
-                request.setAttribute("alert", alertType);
-                request.setAttribute("ICON", ICON);
-
-                action_default(request,response);
-            } catch (TemplateManagerException | IOException | ServletException e) {
-                e.printStackTrace();
-            }
+            request.setAttribute("referrer", "login.ftl.html");
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
 
@@ -64,7 +51,6 @@ public class Login extends InternshipTutorBaseController {
         try {
             if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString("pw")) {
 
-                //Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtente(request.getParameter("username"), request.getParameter("pw"));
                 Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtenteByUser(request.getParameter("username"));
 
                 if (ut != null && passwordEncryptor.checkPassword(request.getParameter("pw"), ut.getPw())) {
@@ -77,29 +63,22 @@ public class Login extends InternshipTutorBaseController {
                     }
                 } else {
                     //notifica errore credenziali
-                    TITLE = "ERRORE";
-                    MSG = "Username e/o Password non validi";
-                    alertType = "danger";
-                    ICON = "fas fa-exclamation-triangle";
+                    request.setAttribute("message", "errore_convalida");
+                    request.setAttribute("errore", "Username e/o Password non validi");
                     action_error(request, response);
                 }
             } else {
-                TITLE = "ERRORE";
-                MSG = "I campi inseriti non sono corretti. Riprova!";
-                alertType = "danger";
-                ICON = "fas fa-exclamation-triangle";
+                //errore inserimento campi
+                request.setAttribute("message", "errore_convalida");
+                request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
                 action_error(request, response);
             }
         } catch (DataException ex) {
-            TITLE = "ERRORE";
-            MSG = "I campi inseriti non sono corretti. Riprova!";
-            alertType = "danger";
-            ICON = "fas fa-exclamation-triangle";
-            //request.setAttribute("exception", ex);
+            request.setAttribute("exception", ex);
             action_error(request, response);
         }
     }
-   
+
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
