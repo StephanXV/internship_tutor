@@ -49,7 +49,7 @@ insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, 
 		   (5, 1, 2, 3, 25, 1, null, '2019-11-21', '2020-1-27', current_timestamp()),
            (6, 1, 1, 4, 25, 0, null, null, null, current_timestamp()),
            (4, 2, 2, 6, 25, 1, null, '2019-12-21', '2020-1-27', current_timestamp()),
-           (5, 2, 2, 3, 25, 3, null, '2019-11-21', '2020-1-27', current_timestamp()),
+           (5, 2, 2, 3, 25, 2, null, '2019-11-21', '2020-1-27', current_timestamp()),
            (6, 2, 1, 3, 25, 0, null, null, null, current_timestamp());
            
 insert into resoconto (id_studente, id_offerta_tirocinio, ore_effettive, descrizione_attivita, giudizio, src_documento_resoconto)

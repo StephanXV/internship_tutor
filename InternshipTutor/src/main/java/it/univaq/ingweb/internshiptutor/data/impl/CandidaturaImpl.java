@@ -17,7 +17,7 @@ public class CandidaturaImpl implements Candidatura {
     private TutoreUni tutoreUni;
     private int cfu;
     private int oreTirocinio;
-    private int statoCandidatura; // 0=in attesa, 1=accettata, 2=in corso, 3=conclusa, 4=rifiutata
+    private int statoCandidatura; // 0=in attesa, 1=accettata/in corso, 2=conclusa, 3=rifiutata
     private String srcDocCandidatura;
     private Date inizioTirocinio;
     private Date fineTirocinio;
