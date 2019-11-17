@@ -35,6 +35,12 @@
         border-bottom-left-radius: 0%;
     }
 }
+
+@media (max-width: 992px) {
+    .btnLogin{
+        width: 35% !important;
+    }
+}
 .register-left img{
     margin-top: 15%;
     margin-bottom: 5%;

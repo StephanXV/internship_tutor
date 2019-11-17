@@ -57,10 +57,29 @@ public class Home extends InternshipTutorBaseController {
             // lista aziende registrate, ovvero in attesa di convenzione
             List<Azienda> az_registrate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(0);
             request.setAttribute("az_registrate", az_registrate);
+            if (az_registrate.size() > 0) {
+                request.setAttribute("num_az_registrate", az_registrate.size());
+            } else {
+                request.setAttribute("num_az_registrate", 0);
+            }
             
             // lista azinde convenzionate
             List<Azienda> az_convenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
             request.setAttribute("az_convenzionate", az_convenzionate);
+            if (az_convenzionate.size() > 0) {
+                request.setAttribute("num_az_convenzionate", az_convenzionate.size());
+            } else {
+                request.setAttribute("num_az_convenzionate", 0);
+            }
+
+            // lista azinde rifiutate
+            List<Azienda> az_rifiutate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(2);
+            request.setAttribute("az_rifiutate", az_rifiutate);
+            if (az_rifiutate.size() > 0) {
+                request.setAttribute("num_az_rifiutate", az_rifiutate.size());
+            } else {
+                request.setAttribute("num_az_rifiutate", 0);
+            }
             
             
             TemplateResult res = new TemplateResult(getServletContext());

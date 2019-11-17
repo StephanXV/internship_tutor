@@ -1,153 +1,211 @@
-<noscript>
-    <style>
-        button.butt_js {
-            visibility: hidden!important;
-        }
 
-        a.a_no_js {
-            color: white!important;
-        }
-        a.a_no_js:hover {
-            color: white!important;
-        }
-    </style>
-</noscript>
+<div class="table-responsive-lg mt-3">
 
-<div class="container-fluid table-responsive-lg mt-3">
-    <div class="row">
-        
-        <#if (az_registrate?size>0)>
-        <!-- colonna 1 -->
-        <div class="col bg-light mx-2 py-2">
-            <h4>Richieste di convenzionamento</h4> <br>
-            <table class="table table-hover" id="myTableConv">
-            <!--Table head-->
+    <div class="row notification-request">
 
-            <thead>
-                    <tr class="bg-primary">
-                        <th class="text-white">Azienda</th>
-                        <th class="text-white">Richiesta</th>
-                        <th class="text-white">Upload</th>
-                    </tr>
-                </thead>
-                <!--Table head-->
-                <!--Table body-->
-                <tbody>
-                    <#list az_registrate as az_registrata>
-                    <tr>
-
-                        <td>${az_registrata.ragioneSociale}</td>
-                        <td>
-                            <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}">
-                                <button type="button" class="btn btn-primary text-white">
-                                    <i class="fa fa-file-download"></i>
-                                </button>
-                            </a>
-
-                            <noscript>
-                                <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_nojs">
-                                    <a class="a_no_js" href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}"><i class="fas fa-trash-alt"></i></a>
-                                </button>
-                            </noscript>
-                            <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header bg-primary text-white">
-                                    <h5 class="modal-title" id="exampleModalLabel">Attenzione</h5>
-                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    Vuoi davvero rifiutare la richiesta dell'azienda ${(az_registrata.ragioneSociale)!"vuoto"}?
-                                  </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                    <a href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}">
-                                        <button type="button" class="btn bg-danger text-white">S&iacute;</button>
-                                    </a>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </td>
-                        <td>
-                            <form method='post' action='upload?az=${az_registrata.utente.id}' enctype='multipart/form-data'>
-                                <input name="tipo" type="hidden" value="convenzione" />
-                                <input type='file' name='convenzionetoupload'/>                         
-                          
-                                <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
-                                    <i class="fas fa-file-upload"></i>
-                                </button>
-                            </form>
-                        </td>
-
-                    </tr>
-                    </#list>
-                </tbody>
-                <!--Table body-->
-            </table>
-            <!--Table-->
+        <div class="col-3 mx-auto notice notice-success">
+            <div class="row">
+                <div class="col-9">
+                    <strong>Convenzioni</strong></i><br>
+                    ${num_az_convenzionate}
+                </div>
+                <div class="col-3 my-auto">
+                    <i class="fas fa-briefcase fa-2x"></i>
+                </div>
+            </div>
         </div>
 
-        <#else>
-        <div class="col bg-light mx-2 pt-4 text-center">
-            <span class="lead">Non ci sono richieste di convenzionamento da visualizzare</span>
+        <div class="col-3 mx-auto notice notice-warning">
+            <div class="row">
+                <div class="col-9">
+                    <strong>Richieste in sospeso</strong></i><br>
+                    ${num_az_registrate}
+                </div>
+                <div class="col-3 my-auto">
+                    <i class="fas fa-hourglass-start fa-2x"></i>
+                </div>
+            </div>
         </div>
-        </#if>
-        
-        <#if (az_convenzionate?size>0)>
-        <!-- colonna 2 -->
-        <div class="col bg-light py-2 mx-2">
-            <h4>Aziende convenzionate</h4> <br>
-            <table class="table table-hover" id="myTableConvAz">
-            <!--Table head-->
-            <thead>
-                    <tr class="bg-primary">
-                        <th class="text-white">Azienda</th>
-                        <th class="text-white">Attiva dal</th>
-                        <th class="text-white">Durata (mesi)</th>
-                        <th class="text-white">Documento</th>
-                    </tr>
-                </thead>
-                <!--Table head-->
-                <!--Table body-->
-                <tbody>
-                    <#list az_convenzionate as az_convenzionata>
-                    <tr>
-                        
-                        <td>${az_convenzionata.ragioneSociale}</td>
-                        <td>${az_convenzionata.inizioConvenzione}</td>
-                        <td>${az_convenzionata.durataConvenzione}</td>
-                        <td>
-                            <form method="get" action="download">
-                                <input name="tipo" type="hidden" value="convenzione" />
-                                <input width="60px" readonly name="res" value="${az_convenzionata.srcDocConvenzione}"/>
-                                <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white">
-                                    <i class="fa fa-file"></i>
-                                </button>
-                            </form>
-                        </td>
-                        
-                    </tr>
-                    </#list>
-                </tbody>
-                <!--Table body-->
-            </table>
-            <!--Table-->
+
+        <div class="col-3 mx-auto notice notice-danger">
+            <div class="row">
+           <div class="col-9">
+               <strong>Richieste rifiutate</strong></i><br>
+               ${num_az_rifiutate}
+           </div>
+            <div class="col-3 my-auto">
+                <i class="fas fa-trash fa-2x"></i>
+            </div>
+            </div>
         </div>
-        <#else>
-        <span class="lead">Non ci sono aziende attualmente convenzionate</span>
-        </#if>
+
     </div>
+
+
+    <section id="tabs" class="project-tab">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <div class="nav nav-tabs nav-fill tab-table" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link item-tab-table active" id="nav-attesa-tab" data-toggle="tab" href="#nav-attesa" role="tab" aria-controls="nav-attesa" aria-selected="false" >Richieste in attesa</a>
+                            <a class="nav-item nav-link item-tab-table" id="nav-convenzionate-tab" data-toggle="tab" href="#nav-conv" role="tab" aria-controls="nav-conv" aria-selected="true" >Aziende Convenzionate</a>
+                            <a class="nav-item nav-link item-tab-table" id="nav-rifiutate-tab" data-toggle="tab" href="#nav-canc" role="tab" aria-controls="nav-canc" aria-selected="false" >Richieste Rifiutate</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active pt-4 tabData" id="nav-attesa" role="tabpanel" aria-labelledby="nav-attesa-tab">
+                            <#if (az_registrate?size>0)>
+                            <table class="table table-hover nowrap" id="myTableConv" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Azienda</th>
+                                    <th>Richiesta</th>
+                                    <th>Upload</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <#list az_registrate as az_registrata>
+                                <tr>
+
+                                    <td>${az_registrata.ragioneSociale}</td>
+                                    <td>
+                                        <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}">
+                                            <button type="button" class="btn btn-primary text-white">
+                                                <i class="fa fa-file-download"></i>
+                                            </button>
+                                        </a>
+
+                                        <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header bg-primary text-white">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Attenzione</h5>
+                                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Vuoi davvero rifiutare la richiesta dell'azienda ${(az_registrata.ragioneSociale)!"vuoto"}?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                        <a href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}">
+                                                            <button type="button" class="btn bg-danger text-white">S&iacute;</button>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <form method='post' action='upload?az=${az_registrata.utente.id}' enctype='multipart/form-data'>
+                                            <input name="tipo" type="hidden" value="convenzione" />
+                                            <input type='file' name='convenzionetoupload'/>
+
+                                            <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                                                <i class="fas fa-file-upload"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                                </#list>
+
+                                </tbody>
+                            </table>
+
+                            <#else>
+                            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                                <span class="lead">Non ci sono richieste di convenzionamento da visualizzare</span>
+                            </div>
+                        </#if></div>
+
+                        <div class="tab-pane fade pt-4 tabData" id="nav-conv" role="tabpanel" aria-labelledby="nav-convenzionate-tab">
+                            <#if (az_convenzionate?size>0)>
+                            <table class="table table-hover nowrap" id="myTableConvAz" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Azienda</th>
+                                    <th>Attiva dal</th>
+                                    <th>Durata (mesi)</th>
+                                    <th>Documento</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <#list az_convenzionate as az_convenzionata>
+                                <tr>
+
+                                    <td>${az_convenzionata.ragioneSociale}</td>
+                                    <td>${az_convenzionata.inizioConvenzione}</td>
+                                    <td>${az_convenzionata.durataConvenzione}</td>
+                                    <td>
+                                        <form method="get" action="download">
+                                            <input name="tipo" type="hidden" value="convenzione" />
+                                            <input width="60px" readonly name="res" value="${az_convenzionata.srcDocConvenzione}"/>
+                                            <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white">
+                                                <i class="fa fa-file"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+                                </#list>
+                                </tbody>
+                            </table>
+
+                            <#else>
+                            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                                <span class="lead">Non ci sono aziende attualmente convenzionate</span>
+                            </div>
+                        </#if></div>
+
+                        <div class="tab-pane fade tabData" id="nav-canc" role="tabpanel" aria-labelledby="nav-rifiutate-tab">
+                            <table class="table" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Contest Name</th>
+                                    <th>Date</th>
+                                    <th>Award Position</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><a href="#">Work 1</a></td>
+                                    <td>Doe</td>
+                                    <td>john@example.com</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">Work 2</a></td>
+                                    <td>Moe</td>
+                                    <td>mary@example.com</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">Work 3</a></td>
+                                    <td>Dooley</td>
+                                    <td>july@example.com</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div>
 
-<script>$(document).ready(function() {
+<script>
+    $(document).ready(function() {
+
     $('#myTableConv').DataTable( {
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     } );
@@ -155,7 +213,7 @@
     $('#myTableConvAz').DataTable( {
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     } );
-} );
+});
 </script>
 
 <script>
