@@ -12,13 +12,15 @@
 
             <#if (ot_attive?size>0)>
             <!-- colonna 1 -->
-            <div class="col-8 bg-light mx-2">
-                <table class="table table-hover">
+            <div class="col bg-light mx-2 py-4 mb-2">
+                <h4>Offerte di tirocinio attive</h4> <br>
+                <table id="myTableTiroAtt" class="table table-hover">
                     <!--Table head-->
-                    <caption style="caption-side: top">Offerte di tirocinio attive</caption>
+                    
                     <thead>
                         <tr class="bg-primary">
                             <th class="text-white">Titolo</th>
+                            <th class="text-white">Studenti</th>
                             <th class="text-white">Luogo</th>
                             <th class="text-white">Durata</th>
                             <th class="text-white">Gestione</th>
@@ -31,7 +33,10 @@
                         <tr>
 
                             <td>
-                                <span class="mr-1">${ot_attiva.titolo}</span>
+                                <span>${ot_attiva.titolo}</span>
+                            </td>
+                            <td>
+                                <span class="mr-1">${ot_attiva.candidature?size}</span>
                                 <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}">
                                     <button type="button" class="btn btn-primary text-white">
                                         <i class="fas fa-search"></i>
@@ -54,20 +59,22 @@
                 <!--Table-->
             </div>
             <#else>
-            <div class="col-8 bg-light mx-2 pt-4 text-center">
+            <div class="col bg-light mx-2 pt-4 text-center">
                 <span class="lead">Non ci sono offerte di tirocinio attive</span>
             </div>
             </#if>
 
             <#if (ot_disattive?size>0)>
             <!-- colonna 2 -->
-            <div class="col bg-light mx-2">
-                <table class="table table-hover">
+            <div class="col bg-light mx-2 py-4 mb-2">
+                <h4>Offerte di tirocinio disattive</h4> <br>
+                <table id="myTableTiroDis" class="table table-hover">
                 <!--Table head-->
-                <caption style="caption-side: top">Offerte di tirocinio disattive</caption>
+                
                 <thead>
                         <tr class="bg-primary">
                             <th class="text-white">Titolo</th>
+                            <th class="text-white">Studenti</th>
                             <th class="text-white">Gestione</th>
                         </tr>
                     </thead>
@@ -77,7 +84,10 @@
                         <#list ot_disattive as ot_disattiva>
                         <tr>
                             <td>
-                                <span class="mr-1">${ot_disattiva.titolo}</span>
+                                <span>${ot_disattiva.titolo}</span>
+                            </td>
+                            <td>
+                                <span class="mr-1">${ot_disattiva.candidature?size}</span>
                                 <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}">
                                     <button type="button" class="btn btn-primary text-white">
                                         <i class="fas fa-search"></i>
@@ -120,3 +130,14 @@
     </#switch>
         
 </div>
+
+<script>$(document).ready(function() {
+    $('#myTableTiroAtt').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+
+    $('#myTableTiroDis').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+} );
+</script>
