@@ -119,10 +119,10 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     }
 
     @Override
-    public List<Candidatura> getCandidature(OffertaTirocinio ot, int stato) throws DataException {
+    public List<Candidatura> getCandidature(int id_ot, int stato) throws DataException {
         List<Candidatura> result = new ArrayList();
         try {
-            sCandidatureByTirocinioAndStato.setInt(1, ot.getId());
+            sCandidatureByTirocinioAndStato.setInt(1, id_ot);
             sCandidatureByTirocinioAndStato.setInt(2, stato);
             try (ResultSet rs = sCandidatureByTirocinioAndStato.executeQuery()) {
                 while (rs.next()) {

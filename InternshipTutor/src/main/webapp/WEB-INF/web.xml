@@ -146,6 +146,14 @@
         <servlet-name>Download</servlet-name>
         <url-pattern>/download</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>GestioneCandidature</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.GestioneCandidature</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GestioneCandidature</servlet-name>
+        <url-pattern>/gestione_candidati</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

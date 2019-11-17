@@ -10,7 +10,7 @@ import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class TutoreTirocinioImpl implements TutoreTirocinio {
     

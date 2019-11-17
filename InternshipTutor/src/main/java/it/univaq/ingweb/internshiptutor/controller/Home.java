@@ -98,6 +98,7 @@ public class Home extends InternshipTutorBaseController {
             // dati dell'azienda
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_utente);
             request.setAttribute("nome_utente", az.getRagioneSociale());
+            request.setAttribute("azienda", az);
             
             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
             List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
