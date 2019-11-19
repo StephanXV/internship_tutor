@@ -32,8 +32,9 @@ public class GestioneCandidature extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_ot) 
+    private void action_default(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException, TemplateManagerException {
+        int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         try {
             OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
             request.setAttribute("nome_tirocinio", ot.getTitolo());
@@ -57,8 +58,10 @@ public class GestioneCandidature extends InternshipTutorBaseController {
     }
     
     
-    private void action_accetta_cand(HttpServletRequest request, HttpServletResponse response, int id_ot) 
+    private void action_accetta_cand(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException, TemplateManagerException {
+        int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+        int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         try {
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, true);
             response.sendRedirect("home");
@@ -68,8 +71,10 @@ public class GestioneCandidature extends InternshipTutorBaseController {
         }  
     }
     
-    private void action_rifiuta_cand(HttpServletRequest request, HttpServletResponse response, int id_ot)
+    private void action_rifiuta_cand(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TemplateManagerException {
+        int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+        int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         try {
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, false);
             response.sendRedirect("home");
@@ -87,9 +92,19 @@ public class GestioneCandidature extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
             }
-            if (request.getParameter("ot") != null) {
-                action_default(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
-            }   
+            if (null == request.getParameter("convalida")) {
+                action_default(request, response);
+            } 
+            else switch (request.getParameter("convalida")) {
+                case "si":
+                    action_accetta_cand(request, response);
+                    break;
+                case "no":
+                    action_rifiuta_cand(request, response);
+                    break;
+                default:
+                    break;
+            }
         } catch (TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

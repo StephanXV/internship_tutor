@@ -23,7 +23,7 @@
         
         <#if (richieste_cand?size>0)>
         <!-- colonna 1 -->
-        <div class="col text-primary bg-light mx-2 py-2">
+        <div class="col bg-light mx-2 py-2">
             <h4>Candidature</h4> <br>
             <table class="table table-hover" id="myTableCand">
             <!--Table head-->
@@ -35,6 +35,8 @@
                         <th class="text-white">Corso di laurea</th>
                         <th class="text-white">Cfu richiesti</th>
                         <th class="text-white">Tutore Universitario</th>
+                        <th class="text-white">Documento</th>
+                        <th class="text-white">Upload</th>
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -48,7 +50,52 @@
                         <td>${richiesta_cand.studente.corsoLaurea}</td>
                         <td>${richiesta_cand.cfu}</td>
                         <td>${richiesta_cand.tutoreUni.nome} ${richiesta_cand.tutoreUni.cognome}</td>
+                        <td>
+                                <a style="text-decoration: none;" target="_blank" <td>
+                                <a style="text-decoration: none;" target="_blank" href="docs?tipo=1&st=${richiesta_cand.studente.utente.id}&ot=${richiesta_cand.offertaTirocinio.id}">
+                                    <button type="button" class="btn btn-primary text-white">
+                                        <i class="fa fa-file-download"></i>
+                                    </button>
+                                </a>
 
+                                <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title" id="exampleModalLabel">Attenzione</h5>
+                                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="modal-body">
+                                                Vuoi davvero rifiutare la richiesta dell'azienda ${(richiesta_cand.studente.nome)!"Nome"} ${(richiesta_cand.studente.cognome)!"Cognome"}?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <a href="gestione_candidati?convalida=no&ot=${richiesta_cand.offertaTirocinio.id}&st=${richiesta_cand.studente.utente.id}">
+                                                    <button type="button" class="btn bg-danger text-white">S&iacute;</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <form method='post' action='upload?ot=${richiesta_cand.offertaTirocinio.id}&st=${richiesta_cand.studente.utente.id}' enctype='multipart/form-data'>
+                                    <input name="tipo" type="hidden" value="candidatura" />
+                                    <input type='file' name='candidaturatoupload'/>
+
+                                    <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                                        <i class="fas fa-file-upload"></i>
+                                        </button>
+                                </form>
+                            </td>
                     </tr>
                     </#list>
                 </tbody>
@@ -100,7 +147,9 @@
             <!--Table-->
         </div>
         <#else>
-        <span class="lead">Non ci sono ancora tirocinanti</span>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono tirocinanti in corso</span>
+        </div>
         </#if>
     
         <#if (tiro_terminati?size>0)>
@@ -138,7 +187,9 @@
             <!--Table-->
         </div>
         <#else>
-        <span class="lead">Non ci sono tirocinanti che hanno concluso il tirocinio</span>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono tirocinanti che hanno concluso il tirocinio</span>
+        </div>
         </#if>
     </div>
 </div>
@@ -156,5 +207,16 @@
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     } );
 } );
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("input[name='candidaturatoupload']").change(function(){
+          if ($(this).val())
+          {
+            $("button[name='submit']").removeAttr('disabled');
+          }
+        });
+    } );
 </script>
 
