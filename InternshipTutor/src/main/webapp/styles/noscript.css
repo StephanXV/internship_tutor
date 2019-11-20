@@ -1,3 +1,7 @@
 .navbar-expand-lg:hover .collapse{
     display: block;
 }
+
+.dettaglio-azienda-js{
+    display: none;
+}

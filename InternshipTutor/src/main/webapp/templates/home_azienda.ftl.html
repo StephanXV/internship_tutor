@@ -1,11 +1,19 @@
 <!--Table-->
 <div class="container-fluid table-responsive-lg mt-3">
     <#switch azienda.statoConvenzione>
-        <#case 0>
-        <div class="container bg-light p-4 text-center">
-            <span class="lead">Azienda non abilitata: attenda che l'admin visioni la sua richiesta di convenzionamento</span>
+    <#case 0>
+    <div class="col-8 mx-auto p-4">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Azienda non abilitata</h1>
+            <hr class="my-4">
+            <p>Attendi che l'admin visioni la sua richiesta di convenzionamento e ritenta l'accesso.</p>
+            <p class="lead">
+                <a href="logout" class="btn btn-lg btn-primary">Logout&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+            </p>
         </div>
-        <#break>
+    </div>
+
+    <#break>
         
         <#case 1>
         <div class="row">
@@ -117,14 +125,28 @@
         <#break>
         
         <#case 2>
-        <div class="container bg-light p-4 text-center">
-            <span class="lead">L'amministratore ha rifiutato la vostra richiesta di convenzione</span>
+        <div class="col-8 mx-auto p-4">
+            <div class="jumbotron text-center">
+                <h1 class="display-4">Azienda non abilitata</h1>
+                <hr class="my-4">
+                <p>L'amministratore ha rifiutato la vostra richiesta di convenzione</p>
+                <p class="lead">
+                    <a href="logout" class="btn btn-lg btn-primary">Logout&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+                </p>
+            </div>
         </div>
         <#break>
         
         <#case 3>
-        <div class="container bg-light p-4 text-center">
-            <span class="lead">La convenzione con il DISIM è scaduta</span>
+        <div class="col-8 mx-auto p-4">
+             <div class="jumbotron text-center">
+                <h1 class="display-4">Azienda non abilitata</h1>
+                <hr class="my-4">
+                <p>La convenzione con il DISIM è scaduta</p>
+                <p class="lead">
+                    <a href="logout" class="btn btn-lg btn-primary">Logout&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+                </p>
+            </div>
         </div>
         <#break>
     </#switch>

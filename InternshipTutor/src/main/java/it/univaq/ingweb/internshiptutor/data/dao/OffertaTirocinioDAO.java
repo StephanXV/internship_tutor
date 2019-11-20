@@ -30,4 +30,6 @@ public interface OffertaTirocinioDAO {
     int insertOffertaTirocinio(OffertaTirocinio ot) throws DataException;
     
     int updateOffertaTirocinioAttiva(int id_ot, boolean attiva) throws DataException;
+
+    List<OffertaTirocinio> searchOffertaTirocinio(String durata, String titolo, boolean facilitazioni, String luogo, String settore, String obiettivi, String corsoStudio) throws DataException;
 }

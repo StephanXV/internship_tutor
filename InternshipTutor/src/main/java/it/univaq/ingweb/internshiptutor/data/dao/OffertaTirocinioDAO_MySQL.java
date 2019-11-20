@@ -28,6 +28,8 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
     private PreparedStatement sOffertaTirocinio;
     private PreparedStatement sOfferteTirocinioByAzienda, sOfferteTirocinioByAttiva;
     private PreparedStatement iOffertaTirocinio, uOffertaTirocinioAttiva;
+    private PreparedStatement ricercaTirocinio;
+    private PreparedStatement ricercaTirocinioFac;
 
     public OffertaTirocinioDAO_MySQL(DataLayer d) {
         super(d);
@@ -43,6 +45,8 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
                     + "durata, titolo, obiettivi, modalita, facilitazioni, id_azienda) values (?,?,?,?,?,?,?,?,?)"
                     , Statement.RETURN_GENERATED_KEYS);
             uOffertaTirocinioAttiva = connection.prepareStatement("UPDATE offerta_tirocinio SET attiva=? WHERE id=?");
+            ricercaTirocinio = connection.prepareStatement(" SELECT t.*, a.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ?)");
+            ricercaTirocinioFac = connection.prepareStatement(" SELECT t.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ? and t.facilitazioni is not null)");
             
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
@@ -193,6 +197,45 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             return uOffertaTirocinioAttiva.executeUpdate();            
         } catch (SQLException ex) {
             throw new DataException("Unable to update offerta tirocinio attiva", ex);
+        }
+    }
+
+    @Override
+    public List<OffertaTirocinio> searchOffertaTirocinio(String durata, String titolo, boolean facilitazioni, String luogo, String settore, String obiettivi, String corsoStudio) throws DataException {
+        List<OffertaTirocinio> result = new ArrayList();
+
+        try {
+            if (!facilitazioni){
+                ricercaTirocinio.setString(1, luogo);
+                ricercaTirocinio.setString(2, settore);
+                ricercaTirocinio.setString(3, titolo);
+                ricercaTirocinio.setString(4 ,obiettivi);
+                ricercaTirocinio.setString(5, durata);
+                ricercaTirocinio.setString(6, corsoStudio);
+
+                try (ResultSet rs = ricercaTirocinio.executeQuery()) {
+                    while (rs.next()) {
+                        result.add(createOffertaTirocinio(rs));
+                    }
+                    return result;
+                }
+            } else {
+                ricercaTirocinioFac.setString(1, luogo);
+                ricercaTirocinioFac.setString(2, settore);
+                ricercaTirocinioFac.setString(3, titolo);
+                ricercaTirocinioFac.setString(4 ,obiettivi);
+                ricercaTirocinioFac.setString(5, durata);
+                ricercaTirocinioFac.setString(6, corsoStudio);
+
+                try (ResultSet rs = ricercaTirocinioFac.executeQuery()) {
+                    while (rs.next()) {
+                        result.add(createOffertaTirocinio(rs));
+                    }
+                    return result;
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to search offerta tirocinio", ex);
         }
     }
 }

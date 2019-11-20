@@ -8,15 +8,14 @@
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/form.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO_MySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO_MySQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/noscript.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/noscript.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/lista_aziende.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/lista_aziende.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/registrazione.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/registrazione.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/ricerca_tirocini.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/ricerca_tirocini.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -281,6 +280,11 @@
       <workItem from="1573824030743" duration="11590000" />
       <workItem from="1573917013125" duration="10929000" />
       <workItem from="1573983664950" duration="23868000" />
+      <workItem from="1574012470573" duration="306000" />
+      <workItem from="1574063798047" duration="494000" />
+      <workItem from="1574088165905" duration="201000" />
+      <workItem from="1574155498449" duration="18987000" />
+      <workItem from="1574235855647" duration="8884000" />
     </task>
     <servers />
   </component>

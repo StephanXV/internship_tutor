@@ -38,3 +38,42 @@ body {
     margin-right: -3px;
 }
 
+/****** dettaglio azienda *******/
+ .mapouter{
+     position:relative;
+     text-align:right;
+ }
+
+.gmap_canvas {
+    overflow:hidden;
+    background:none!important;
+    height:100%;
+    width:100%;
+}
+.raiting_h2, .raiting_p {
+    display: inline;
+}
+.raiting_p {
+    color: #7f7f84;
+}
+.progress-bar{
+    margin-left: -15px;
+}
+.btn_star{
+    pointer-events: none;
+}
+/**************************************************/
+
+
+/**** ricerca tirocini *****/
+.btnSearch{
+    float: right;
+    border-radius: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-top: 15px;
+}
+
+.searchFilters{
+    margin-top: 60px;
+}
