@@ -50,7 +50,9 @@
                     <th>Obiettivi</th>
                     <th>Luogo</th>
                     <th>Durata</th>
-                    <#if (session.tipologia == st)><th>Azioni</th></#if>
+                    <#if (tipo == "st")>
+                        <th>Azioni</th>
+                    </#if>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,7 +68,7 @@
                     <td>${tirocinio.obiettivi}</td>
                     <td>${tirocinio.luogo}</td>
                     <td>${tirocinio.durata} mesi</td>
-                    <#if (session.tipologia == st)>
+                    <#if (tipo == "st")>
                     <td>
                         <a href="richiesta_tirocinio?n=${tirocinio.id}">
                             <button>richiedi tirocinio</button>

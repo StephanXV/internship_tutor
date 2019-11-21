@@ -37,7 +37,7 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
             }
         try {
             try {
-                action_default(request, response, n);
+                action_default(request, response, n, s);
             } catch (DataException ex) {
                 request.setAttribute("exception", ex);
                 action_error(request, response);
@@ -48,12 +48,11 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, int n) throws TemplateManagerException, DataException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int n, HttpSession s) throws TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
-        HttpSession s = SecurityLayer.checkSession(request);
         Azienda azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
         List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
-        request.setAttribute("session", s);
+        request.setAttribute("tipo", s.getAttribute("tipologia"));
         request.setAttribute("tirocini", tirocini);
         request.setAttribute("azienda", azienda);
         request.setAttribute("page_title", "Azienda:" + azienda.getRagioneSociale());
