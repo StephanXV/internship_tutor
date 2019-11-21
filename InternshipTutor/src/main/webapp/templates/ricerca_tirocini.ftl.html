@@ -1,1 +1,158 @@
-<h1>Qui si possono ricercare offerte di tirocinio</h1>
+<#if noSearch?has_content> <!-- check if content exist and is not empty -->
+<div class="container">
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;<strong>ATTENZIONE: &nbsp;</strong>
+        ${noSearch}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+</#if>
+
+<div class="card">
+    <div class="card-header">
+        Ricerca Tirocini
+    </div>
+    <div class="card-body">
+
+        <form method="post" action="tirocini">
+            <div class="form-group float-label-control pl-3 pr-3">
+                <label for="titolo"><b>Ricerca per titolo...</b></label>
+                <input name="titolo" placeholder="Ricerca per titolo..." value="${p_titolo}" type="text" class="form-control" id="titolo">
+            </div>
+
+            <div class="row searchFilters">
+                <div class="col-12 col-md-4 pl-3 pr-3">
+                    <div class="form-group">
+                        <label for="competenze"><i class="fas fa-book pr-2"></i><b>Corso di studi</b></label>
+                        <input name="corso" placeholder="Corso..." value="${p_corso}" type="text" class="form-control" id="competenze">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 pl-3 pr-3">
+                    <div class="form-group">
+                        <label for="selecth"><i class="far fa-clock pr-2"></i><b>Durata (ore)</b></label>
+                        <select name="durata" class="custom-select form-control" id="selecth">
+                            <option selected value="">Durata...</option>
+                            <option value="1">25 (1 CFU)</option>
+                            <option value="2">50 (2 CFU)</option>
+                            <option value="3">75 (3 CFU)</option>
+                            <option value="4">100 (4 CFU)</option>
+                            <option value="5">125 (5 CFU)</option>
+                            <option value="6">150 (6 CFU)</option>
+                            <option value="7">175 (7 CFU)</option>
+                            <option value="8">200 (8 CFU)</option>
+                            <option value="9">225 (9 CFU)</option>
+                            <option value="10">250 (10 CFU)</option>
+                            <option value="11">275 (11 CFU)</option>
+                            <option value="12">300 (12 CFU)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 pl-3 pr-3">
+                    <div class="form-group">
+                        <label for="settore"><i class="fas fa-briefcase pr-2"></i><b>Settore</b></label>
+                        <input name="settore" placeholder="Settore..." value="${p_settore}" type="text" class="form-control" id="settore">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-2">
+                <div class="col-12 col-md-4 pl-3 pr-3">
+                    <div class="form-group">
+                        <label for="obiettivi"><i class="fas fa-crosshairs pr-2"></i><b>Obiettivi</b></label>
+                        <input name="obiettivi" placeholder="Obiettivi..." value="${p_obiettivi}" type="text" class="form-control" id="obiettivi">
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 pl-3 pr-3">
+                    <div class="form-group">
+                        <label for="selectFacilitazioni"><i class="fas fa-plus-square pr-2"></i><b>Facilitazioni</b></label>
+                        <select name="facilitazioni" class="custom-select form-control" id="selectFacilitazioni">
+                            <option selected value="">Facilitazioni...</option>
+                            <option value="1">Si</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 pl-3 pr-3">
+                    <div class="form-group">
+                        <label for="luogo"><i class="fas fa-map-marker-alt pr-2"></i><b>Luogo</b></label>
+                        <input name="luogo" placeholder="Luogo..." value="${p_luogo}" type="text" class="form-control" id="luogo">
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btnSearch" name="submit" value="Cerca" type="submit">Cerca&nbsp;&nbsp;<i class="fas fa-search"></i></button>
+
+        </form>
+
+    </div>
+</div>
+
+
+<#if (tirocini?size>0)>
+<div style="margin-top: 65px">
+<table class="table table-hover" id="tableListaTirocini" cellspacing="0">
+    <thead class="bg-primary text-white">
+    <tr>
+        <th>Tirocinio</th>
+        <th>Settore</th>
+        <th>Obiettivi</th>
+        <th>Luogo</th>
+        <th>Durata</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <#list tirocini as tirocinio>
+    <tr>
+
+        <td>
+            <a href="#">
+                ${tirocinio.titolo}
+            </a>
+        </td>
+        <td>${tirocinio.settore} ${tirocinio.azienda.ragioneSociale}</td>
+        <td>${tirocinio.obiettivi}</td>
+        <td>${tirocinio.luogo}</td>
+        <td>${tirocinio.durata} mesi</td>
+        <td>
+            <a href="richiesta_tirocinio?n=${tirocinio.id}">
+                <button>richiedi tirocinio</button>
+            </a>
+        </td>
+
+    </tr>
+    </#list>
+    </tbody>
+</table>
+
+<#else>
+    <div class="jumbotron text-center" style="margin-bottom: 30px; margin-top: 60px">
+        <h1 class="display-4"><i class="far fa-times-circle mr-2"></i>OPSS...</h1>
+        <p class="lead">Nessun risultato.</p>
+        <hr class="my-4">
+        <p>Non &egrave; stato trovato nessun tirocinio che rispetta i parametri della ricerca.</p>
+    </div>
+</#if>
+</div>
+
+
+
+<script src="js/floating_label.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#tableListaTirocini').DataTable( {
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        } );
+
+        document.getElementById("selecth").value = "${p_durata}";
+        document.getElementById("selectFacilitazioni").value = "${p_facilitazioni}";
+
+    });
+</script>

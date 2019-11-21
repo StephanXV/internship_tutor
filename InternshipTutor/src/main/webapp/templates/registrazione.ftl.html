@@ -1,0 +1,253 @@
+<!-- <div>
+    <form method="post">
+        <!- - Dati di Base - ->
+        <div class="row">
+            <input class="eight columns" name="ragione_sociale" placeholder="Ragione Sociale" type="text" autofocus required/>
+            <input class="seven columns" name="piva" placeholder="Partita Iva" type="number"  required/> 
+        </div>
+        <div class="row">
+            <input class="six columns" name="citta" placeholder="Citta" type="text" required/>
+            <input class="two columns" name="cap" placeholder="CAP" type="number" required/>
+            <input class="two columns" name="provincia" placeholder="Provincia (Sigla)" maxlength="2" type="text" required/>
+            <input class="five columns" name="indirizzo" placeholder="Indirizzo" type="text" required/>         
+        </div>
+        
+        <!- - Informazioni sulle attività - ->
+        <div>
+            <input name="corso_studio" placeholder="Corso di Studio" type="text" required/>
+            <textarea name="tematiche" placeholder="Tematiche" required></textarea>
+            <input name="durata" placeholder="Durata della Convenzione (Mesi)" min="1" type="number" required/>
+        </div>
+        
+        <!- - Informazioni Legali - ->
+        <div>
+            <input name="rappresentante_legale" placeholder="Rappr. Legale (Nome e Cognome)" type="text" required/>
+            <input name="foro_competente" placeholder="Foro Competente" type="text" required>
+        </div>
+        
+        <!- - Responsabile Tirocini - ->
+        <div>
+            <input name="nome_rt" placeholder="Nome" type="text" required/>
+            <input name="cognome_rt" placeholder="Cognome" type="text" required/>
+            <input name="email_rt" placeholder="Email" type="email" required/>
+            <input name="telefono_rt" placeholder="Telefono" type="tel" required/>
+        </div>
+        
+        <!- - Dati di Utenza - ->
+        <div>
+            <input name="username" placeholder="Username" type="text" required/>
+            <input name="pw" placeholder="Password" type="password" required/>
+            <input name="email" placeholder="Email" type="email" required/>
+        </div>
+        
+        <!- - Pulsante di Submit - ->
+        <div>
+            <input name="submit" value="Registrati come azienda" type="submit"/>
+        </div>
+    </form>
+</div> -->
+<#if MSG?has_content> <!-- check if content exist and is not empty -->
+<div class="container" xmlns="http://java.sun.com/jsf/html">
+    <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
+            <#outputformat "plainText">${MSG}</#outputformat>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+</#if>
+
+<div class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left my-auto">
+            <img src="images/logo_it.png" title="logo" alt="logo"/>
+            <h3>Internship Tutor</h3>
+            <p>Gi&agrave; registrato? Accedi</p>
+            <a href="login">Login</a>
+        </div>
+        <div class="col-md-9 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link ${activeAzienda}" id="azienda-tab" data-toggle="tab" href="#azienda" role="tab" aria-controls="home" aria-selected="${ariaAzienda}">
+                        Azienda
+                    </a>
+                    <noscript>
+                        <a href="registrazione?tipo=azienda" style="color: white">vai</a>
+                    </noscript>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ${activeStudente}" id="studente-tab" data-toggle="tab" href="#studente" role="tab" aria-controls="profile" aria-selected="${ariaStudente}">
+                        Studente
+                    </a>
+                    <noscript>
+                        <a href="registrazione?tipo=studente" style="color: white">vai</a>
+                    </noscript>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show ${activeAzienda}" id="azienda" role="tabpanel" aria-labelledby="azienda-tab">
+                    <h3 class="register-heading">Registrati come Azienda</h3>
+                    <form method="post" action="registrazione" id="regAzienda">
+                    <div class="row register-form">
+                        <div class="col-md-6">
+                            <label class="info-campi">Dati Azienda</label>
+                            <div class="form-group">
+                                <input type="text" id="rag_soc" class="form-control" name="ragione_sociale" placeholder="Ragione Sociale" type="text" autofocus required/>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="p_iva" class="form-control" name="piva" placeholder="Partita Iva" type="number"  required />
+                            </div>
+                            <div class="form-group">
+                                <input id="city" class="form-control" name="citta" placeholder="Citta" type="text" required />
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <input id="provincia" class="form-control"  name="provincia" placeholder="Provincia" maxlength="2" type="text" required />
+                                    </div>
+                                    <div class="col">
+                                        <input id="cap" class="form-control"  name="cap" placeholder="CAP" type="number" maxlength="5" minlength="5" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="address" class="form-control"  name="indirizzo" placeholder="Indirizzo" type="text" required />
+                            </div>
+                        </div>
+                        <div class="col md-6">
+                            <label class="info-campi">Dati Tirocinio / Legali</label>
+                            <div class="form-group">
+                                <input id="rappr_leg" class="form-control" name="rappresentante_legale" placeholder="Rappr. Legale (Nome Cognome)" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input id="foro" class="form-control" name="foro_competente" placeholder="Foro Competente" type="text" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="durata" class="form-control" name="durata" placeholder="Durata della Convenzione (Mesi)" min="1" type="number" required/>
+                            </div>
+                            <div class="form-group">
+                                <input id="corso" class="form-control" name="corso_studio"  placeholder="Corso di Studio" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="tematiche" class="form-control" name="tematiche" placeholder="Tematiche" style="height: 38px" required></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row register-form-sub">
+                        <div class="col-md-6">
+                            <label class="info-campi">Dati Responsabile Tirocinio</label>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <input  id="nome_tir" class="form-control" name="nome_rt" placeholder="Nome" type="text" required/>
+                                    </div>
+                                    <div class="col">
+                                        <input id="cogn_tir" class="form-control" name="cognome_rt" placeholder="Cognome" type="text" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="email_tir" class="form-control" name="email_rt" placeholder="Email" type="email" required/>
+                            </div>
+                            <div class="form-group">
+                                <input id="telefono_tir" class="form-control" name="telefono_rt" placeholder="Telefono" type="tel" required/>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="info-campi">Dati Utente</label>
+                            <div class="form-group">
+                                <input id="usern" class="form-control" name="username" placeholder="Username" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input id="pass" class="form-control" name="pw" placeholder="Password" type="password" required/>
+                            </div>
+                            <div class="form-group">
+                                <input id="email" class="form-control" name="email" placeholder="Email" type="email" required/>
+                            </div>
+
+                            <input name="submitAzienda" value="Registrati" class="btnRegister" type="submit"/>
+                        </div>
+
+                    </div>
+                    </form>
+                </div>
+
+
+                <div class="tab-pane fade show ${activeStudente}" id="studente" role="tabpanel" aria-labelledby="studente-tab">
+                    <h3  class="register-heading">Registrati come Studente</h3>
+                    <form method="post" action="registrazione" id="regStudente">
+                    <div class="row register-form">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" name="nome" placeholder="Nome" type="text" autofocus required/>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" name="cognome" placeholder="Cognome" type="text" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="codice_fiscale" placeholder="Codice Fiscale" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="data_nascita" placeholder="Data di Nascita (gg/mm/aaaa)" onfocus="(this.type='date')" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="citta_nascita" placeholder="Citta di Nascita" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="provincia_nascita" placeholder="Provincia di Nascita (Sigla)" maxlength="2" type="text"  required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="telefono" placeholder="Telefono" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="corso_laurea" placeholder="Corso di Laurea" type="text" required/>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="form-control" name="citta_residenza" placeholder="Citta di Residenza" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="provincia_residenza" placeholder="Pronvincia di Residenza (Sigla)" type="text" minlength="2" maxlength="2" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="cap_residenza" placeholder="CAP" type="number" minlength="5" maxlength="5" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="username" placeholder="Username" type="text" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="pw" placeholder="Password" type="password" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="email" placeholder="Email" type="email" required/>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" name="handicap" required>
+                                    <option class="hidden" disabled selected>Portatore di handicap</option>
+                                    <option name="handicap" value="true">Si</option>
+                                    <option name="handicap" value="false">No</option>
+                                </select>
+                            </div>
+
+                            <input name="submitStudent" value="Registrati" class="btnRegister" type="submit"/>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="js/validateForm.js"></script>

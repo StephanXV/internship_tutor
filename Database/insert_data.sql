@@ -12,12 +12,12 @@ insert into tutore_uni (nome, cognome, email, telefono)
            ('Giorgio', 'Rossi', 'giorgio.rossi@mail.it', '321483647');
            
 insert into utente (email, username, pw, tipologia)
-	values ('admin@mail.it', 'admin', 'admin', 'ad'),
-		   ('google@mail.it', 'google', 'google', 'az'),
-		   ('microsoft@mail.it', 'microsoft', 'microsoft', 'az'),
-           ('stefano.florio@mail.it', 'steflo', 'steflo', 'st'),
-           ('giuseppe.gasbarro@mail.it', 'giusgas', 'giusgas', 'st'),
-           ('enrico.monte@mail.it', 'enrimon', 'enrimon', 'st');
+	values ('admin@mail.it', 'admin', 'Wzt1qwYki8QB5MxWbRmhAAdQkQVx6J1/', 'ad'),
+		   ('google@mail.it', 'google', '2jq4XG03cR2KDk53vgRMCkx0ydVgO0r5', 'az'),
+		   ('microsoft@mail.it', 'microsoft', 'UCbLgSj1jbP50jW0hJUeqx7wgGL8r76f', 'az'),
+           ('stefano.florio@mail.it', 'steflo', 'Kj/t1Uvjv4MC1/NVZI3G60gDRXheDg8p', 'st'),
+           ('giuseppe.gasbarro@mail.it', 'giusgas', 'GE9MUvnB/4tMxHdVDYY9yZX2N40ZHFAW', 'st'),
+           ('enrico.monte@mail.it', 'enrimon', 'ItCMzC/jMvxzXXqSuHlC7dE1yPaqmi62', 'st');
 
 insert into azienda (id_utente, ragione_sociale, indirizzo, citta, cap, provincia, rappresentante_legale, piva,
 					foro_competente, src_documento_convenzione, tematiche, stato_convenzione, corso_studio,
@@ -26,7 +26,7 @@ insert into azienda (id_utente, ragione_sociale, indirizzo, citta, cap, provinci
 		   'Tribunale della Repubblica di Milano', null, 'Inserimento nello sviluppo di un\' applicazione per dispositivi mobili, 
            utilizzando React Native e MongoDB', 0, 'Informatica', null, 6, 1),
            (3, 'Microsoft', 'Via Avignone 10', 'Roma', '00144', 'RM', 'Claudio Rossi', '39274837218',
-           'Tribunale Ordinario di Roma', null, 'Utilizzo dell\'intelligenza artificiale per sviluppare sistemi di riconoscimento 
+           'Tribunale Ordinario di Roma', 'convenzione_41598925698264908571573730186680.pdf', 'Utilizzo dell\'intelligenza artificiale per sviluppare sistemi di riconoscimento 
 		   facciale; sviluppo di siti web con Angular 6', 1, 'Informatica', '2019-08-27', 12, 2);
            
 insert into studente (id_utente, nome, cognome, codice_fiscale, data_nascita, citta_nascita, provincia_nascita,
@@ -52,7 +52,7 @@ insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, 
 		   (5, 1, 2, 3, 25, 1, null, '2019-11-21', '2020-1-27', current_timestamp()),
            (6, 1, 1, 4, 25, 0, null, null, null, current_timestamp()),
            (4, 2, 2, 6, 25, 1, null, '2019-12-21', '2020-1-27', current_timestamp()),
-           (5, 2, 2, 3, 25, 3, null, '2019-11-21', '2020-1-27', current_timestamp()),
+           (5, 2, 2, 3, 25, 2, null, '2019-11-21', '2020-1-27', current_timestamp()),
            (6, 2, 1, 3, 25, 0, null, null, null, current_timestamp());
            
 insert into resoconto (id_studente, id_offerta_tirocinio, ore_effettive, descrizione_attivita, giudizio, src_documento_resoconto)

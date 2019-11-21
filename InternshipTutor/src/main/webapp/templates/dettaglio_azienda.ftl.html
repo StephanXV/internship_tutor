@@ -1,32 +1,350 @@
+<div class="mx-auto dettaglio-azienda-js">
+
 <#if (azienda?size>0)>
-<h1>Ragione sociale azienda: ${azienda.ragioneSociale}</h1>
-<h3>Indirizzo: ${azienda.indirizzo}, ${azienda.citta} (${azienda.provincia})</h3>
-<h3>Tematiche:</h3>
-<p>${azienda.tematiche}</p>
-<b>Corso di studio: </b> 
-<a>${azienda.corsoStudio}</a> 
-<h2>Offerte di tirocinio:</h2>
-<#if (tirocini?size>0)>
-<ul>
-    <#list tirocini as tirocinio>
-    <li>
-        <h3>${tirocinio.titolo}</h3>
-        <b>Settore:</b>
-        <p>${tirocinio.settore}</p>
-        <b>Modalit&#224; tirocionio:</b>
-        <p>${tirocinio.modalita}</p>
-        <b>Obiettivi:</b>
-        <p>${tirocinio.obiettivi}</p>
-        <b>Luogo di lavoro:</b>
-        <p>${tirocinio.luogo}</p>
-        <b>Orari di lavoro:</b>
-        <p>${tirocinio.orari}</p>
-        <#if session??>
-            <a href="richiesta_tirocinio?n=${tirocinio.id}"><button>richiedi tirocinio</button>
-            </a>
-        </#if>
-    </li>
-    </#list>
-</ul>
+<div class="card border-0" style="margin-bottom: 30px">
+    <div class="card-body">
+        <h2 class="card-title text-center">${azienda.ragioneSociale}</h2>
+        <p class="card-text text-center">${azienda.tematiche}</p>
+    </div>
+
+    <nav>
+        <div class="nav nav-tabs nav-fill tab-table" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link item-tab-table active" id="nav-informazioni-tab" data-toggle="tab" href="#nav-infoAz" role="tab" aria-controls="nav-informazioni-tab" aria-selected="true" >Informazioni</a>
+            <a class="nav-item nav-link item-tab-table" id="nav-tirocini-tab" data-toggle="tab" href="#nav-tirocini" role="tab" aria-controls="nav-tirocini-tab" aria-selected="false" >Tirocini</a>
+            <a class="nav-item nav-link item-tab-table" id="nav-statistiche-tab" data-toggle="tab" href="#nav-rating" role="tab" aria-controls="nav-statistiche-tab" aria-selected="false" >Statistiche</a>
+        </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+
+        <div class="tab-pane fade show active pt-4" id="nav-infoAz" role="tabpanel" aria-labelledby="nav-informazioni-tab">
+            <div class="row">
+                <div class="col-10 mx-auto col-md-7 card border-0">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-map-marker-alt pr-2"></i><strong>Indirizzo:</strong> ${azienda.indirizzo}, ${azienda.citta} (${azienda.provincia}), ${azienda.cap}</li>
+                            <li class="list-group-item"><i class="fas fa-briefcase pr-2"></i><strong>Competenza:</strong> ${azienda.corsoStudio}</li>
+                            <li class="list-group-item"><i class="fas fa-user pr-2"></i><strong>Rappresentante Legale:</strong> ${azienda.rappresentanteLegale}</li>
+                            <li class="list-group-item"><i class="far fa-file-alt pr-2"></i><strong>Partita IVA:</strong> ${azienda.piva}</li>
+                            <li class="list-group-item"><i class="fas fa-building pr-2"></i><strong>Foro competente:</strong> ${azienda.foroCompetente}</li>
+                            <li class="list-group-item"><i class="far fa-clock pr-2"></i><strong>Durata convenzione:</strong> ${azienda.durataConvenzione} mesi</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-10 mx-auto col-md-5 mapouter">
+                    <div class="gmap_canvas">
+                        <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=${azienda.indirizzo}%20${azienda.citta}%20${azienda.provincia}%20${azienda.cap}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade pt-4" id="nav-tirocini" role="tabpanel" aria-labelledby="nav-tirocini-tab">
+            <#if (tirocini?size>0)>
+            <table class="table table-hover mt-5" id="tableListaTirocini" cellspacing="0">
+                <thead class="bg-primary text-white">
+                <tr>
+                    <th>Tirocinio</th>
+                    <th>Settore</th>
+                    <th>Obiettivi</th>
+                    <th>Luogo</th>
+                    <th>Durata</th>
+                    <th>Azioni</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list tirocini as tirocinio>
+                <tr>
+
+                    <td>
+                        <a href="#">
+                            ${tirocinio.titolo}
+                        </a>
+                    </td>
+                    <td>${tirocinio.settore}</td>
+                    <td>${tirocinio.obiettivi}</td>
+                    <td>${tirocinio.luogo}</td>
+                    <td>${tirocinio.durata} mesi</td>
+                    <td>
+                        <a href="richiesta_tirocinio?n=${tirocinio.id}">
+                            <button>richiedi tirocinio</button>
+                        </a>
+                    </td>
+
+                </tr>
+                </#list>
+                </tbody>
+            </table>
+
+            <#else>
+            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                <span class="lead">Questa azienda non ha ancora reso disponibile nessun tirocinio.</span>
+            </div>
+            </#if>
+
+        </div>
+
+        <div class="tab-pane fade pt-4" id="nav-rating" role="tabpanel" aria-labelledby="nav-statistiche-tab">
+            <div class="container bg-light">
+                <div class="row pt-4 pb-4">
+
+                    <div class="col-10 col-md-5 mx-auto my-auto text-center">
+                        <h2 class="raiting_h2">4.0 </h2><p class="raiting_p"> / 5</p>
+                        <div class="mt-2 mb-2">
+                            <button class="btn btn-warning btn_star">
+                                <i class="fas fa-star text-white"></i>
+                            </button>
+                            <button class="btn btn-warning btn_star">
+                                <i class="fas fa-star text-white"></i>
+                            </button>
+                            <button class="btn btn-warning btn_star">
+                                <i class="fas fa-star text-white"></i>
+                            </button>
+                            <button class="btn btn-warning btn_star">
+                                <i class="fas fa-star text-white"></i>
+                            </button>
+                            <button class="btn btn-warning btn_star">
+                                <i class="far fa-star text-white"></i>
+                            </button>
+                        </div>
+                        <div>
+                            <p><i class="fas fa-user"></i>&nbsp;&nbsp;562 valutazioni</p>
+                        </div>
+                    </div>
+
+                    <div class="col-10 col-md-5 mx-auto my-auto">
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="fas fa-star star"></i> 5
+                            </div>
+                            <div class="col-10 progress my-auto">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="fas fa-star star"></i> 4
+                            </div>
+                            <div class="col-10 progress my-auto ">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="fas fa-star star"></i> 3
+                            </div>
+                            <div class="col-10 progress my-auto">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="fas fa-star star"></i> 2
+                            </div>
+                            <div class="col-10 progress my-auto">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <i class="fas fa-star star"></i> 1
+                            </div>
+                            <div class="col-10 progress my-auto">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<#else>
+<div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+    <span class="lead">OPSS.. L'azienda non è stata trovata</span>
+</div>
+
 </#if>
-</#if>
+
+</div>
+
+
+<noscript>
+<div class="mx-auto">
+
+    <div class="card border-0" style="margin-bottom: 30px">
+        <div class="card-body">
+            <h2 class="card-title text-center">${azienda.ragioneSociale}</h2>
+            <p class="card-text text-center">${azienda.tematiche}</p>
+        </div>
+
+        <div class="row">
+            <div class="col-7 card border-0">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fas fa-map-marker-alt pr-2"></i><strong>Indirizzo:</strong> ${azienda.indirizzo}, ${azienda.citta} (${azienda.provincia}), ${azienda.cap}</li>
+                        <li class="list-group-item"><i class="fas fa-briefcase pr-2"></i><strong>Competenza:</strong> ${azienda.corsoStudio}</li>
+                        <li class="list-group-item"><i class="fas fa-user pr-2"></i><strong>Rappresentante Legale:</strong> ${azienda.rappresentanteLegale}</li>
+                        <li class="list-group-item"><i class="far fa-file-alt pr-2"></i><strong>Partita IVA:</strong> ${azienda.piva}</li>
+                        <li class="list-group-item"><i class="fas fa-building pr-2"></i><strong>Foro competente:</strong> ${azienda.foroCompetente}</li>
+                        <li class="list-group-item"><i class="far fa-clock pr-2"></i><strong>Durata convenzione:</strong> ${azienda.durataConvenzione} mesi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-5 my-auto text-center">
+                 <a class="text-center" href="https://maps.google.com/?q={azienda.cap}%20{azienda.citta}%20${azienda.indirizzo}%20${azienda.provincia}">
+                     <button type="button" class="btn btn-primary">Mostra su Mappa</button>
+                 </a>
+            </div>
+        </div>
+
+        <h2 class="text-center mt-5">Tirocini</h2>
+        <div class="row mt-3 pr-3 pl-3">
+            <#if (tirocini?size>0)>
+            <table class="table table-hover mt-3" cellspacing="0">
+                <thead class="bg-primary text-white">
+                <tr>
+                    <th>Tirocinio</th>
+                    <th>Settore</th>
+                    <th>Obiettivi</th>
+                    <th>Luogo</th>
+                    <th>Durata</th>
+                </tr>
+                </thead>
+                <tbody>
+                <#list tirocini as tirocinio>
+                <tr>
+
+                    <td>
+                        <a href="#">
+                            ${tirocinio.titolo}
+                        </a>
+                    </td>
+                    <td>${tirocinio.settore}</td>
+                    <td>${tirocinio.obiettivi}</td>
+                    <td>${tirocinio.luogo}</td>
+                    <td>${tirocinio.durata} mesi</td>
+                </tr>
+                </#list>
+                </tbody>
+            </table>
+
+            <#else>
+            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                <span class="lead">Questa azienda non ha ancora reso disponibile nessun tirocinio.</span>
+            </div>
+            </#if>
+        </div>
+
+    <h2 class="text-center mt-5">Valutazioni</h2>
+    <div class="container bg-light mt-3">
+        <div class="row pt-4 pb-4">
+            <div class="col-5 mx-auto my-auto text-center">
+                <h2 class="raiting_h2">4.0 </h2><p class="raiting_p"> / 5</p>
+                <div class="mt-2 mb-2">
+                    <button class="btn btn-warning btn_star">
+                        <i class="fas fa-star text-white"></i>
+                    </button>
+                    <button class="btn btn-warning btn_star">
+                        <i class="fas fa-star text-white"></i>
+                    </button>
+                    <button class="btn btn-warning btn_star">
+                        <i class="fas fa-star text-white"></i>
+                    </button>
+                    <button class="btn btn-warning btn_star">
+                        <i class="fas fa-star text-white"></i>
+                    </button>
+                    <button class="btn btn-warning btn_star">
+                        <i class="far fa-star text-white"></i>
+                    </button>
+                </div>
+                <div>
+                    <p><i class="fas fa-user"></i>&nbsp;&nbsp;562 valutazioni</p>
+                </div>
+            </div>
+
+            <div class="col-5 mx-auto my-auto">
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-star star"></i> 5
+                    </div>
+                    <div class="col-10 progress my-auto">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-star star"></i> 4
+                    </div>
+                    <div class="col-10 progress my-auto ">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-star star"></i> 3
+                    </div>
+                    <div class="col-10 progress my-auto">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-star star"></i> 2
+                    </div>
+                    <div class="col-10 progress my-auto">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-2">
+                        <i class="fas fa-star star"></i> 1
+                    </div>
+                    <div class="col-10 progress my-auto">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>
+</noscript>
+
+
+
+
+<script>
+    $(document).ready(function() {
+
+        $('#tableListaTirocini').DataTable( {
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        } );
+
+    });
+</script>
+

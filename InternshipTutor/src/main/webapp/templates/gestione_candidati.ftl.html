@@ -1,0 +1,222 @@
+<noscript>
+    <style>
+        button.butt_js {
+            visibility: hidden!important;
+        }
+
+        a.a_no_js {
+            color: white!important;
+        }
+        a.a_no_js:hover {
+            color: white!important;
+        }
+    </style>
+</noscript>
+
+<div class="container-fluid table-responsive-lg mt-3">
+    <div class="row mb-3">
+        <div class="col bg-light mx-2 py-2 text-center">
+            <h5>${nome_tirocinio!"Titolo Tirocinio"}</h5>
+        </div>
+    </div>
+    <div class="row mb-3">
+        
+        <#if (richieste_cand?size>0)>
+        <!-- colonna 1 -->
+        <div class="col bg-light mx-2 py-2">
+            <h4>Candidature</h4> <br>
+            <table class="table table-hover" id="myTableCand">
+            <!--Table head-->
+
+            <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Data</th>
+                        <th class="text-white">Studente</th>
+                        <th class="text-white">Corso di laurea</th>
+                        <th class="text-white">Cfu richiesti</th>
+                        <th class="text-white">Tutore Universitario</th>
+                        <th class="text-white">Documento</th>
+                        <th class="text-white">Upload</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <#list richieste_cand as richiesta_cand>
+                    <tr>
+
+                        <td>${richiesta_cand.tms}</td>
+                        <td>${richiesta_cand.studente.nome} ${richiesta_cand.studente.cognome}</td>
+                        <td>${richiesta_cand.studente.corsoLaurea}</td>
+                        <td>${richiesta_cand.cfu}</td>
+                        <td>${richiesta_cand.tutoreUni.nome} ${richiesta_cand.tutoreUni.cognome}</td>
+                        <td>
+                                <a style="text-decoration: none;" target="_blank" <td>
+                                <a style="text-decoration: none;" target="_blank" href="docs?tipo=1&st=${richiesta_cand.studente.utente.id}&ot=${richiesta_cand.offertaTirocinio.id}">
+                                    <button type="button" class="btn btn-primary text-white">
+                                        <i class="fa fa-file-download"></i>
+                                    </button>
+                                </a>
+
+                                <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title" id="exampleModalLabel">Attenzione</h5>
+                                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="modal-body">
+                                                Vuoi davvero rifiutare la richiesta dell'azienda ${(richiesta_cand.studente.nome)!"Nome"} ${(richiesta_cand.studente.cognome)!"Cognome"}?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                <a href="gestione_candidati?convalida=no&ot=${richiesta_cand.offertaTirocinio.id}&st=${richiesta_cand.studente.utente.id}">
+                                                    <button type="button" class="btn bg-danger text-white">S&iacute;</button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <form method='post' action='upload?ot=${richiesta_cand.offertaTirocinio.id}&st=${richiesta_cand.studente.utente.id}' enctype='multipart/form-data'>
+                                    <input name="tipo" type="hidden" value="candidatura" />
+                                    <input type='file' name='candidaturatoupload'/>
+
+                                    <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                                        <i class="fas fa-file-upload"></i>
+                                        </button>
+                                </form>
+                            </td>
+                    </tr>
+                    </#list>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+
+        <#else>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono candidature da visualizzare</span>
+        </div>
+        </#if>
+    </div>
+        
+    <div class="row">
+        <#if (cand_accettate?size>0)>
+        <!-- colonna 2 -->
+        <div class="col bg-light py-2 mx-2 mb-3">
+            <h4>Tirocinanti attivi</h4> <br>
+            <table class="table table-hover" id="myTableCandAcc">
+            <!--Table head-->
+            <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Tirocinante</th>
+                        <th class="text-white">Data inizio</th>
+                        <th class="text-white">Data fine</th>
+                        <th class="text-white">Documento</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <#list cand_accettate as cand_accettata>
+                    <tr>
+                        
+                        <td>${cand_accettata.studente.nome} ${cand_accettata.studente.cognome}</td>
+                        <td>${cand_accettata.inizioTirocinio}</td>
+                        <td>${cand_accettata.fineTirocinio}</td>
+                        <td> Src Doc
+                            
+                        </td>
+                        
+                    </tr>
+                    </#list>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+        <#else>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono tirocinanti in corso</span>
+        </div>
+        </#if>
+    
+        <#if (tiro_terminati?size>0)>
+        <!-- colonna 2 -->
+        <div class="col bg-light py-2 mx-2">
+            <h4>Resoconti</h4> <br>
+            <table class="table table-hover" id="myTableCandTer">
+            <!--Table head-->
+            <thead>
+                    <tr class="bg-primary">
+                        <th class="text-white">Tirocinante</th>
+                        <th class="text-white">Data inizio</th>
+                        <th class="text-white">Data fine</th>
+                        <th class="text-white">Resoconto</th>
+                    </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                    <#list tiro_terminati as tiro_terminato>
+                    <tr>
+                        
+                        <td>${tiro_terminato.studente.nome} ${tiro_terminato.studente.cognome}</td>
+                        <td>${tiro_terminato.inizioTirocinio}</td>
+                        <td>${tiro_terminato.fineTirocinio}</td>
+                        <td> Resoconto
+                            
+                        </td>
+                        
+                    </tr>
+                    </#list>
+                </tbody>
+                <!--Table body-->
+            </table>
+            <!--Table-->
+        </div>
+        <#else>
+        <div class="col bg-light mx-2 pt-4 text-center">
+            <span class="lead">Non ci sono tirocinanti che hanno concluso il tirocinio</span>
+        </div>
+        </#if>
+    </div>
+</div>
+
+<script>$(document).ready(function() {
+    $('#myTableCand').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+
+    $('#myTableCandAcc').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+    
+    $('#myTableCandTer').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+} );
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("input[name='candidaturatoupload']").change(function(){
+          if ($(this).val())
+          {
+            $("button[name='submit']").removeAttr('disabled');
+          }
+        });
+    } );
+</script>
+

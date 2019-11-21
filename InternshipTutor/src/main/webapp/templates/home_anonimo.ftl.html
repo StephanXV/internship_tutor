@@ -1,5 +1,132 @@
-<h1>Ciao sono la home dell'utente anomimo</h1>
-<div>
-    <a href="registrazione?tipo=azienda">Convenzionamento azienda</a>
-    <a href="registrazione?tipo=studente">Registrazione studente</a>
+<#if MSG?has_content> <!-- check if content exist and is not empty -->
+<div class="container">
+    <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
+        ${MSG}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 </div>
+</#if>
+
+<div class="jumbotron container" style="margin-top: 7vh">
+    <h1 class="display-4">Benvenuto</h1>
+    <p class="lead">Internship Tutor ha l'obiettivo di favorire il contatto tra l'universit&aacute;, gli studenti e le aziende interessate alla realizzazione dei tirocini.</p>
+    <hr class="my-4">
+    <p>Attraverso il servizio online dell'ateneo potrai consultare l'elenco di tutte le strutture convenzionate, presso le quali svolgere il tirocinio</p>
+    <a class="btn btn-primary btn-lg click_to_scroll" href="#info" role="button">Esplora</a>
+</div>
+
+
+<div id="info">
+    <div class="row">
+        <div class="col-lg-5 mx-auto col-md-10 block">
+            <div class="card b-s">
+                <div class="card-header text-center bg-primary text-white">
+                    Sei uno studente?
+                </div>
+                <div class="card-body">
+
+                    <div class="container" style="margin-top: 30px">
+                        <ul class="timeline">
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge"><i class="fas fa-user-plus"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>Mussum ipsum cacilds</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge"><i class="fas fa-handshake"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>Mussum ipsum cacilds</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="timeline-inverted">
+                                <div class="timeline-badge"><i class="far fa-clock"></i></div>
+                                <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                        <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                    </div>
+                                    <div class="timeline-body">
+                                        <p>Mussum ipsum cacilds</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div class="text-center" style="margin-top: 35px">
+                            <a href="registrazione?tipo=studente" class="btn btn-primary">Registrati&nbsp;&nbsp;<i class="fas fa-user-graduate"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+
+    <div class="col-lg-5 mx-auto col-md-10 block">
+        <div class="card b-s">
+            <div class="card-header text-center bg-primary text-white">
+                Sei una Azienda?
+            </div>
+            <div class="card-body">
+
+                <div class="container" style="margin-top: 30px">
+                    <ul class="timeline">
+                        <li class="timeline-inverted">
+                            <div class="timeline-badge"><i class="fas fa-user-plus"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-badge"><i class="fas fa-handshake"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="timeline-inverted">
+                            <div class="timeline-badge"><i class="far fa-clock"></i></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 class="timeline-title">Mussum ipsum cacilds</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p>Mussum ipsum cacilds</p>
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <div class="text-center" style="margin-top: 35px">
+                        <a href="registrazione?tipo=azienda" class="btn btn-primary">Registrati&nbsp;&nbsp;<i class="fas fa-briefcase"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="js/scroll.js"></script>

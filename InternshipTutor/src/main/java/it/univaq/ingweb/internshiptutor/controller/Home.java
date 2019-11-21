@@ -57,10 +57,29 @@ public class Home extends InternshipTutorBaseController {
             // lista aziende registrate, ovvero in attesa di convenzione
             List<Azienda> az_registrate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(0);
             request.setAttribute("az_registrate", az_registrate);
+            if (az_registrate.size() > 0) {
+                request.setAttribute("num_az_registrate", az_registrate.size());
+            } else {
+                request.setAttribute("num_az_registrate", 0);
+            }
             
             // lista azinde convenzionate
             List<Azienda> az_convenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
             request.setAttribute("az_convenzionate", az_convenzionate);
+            if (az_convenzionate.size() > 0) {
+                request.setAttribute("num_az_convenzionate", az_convenzionate.size());
+            } else {
+                request.setAttribute("num_az_convenzionate", 0);
+            }
+
+            // lista azinde rifiutate
+            List<Azienda> az_rifiutate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(2);
+            request.setAttribute("az_rifiutate", az_rifiutate);
+            if (az_rifiutate.size() > 0) {
+                request.setAttribute("num_az_rifiutate", az_rifiutate.size());
+            } else {
+                request.setAttribute("num_az_rifiutate", 0);
+            }
             
             
             TemplateResult res = new TemplateResult(getServletContext());
@@ -79,10 +98,15 @@ public class Home extends InternshipTutorBaseController {
             // dati dell'azienda
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_utente);
             request.setAttribute("nome_utente", az.getRagioneSociale());
+            request.setAttribute("azienda", az);
             
             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
-            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az);
-            request.setAttribute("tirocini", tirocini);
+            List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
+            request.setAttribute("ot_attive", tirocini_attivi);
+            
+             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
+            List<OffertaTirocinio> tirocini_disattivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, false);
+            request.setAttribute("ot_disattive", tirocini_disattivi);
             
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Home azienda");

@@ -31,6 +31,10 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int n = SecurityLayer.checkNumeric(request.getParameter("n"));
+        HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            }
         try {
             try {
                 action_default(request, response, n);
@@ -46,10 +50,10 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
     
     private void action_default(HttpServletRequest request, HttpServletResponse response, int n) throws TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
-        HttpSession s = SecurityLayer.checkSession(request);
-        Azienda azienda = (Azienda) ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
-        List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda);
-        request.setAttribute("session", s);
+        //HttpSession s = SecurityLayer.checkSession(request);
+        Azienda azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
+        List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
+        //request.setAttribute("session", s);
         request.setAttribute("tirocini", tirocini);
         request.setAttribute("azienda", azienda);
         request.setAttribute("page_title", "Azienda:" + azienda.getRagioneSociale());

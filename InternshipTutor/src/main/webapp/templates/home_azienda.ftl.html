@@ -1,1 +1,165 @@
-<h1>Questa è la dashboard di una azienda</h1>
+<!--Table-->
+<div class="container-fluid table-responsive-lg mt-3">
+    <#switch azienda.statoConvenzione>
+    <#case 0>
+    <div class="col-8 mx-auto p-4">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Azienda non abilitata</h1>
+            <hr class="my-4">
+            <p>Attendi che l'admin visioni la sua richiesta di convenzionamento e ritenta l'accesso.</p>
+            <p class="lead">
+                <a href="logout" class="btn btn-lg btn-primary">Logout&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+            </p>
+        </div>
+    </div>
+
+    <#break>
+        
+        <#case 1>
+        <div class="row">
+
+            <#if (ot_attive?size>0)>
+            <!-- colonna 1 -->
+            <div class="col bg-light mx-2 py-4 mb-2">
+                <h4>Offerte di tirocinio attive</h4> <br>
+                <table id="myTableTiroAtt" class="table table-hover">
+                    <!--Table head-->
+                    
+                    <thead>
+                        <tr class="bg-primary">
+                            <th class="text-white">Titolo</th>
+                            <th class="text-white">Studenti</th>
+                            <th class="text-white">Luogo</th>
+                            <th class="text-white">Durata</th>
+                            <th class="text-white">Gestione</th>
+                        </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody>
+                        <#list ot_attive as ot_attiva>
+                        <tr>
+
+                            <td>
+                                <span>${ot_attiva.titolo}</span>
+                            </td>
+                            <td>
+                                <span class="mr-1">${ot_attiva.candidature?size}</span>
+                                <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}">
+                                    <button type="button" class="btn btn-primary text-white">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </a>
+                            </td>
+                            <td>${ot_attiva.luogo}</td>
+                            <td>${ot_attiva.durata}</td>
+                            <td>                      
+                                <a href="gestione_tirocini?ot=${ot_attiva.id}&action=disattiva">
+                                    <button type="button" class="btn bg-danger text-white">Disattiva</button>
+                                </a>
+                            </td>
+                            
+                        </tr>
+                        </#list>
+                    </tbody>
+                    <!--Table body-->
+                </table>
+                <!--Table-->
+            </div>
+            <#else>
+            <div class="col bg-light mx-2 pt-4 text-center">
+                <span class="lead">Non ci sono offerte di tirocinio attive</span>
+            </div>
+            </#if>
+
+            <#if (ot_disattive?size>0)>
+            <!-- colonna 2 -->
+            <div class="col bg-light mx-2 py-4 mb-2">
+                <h4>Offerte di tirocinio disattive</h4> <br>
+                <table id="myTableTiroDis" class="table table-hover">
+                <!--Table head-->
+                
+                <thead>
+                        <tr class="bg-primary">
+                            <th class="text-white">Titolo</th>
+                            <th class="text-white">Studenti</th>
+                            <th class="text-white">Gestione</th>
+                        </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody>
+                        <#list ot_disattive as ot_disattiva>
+                        <tr>
+                            <td>
+                                <span>${ot_disattiva.titolo}</span>
+                            </td>
+                            <td>
+                                <span class="mr-1">${ot_disattiva.candidature?size}</span>
+                                <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}">
+                                    <button type="button" class="btn btn-primary text-white">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </a>
+                            </td>
+                            <td>                      
+                                <a href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
+                                    <button type="button" class="btn bg-success text-white">Attiva</button>
+                                </a>
+                            </td>
+                        </tr>
+                        </#list>
+                    </tbody>
+                    <!--Table body-->
+                </table>
+                <!--Table-->
+            </div>
+
+            <#else>
+            <div class="col bg-light mx-2 pt-4 text-center">
+                <span class="lead">Non ci sono offerte di tirocinio disattive</span>
+            </div>
+            </#if>
+   
+        </div>
+        <#break>
+        
+        <#case 2>
+        <div class="col-8 mx-auto p-4">
+            <div class="jumbotron text-center">
+                <h1 class="display-4">Azienda non abilitata</h1>
+                <hr class="my-4">
+                <p>L'amministratore ha rifiutato la vostra richiesta di convenzione</p>
+                <p class="lead">
+                    <a href="logout" class="btn btn-lg btn-primary">Logout&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+                </p>
+            </div>
+        </div>
+        <#break>
+        
+        <#case 3>
+        <div class="col-8 mx-auto p-4">
+             <div class="jumbotron text-center">
+                <h1 class="display-4">Azienda non abilitata</h1>
+                <hr class="my-4">
+                <p>La convenzione con il DISIM è scaduta</p>
+                <p class="lead">
+                    <a href="logout" class="btn btn-lg btn-primary">Logout&nbsp;&nbsp;<i class="fas fa-sign-out-alt"></i></a>
+                </p>
+            </div>
+        </div>
+        <#break>
+    </#switch>
+        
+</div>
+
+<script>$(document).ready(function() {
+    $('#myTableTiroAtt').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+
+    $('#myTableTiroDis').DataTable( {
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    } );
+} );
+</script>

@@ -24,9 +24,11 @@ public interface AziendaDAO {
     
     List<Azienda> getAziendeByStato(int stato) throws DataException;
         
-    Azienda updateAziendaStato(Azienda az, int stato) throws DataException;
+    int updateAziendaStato(int id_az, int stato) throws DataException;
     
     int insertAzienda(Azienda az) throws DataException;
     
     int deleteAzienda(int id_az) throws DataException;
+    
+    int updateAziendaDocumento(int id_az, String src) throws DataException;
 }
