@@ -5,8 +5,7 @@
  */
 
  function change($i){
-     //var selectBox = document.getElementById("selectBox");
-     //var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+     remove("#new_tutore");
      if ($i === "new") {
              add_tutore();
      } else {
@@ -27,7 +26,7 @@ function add_tutore() {
                .attr("type", "hidden")
                .attr("name", "id_tutore").val("add");
        $('#richiestaForm').append($(input));
-    return $("#new_tutore").append("<input name=\"nome_tutore\" placeholder=\"Nome\" type=\"text\" required/>")
+    $("#new_tutore").append("<input name=\"nome_tutore\" placeholder=\"Nome\" type=\"text\" required/>")
             .append("<input name=\"cognome_tutore\" placeholder=\"Cognome\" type=\"text\" required/>")
             .append("<input name=\"email_tutore\" placeholder=\"Email\" type=\"email\" required/>")
             .append("<input name=\"telefono_tutore\" placeholder=\"Telefono\" type=\"tel\" required/>");

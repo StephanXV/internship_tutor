@@ -47,7 +47,6 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response, int n) throws TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
         HttpSession s = SecurityLayer.checkSession(request);
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaa"+s.getId());
         Azienda azienda = (Azienda) ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
         List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda);
         request.setAttribute("session", s);

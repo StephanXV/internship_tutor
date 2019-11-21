@@ -52,8 +52,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
     private void action_request (HttpServletRequest request, HttpServletResponse response) throws DataException, IOException {
         HttpSession s = SecurityLayer.checkSession(request);
         Candidatura c = new CandidaturaImpl();
-        long l = (long) s.getAttribute("userid");
-        int u = (int) l;
+        int u = (int) s.getAttribute("id_utente");
         TutoreUni tu = new TutoreUniImpl();
         
         c.setStudente(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(u));

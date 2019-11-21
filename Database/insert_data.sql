@@ -43,6 +43,9 @@ insert into offerta_tirocinio (luogo, settore, orari, durata, titolo, obiettivi,
 		   conoscenza avanzata di Angular 6', 'Il tirocinante sarà affiancato da un tutor esperto che lo seguirà nello sviluppo dei compiti 
            assegnati', null, 3);
            
+INSERT INTO offerta_tirocinio (id, luogo, settore, durata, titolo, obiettivi, modalita, facilitazioni, attiva, id_azienda) VALUES ('3', 'Milano', 'Ricerca operativa', '3', 'Ricerca degli operai in assembly', 'Imparare a lavorare in un team di sviluppo; acquisire conoscenze di base sulla ricerca operativa.', 'Il tirocinante sarà affiancato da un tutor esperto e realizzerà algoritmi', 'Rimborso viaggio', '1', '3');
+           
+           
 insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, ore_tirocinio, stato_candidatura,
 						src_documento_candidatura, data_inizio, data_fine, tms)
 	values (4, 1, 1, 6, 25, 0, null, null, null, current_timestamp()),
