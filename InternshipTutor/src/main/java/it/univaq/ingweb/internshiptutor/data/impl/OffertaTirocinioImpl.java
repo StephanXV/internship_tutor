@@ -8,6 +8,7 @@ package it.univaq.ingweb.internshiptutor.data.impl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
+import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
     private String facilitazioni;
     private String modalita;
     private boolean attiva;
+    private TutoreTirocinio tutoreTirocinio;
     private Azienda azienda;
     private List<Candidatura> candidature;
 
@@ -41,6 +43,7 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
         this.modalita = "";
         this.attiva = true;
         this.azienda = null;
+        this.tutoreTirocinio = null;
         this.candidature = null;
     }
     
@@ -168,5 +171,17 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
     public void addCandidatura(Candidatura c) {
         this.candidature.add(c);
     }
+
+    @Override
+    public TutoreTirocinio getTutoreTirocinio() {
+        return tutoreTirocinio;
+    }
+
+    @Override
+    public void setTutoreTirocinio(TutoreTirocinio tutoreTirocinio) {
+        this.tutoreTirocinio = tutoreTirocinio;
+    }
+    
+    
     
 }

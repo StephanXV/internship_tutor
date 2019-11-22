@@ -42,7 +42,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             sOfferteTirocinioByAttiva = connection.prepareStatement("SELECT * FROM offerta_tirocinio WHERE id_azienda=? AND attiva=?");
             sOfferteTirocinioByAzienda = connection.prepareStatement("SELECT * FROM offerta_tirocinio WHERE id_azienda=?");
             iOffertaTirocinio = connection.prepareStatement("INSERT INTO offerta_tirocinio (luogo, settore, orari, "
-                    + "durata, titolo, obiettivi, modalita, facilitazioni, id_azienda) values (?,?,?,?,?,?,?,?,?)"
+                    + "durata, titolo, obiettivi, modalita, facilitazioni, id_azienda, id_tutore_tirocinio) values (?,?,?,?,?,?,?,?,?,?)"
                     , Statement.RETURN_GENERATED_KEYS);
             uOffertaTirocinioAttiva = connection.prepareStatement("UPDATE offerta_tirocinio SET attiva=? WHERE id=?");
             ricercaTirocinio = connection.prepareStatement(" SELECT t.*, a.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ?)");
@@ -88,6 +88,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             ot.setFacilitazioni(rs.getString("facilitazioni"));
             ot.setAttiva(rs.getBoolean("attiva"));
             ot.setId_azienda(rs.getInt("id_azienda"));
+            ot.setId_tutore_tirocinio(rs.getInt("id_tutore_tirocinio"));
         } catch (SQLException ex) {
             throw new DataException("Unable to create offerta tirocinio from result set", ex);
         }
@@ -158,6 +159,10 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
                 iOffertaTirocinio.setInt(10, ot.getAzienda().getUtente().getId());
             else
                 iOffertaTirocinio.setNull(10, java.sql.Types.INTEGER);
+            if (ot.getTutoreTirocinio() != null)
+                iOffertaTirocinio.setInt(11, ot.getTutoreTirocinio().getId());
+            else
+                iOffertaTirocinio.setNull(11, java.sql.Types.INTEGER);
             if (iOffertaTirocinio.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database
                     //per il record appena inserito, usiamo il metodo

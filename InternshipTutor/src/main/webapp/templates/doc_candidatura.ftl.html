@@ -186,17 +186,38 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p8 ft8"><SPAN class="ft7">Nominativo del tirocinante </SPAN><span class="input">${(rc.studente.nome)!"[Nome Studente]"}&nbsp;</span><span class="input">${(rc.studente.cognome)!"[Cognome Studente]"}</span></P>
 <P class="p9 ft8"><SPAN class="ft7">Nato a </SPAN><span class="input">${(rc.studente.cittaNascita)!"[Citta di nascita]"}</span>&nbsp;Prov.&nbsp;<span class="input">${(rc.studente.provinciaNascita)!"[Provincia di nascita]"}</span> il <span class="input">${(rc.studente.dataNascita)!"[Data di nascita]"}</span></P>
 <P class="p9 ft8"><SPAN class="ft7">Residente in </SPAN><span class="input">${(rc.studente.cittaResidenza)!"[Citta di res.]"}&nbsp;</span>&nbsp;Prov. (<span class="input">${(rc.studente.provinciaResidenza)!"[Pronvincia di res.]"}</span>)</P>
-<P class="p10 ft8"><SPAN class="ft7">Codice fiscale</SPAN><span class="input">${(rc.studente.CF)!"[Codice Fiscale]"}</span></P>
+<P class="p10 ft8"><SPAN class="ft7">Codice fiscale </SPAN><span class="input">${(rc.studente.CF)!"[Codice Fiscale]"}</span></P>
 <P class="p9 ft8"><SPAN class="ft7">Telefono </SPAN><span class="input">${(rc.studente.telefono)!"[Telefono]"}</span></P>
 <P class="p11 ft9">Attuale condizione (barrare la casella – possibilit&aacute; di doppia scelta):</P>
-<P class="p12 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Studente Corso di Laurea in: <span class="input">${(rc.studente.corsoLaurea)!"[Corso Laurea]"}</span></SPAN></P>
+<#if (rc.studente.corsoLaurea??)>
+<P class="p12 ft8"><SPAN class="ft10">&boxtimes;</SPAN><SPAN class="ft11">Studente Corso di Laurea in: <span class="input">${(rc.studente.corsoLaurea)!"[Corso Laurea]"}</span></SPAN></P>
+<#else>
+<P class="p12 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Studente Corso di Laurea in: ________________________________________</SPAN></P>
+</#if>
+<#if (rc.studente.diploma??)>
+<P class="p13 ft8"><SPAN class="ft10">&boxtimes;</SPAN><SPAN class="ft11">Diplomato. Diploma universitario in: <span class="input">${(rc.studente.diploma)!"[Diploma]"}</span></SPAN></P>
+<#else>
 <P class="p13 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Diplomato. Diploma universitario in: ________________________________________</SPAN></P>
+</#if>
 <P class="p14 ft8">(entro 12 mesi dal diploma)</P>
+<#if (rc.studente.laurea??)>
+<P class="p13 ft8"><SPAN class="ft10">&boxtimes;</SPAN><SPAN class="ft11">Laureato. Laurea in: <span class="input">${(rc.studente.laurea)!"[Laurea]"}</span></SPAN></P>
+<#else>
 <P class="p13 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Laureato. Laurea in: ____________________________________________________</SPAN></P>
+</#if>
 <P class="p15 ft8">(entro 12 mesi dalla laurea)</P>
+<#if (rc.studente.dottoratoRicerca??)>
+<P class="p9 ft8"><SPAN class="ft10">&boxtimes;</SPAN><SPAN class="ft11">Dottorato di ricerca in: <span class="input">${(rc.studente.dottoratoRicerca)!"[Dottorato di ricerca]"}</span></SPAN></P>
+<#else>
 <P class="p9 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Dottorato di ricerca in: ___________________________________________________</SPAN></P>
+</#if>
+<#if (rc.studente.specializzazione??)>
+<P class="p16 ft8"><SPAN class="ft10">&boxtimes;</SPAN><SPAN class="ft11">Scuola o corso di perfezionamento o specializzazione in: <span class="input">${(rc.studente.specializzazione)!"[Specializzazione]"}</span></SPAN></P>
+<P class="p17 ft8">__________________________________________________________________</P>
+<#else>
 <P class="p16 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Scuola o corso di perfezionamento o specializzazione in: ________________________</SPAN></P>
 <P class="p17 ft8">__________________________________________________________________</P>
+</#if>
 <P class="p13 ft8">Barrare se trattasi di soggetto portatore di handicap:</P>
 <#if (rc.studente.handicap == true)>
 <P class="p18 ft8">Si<SPAN style="padding-left:114px;"><SPAN class="ft12">&boxtimes;</SPAN></SPAN></P>
@@ -225,14 +246,14 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p22 ft1">Dipartimento di INGEGNERIA E SCIENZE DELL’INFORMAZIONE E MATEMATICA</P>
 <P class="p23 ft14">SEGRETERIA AMMINISTRATIVA PER LA DIDATTICA</P>
 <P class="p24 ft8"><SPAN class="ft7">Luogo di effettuazione del tirocinio </SPAN><span class="input">${(rc.offertaTirocinio.luogo)!"[Luogo tirocinio]"}</span></P>
-<P class="p25 ft8"><SPAN class="ft7">Settore di inserimento </SPAN>____________________________________________________</P>
-<P class="p26 ft8"><SPAN class="ft7">Tempi di accesso ai locali aziendali </SPAN>_________________________________________</P>
-<P class="p25 ft8"><SPAN class="ft7">Periodo di tirocinio </SPAN>n. _______ mesi dal___________________al __________________</P>
-<P class="p27 ft16">(con possibilit&aacute; di proroga entro i limiti massimi previsti dalla normativa vigente) <SPAN class="ft15">numero ore di tirocinio __________ per il conseguimento di n. ___________ CFU</SPAN></P>
-<P class="p28 ft8"><SPAN class="ft7">Tutore universitario</SPAN>_______________________________________________________</P>
-<P class="p25 ft8">Telefono___________________________________</P>
-<P class="p29 ft8"><SPAN class="ft7">Tutore aziendale</SPAN>: _________________________________________________________</P>
-<P class="p26 ft8">Telefono___________________________________</P>
+<P class="p25 ft8"><SPAN class="ft7">Settore di inserimento </SPAN><span class="input">${(rc.offertaTirocinio.settore)!"[Settore]"}</span></P>
+<P class="p26 ft8"><SPAN class="ft7">Tempi di accesso ai locali aziendali </SPAN> <#if (rc.offertaTirocinio.orari??)> <span class="input">${(rc.offertaTirocinio.orari)!"[Orari tirocinio]"}</span><#else>_________________________________________</P></#if>
+<P class="p25 ft8"><SPAN class="ft7">Periodo di tirocinio </SPAN>n. <span class="input">${(rc.offertaTirocinio.durata)!"[Durata tirocinio]"}</span>&nbsp;mesi dal___________________al __________________</P>
+<P class="p27 ft16">(con possibilit&aacute; di proroga entro i limiti massimi previsti dalla normativa vigente) <SPAN class="ft15">numero ore di tirocinio <span class="input">${(rc.oreTirocinio) * (rc.cfu)}</span> per il conseguimento di n. <span class="input">${(rc.cfu)!"[Cfu richiesti]"}</span> CFU</SPAN></P>
+<P class="p28 ft8"><SPAN class="ft7">Tutore universitario&nbsp;</SPAN><span class="input">${(rc.tutoreUni.nome)!"[Nome tutore uni]"} ${(rc.tutoreUni.cognome)!"[Cognome tutore uni]"}</span></P>
+<P class="p25 ft8">Telefono <span class="input">${(rc.tutoreUni.telefono)!"[Telefono tutore uni]"}</span></P>
+<P class="p29 ft8"><SPAN class="ft7">Tutore aziendale</SPAN>: <span class="input">${(rc.offertaTirocinio.tutoreTirocinio.nome)!"[Nome tutore tirocinio]"} ${(rc.offertaTirocinio.tutoreTirocinio.cognome)!"[Cognome tutore tirocinio]"}</span></P>
+<P class="p26 ft8">Telefono <span class="input">${(rc.offertaTirocinio.tutoreTirocinio.telefono)!"[Telefono tutore tirocinio]"}</span></P>
 <P class="p29 ft7">Polizze assicurative<SPAN class="ft17">:</SPAN></P>
 <P class="p24 ft18">Copertura assicurativa per rischio responsabilit&aacute; civile terzi:</P>
 <P class="p24 ft8">Compagnia assicurativa: QBE Insurance Assicurazioni</P>
@@ -246,14 +267,13 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p24 ft8">Copertura assicurativa &ldquo;in conto Stato&rdquo; ex art. 2 D.P.R. N. 156 del 9.04.1999</P>
 <P class="p25 ft19">Obiettivi del tirocinio:</P>
 <P class="p24 ft8">________________________________________________________________________</P>
-<P class="p24 ft8">________________________________________________________________________</P>
+<div style="width:665px ; word-wrap: break-word;"><P class="p24 ft8"><span class="input">${(rc.offertaTirocinio.obiettivi)!"[Obiettivi tirocinio]"}</span></P></div>
 <P class="p30 ft8">________________________________________________________________________</P>
-<P class="p24 ft8">________________________________________________________________________</P>
 <P class="p31 ft19">Modalit&aacute;:</P>
-<P class="p24 ft8">________________________________________________________________________</P>
+<div style="width:665px ; word-wrap: break-word;"><P class="p24 ft8"><span class="input">${(rc.offertaTirocinio.modalita)!"[Modalita tirocinio]"}</span></P></div>
 <P class="p24 ft8">________________________________________________________________________</P>
 <P class="p32 ft19">Facilitazioni previste: sussidio di formazione e servizi aziendali (mensa)</P>
-<P style="margin-bottom:50px" class="p24 ft8">________________________________________________________________________</P>
+<P style="margin-bottom:50px" class="p24 ft8"><span class="input">${(rc.offertaTirocinio.facilitazioni)!"[Facilitazioni]"}</span></P>
 </div>
 </DIV>
         

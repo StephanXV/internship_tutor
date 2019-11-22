@@ -10,9 +10,11 @@ import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.AziendaDAO;
 import it.univaq.ingweb.internshiptutor.data.dao.CandidaturaDAO;
+import it.univaq.ingweb.internshiptutor.data.dao.TutoreTirocinioDAO;
 import it.univaq.ingweb.internshiptutor.data.impl.OffertaTirocinioImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
+import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +26,7 @@ import java.util.logging.Logger;
 public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
     
     protected boolean dirty;
-    protected int id_azienda;
+    protected int id_azienda, id_tutore_tirocinio;
     
     protected DataLayer dataLayer;
 
@@ -33,6 +35,7 @@ public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
         this.dataLayer = d;
         this.dirty = false;
         this.id_azienda = 0;
+        this.id_tutore_tirocinio = 0;
     }
 
     @Override
@@ -70,6 +73,25 @@ public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
             }
         }
         return super.getAzienda();
+    }
+    
+    @Override
+    public void setTutoreTirocinio(TutoreTirocinio tt) {
+        super.setTutoreTirocinio(tt);
+        this.id_tutore_tirocinio = tt.getId();
+        this.dirty = true;
+    }
+
+    @Override
+    public TutoreTirocinio getTutoreTirocinio() {
+        if (super.getTutoreTirocinio() == null && id_tutore_tirocinio > 0) {
+            try {
+                super.setTutoreTirocinio(((TutoreTirocinioDAO) dataLayer.getDAO(TutoreTirocinio.class)).getTutoreTirocinio(id_tutore_tirocinio));
+            } catch (DataException ex) {
+                Logger.getLogger(OffertaTirocinioProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getTutoreTirocinio();
     }
 
     @Override
@@ -146,5 +168,10 @@ public class OffertaTirocinioProxy extends OffertaTirocinioImpl {
         this.id_azienda = id_azienda;
         super.setAzienda(null);
     }  
+    
+    public void setId_tutore_tirocinio(int id_tutore_tirocinio) {
+        this.id_tutore_tirocinio = id_tutore_tirocinio;
+        super.setTutoreTirocinio(null);
+    }
 
 }

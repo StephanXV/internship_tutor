@@ -84,8 +84,11 @@ create table offerta_tirocinio (
     facilitazioni text,
     attiva bool not null default true,
     id_azienda integer unsigned not null,
+    id_tutore_tirocinio integer unsigned not null,
     constraint offerte_azienda foreign key(id_azienda)
-		references azienda(id_utente) on delete cascade on update cascade
+		references azienda(id_utente) on delete cascade on update cascade,
+	constraint offerte_tutore_tirocinio foreign key(id_tutore_tirocinio)
+		references tutore_tirocinio(id) on delete cascade on update cascade
 );
 
 create table tutore_uni (

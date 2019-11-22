@@ -62,4 +62,8 @@ public interface OffertaTirocinio {
     
     void setAttiva(boolean b);
     
+    TutoreTirocinio getTutoreTirocinio();
+    
+    void setTutoreTirocinio(TutoreTirocinio tt);
+    
 }
