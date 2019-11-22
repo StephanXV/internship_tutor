@@ -134,5 +134,10 @@ public class CandidaturaImpl implements Candidatura {
     public void setTms(Date tms) {
         this.tms = tms;
     }
-    
+
+    @Override
+    public String toString() {
+        return "CandidaturaImpl{" + "studente=" + studente + ", offertaTirocinio=" + offertaTirocinio + ", tutoreUni=" + tutoreUni + ", cfu=" + cfu + ", oreTirocinio=" + oreTirocinio + ", statoCandidatura=" + statoCandidatura + ", srcDocCandidatura=" + srcDocCandidatura + ", inizioTirocinio=" + inizioTirocinio + ", fineTirocinio=" + fineTirocinio + ", tms=" + tms + '}';
+    }
+        
 }

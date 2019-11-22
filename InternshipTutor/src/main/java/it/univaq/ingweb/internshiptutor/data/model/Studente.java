@@ -62,6 +62,22 @@ public interface Studente {
     
     void setCorsoLaurea(String cl);
     
+    String getDiploma();
+    
+    void setDiploma(String d);
+    
+    String getLaurea();
+    
+    void setLaurea(String l);
+    
+    String getDottoratoRicerca();
+    
+    void setDottoratoRicerca(String dr);
+    
+    String getSpecializzazione();
+    
+    void setSpecializzazione(String s);
+    
     boolean isHandicap();
     
     void setHandicap(boolean hand);

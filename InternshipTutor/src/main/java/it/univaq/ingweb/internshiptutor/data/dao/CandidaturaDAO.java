@@ -32,4 +32,6 @@ public interface CandidaturaDAO {
     
     int insertCandidatura(Candidatura c) throws DataException;
     
+    int updateCandidaturaStato(int stato, int id_st, int id_ot) throws DataException;
+    
 }

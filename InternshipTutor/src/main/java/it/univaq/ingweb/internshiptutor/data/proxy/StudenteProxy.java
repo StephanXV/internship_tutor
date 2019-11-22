@@ -67,6 +67,32 @@ public class StudenteProxy  extends StudenteImpl {
     }
 
     @Override
+    public void setSpecializzazione(String specializzazione) {
+        super.setSpecializzazione(specializzazione);
+        this.dirty = true;
+    }
+
+    @Override
+    public void setDottoratoRicerca(String dottoratoRicerca) {
+        super.setDottoratoRicerca(dottoratoRicerca);
+        this.dirty = true;
+    }
+
+    @Override
+    public void setLaurea(String laurea) {
+        super.setLaurea(laurea);
+        this.dirty = true;
+    }
+
+    @Override
+    public void setDiploma(String diploma) {
+        super.setDiploma(diploma);
+        this.dirty = true;
+    }
+    
+    
+
+    @Override
     public void setTelefono(String telefono) {
         super.setTelefono(telefono);
         this.dirty = true;

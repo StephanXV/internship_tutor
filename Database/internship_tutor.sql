@@ -23,6 +23,10 @@ create table studente (
     cap_residenza varchar(10) not null,
     telefono varchar(20) not null,
     corso_laurea varchar(100) not null,
+    diploma varchar(100) default null,
+    laurea varchar(100) default null,
+    dottorato_ricerca varchar(100) default null,
+    specializzazione varchar(100) default null,
     handicap bool not null,
     constraint studente_utente foreign key(id_utente)
 		references utente(id) on delete cascade on update cascade

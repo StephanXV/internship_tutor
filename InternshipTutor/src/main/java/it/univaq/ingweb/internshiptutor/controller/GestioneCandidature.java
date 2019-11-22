@@ -63,8 +63,8 @@ public class GestioneCandidature extends InternshipTutorBaseController {
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
         int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         try {
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, true);
-            response.sendRedirect("home");
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(1, id_st, id_ot);
+            response.sendRedirect("gestione_candidati?ot=" + id_ot);
         } catch (DataException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
@@ -76,8 +76,8 @@ public class GestioneCandidature extends InternshipTutorBaseController {
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
         int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         try {
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, false);
-            response.sendRedirect("home");
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(3, id_st, id_ot);
+            response.sendRedirect("gestione_candidati?ot=" + id_ot);
         } catch (DataException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

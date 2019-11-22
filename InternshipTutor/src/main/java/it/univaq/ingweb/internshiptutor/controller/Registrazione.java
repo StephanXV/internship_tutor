@@ -238,8 +238,22 @@ public class Registrazione extends InternshipTutorBaseController {
                     st.setProvinciaResidenza(request.getParameter("provincia_residenza"));
                     st.setTelefono(request.getParameter("telefono"));
                     st.setCorsoLaurea(request.getParameter("corso_laurea"));
+                    if (!request.getParameter("diploma").equals(""))
+                        st.setDiploma(request.getParameter("diploma"));
+                    else st.setDiploma(null);
+                    if (!request.getParameter("laurea").equals(""))
+                        st.setLaurea(request.getParameter("laurea"));
+                    else st.setLaurea(null);
+                    if (!request.getParameter("dottorato_ricerca").equals(""))
+                        st.setDottoratoRicerca(request.getParameter("dottorato_ricerca"));
+                    else st.setDottoratoRicerca(null);
+                    if (!request.getParameter("specializzazione").equals(""))
+                        st.setSpecializzazione(request.getParameter("specializzazione"));
+                    else st.setSpecializzazione(null);
                     st.setHandicap(Boolean.valueOf(request.getParameter("handicap")));
                     st.setUtente(ut);
+                    
+                    System.out.println(st);
 
                     int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
                     if (insert != 1){

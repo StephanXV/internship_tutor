@@ -74,7 +74,7 @@
                                             </div>
                                             
                                             <div class="modal-body">
-                                                Vuoi davvero rifiutare la richiesta dell'azienda ${(richiesta_cand.studente.nome)!"Nome"} ${(richiesta_cand.studente.cognome)!"Cognome"}?
+                                                Vuoi davvero rifiutare la richiesta dello studente ${(richiesta_cand.studente.nome)!"Nome"} ${(richiesta_cand.studente.cognome)!"Cognome"}?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
@@ -105,8 +105,8 @@
         </div>
 
         <#else>
-        <div class="col bg-light mx-2 pt-4 text-center">
-            <span class="lead">Non ci sono candidature da visualizzare</span>
+        <div class="col bg-light mx-2 py-4 text-center">
+            <span class="lead">Non ci sono candidature in attesa di essere visualizzate</span>
         </div>
         </#if>
     </div>
@@ -114,7 +114,7 @@
     <div class="row">
         <#if (cand_accettate?size>0)>
         <!-- colonna 2 -->
-        <div class="col bg-light py-2 mx-2 mb-3">
+        <div class="col bg-light py-2 mx-2">
             <h4>Tirocinanti attivi</h4> <br>
             <table class="table table-hover" id="myTableCandAcc">
             <!--Table head-->
@@ -147,7 +147,7 @@
             <!--Table-->
         </div>
         <#else>
-        <div class="col bg-light mx-2 pt-4 text-center">
+        <div class="col bg-light mx-2 py-4 text-center">
             <span class="lead">Non ci sono tirocinanti in corso</span>
         </div>
         </#if>
@@ -187,7 +187,7 @@
             <!--Table-->
         </div>
         <#else>
-        <div class="col bg-light mx-2 pt-4 text-center">
+        <div class="col bg-light mx-2 py-4 text-center">
             <span class="lead">Non ci sono tirocinanti che hanno concluso il tirocinio</span>
         </div>
         </#if>

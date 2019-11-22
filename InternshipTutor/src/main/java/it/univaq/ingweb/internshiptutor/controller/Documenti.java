@@ -12,6 +12,7 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
+import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import java.io.IOException;
@@ -57,11 +58,9 @@ public class Documenti extends InternshipTutorBaseController {
         int id_offerta_tirocinio = SecurityLayer.checkNumeric(request.getParameter("ot"));
         
         try {
-            Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_studente);
-            request.setAttribute("studente", st);
-            
-            OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_offerta_tirocinio);
-            request.setAttribute("tirocinio", ot);
+            Candidatura rc = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_studente, id_offerta_tirocinio);
+            request.setAttribute("rc", rc);
+            System.out.println(rc);
            
             TemplateResult res = new TemplateResult(getServletContext());
             res.activateNoOutline("doc_candidatura.ftl.html", request, response);  

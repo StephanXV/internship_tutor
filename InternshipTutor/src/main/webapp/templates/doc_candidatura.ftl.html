@@ -14,46 +14,50 @@ div#page_1, div#page_2, div#page_3 {border: none;box-shadow:0px 0px 0px 0px #FFF
 
 body {margin-top: 0px;margin-left: 0px;}
 
-#page_1 { border:1px solid #000000;
+.brdr {
+    border:1px solid #000000;
     border-radius:3px;
     -moz-border-radius:3px;
     -webkit-border-radius:3px;
     -webkit-box-shadow:0px 2px 5px 1px #858585 ;
     -moz-box-shadow:0px 2px 5px 1px #858585 ;
     box-shadow:0px 2px 5px 1px #858585 ;
-    padding: 20px 0px 76px 80px; position:relative; overflow: hidden;margin: 48px 0px 99px 76px;width: 718px;}
+    padding: 20px 0px 70px 0px;
+    
+    
+}
 
-#page_1 #p1dimg1 {position:absolute;top:20px;left:376px;z-index:-1;width:48px;height:59px;}
+.pad-l {
+    margin-left: 30px;
+    height: 100%;
+    width: 100%;
+}
+
+.input {
+    color: red;
+    text-decoration: underline black;
+    font-weight: bold;
+}
+
+#page_1 {position:relative; overflow: hidden;margin: auto; margin-top: 20px; width: 718px;}
+
+#page_1 #p1dimg1 {margin: auto;width:48px;height:59px;}
 #page_1 #p1dimg1 #p1img1 {width:48px;height:59px;}
 
 
 
 
-#page_2 {border:1px solid #000000;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    -webkit-box-shadow:0px 2px 5px 1px #858585 ;
-    -moz-box-shadow:0px 2px 5px 1px #858585 ;
-    box-shadow:0px 2px 5px 1px #858585 ;
-    padding: 20px 0px 76px 80px; position:relative; overflow: hidden;margin: 48px 0px 92px 76px;width: 718px;}
+#page_2 {position:relative; overflow: hidden;margin: auto;width: 718px;}
 
-#page_2 #p2dimg1 {position:absolute;top:20px;left:376px;z-index:-1;width:48px;height:59px;}
+#page_2 #p2dimg1 {margin:auto ;width:48px;height:59px;}
 #page_2 #p2dimg1 #p2img1 {width:48px;height:59px;}
 
 
 
 
-#page_3 {border:1px solid #000000;
-    border-radius:3px;
-    -moz-border-radius:3px;
-    -webkit-border-radius:3px;
-    -webkit-box-shadow:0px 2px 5px 1px #858585 ;
-    -moz-box-shadow:0px 2px 5px 1px #858585 ;
-    box-shadow:0px 2px 5px 1px #858585 ;
-    padding: 20px 0px 76px 80px; position:relative; overflow: hidden;margin: 48px 0px 74px 76px; width: 718px;}
+#page_3 {position:relative; overflow: hidden;margin: auto; width: 718px;}
 
-#page_3 #p3dimg1 {position:absolute;top:20px;left:376px;z-index:-1;width:48px;height:59px;}
+#page_3 #p3dimg1 {margin:auto;width:48px;height:59px;}
 #page_3 #p3dimg1 #p3img1 {width:48px;height:59px;}
 
 
@@ -89,7 +93,7 @@ body {margin-top: 0px;margin-left: 0px;}
 .ft25{font: 8px 'Arial';line-height: 10px;}
 .ft26{font: 13px 'Arial';margin-left: 4px;line-height: 16px;}
 
-.p0{text-align: left;padding-left: 100px;margin-top: 67px;margin-bottom: 0px;}
+.p0{text-align: left;padding-left: 100px;margin-top: 10px;margin-bottom: 0px;}
 .p1{text-align: left;padding-left: 62px;margin-top: 1px;margin-bottom: 0px;}
 .p2{text-align: left;padding-left: 191px;margin-top: 11px;margin-bottom: 0px;}
 .p3{text-align: left;padding-left: 9px;margin-top: 0px;margin-bottom: 0px;white-space: nowrap;}
@@ -110,7 +114,7 @@ body {margin-top: 0px;margin-left: 0px;}
 .p18{text-align: left;padding-left: 171px;margin-top: 10px;margin-bottom: 0px;}
 .p19{text-align: left;padding-left: 168px;margin-top: 7px;margin-bottom: 0px;}
 .p20{text-align: left;padding-left: 9px;margin-top: 28px;margin-bottom: 0px;}
-.p21{text-align: left;padding-left: 91px;margin-top: 67px;margin-bottom: 0px;}
+.p21{text-align: left;padding-left: 91px;margin-top: 10px;margin-bottom: 0px;}
 .p22{text-align: left;padding-left: 53px;margin-top: 1px;margin-bottom: 0px;}
 .p23{text-align: left;padding-left: 182px;margin-top: 12px;margin-bottom: 0px;}
 .p24{text-align: left;margin-top: 0px;margin-bottom: 0px;}
@@ -149,12 +153,14 @@ body {margin-top: 0px;margin-left: 0px;}
 </HEAD>
 
 <BODY>
-<DIV id="page_1">
+    <div style=" width: 800px; margin: auto">
+<DIV id="page_1" class="brdr">
 <DIV id="p1dimg1">
 <IMG src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAA7ADADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+sK+8W6Xa747Z31K4SR4mgsQJCrpjcjtkJGwznDspPOMnivI7vXY5bPQrjVdGt9W+2WC3jReUhlD7DJI8SvxIclSVBDDORuydug3xQ8Hxs0cuqtFIh2vHJazBkPcEbOorx6uZVbWo0m/x6tbL0OuOHj9uRueKde1V9Jaa+06e7tWZUl0zS/3hKkrnex2tKAQ3ACgh8MrDLCDwfrurnSRdW2n3OnRqxQaTqWdgCghfLbG6JT8g6FVCnCc7jgfEq8iTwrb3FvcESXdxDDbzB2eHDHdl4xkSKVUjG1s56Gk+E1zFL4JS1iikQ2U7wyNIm1mcgO2RzjBcqOckKDxnaOF4jEfV/rXM+a9vl6bfhc25KftPZW0serQ+L9Jxi+lbTGxn/TgI0+8VUeYCYyTjIUNuwRkCt6vFh8UfBpYKNY3MTtAW2mJJ/74rMhNh4pstegs9Cs9OmltZl2zW6i6MhAw8oUYi+bOAxLPjcMBTntpZnWiv39Nrz2/B/oYyw8G/ckVdbtFk8CeHfJginR7CKN1YozyqI1KqImK+Zk5A2ssil8oeSDxj2FrJNPbai7zR2gmjitJrgxXDStGxEixSpvxIdhChm2u27DDivb9FS503w7Y6ZcTac66dFFaSOhO8MmY2G7uPM+UAhe+CTwOV1fwtfafubw+JIBI5bNlGkUiE9OElgQquBjf5hOeeOvPCssPUUJPfVP5u/3bGjh7SN16fgec6p4m1K/s7Hw/EqWM2l2Zg81ZTLHcQmEpLJtEZypi+cHsu4jcSuLHhbxM3h7Tb2TT4I43kRIA0l15kUYbmBsKHYyDNw7rhFwvQMcGnrU6wXFzpd9bTxx21wz3cdtctLCQQrlnXars5cIC7vhiSE2AArX0lrB1/sfTxcW2qPJDHDeylCsdyGXAV/LMkYLB9uwggj5iysdnseyoOjy2916/rc5OafPfr/SH2NtJbwWoDxxPcLFHJbW9yvmzjaDHJ5UCFwqqd7AvlyMgg16d4C0wWcc1wUWCCJBbBGVIm3EIcmJGPlsRs3eYzSMcZ2ABTX0Xwff3NjFaaxG5gi2qDdIkjrgcFEeSeLHY4VCB09K7jVrK9PhnUDp1mq3V1byWlvKdoYvtzGUbdwN+5SCMk4PQc+NWqrEylSg+7b+6352OyEfZpSZcuYX0vV9SsYU8iG43XMDorYIlJMmSThn8zzCQMALInQkGpRZykW6wCW48xhEW2YIYKzFmx8qr8vHPVgMVt+ItFfVIIZ7QxJqNoS0DSZCuCMNGxHIVuOmcMqNhtuDwmqpFrlrJo5sJLmZnQT2rocwncrDzAOnJU8/Lggn5TzpjaDVXllDmhJ6W3Te/372ZFKouS6dmvxPO08DmLb4iF3bX1hb3ZuLq+MIAmdLj5iirIyqjncpYIP8AUAD5XJafxL8NGgudR1G8+z2Fs08TS3TGKYQSTzgEOpYYAJjOSQAjY2sdz11f9kNotnJpNhPPdWqBVlt7UyzQpgYAA57ctgY4JJJBxFqVqLrTodHnvBd2UoX/AESCYvCS2Nq8cMctwBkbtpBLAY6XV5XzPm006f5GO+mn4nb3lleWlq8xhUyK4VYmlVfM6E4PQfLuPc/L0NU7S1utZ1mxtbld1tDP9s8tlJ+zxxsrRp5g6uZFiPzEhgjgdKxdH8vQok0JbVVkjYx28FsAWkbG4rgYG7O4ntwSSME16D4e0V9LgmnuzE+o3ZDXDx5KqAMLGpPJVeeuMszthd2BzYGg3VcYQ5YJ6t6ttbL062RtVqLlu3dv8DZrK1bRft6yz2d1JYai0PlLdxDJwCSA69HUEt6Ebm2spYmtWiveOI81ngu7eS10O6gi0seQBPemT9zN8m6Xy3IBOcNlCdxESkhVGaztN+3XNy1n4dV5Jnik8y4IaERBskCR8nGAVUYUMeW2fLlfTtXsLXU9JubO8hWWCRDuU8cjkEEcgggEEcggEYIrL8Cqv/CBaDMFUPcWENxKVUDdI6BnbjuWJNczw65rr+vJdvzK5tB/h3wrZ6AgmLfadRaPZLduuCQTkqi87FyBwMk7V3FiM1vUUV0RioqyJP/Z" id="p1img1"></DIV>
 
 
 <DIV class="dclr"></DIV>
+<div class="pad-l">
 <P class="p0 ft0">UNIVERSITA' DEGLI STUDI DELL'AQUILA</P>
 <P class="p1 ft1">Dipartimento di INGEGNERIA E SCIENZE DELL’INFORMAZIONE E MATEMATICA</P>
 <P class="p2 ft2">SEGRETERIA AMMINISTRATIVA PER LA DIDATTICA</P>
@@ -177,13 +183,13 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p5 ft7">ALLEGATO 1</P>
 <P class="p6 ft7">alla Convenzione per lo svolgimento di attivit&aacute; di tirocinio e di orientamento (ai sensi dell'art. 18 L.196/97 e dell'Art. 1 Decreto Ministero del Lavoro e Previdenza Sociale N. 142/98 e della Legge 148 del 14/09/2011) per studenti, laureati e diplomati del Dipartimento di Ingegneria, Scienze dell’Informazione e Matematica dell’Universit&aacute; degli Studi dell'Aquila.</P>
 <P class="p7 ft7">PROGETTO FORMATIVO E DI ORIENTAMENTO</P>
-<P class="p8 ft8"><SPAN class="ft7">Nominativo del tirocinante </SPAN>_________________________________________________</P>
-<P class="p9 ft8"><SPAN class="ft7">Nato a </SPAN>__________________________________________Prov._____ il ____/___/ ____</P>
-<P class="p9 ft8"><SPAN class="ft7">Residente in </SPAN>____________________________________________Prov. (_______)</P>
-<P class="p10 ft8"><SPAN class="ft7">Codice fiscale</SPAN>____________________________________________________________</P>
-<P class="p9 ft8"><SPAN class="ft7">Telefono </SPAN>________________________________________________________________</P>
+<P class="p8 ft8"><SPAN class="ft7">Nominativo del tirocinante </SPAN><span class="input">${(rc.studente.nome)!"[Nome Studente]"}&nbsp;</span><span class="input">${(rc.studente.cognome)!"[Cognome Studente]"}</span></P>
+<P class="p9 ft8"><SPAN class="ft7">Nato a </SPAN><span class="input">${(rc.studente.cittaNascita)!"[Citta di nascita]"}</span>&nbsp;Prov.&nbsp;<span class="input">${(rc.studente.provinciaNascita)!"[Provincia di nascita]"}</span> il <span class="input">${(rc.studente.dataNascita)!"[Data di nascita]"}</span></P>
+<P class="p9 ft8"><SPAN class="ft7">Residente in </SPAN><span class="input">${(rc.studente.cittaResidenza)!"[Citta di res.]"}&nbsp;</span>&nbsp;Prov. (<span class="input">${(rc.studente.provinciaResidenza)!"[Pronvincia di res.]"}</span>)</P>
+<P class="p10 ft8"><SPAN class="ft7">Codice fiscale</SPAN><span class="input">${(rc.studente.CF)!"[Codice Fiscale]"}</span></P>
+<P class="p9 ft8"><SPAN class="ft7">Telefono </SPAN><span class="input">${(rc.studente.telefono)!"[Telefono]"}</span></P>
 <P class="p11 ft9">Attuale condizione (barrare la casella – possibilit&aacute; di doppia scelta):</P>
-<P class="p12 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Studente Corso di Laurea in: ______________________________________________</SPAN></P>
+<P class="p12 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Studente Corso di Laurea in: <span class="input">${(rc.studente.corsoLaurea)!"[Corso Laurea]"}</span></SPAN></P>
 <P class="p13 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Diplomato. Diploma universitario in: ________________________________________</SPAN></P>
 <P class="p14 ft8">(entro 12 mesi dal diploma)</P>
 <P class="p13 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Laureato. Laurea in: ____________________________________________________</SPAN></P>
@@ -192,22 +198,33 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p16 ft8"><SPAN class="ft10"></SPAN><SPAN class="ft11">Scuola o corso di perfezionamento o specializzazione in: ________________________</SPAN></P>
 <P class="p17 ft8">__________________________________________________________________</P>
 <P class="p13 ft8">Barrare se trattasi di soggetto portatore di handicap:</P>
-<P class="p18 ft8">Si<SPAN style="padding-left:114px;"><SPAN class="ft12"></SPAN></SPAN></P>
-<P class="p19 ft8">No<SPAN style="padding-left:111px;"><SPAN class="ft13"></SPAN></SPAN></P>
-<P style="margin-bottom:50px" class="p20 ft8"><SPAN class="ft7">Ente/Azienda ospitante </SPAN>___________________________________________________</P>
-
+<#if (rc.studente.handicap == true)>
+<P class="p18 ft8">Si<SPAN style="padding-left:114px;"><SPAN class="ft12">&boxtimes;</SPAN></SPAN></P>
+<#else>
+<P class="p18 ft8">Si<SPAN style="padding-left:114px;"><SPAN class="ft12" style="font-size: 28px">&#9633;</SPAN></SPAN></P>
+</#if>
+<#if (rc.studente.handicap == false)>
+<P class="p19 ft8">No<SPAN style="padding-left:111px;"><SPAN class="ft13">&boxtimes;</SPAN></SPAN></P>
+<#else>
+<P class="p19 ft8">No<SPAN style="padding-left:111px;"><SPAN class="ft13" style="font-size: 28px">&#9633;</SPAN></SPAN></P>
+</#if>
+<P style="margin-bottom:100px" class="p20 ft8"><SPAN class="ft7">Ente/Azienda ospitante </SPAN><span class="input">${(rc.offertaTirocinio.azienda.ragioneSociale)!"[Ragione Sociale]"}</span></P>
+</div>
 </DIV>
+        
+        <br>
 
-<DIV id="page_2">
+<DIV id="page_2" class="brdr">
 <DIV id="p2dimg1">
 <IMG src="data:image/jpg;base64,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" id="p2img1"></DIV>
 
 
 <DIV class="dclr"></DIV>
+<div class="pad-l">
 <P class="p21 ft0">UNIVERSITA' DEGLI STUDI DELL'AQUILA</P>
 <P class="p22 ft1">Dipartimento di INGEGNERIA E SCIENZE DELL’INFORMAZIONE E MATEMATICA</P>
 <P class="p23 ft14">SEGRETERIA AMMINISTRATIVA PER LA DIDATTICA</P>
-<P class="p24 ft8"><SPAN class="ft7">Luogo di effettuazione del tirocinio </SPAN>_________________________________________</P>
+<P class="p24 ft8"><SPAN class="ft7">Luogo di effettuazione del tirocinio </SPAN><span class="input">${(rc.offertaTirocinio.luogo)!"[Luogo tirocinio]"}</span></P>
 <P class="p25 ft8"><SPAN class="ft7">Settore di inserimento </SPAN>____________________________________________________</P>
 <P class="p26 ft8"><SPAN class="ft7">Tempi di accesso ai locali aziendali </SPAN>_________________________________________</P>
 <P class="p25 ft8"><SPAN class="ft7">Periodo di tirocinio </SPAN>n. _______ mesi dal___________________al __________________</P>
@@ -237,14 +254,18 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p24 ft8">________________________________________________________________________</P>
 <P class="p32 ft19">Facilitazioni previste: sussidio di formazione e servizi aziendali (mensa)</P>
 <P style="margin-bottom:50px" class="p24 ft8">________________________________________________________________________</P>
-
+</div>
 </DIV>
-<DIV id="page_3">
+        
+        <br>
+        
+<DIV id="page_3" class="brdr">
 <DIV id="p3dimg1">
 <IMG src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAA7ADADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD3+sK+8W6Xa747Z31K4SR4mgsQJCrpjcjtkJGwznDspPOMnivI7vXY5bPQrjVdGt9W+2WC3jReUhlD7DJI8SvxIclSVBDDORuydug3xQ8Hxs0cuqtFIh2vHJazBkPcEbOorx6uZVbWo0m/x6tbL0OuOHj9uRueKde1V9Jaa+06e7tWZUl0zS/3hKkrnex2tKAQ3ACgh8MrDLCDwfrurnSRdW2n3OnRqxQaTqWdgCghfLbG6JT8g6FVCnCc7jgfEq8iTwrb3FvcESXdxDDbzB2eHDHdl4xkSKVUjG1s56Gk+E1zFL4JS1iikQ2U7wyNIm1mcgO2RzjBcqOckKDxnaOF4jEfV/rXM+a9vl6bfhc25KftPZW0serQ+L9Jxi+lbTGxn/TgI0+8VUeYCYyTjIUNuwRkCt6vFh8UfBpYKNY3MTtAW2mJJ/74rMhNh4pstegs9Cs9OmltZl2zW6i6MhAw8oUYi+bOAxLPjcMBTntpZnWiv39Nrz2/B/oYyw8G/ckVdbtFk8CeHfJginR7CKN1YozyqI1KqImK+Zk5A2ssil8oeSDxj2FrJNPbai7zR2gmjitJrgxXDStGxEixSpvxIdhChm2u27DDivb9FS503w7Y6ZcTac66dFFaSOhO8MmY2G7uPM+UAhe+CTwOV1fwtfafubw+JIBI5bNlGkUiE9OElgQquBjf5hOeeOvPCssPUUJPfVP5u/3bGjh7SN16fgec6p4m1K/s7Hw/EqWM2l2Zg81ZTLHcQmEpLJtEZypi+cHsu4jcSuLHhbxM3h7Tb2TT4I43kRIA0l15kUYbmBsKHYyDNw7rhFwvQMcGnrU6wXFzpd9bTxx21wz3cdtctLCQQrlnXars5cIC7vhiSE2AArX0lrB1/sfTxcW2qPJDHDeylCsdyGXAV/LMkYLB9uwggj5iysdnseyoOjy2916/rc5OafPfr/SH2NtJbwWoDxxPcLFHJbW9yvmzjaDHJ5UCFwqqd7AvlyMgg16d4C0wWcc1wUWCCJBbBGVIm3EIcmJGPlsRs3eYzSMcZ2ABTX0Xwff3NjFaaxG5gi2qDdIkjrgcFEeSeLHY4VCB09K7jVrK9PhnUDp1mq3V1byWlvKdoYvtzGUbdwN+5SCMk4PQc+NWqrEylSg+7b+6352OyEfZpSZcuYX0vV9SsYU8iG43XMDorYIlJMmSThn8zzCQMALInQkGpRZykW6wCW48xhEW2YIYKzFmx8qr8vHPVgMVt+ItFfVIIZ7QxJqNoS0DSZCuCMNGxHIVuOmcMqNhtuDwmqpFrlrJo5sJLmZnQT2rocwncrDzAOnJU8/Lggn5TzpjaDVXllDmhJ6W3Te/372ZFKouS6dmvxPO08DmLb4iF3bX1hb3ZuLq+MIAmdLj5iirIyqjncpYIP8AUAD5XJafxL8NGgudR1G8+z2Fs08TS3TGKYQSTzgEOpYYAJjOSQAjY2sdz11f9kNotnJpNhPPdWqBVlt7UyzQpgYAA57ctgY4JJJBxFqVqLrTodHnvBd2UoX/AESCYvCS2Nq8cMctwBkbtpBLAY6XV5XzPm006f5GO+mn4nb3lleWlq8xhUyK4VYmlVfM6E4PQfLuPc/L0NU7S1utZ1mxtbld1tDP9s8tlJ+zxxsrRp5g6uZFiPzEhgjgdKxdH8vQok0JbVVkjYx28FsAWkbG4rgYG7O4ntwSSME16D4e0V9LgmnuzE+o3ZDXDx5KqAMLGpPJVeeuMszthd2BzYGg3VcYQ5YJ6t6ttbL062RtVqLlu3dv8DZrK1bRft6yz2d1JYai0PlLdxDJwCSA69HUEt6Ebm2spYmtWiveOI81ngu7eS10O6gi0seQBPemT9zN8m6Xy3IBOcNlCdxESkhVGaztN+3XNy1n4dV5Jnik8y4IaERBskCR8nGAVUYUMeW2fLlfTtXsLXU9JubO8hWWCRDuU8cjkEEcgggEEcggEYIrL8Cqv/CBaDMFUPcWENxKVUDdI6BnbjuWJNczw65rr+vJdvzK5tB/h3wrZ6AgmLfadRaPZLduuCQTkqi87FyBwMk7V3FiM1vUUV0RioqyJP/Z" id="p3img1"></DIV>
 
 
 <DIV class="dclr"></DIV>
+<div class="pad-l">
 <P class="p21 ft0">UNIVERSITA' DEGLI STUDI DELL'AQUILA</P>
 <P class="p22 ft1">Dipartimento di INGEGNERIA E SCIENZE DELL’INFORMAZIONE E MATEMATICA</P>
 <P class="p23 ft14">SEGRETERIA AMMINISTRATIVA PER LA DIDATTICA</P>
@@ -268,5 +289,7 @@ body {margin-top: 0px;margin-left: 0px;}
 <P class="p24 ft8">_______________________________________</P>
 <P class="p32 ft9"><SPAN class="ft25">1</SPAN><SPAN class="ft26">Timbro e firma dell’Azienda</SPAN></P>
 </DIV>
+</div>
+    </div>
 </BODY>
 </HTML>

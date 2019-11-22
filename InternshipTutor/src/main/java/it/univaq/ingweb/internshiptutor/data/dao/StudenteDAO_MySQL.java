@@ -37,8 +37,8 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
             sStudenteById = connection.prepareStatement("SELECT * FROM studente WHERE id_utente=?");
             iStudente = connection.prepareStatement("INSERT INTO studente (id_utente, nome, cognome, "
                     + "codice_fiscale, data_nascita, citta_nascita, provincia_nascita, citta_residenza, "
-                    + "provincia_residenza, cap_residenza, telefono, corso_laurea, handicap) values "
-                    + "(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                    + "provincia_residenza, cap_residenza, telefono, corso_laurea, diploma, laurea, dottorato_ricerca, specializzazione, handicap) values "
+                    + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -77,6 +77,10 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
             s.setCapResidenza(rs.getString("cap_residenza"));
             s.setTelefono(rs.getString("telefono"));
             s.setCorsoLaurea(rs.getString("corso_laurea"));
+            s.setDiploma(rs.getString("diploma"));
+            s.setLaurea(rs.getString("laurea"));
+            s.setDottoratoRicerca(rs.getString("dottorato_ricerca"));
+            s.setSpecializzazione(rs.getString("specializzazione"));
             s.setHandicap(rs.getBoolean("handicap"));
         } catch(SQLException ex) {
             throw new DataException("Unable to create studente object from resultset", ex);
@@ -117,7 +121,11 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
             iStudente.setString(10, st.getCapResidenza());
             iStudente.setString(11, st.getTelefono());
             iStudente.setString(12, st.getCorsoLaurea());
-            iStudente.setBoolean(13, st.isHandicap());
+            iStudente.setString(13, st.getDiploma());
+            iStudente.setString(14, st.getLaurea());
+            iStudente.setString(15, st.getDottoratoRicerca());
+            iStudente.setString(16, st.getSpecializzazione());
+            iStudente.setBoolean(17, st.isHandicap());
             return iStudente.executeUpdate();
             
         } catch (SQLException ex) {

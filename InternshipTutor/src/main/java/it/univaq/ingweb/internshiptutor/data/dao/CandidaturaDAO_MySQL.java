@@ -26,7 +26,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     
     private PreparedStatement sCandidatura;
     private PreparedStatement sCandidatureByStudente, sCandidatureByTirocinio, sCandidatureByTirocinioAndStato;
-    private PreparedStatement iCandidatura;
+    private PreparedStatement iCandidatura, uCandidaturaStato;
 
     public CandidaturaDAO_MySQL(DataLayer d) {
         super(d);
@@ -41,6 +41,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             sCandidatureByTirocinio = connection.prepareStatement("SELECT * FROM candidatura WHERE id_offerta_tirocinio=?");
             iCandidatura = connection.prepareStatement("INSERT INTO candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, "
                     + "cfu, ore_tirocinio) VALUES (?,?,?,?,?)");
+            uCandidaturaStato = connection.prepareStatement("UPDATE candidatura SET stato_candidatura=? WHERE id_studente=? AND id_offerta_tirocinio=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -55,6 +56,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             sCandidatureByTirocinio.close();
             sCandidatureByTirocinioAndStato.close();
             iCandidatura.close();
+            uCandidaturaStato.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -173,6 +175,19 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             throw new DataException("Unable to insert new candidatura", ex);
         }
     }
+
+    @Override
+    public int updateCandidaturaStato(int stato, int id_st, int id_ot) throws DataException {
+        try {
+            uCandidaturaStato.setInt(1, stato);
+            uCandidaturaStato.setInt(2, id_st);
+            uCandidaturaStato.setInt(3, id_ot);
+            return uCandidaturaStato.executeUpdate();
+         } catch(SQLException ex) {
+            throw new DataException("Unable to update candidatura stato", ex);
+        }
+    }
+    
     
     
 
