@@ -35,15 +35,18 @@ insert into studente (id_utente, nome, cognome, codice_fiscale, data_nascita, ci
 		   (5, 'Giuseppe', 'Gasbarro', 'GSPGBR97H08E372H', '1997-05-23', 'Lanciano', 'CH', 'Lanciano', 'CH', '66034', '3937726352', 'Informatica', false),
            (6, 'Enrico', 'Monte', 'ERCMNT97H08E372H', '1997-05-05', 'Vasto', 'CH', 'Torrebruna', 'CH', '66050', '3937726352', 'Informatica', false);
 
-insert into offerta_tirocinio (luogo, settore, orari, durata, titolo, obiettivi, modalita, facilitazioni, id_azienda)
+insert into offerta_tirocinio (luogo, settore, orari, durata, titolo, obiettivi, modalita, facilitazioni, id_azienda, id_tutore_tirocinio)
 	values ('Roma', 'Intelligenza artificiale', null, 2, 'Riconoscimento facciale con AI', 'Imparare a lavorare in un team di sviluppo; acquisire una 
 		   conoscenza avanzata sulle AI e sulla loro applicazione', 'Il tirocinante dapprima seguirà un corso di intelligenza artificiale, poi sarà affiancato da un tutor 
-           esperto per applicare ciò che ha appreso nel corso', 'Buoni pasto', 3),
+           esperto per applicare ciò che ha appreso nel corso', 'Buoni pasto', 3, 1),
+           
            ('Roma', 'Divisione sviluppo web', null, 1, 'Sviluppo in Angular 6', 'Imparare a lavorare in un team di sviluppo; acquisire una 
 		   conoscenza avanzata di Angular 6', 'Il tirocinante sarà affiancato da un tutor esperto che lo seguirà nello sviluppo dei compiti 
-           assegnati', null, 3);
+           assegnati', null, 3, 2),
            
-INSERT INTO offerta_tirocinio (id, luogo, settore, durata, titolo, obiettivi, modalita, facilitazioni, attiva, id_azienda) VALUES ('3', 'Milano', 'Ricerca operativa', '3', 'Ricerca degli operai in assembly', 'Imparare a lavorare in un team di sviluppo; acquisire conoscenze di base sulla ricerca operativa.', 'Il tirocinante sarà affiancato da un tutor esperto e realizzerà algoritmi', 'Rimborso viaggio', '1', '3');
+           ('Milano', 'Ricerca operativa', null, 3, 'Ricerca operativa in assembly', 'Imparare a lavorare in un team di sviluppo; acquisire
+           conoscenze di base sulla ricerca operativa.', 'Il tirocinante sarà affiancato da un tutor esperto e realizzerà algoritmi', 
+           'Rimborso viaggio', 3, 2);
            
            
 insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, ore_tirocinio, stato_candidatura,
