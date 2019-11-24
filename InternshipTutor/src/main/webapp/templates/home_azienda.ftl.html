@@ -1,3 +1,5 @@
+
+
 <!--Table-->
 <div class="container-fluid table-responsive-lg mt-3">
     <#switch azienda.statoConvenzione>
@@ -16,112 +18,148 @@
     <#break>
         
         <#case 1>
-        <div class="row">
 
-            <#if (ot_attive?size>0)>
-            <!-- colonna 1 -->
-            <div class="col bg-light mx-2 py-4 mb-2">
-                <h4>Offerte di tirocinio attive</h4> <br>
-                <table id="myTableTiroAtt" class="table table-hover">
-                    <!--Table head-->
-                    
-                    <thead>
-                        <tr class="bg-primary">
-                            <th class="text-white">Titolo</th>
-                            <th class="text-white">Studenti</th>
-                            <th class="text-white">Luogo</th>
-                            <th class="text-white">Durata</th>
-                            <th class="text-white">Gestione</th>
-                        </tr>
-                    </thead>
-                    <!--Table head-->
-                    <!--Table body-->
-                    <tbody>
-                        <#list ot_attive as ot_attiva>
-                        <tr>
-
-                            <td>
-                                <span>${ot_attiva.titolo}</span>
-                            </td>
-                            <td>
-                                <span class="mr-1">${ot_attiva.candidature?size}</span>
-                                <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}">
-                                    <button type="button" class="btn btn-primary text-white">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </a>
-                            </td>
-                            <td>${ot_attiva.luogo}</td>
-                            <td>${ot_attiva.durata}</td>
-                            <td>                      
-                                <a href="gestione_tirocini?ot=${ot_attiva.id}&action=disattiva">
-                                    <button type="button" class="btn bg-danger text-white">Disattiva</button>
-                                </a>
-                            </td>
-                            
-                        </tr>
-                        </#list>
-                    </tbody>
-                    <!--Table body-->
-                </table>
-                <!--Table-->
-            </div>
-            <#else>
-            <div class="col bg-light mx-2 pt-4 text-center">
-                <span class="lead">Non ci sono offerte di tirocinio attive</span>
-            </div>
-            </#if>
-
-            <#if (ot_disattive?size>0)>
-            <!-- colonna 2 -->
-            <div class="col bg-light mx-2 py-4 mb-2">
-                <h4>Offerte di tirocinio disattive</h4> <br>
-                <table id="myTableTiroDis" class="table table-hover">
-                <!--Table head-->
-                
-                <thead>
-                        <tr class="bg-primary">
-                            <th class="text-white">Titolo</th>
-                            <th class="text-white">Studenti</th>
-                            <th class="text-white">Gestione</th>
-                        </tr>
-                    </thead>
-                    <!--Table head-->
-                    <!--Table body-->
-                    <tbody>
-                        <#list ot_disattive as ot_disattiva>
-                        <tr>
-                            <td>
-                                <span>${ot_disattiva.titolo}</span>
-                            </td>
-                            <td>
-                                <span class="mr-1">${ot_disattiva.candidature?size}</span>
-                                <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}">
-                                    <button type="button" class="btn btn-primary text-white">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                </a>
-                            </td>
-                            <td>                      
-                                <a href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
-                                    <button type="button" class="btn bg-success text-white">Attiva</button>
-                                </a>
-                            </td>
-                        </tr>
-                        </#list>
-                    </tbody>
-                    <!--Table body-->
-                </table>
-                <!--Table-->
-            </div>
-
-            <#else>
-            <div class="col bg-light mx-2 pt-4 text-center">
-                <span class="lead">Non ci sono offerte di tirocinio disattive</span>
-            </div>
-            </#if>
-   
+    <div class="row">
+        <div class="col mx-auto text-center mb-5">
+            <h2>Offerte Di Tirocinio</h2>
         </div>
+    </div>
+
+
+    <div class="row notification-request" style="margin-bottom: 60px">
+
+        <div class="col-4 mx-auto notice notice-success">
+            <div class="row">
+                <div class="col-9">
+                    <strong>Attive</strong> <br>
+                    ${ot_attive?size}
+                </div>
+                <div class="col-3 my-auto">
+                    <i class="fas fa-check fa-2x"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4 mx-auto notice notice-danger">
+            <div class="row">
+                <div class="col-9">
+                    <strong>Disattive</strong> <br>
+                    ${ot_disattive?size}
+                </div>
+                <div class="col-3 my-auto">
+                    <i class="fas fa-times fa-2x"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tab-student">
+    <nav>
+        <div class="nav nav-tabs nav-fill tab-table" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link item-tab-table active" id="nav-offerte_attive-tab" data-toggle="tab" href="#nav-tiro-active" role="tab" aria-controls="nav-offerte_attive-tab" aria-selected="true" >Attive</a>
+            <a class="nav-item nav-link item-tab-table" id="nav-offerte_disattive-tab" data-toggle="tab" href="#nav-tiro-noactive" role="tab" aria-controls="nav-offerte_disattive-tab" aria-selected="false" >Non attive</a>
+        </div>
+    </nav>
+
+    <div class="tab-content" id="nav-tabContent">
+
+        <div class="tab-pane fade show active pt-4" id="#myTableTiroAtt" role="tabpanel" aria-labelledby="nav-offerte_attive-tab">
+            <#if (ot_attive?size>0)>
+            <table class="table table-hover mt-5" id="tableOffertaAttive" cellspacing="0">
+                <thead>
+                <tr class="bg-primary">
+                    <th class="text-white">Titolo</th>
+                    <th class="text-white">Studenti</th>
+                    <th class="text-white">Luogo</th>
+                    <th class="text-white">Durata</th>
+                    <th class="text-white">Gestione</th>
+                </tr>
+                </thead>
+                <!--Table head-->
+                <!--Table body-->
+                <tbody>
+                <#list ot_attive as ot_attiva>
+                <tr>
+
+                    <td>
+                        <span>${ot_attiva.titolo}</span>
+                    </td>
+                    <td>
+                        <span class="mr-1">${ot_attiva.candidature?size}</span>
+                        <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}">
+                            <button type="button" class="btn btn-primary text-white">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </a>
+                    </td>
+                    <td>${ot_attiva.luogo}</td>
+                    <td>${ot_attiva.durata}</td>
+                    <td>
+                        <a href="gestione_tirocini?ot=${ot_attiva.id}&action=disattiva">
+                            <button type="button" class="btn bg-danger text-white">Disattiva</button>
+                        </a>
+                    </td>
+
+                </tr>
+                </#list>
+                </tbody>
+                <!--Table body-->
+            </table>
+
+            <#else>
+            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                <span class="lead">Non ci sono offerte di tirocinio attive.</span>
+            </div>
+        </#if>
+    </div>
+
+
+
+    <div class="tab-pane fade pt-4" id="#myTableTiroDis" role="tabpanel" aria-labelledby="nav-offerte_disattive-tab">
+        <#if (ot_disattive?size>0)>
+        <table class="table table-hover mt-5" id="tableOfferteNonAttive" cellspacing="0">
+            <thead>
+            <tr class="bg-primary">
+                <th class="text-white">Titolo</th>
+                <th class="text-white">Studenti</th>
+                <th class="text-white">Gestione</th>
+            </tr>
+            </thead>
+            <!--Table head-->
+            <!--Table body-->
+            <tbody>
+            <#list ot_disattive as ot_disattiva>
+            <tr>
+                <td>
+                    <span>${ot_disattiva.titolo}</span>
+                </td>
+                <td>
+                    <span class="mr-1">${ot_disattiva.candidature?size}</span>
+                    <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}">
+                        <button type="button" class="btn btn-primary text-white">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </a>
+                </td>
+                <td>
+                    <a href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
+                        <button type="button" class="btn bg-success text-white">Attiva</button>
+                    </a>
+                </td>
+            </tr>
+            </#list>
+            </tbody>
+        </table>
+
+        <#else>
+        <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+            <span class="lead">Non ci sono offerte di tirocinio disattive.</span>
+        </div>
+    </#if>
+</div>
+</div>
+</div>
         <#break>
         
         <#case 2>

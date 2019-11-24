@@ -127,6 +127,19 @@ public class SecurityLayer {
             throw new NumberFormatException("String argument is null");
         }
     }
+
+    public static boolean checkNumericBool(String s) throws NumberFormatException {
+        if (s != null && !s.equals("") && s.length() > 0) {
+            try {
+                int n = Integer.parseInt(s);
+            } catch (NumberFormatException | NullPointerException nfe) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     public static boolean checkDurata(String string) {
             if (string.length()<4){

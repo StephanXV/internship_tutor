@@ -25,9 +25,11 @@
     font-size: 16px;
     font-weight: 600;
 }
-.project-tab .item-tab-table:hover {
+
+.item-tab-table:hover {
     border: none;
 }
+
 .project-tab thead{
     background: #f3f3f3;
     color: #333;
@@ -43,4 +45,11 @@
         overflow-x: auto;
         white-space: nowrap;
     }
+}
+
+.tab-student{
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }

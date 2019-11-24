@@ -17,6 +17,8 @@ import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,40 +32,52 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int n = SecurityLayer.checkNumeric(request.getParameter("n"));
-        HttpSession s = SecurityLayer.checkSession(request);
+        if (SecurityLayer.checkNumericBool(request.getParameter("n"))) {
+            int az = SecurityLayer.checkNumeric(request.getParameter("n"));
+            HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
             }
-        try {
-            try {
-                action_default(request, response, n, s);
-            } catch (DataException ex) {
-                request.setAttribute("exception", ex);
-                action_error(request, response);
-            }
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
+
+            action_default(request, response, az);
+
+        } else {
+            request.setAttribute("message", "errore gestito");
+            request.setAttribute("title", "Impossibile trovare l'azienda");
+            request.setAttribute("errore", "404 NOT FOUND");
             action_error(request, response);
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, int n, HttpSession s) throws TemplateManagerException, DataException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int az) {
         TemplateResult res = new TemplateResult(getServletContext());
-        Azienda azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(n);
-        List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
-        request.setAttribute("tipo", s.getAttribute("tipologia"));
-        request.setAttribute("tirocini", tirocini);
-        request.setAttribute("azienda", azienda);
-        request.setAttribute("page_title", "Azienda:" + azienda.getRagioneSociale());
-        res.activate("dettaglio_azienda.ftl.html", request, response);
+        Azienda azienda = null;
+
+        try {
+            azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(az);
+            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
+            request.setAttribute("tirocini", tirocini);
+            request.setAttribute("azienda", azienda);
+            request.setAttribute("page_title", "Azienda:" + azienda.getRagioneSociale());
+            res.activate("dettaglio_azienda.ftl.html", request, response);
+        } catch (NullPointerException | DataException | TemplateManagerException ex){
+            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", "errore gestito");
+            request.setAttribute("title", "Impossibile trovare l'azienda");
+            request.setAttribute("errore", "404 NOT FOUND");
+            action_error(request, response);
+        }
+
+        //request.setAttribute("tipo", s.getAttribute("tipologia"));
+
         
     }
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
-           (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
+            request.setAttribute("referrer", "dettaglio_azienda.ftl.html");
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }

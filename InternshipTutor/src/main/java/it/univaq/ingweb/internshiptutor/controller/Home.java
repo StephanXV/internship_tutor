@@ -18,6 +18,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,7 +129,37 @@ public class Home extends InternshipTutorBaseController {
             
             // lista delle candidature dello studente
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(st);
-            request.setAttribute("candidature", candidature);
+            List<Candidatura> attesa = new ArrayList<Candidatura>();
+            List<Candidatura> attiva = new ArrayList<Candidatura>();
+            List<Candidatura> finita = new ArrayList<Candidatura>();
+            List<Candidatura> rifiutata = new ArrayList<Candidatura>();
+
+            for (Candidatura c: candidature){
+                switch (c.getStatoCandidatura()) {
+                    case 0 :
+                        attesa.add(c);
+                        break;
+
+                    case 1 :
+                        attiva.add(c);
+                        break;
+
+                    case 2:
+                        finita.add(c);
+                        break;
+
+                    case 3:
+                        finita.add(c);
+                        break;
+
+                    default: break;
+                }
+            }
+
+            request.setAttribute("candidature_attesa", attesa);
+            request.setAttribute("candidature_attive", attiva);
+            request.setAttribute("candidature_finite", finita);
+            request.setAttribute("candidature_rifiutate", rifiutata);
             
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Home studente");
