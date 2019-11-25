@@ -16,13 +16,13 @@
         <div class="col-12 col-md-8 mx-auto">
             <div class="card text-center">
                 <div class="card-header">
-                    Richiesta Tirocinio
+                    <i class="fas fa-share-square mr-2"></i>Richiesta Tirocinio
                 </div>
                 <div class="card-body">
                     <form role="form" method="post" action="#">
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <input class="form-control" name="corso" placeholder="Corso Di Laurea *" type="text" autofocus required />
-                            </div>
+                            </div> -->
                             <div class="form-group">
 
                                 <div class="input-group">
@@ -60,7 +60,7 @@
                                 <input class="form-control" name="specializzazione" placeholder="Specializzazione (Se frequentante)" type="text" />
                             </div>
 
-                            <input name="submit" class="btn btn-lg btn-primary btn-block" type="submit" value="Invia la tua candidatura">
+                            <input name="submit" class="btn btn-primary btn-request-tiro" type="submit" value="Invia la tua candidatura">
                     </form>
                 </div>
             </div>
@@ -74,7 +74,7 @@
         <div class="col-12 col-md-8 mx-auto" style="padding-top: 70px">
             <div class="card text-center">
                 <div class="card-header">
-                    Aggiungi un nuovo tutore
+                    <i class="fas fa-user-plus mr-2"></i>Aggiungi un nuovo tutore
                 </div>
                 <div class="card-body">
                     <form role="form" method="post" action="richiesta_tirocinio?n=${tirocinio}">
@@ -91,7 +91,7 @@
                             <input class="form-control" name="telefono" placeholder="Telefono *" type="text" required />
                         </div>
 
-                        <input name="submitTutore" class="btn btn-lg btn-primary btn-block" type="submit" value="Aggiungi Autore">
+                        <input name="submitTutore" class="btn btn-primary btn-request-tiro" type="submit" value="Aggiungi Autore">
                     </form>
                 </div>
             </div>

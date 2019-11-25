@@ -77,3 +77,9 @@ body {
 .searchFilters{
     margin-top: 60px;
 }
+
+/*** richiesta tirocini ***/
+.btn-request-tiro{
+    width: 65%;
+    border-radius: 20px;
+}

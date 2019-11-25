@@ -88,32 +88,24 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             //set corsoLaure obbligatorio
 
             if (request.getParameter("laurea") != null && request.getParameter("laurea").length() > 0) {
-                //set laurea acquisita
+                c.setLaurea(request.getParameter("laurea"));
             }
 
             if (request.getParameter("dottorato") != null && request.getParameter("dottorato").length() > 0) {
-                //set dottorato acquisita
+                c.setDottoratoRicerca(request.getParameter("dottorato"));
             }
 
             if (request.getParameter("specializzazione") != null && request.getParameter("specializzazione").length() > 0) {
-                //set special acquisita
+                c.setSpecializzazione(request.getParameter("specializzazione"));
             }
 
             if (request.getParameter("diploma") != null && request.getParameter("diploma").length() > 0) {
-                //set diploma acquisita
+                c.setDiploma(request.getParameter("diploma"));
             }
-        } catch (DataException e) {
-            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Impossibile richiedere la candidatura");
-            request.setAttribute("errore", "ERRORE");
-            action_error(request, response);
-            return;
-        }
 
-
-        try {
+            //insert candidatura
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
+
         } catch (DataException e) {
             Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
             request.setAttribute("message", "errore gestito");
@@ -123,6 +115,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             return;
         }
 
+        //mettere il template activate
         try {
             response.sendRedirect("home");
         } catch (IOException e) {
