@@ -15,8 +15,8 @@ insert into utente (email, username, pw, tipologia)
 	values ('admin@mail.it', 'admin', 'Wzt1qwYki8QB5MxWbRmhAAdQkQVx6J1/', 'ad'),
 		   ('google@mail.it', 'google', '2jq4XG03cR2KDk53vgRMCkx0ydVgO0r5', 'az'),
 		   ('microsoft@mail.it', 'microsoft', 'UCbLgSj1jbP50jW0hJUeqx7wgGL8r76f', 'az'),
-           ('stefano.florio@mail.it', 'steflo', 'Kj/t1Uvjv4MC1/NVZI3G60gDRXheDg8p', 'st'),
-           ('giuseppe.gasbarro@mail.it', 'giusgas', 'GE9MUvnB/4tMxHdVDYY9yZX2N40ZHFAW', 'st'),
+           ('stefano.florio@mail.it', 'steflo', 'rVAcsixrOLRdlqXV6oK7fBd+pNm2tl4V', 'st'),
+           ('giuseppe.gasbarro@mail.it', 'giusgas', 'P2C27LozxOTfclPSjSLgTw1u19rXsG8Q', 'st'),
            ('enrico.monte@mail.it', 'enrimon', 'ItCMzC/jMvxzXXqSuHlC7dE1yPaqmi62', 'st');
 
 insert into azienda (id_utente, ragione_sociale, indirizzo, citta, cap, provincia, rappresentante_legale, piva,
@@ -49,14 +49,14 @@ insert into offerta_tirocinio (luogo, settore, orari, durata, titolo, obiettivi,
            'Rimborso viaggio', 3, 2);
            
            
-insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, ore_tirocinio, stato_candidatura,
+insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, stato_candidatura,
 						src_documento_candidatura, data_inizio, data_fine, tms)
-	values (4, 1, 1, 6, 25, 0, null, null, null, current_timestamp()),
-		   (5, 1, 2, 3, 25, 1, null, '2019-11-21', '2020-1-27', current_timestamp()),
-           (6, 1, 1, 4, 25, 0, null, null, null, current_timestamp()),
-           (4, 2, 2, 6, 25, 1, null, '2019-12-21', '2020-1-27', current_timestamp()),
-           (5, 2, 2, 3, 25, 2, null, '2019-11-21', '2020-1-27', current_timestamp()),
-           (6, 2, 1, 3, 25, 0, null, null, null, current_timestamp());
+	values (4, 1, 1, 6, 0, null, null, null, current_timestamp()),
+		   (5, 1, 2, 3, 1, null, '2019-11-21', '2020-1-27', current_timestamp()),
+           (6, 1, 1, 4, 0, null, null, null, current_timestamp()),
+           (4, 2, 2, 6, 1, null, '2019-12-21', '2020-1-27', current_timestamp()),
+           (5, 2, 2, 3, 2, null, '2019-11-21', '2020-1-27', current_timestamp()),
+           (6, 2, 1, 3, 0, null, null, null, current_timestamp());
            
 insert into resoconto (id_studente, id_offerta_tirocinio, ore_effettive, descrizione_attivita, giudizio, src_documento_resoconto)
 	values (5, 2, 75, 'Il tirocinante ha contribuito correttamente allo sviluppo lato server del sito web, lavorando in un team di sviluppo', 

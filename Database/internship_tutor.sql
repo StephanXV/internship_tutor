@@ -23,10 +23,6 @@ create table studente (
     cap_residenza varchar(10) not null,
     telefono varchar(20) not null,
     corso_laurea varchar(100) not null,
-    diploma varchar(100) default null,
-    laurea varchar(100) default null,
-    dottorato_ricerca varchar(100) default null,
-    specializzazione varchar(100) default null,
     handicap bool not null,
     constraint studente_utente foreign key(id_utente)
 		references utente(id) on delete cascade on update cascade
@@ -104,11 +100,14 @@ create table candidatura (
     id_offerta_tirocinio integer unsigned not null, 
     id_tutore_uni integer unsigned not null,
     cfu integer(2) not null,
-    ore_tirocinio integer(3) not null,
     stato_candidatura integer(1) not null default 0,
     src_documento_candidatura varchar(250),
     data_inizio date,
     data_fine date,
+    diploma varchar(100) default null,
+    laurea varchar(100) default null,
+    dottorato_ricerca varchar(100) default null,
+    specializzazione varchar(100) default null,
     tms timestamp default current_timestamp,
     constraint candidatura_unica unique (id_studente, id_offerta_tirocinio),
     constraint studente_candidatura foreign key(id_studente) 

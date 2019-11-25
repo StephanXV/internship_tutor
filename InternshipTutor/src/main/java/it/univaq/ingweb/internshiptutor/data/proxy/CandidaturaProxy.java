@@ -14,6 +14,7 @@ import it.univaq.ingweb.internshiptutor.data.impl.CandidaturaImpl;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,13 +49,13 @@ public class CandidaturaProxy extends CandidaturaImpl {
     }
 
     @Override
-    public void setFineTirocinio(Date fineTirocinio) {
+    public void setFineTirocinio(LocalDate fineTirocinio) {
         super.setFineTirocinio(fineTirocinio);
         this.dirty = true;
     }
 
     @Override
-    public void setInizioTirocinio(Date inizioTirocinio) {
+    public void setInizioTirocinio(LocalDate inizioTirocinio) {
         super.setInizioTirocinio(inizioTirocinio);
         this.dirty = true;
     }
@@ -68,12 +69,6 @@ public class CandidaturaProxy extends CandidaturaImpl {
     @Override
     public void setSrcDocCandidatura(String srcDocCandidatura) {
         super.setSrcDocCandidatura(srcDocCandidatura);
-        this.dirty = true;
-    }
-
-    @Override
-    public void setOreTirocinio(int oreTirocinio) {
-        super.setOreTirocinio(oreTirocinio);
         this.dirty = true;
     }
 
@@ -101,6 +96,31 @@ public class CandidaturaProxy extends CandidaturaImpl {
         this.id_tutore_uni = tutoreUni.getId();
         this.dirty = true;
     }
+    
+     @Override
+    public void setSpecializzazione(String specializzazione) {
+        super.setSpecializzazione(specializzazione);
+        this.dirty = true;
+    }
+
+    @Override
+    public void setDottoratoRicerca(String dottoratoRicerca) {
+        super.setDottoratoRicerca(dottoratoRicerca);
+        this.dirty = true;
+    }
+
+    @Override
+    public void setLaurea(String laurea) {
+        super.setLaurea(laurea);
+        this.dirty = true;
+    }
+
+    @Override
+    public void setDiploma(String diploma) {
+        super.setDiploma(diploma);
+        this.dirty = true;
+    }
+    
     
     @Override
     public OffertaTirocinio getOffertaTirocinio() {

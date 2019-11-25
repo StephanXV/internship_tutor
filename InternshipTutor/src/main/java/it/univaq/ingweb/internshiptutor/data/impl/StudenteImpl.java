@@ -28,10 +28,6 @@ public class StudenteImpl implements Studente {
     private String provinciaResidenza;
     private String telefono;
     private String corsoLaurea;
-    private String diploma;
-    private String laurea;
-    private String dottoratoRicerca;
-    private String specializzazione;
     private boolean handicap;
     private List<Candidatura> candidature;
 
@@ -48,10 +44,6 @@ public class StudenteImpl implements Studente {
         this.provinciaResidenza = "";
         this.telefono = "";
         this.corsoLaurea = "";
-        this.diploma = null;
-        this.laurea = null;
-        this.dottoratoRicerca = null;
-        this.specializzazione = null;
         this.handicap = false;
         this.candidature = null;
     }
@@ -175,46 +167,6 @@ public class StudenteImpl implements Studente {
     public void setCorsoLaurea(String corsoLaurea) {
         this.corsoLaurea = corsoLaurea;
     }
-
-    @Override
-    public String getDiploma() {
-        return diploma;
-    }
-
-    @Override
-    public void setDiploma(String diploma) {
-        this.diploma = diploma;
-    }
-
-    @Override
-    public String getLaurea() {
-        return laurea;
-    }
-
-    @Override
-    public void setLaurea(String laurea) {
-        this.laurea = laurea;
-    }
-
-    @Override
-    public String getDottoratoRicerca() {
-        return dottoratoRicerca;
-    }
-
-    @Override
-    public void setDottoratoRicerca(String dottoratoRicerca) {
-        this.dottoratoRicerca = dottoratoRicerca;
-    }
-
-    @Override
-    public String getSpecializzazione() {
-        return specializzazione;
-    }
-
-    @Override
-    public void setSpecializzazione(String specializzazione) {
-        this.specializzazione = specializzazione;
-    }
         
     @Override
     public boolean isHandicap() {
@@ -238,9 +190,9 @@ public class StudenteImpl implements Studente {
 
     @Override
     public String toString() {
-        return "StudenteImpl{" + "utente=" + utente + ", nome=" + nome + ", cognome=" + cognome + ", CF=" + CF + ", dataNascita=" + dataNascita + ", cittaNascita=" + cittaNascita + ", provinciaNascita=" + provinciaNascita + ", cittaResidenza=" + cittaResidenza + ", capResidenza=" + capResidenza + ", provinciaResidenza=" + provinciaResidenza + ", telefono=" + telefono + ", corsoLaurea=" + corsoLaurea + ", diploma=" + diploma + ", laurea=" + laurea + ", dottoratoRicerca=" + dottoratoRicerca + ", specializzazione=" + specializzazione + ", handicap=" + handicap + ", candidature=" + candidature + '}';
+        return "StudenteImpl{" + "utente=" + utente + ", nome=" + nome + ", cognome=" + cognome + ", CF=" + CF + ", dataNascita=" + dataNascita + ", cittaNascita=" + cittaNascita + ", provinciaNascita=" + provinciaNascita + ", cittaResidenza=" + cittaResidenza + ", capResidenza=" + capResidenza + ", provinciaResidenza=" + provinciaResidenza + ", telefono=" + telefono + ", corsoLaurea=" + corsoLaurea + ", handicap=" + handicap + ", candidature=" + candidature + '}';
     }
-    
+  
     
        
 }

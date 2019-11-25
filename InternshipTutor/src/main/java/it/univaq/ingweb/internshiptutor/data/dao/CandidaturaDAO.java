@@ -10,6 +10,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -33,5 +34,9 @@ public interface CandidaturaDAO {
     int insertCandidatura(Candidatura c) throws DataException;
     
     int updateCandidaturaStato(int stato, int id_st, int id_ot) throws DataException;
+    
+    int updateCandidaturaDate(LocalDate it, LocalDate ft, int id_st, int id_ot) throws DataException;
+    
+    int updateCandidaturaDocumento(int id_st, int id_ot, String src) throws DataException;
     
 }

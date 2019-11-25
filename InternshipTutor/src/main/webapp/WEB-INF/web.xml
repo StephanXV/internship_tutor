@@ -154,6 +154,14 @@
         <servlet-name>GestioneCandidature</servlet-name>
         <url-pattern>/gestione_candidati</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>DettaglioCandidatura</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.DettaglioCandidatura</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DettaglioCandidatura</servlet-name>
+        <url-pattern>/dettaglio_candidatura</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

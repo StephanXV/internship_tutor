@@ -129,6 +129,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             request.setAttribute("exception", e);
             action_error(request, response);
         }
+
     }
     
     private void action_default(HttpServletRequest request, HttpServletResponse response) {
