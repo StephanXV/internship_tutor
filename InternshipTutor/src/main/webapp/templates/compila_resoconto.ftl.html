@@ -1,0 +1,49 @@
+<div class="container">
+    
+    <!-- Dati Resoconto -->
+    <form method="post" action="compila_resoconto?ot=${id_ot}&st=${id_st}">
+        <div class="p-3 mb-3 bg-light text-center">
+            <span class="lead">Compila il resoconto</span>
+            <div class="row my-2">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="bg-primary text-white input-group-text">Ore effettive</span>
+                        </div>
+                        <input required type="number" min="1" name="ore_effettive" class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row my-2">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="bg-primary text-white input-group-text">Descrizine delle attività svolte</span>
+                        </div>
+                        <textarea required name="desc_attivita" rows="6" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row my-2">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="bg-primary text-white input-group-text">Giudizio finale</span>
+                        </div>
+                        <textarea required name="giudizio" rows="4" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row my-2">
+                <div class="col text-center">
+                    <button type='submit' name='submit' value='resoconto' class="btn bg-success text-white">
+                        Invia resoconto
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

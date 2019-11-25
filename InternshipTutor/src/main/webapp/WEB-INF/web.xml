@@ -162,6 +162,14 @@
         <servlet-name>DettaglioCandidatura</servlet-name>
         <url-pattern>/dettaglio_candidatura</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CompilaResoconto</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.CompilaResoconto</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CompilaResoconto</servlet-name>
+        <url-pattern>/compila_resoconto</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

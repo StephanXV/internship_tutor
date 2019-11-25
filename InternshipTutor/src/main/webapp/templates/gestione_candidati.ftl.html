@@ -1,16 +1,16 @@
 <noscript>
-    <style>
-        button.butt_js {
-            visibility: hidden!important;
-        }
-
-        a.a_no_js {
-            color: white!important;
-        }
-        a.a_no_js:hover {
-            color: white!important;
-        }
-    </style>
+<style>
+    button.butt_js {
+        visibility: hidden!important;
+    }
+    
+    a.a_no_js {
+        color: white!important;
+    }
+    a.a_no_js:hover {
+        color: white!important;
+    }
+</style>
 </noscript>
 
 <div class="container-fluid table-responsive-lg mt-3">
@@ -26,9 +26,9 @@
         <div class="col bg-light mx-2 py-2">
             <h4>Candidature</h4> <br>
             <table class="table table-hover" id="myTableCand">
-            <!--Table head-->
-
-            <thead>
+                <!--Table head-->
+                
+                <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Data</th>
                         <th class="text-white">Studente</th>
@@ -36,7 +36,7 @@
                         <th class="text-white">Cfu richiesti</th>
                         <th class="text-white">Tutore Universitario</th>
                         <th class="text-white">Azioni</th>
-                       
+                        
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -44,7 +44,7 @@
                 <tbody>
                     <#list richieste_cand as richiesta_cand>
                     <tr>
-
+                        
                         <td>${richiesta_cand.tms}</td>
                         <td>${richiesta_cand.studente.nome} ${richiesta_cand.studente.cognome}</td>
                         <td>${richiesta_cand.studente.corsoLaurea}</td>
@@ -64,22 +64,22 @@
             </table>
             <!--Table-->
         </div>
-
+        
         <#else>
         <div class="col bg-light mx-2 py-4 text-center">
             <span class="lead">Non ci sono candidature in attesa di essere visualizzate</span>
         </div>
         </#if>
     </div>
-        
+    
     <div class="row">
         <#if (cand_accettate?size>0)>
         <!-- colonna 2 -->
         <div class="col bg-light py-2 mx-2">
             <h4>Tirocinanti attivi</h4> <br>
             <table class="table table-hover" id="myTableCandAcc">
-            <!--Table head-->
-            <thead>
+                <!--Table head-->
+                <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Tirocinante</th>
                         <th class="text-white">Data inizio</th>
@@ -116,19 +116,19 @@
             <span class="lead">Non ci sono tirocinanti in corso</span>
         </div>
         </#if>
-    
+        
         <#if (tiro_terminati?size>0)>
         <!-- colonna 2 -->
         <div class="col bg-light py-2 mx-2">
             <h4>Resoconti</h4> <br>
             <table class="table table-hover" id="myTableCandTer">
-            <!--Table head-->
-            <thead>
+                <!--Table head-->
+                <thead>
                     <tr class="bg-primary">
                         <th class="text-white">Tirocinante</th>
                         <th class="text-white">Data inizio</th>
                         <th class="text-white">Data fine</th>
-                        <th class="text-white">Resoconto</th>
+                        <th class="text-white">Compilazione resoconto</th>
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -140,8 +140,12 @@
                         <td>${tiro_terminato.studente.nome} ${tiro_terminato.studente.cognome}</td>
                         <td>${tiro_terminato.inizioTirocinio}</td>
                         <td>${tiro_terminato.fineTirocinio}</td>
-                        <td> Resoconto
-                            
+                        <td> 
+                            <a style="text-decoration: none;" href="compila_resoconto?st=${tiro_terminato.studente.utente.id}&ot=${tiro_terminato.offertaTirocinio.id}">
+                                <button type="button" class="btn btn-primary text-white">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            </a>
                         </td>
                         
                     </tr>
