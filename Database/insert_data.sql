@@ -58,9 +58,6 @@ insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, 
            (5, 2, 2, 3, 2, null, '2019-11-21', '2020-1-27', current_timestamp()),
            (6, 2, 1, 3, 0, null, null, null, current_timestamp());
            
-insert into resoconto (id_studente, id_offerta_tirocinio, ore_effettive, descrizione_attivita, giudizio, src_documento_resoconto)
-	values (5, 2, 75, 'Il tirocinante ha contribuito correttamente allo sviluppo lato server del sito web, lavorando in un team di sviluppo', 
-		   'Promosso', null);
            
 insert into valutazione (id_studente, id_azienda, stelle)
 	values (5, 3, 4);
