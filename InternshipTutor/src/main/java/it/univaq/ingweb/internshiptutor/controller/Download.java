@@ -32,6 +32,15 @@ public class Download extends InternshipTutorBaseController {
         request.setAttribute("contentType", "application/pdf");
         result.activate(downloaded_file, request, response);
     }
+    
+    private void action_download_candidatura (HttpServletRequest request, HttpServletResponse response)
+            throws IOException, NamingException, SQLException {
+        String nome_doc = request.getParameter("res");
+        StreamResult result = new StreamResult(getServletContext());
+        File downloaded_file = new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory") + File.separatorChar + nome_doc);
+        request.setAttribute("contentType", "application/pdf");
+        result.activate(downloaded_file, request, response);
+    }
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -39,6 +48,8 @@ public class Download extends InternshipTutorBaseController {
         try {
             if(request.getParameter("tipo").equals("convenzione"))
                 action_download_convenzione(request, response);
+            else if(request.getParameter("tipo").equals("candidatura"))
+                action_download_candidatura(request, response);
         } catch (NumberFormatException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

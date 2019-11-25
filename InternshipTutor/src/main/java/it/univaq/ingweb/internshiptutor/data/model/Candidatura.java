@@ -4,11 +4,12 @@
  */
 package it.univaq.ingweb.internshiptutor.data.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public interface Candidatura {
     
@@ -28,10 +29,6 @@ public interface Candidatura {
     
     void setCfu(int cfu);
     
-    int getOreTirocinio();
-    
-    void setOreTirocinio(int ot);
-    
     String getSrcDocCandidatura();
     
     void setSrcDocCandidatura(String src);
@@ -40,16 +37,32 @@ public interface Candidatura {
     
     void setStatoCandidatura(int sc);
     
-    Date getInizioTirocinio();
+    LocalDate getInizioTirocinio();
     
-    void setInizioTirocinio(Date it);
+    void setInizioTirocinio(LocalDate it);
     
-    Date getFineTirocinio();
+    LocalDate getFineTirocinio();
     
-    void setFineTirocinio(Date ft);
+    void setFineTirocinio(LocalDate ft);
     
     Date getTms();
     
     void setTms(Date tms); 
+    
+    String getDiploma();
+    
+    void setDiploma(String d);
+    
+    String getLaurea();
+    
+    void setLaurea(String l);
+    
+    String getDottoratoRicerca();
+    
+    void setDottoratoRicerca(String dr);
+    
+    String getSpecializzazione();
+    
+    void setSpecializzazione(String s);
     
 }

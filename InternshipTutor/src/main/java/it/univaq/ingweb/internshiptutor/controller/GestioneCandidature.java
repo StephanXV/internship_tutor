@@ -62,9 +62,11 @@ public class GestioneCandidature extends InternshipTutorBaseController {
             throws ServletException, IOException, TemplateManagerException {
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
         int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
+        String src = request.getParameter("src");
         try {
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(1, id_st, id_ot);
-            response.sendRedirect("gestione_candidati?ot=" + id_ot);
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaDocumento(id_st, id_ot, src);
+            response.sendRedirect("dettaglio_candidatura?st="+id_st+"&ot="+id_ot);
         } catch (DataException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

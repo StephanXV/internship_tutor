@@ -74,8 +74,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
         
         c.setTutoreUni(tu);
         c.setCfu(Integer.valueOf(request.getParameter("cfu")));
-        c.setOreTirocinio(Integer.valueOf(request.getParameter("ore_tirocinio")));
-        
+                
         ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
         
         response.sendRedirect("home");
