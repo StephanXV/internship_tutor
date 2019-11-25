@@ -79,6 +79,10 @@
                                         <input type="password" class="form-control" id="pass" placeholder="Password" name="pw" required>
                                     </div>
 
+                                    <#if referrer?has_content> <!-- Se c'è un referrer lo passa -->
+                                        <input type="hidden" name="referrer" value="${referrer}">
+                                    </#if>
+
                                     <button class="btnLogin" name="login" value="Login" type="submit">Accedi&nbsp;&nbsp;<i class="fa fa-arrow-right"></i></button>
                                 </div>
                             </div>

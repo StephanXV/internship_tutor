@@ -37,6 +37,12 @@ public class Login extends InternshipTutorBaseController {
             throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Login");
+
+        //passamano del referrer (prima a login html poi alla servlet che valida il login)
+        if (request.getParameter("referrer") != null) {
+            request.setAttribute("referrer", request.getParameter("referrer") + "?" + request.getParameter("referrer_res"));
+        }
+
         res.activate("login.ftl.html", request, response);
     }
     
@@ -57,7 +63,14 @@ public class Login extends InternshipTutorBaseController {
                     SecurityLayer.createSession(request, ut.getUsername(), ut.getId(), ut.getTipologia());
 
                     if (request.getParameter("referrer") != null) {
-                        response.sendRedirect(request.getParameter("referrer"));
+                        if (ut.getTipologia().equals("st")) {
+                            response.sendRedirect(request.getParameter("referrer"));
+                        } else { //se non è studente --> non autorizzato
+                            request.setAttribute("message", "errore gestito");
+                            request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
+                            request.setAttribute("errore", "401 Unauthorized");
+                            action_error(request, response);
+                        }
                     } else {
                         response.sendRedirect("home");
                     }

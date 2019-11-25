@@ -10,12 +10,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="InternshipTutor" target="8" />
+      <module name="InternshipTutor" target="1.7" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="InternshipTutor" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
+      <module name="InternshipTutor" options="-endorseddirs &quot;C:\Users\enrico monte\Documents\GitHub\internship_tutor\InternshipTutor\target/endorsed&quot;" />
     </option>
   </component>
 </project>

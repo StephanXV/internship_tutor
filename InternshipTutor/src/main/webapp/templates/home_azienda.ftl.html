@@ -64,9 +64,9 @@
 
     <div class="tab-content" id="nav-tabContent">
 
-        <div class="tab-pane fade show active pt-4" id="#myTableTiroAtt" role="tabpanel" aria-labelledby="nav-offerte_attive-tab">
+        <div class="tab-pane fade show active pt-4" id="nav-tiro-active" role="tabpanel" aria-labelledby="nav-offerte_attive-tab">
             <#if (ot_attive?size>0)>
-            <table class="table table-hover mt-5" id="tableOffertaAttive" cellspacing="0">
+            <table class="table table-hover mt-5" id="myTableTiroAtt" cellspacing="0">
                 <thead>
                 <tr class="bg-primary">
                     <th class="text-white">Titolo</th>
@@ -116,9 +116,9 @@
 
 
 
-    <div class="tab-pane fade pt-4" id="#myTableTiroDis" role="tabpanel" aria-labelledby="nav-offerte_disattive-tab">
+    <div class="tab-pane fade pt-4" id="nav-tiro-noactive" role="tabpanel" aria-labelledby="nav-offerte_disattive-tab">
         <#if (ot_disattive?size>0)>
-        <table class="table table-hover mt-5" id="tableOfferteNonAttive" cellspacing="0">
+        <table class="table table-hover mt-5" id="myTableTiroDis" cellspacing="0">
             <thead>
             <tr class="bg-primary">
                 <th class="text-white">Titolo</th>

@@ -1,7 +1,110 @@
-<h1>Ciao qui si richiede il tirocigno</h1>
-<div>
+<#if MSG?has_content> <!-- check if content exist and is not empty -->
+<div class="container" xmlns="http://java.sun.com/jsf/html">
+    <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
+        <#outputformat "plainText">${MSG}</#outputformat>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+</div>
+</#if>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    Richiesta Tirocinio
+                </div>
+                <div class="card-body">
+                    <form role="form" method="post" action="#">
+                            <div class="form-group">
+                                <input class="form-control" name="corso" placeholder="Corso Di Laurea *" type="text" autofocus required />
+                            </div>
+                            <div class="form-group">
+
+                                <div class="input-group">
+
+                                    <select class="form-control" name="tutore" required>
+                                        <option value="" disabled selected>Tutore universitario *</option>
+                                        <#list tutori as tutore>
+                                        <option value="${tutore.id}">${tutore.nome} ${tutore.cognome}</option>
+                                        </#list>
+                                    </select>
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" >
+                                            <a class="click_to_scroll" style="text-decoration: none;" data-toggle="tooltip" data-placement="right" title="Aggiungi un nuovo tutore universitario" href="#newTut">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="cfu" placeholder="CFU richiesti *" type="number" required/>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="laurea" placeholder="Laurea (Se Acquisita)" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="diploma" placeholder="Diploma di Laurea (Se acquisito)" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="dottorato" placeholder="Dottorato Di Ricerca (Se frequentante)" type="text" />
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="specializzazione" placeholder="Specializzazione (Se frequentante)" type="text" />
+                            </div>
+
+                            <input name="submit" class="btn btn-lg btn-primary btn-block" type="submit" value="Invia la tua candidatura">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="row" id="newTut" style="margin-top: 150px">
+        <div class="col-12 col-md-8 mx-auto" style="padding-top: 70px">
+            <div class="card text-center">
+                <div class="card-header">
+                    Aggiungi un nuovo tutore
+                </div>
+                <div class="card-body">
+                    <form role="form" method="post" action="richiesta_tirocinio?n=${tirocinio}">
+                        <div class="form-group">
+                            <input class="form-control" name="name" placeholder="Nome *" type="text" autofocus required />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="surname" placeholder="Cognome *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="email" placeholder="Email *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="telefono" placeholder="Telefono *" type="text" required />
+                        </div>
+
+                        <input name="submitTutore" class="btn btn-lg btn-primary btn-block" type="submit" value="Aggiungi Autore">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- <div>
     <form method="post" id="richiestaForm">
-        <!-- Dati di Base -->
+        <!- - Dati di Base - ->
         <div class="row">
             <input class="eight columns" name="cfu" placeholder="CFU richiesti" type="number" autofocus required/>
         </div>
@@ -17,17 +120,26 @@
                 </#list>
                 <option name="tutore" value="new">Aggiungi un nuovo tutore universitario</option>
             </select>
+
         </div>
         
         <div id="new_tutore">
        
         </div>
         
-        <!-- Pulsante di Submit -->
+        <!- - Pulsante di Submit - ->
         <div>
             <input name="submit" value="Invia la tua candidatura" type="submit"/>
         </div>
     </form>
-</div>
+</div> -->
 
 <script type="text/javascript" src="js/addnewtutore.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script src="js/scroll.js"></script>

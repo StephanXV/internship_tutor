@@ -54,6 +54,9 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
         Azienda azienda = null;
 
         try {
+            /** cambiare tipo **/
+            request.setAttribute("tipo", "st");
+
             azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(az);
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
             request.setAttribute("tirocini", tirocini);
@@ -68,7 +71,7 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
             action_error(request, response);
         }
 
-        //request.setAttribute("tipo", s.getAttribute("tipologia"));
+
 
         
     }
