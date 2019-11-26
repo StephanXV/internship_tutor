@@ -86,5 +86,6 @@ public interface Azienda {
     void setValutazioni(List<Valutazione> val);
     
     void addValutazione(Valutazione val);
+
     
 }

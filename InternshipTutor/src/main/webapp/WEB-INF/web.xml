@@ -170,6 +170,14 @@
         <servlet-name>CompilaResoconto</servlet-name>
         <url-pattern>/compila_resoconto</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>CreaOffertaTirocinio</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.CreaOffertaTirocinio</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreaOffertaTirocinio</servlet-name>
+        <url-pattern>/crea_offerta_tirocinio</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

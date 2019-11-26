@@ -5,8 +5,13 @@
  */
 package it.univaq.ingweb.internshiptutor.data.proxy;
 
+import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
+import it.univaq.ingweb.internshiptutor.data.dao.AziendaDAO;
 import it.univaq.ingweb.internshiptutor.data.impl.TutoreTirocinioImpl;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -17,6 +22,7 @@ public class TutoreTirocinioProxy extends TutoreTirocinioImpl {
        
     protected boolean dirty;
     protected DataLayer dataLayer;
+    protected int id_azienda = 0;
 
     public TutoreTirocinioProxy(DataLayer d) {
         super();
@@ -46,6 +52,25 @@ public class TutoreTirocinioProxy extends TutoreTirocinioImpl {
     }
     
     @Override
+    public void setAzienda(Azienda azienda) {
+        super.setAzienda(azienda);
+        this.id_azienda = azienda.getUtente().getId();
+        this.dirty = true;
+    }
+
+    @Override
+    public Azienda getAzienda() {
+        if (super.getAzienda() == null && id_azienda > 0) {
+            try {
+                super.setAzienda(((AziendaDAO) dataLayer.getDAO(Azienda.class)).getAzienda(id_azienda));
+            } catch (DataException ex) {
+                Logger.getLogger(OffertaTirocinioProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getAzienda();
+    }
+    
+    @Override
     public void setEmail(String email) {
         super.setEmail(email);
         this.dirty = true;
@@ -68,5 +93,10 @@ public class TutoreTirocinioProxy extends TutoreTirocinioImpl {
     public boolean isDirty() {
         return dirty;
     }
+    
+     public void setId_azienda(int id_azienda) {
+        this.id_azienda = id_azienda;
+        super.setAzienda(null);
+    }  
 
 }

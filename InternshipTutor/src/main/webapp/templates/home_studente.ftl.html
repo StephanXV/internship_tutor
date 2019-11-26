@@ -5,7 +5,7 @@
 </div>
 
 <div class="row notification-request-student">
-
+    
     <div class="col-2 mx-auto notice-student notice-success">
         <div class="row">
             <div class="col-9">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="col-2 mx-auto notice-student notice-warning">
         <div class="row">
             <div class="col-9">
@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="col-2 mx-auto notice-student notice-primary">
         <div class="row">
             <div class="col-9">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </div>
-
+    
     <div class="col-2 mx-auto notice-student notice-danger">
         <div class="row">
             <div class="col-9">
@@ -53,7 +53,7 @@
             </div>
         </div>
     </div>
-
+    
 </div>
 
 
@@ -66,202 +66,216 @@
             <a class="nav-item nav-link item-tab-table" id="nav-tiro-rifiutati-tab" data-toggle="tab" href="#nav-tiro-no" role="tab" aria-controls="nav-tiro-rifiutati-tab" aria-selected="false" >Rifiutati</a>
         </div>
     </nav>
-
+    
     <div class="tab-content" id="nav-tabContent">
-
+        
         <div class="tab-pane fade show active pt-4" id="nav-tiro-att" role="tabpanel" aria-labelledby="nav-tiro_attesa-tab">
             <#if (candidature_attesa?size>0)>
             <table class="table table-hover mt-5" id="tableTirociniAttesa" cellspacing="0">
                 <thead class="bg-primary text-white">
-                <tr>
-                    <th>Tirocinio</th>
-                    <th>Luogo</th>
-                    <th>Tutore</th>
-                    <th>CFU</th>
-                    <th>Ore</th>
-                    <th>Data Richiesta</th>
-                </tr>
+                    <tr>
+                        <th>Tirocinio</th>
+                        <th>Luogo</th>
+                        <th>Tutore</th>
+                        <th>CFU</th>
+                        <th>Ore</th>
+                        <th>Data Richiesta</th>
+                    </tr>
                 </thead>
-
+                
                 <tbody>
-                <#list candidature_attesa as candidatura>
-                <tr>
-
-                    <td>
-                        <a href="#">
-                            ${candidatura.offertaTirocinio.titolo}
-                        </a>
-                    </td>
-                    <td>${candidatura.offertaTirocinio.luogo}</td>
-                    <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
-                    <td>${candidatura.cfu}</td>
-                    <td>${candidatura.cfu * 25} h</td>
-                    <td>${candidatura.tms?date}</td>
-
-                </tr>
-                </#list>
+                    <#list candidature_attesa as candidatura>
+                        <tr>
+                        
+                        <td>
+                            <a href="#">
+                                ${candidatura.offertaTirocinio.titolo}
+                            </a>
+                        </td>
+                        <td>${candidatura.offertaTirocinio.luogo}</td>
+                        <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                        <td>${candidatura.cfu}</td>
+                        <td>${candidatura.cfu * 25} h</td>
+                        <td>${candidatura.tms?date}</td>
+                            
+                    </tr>
+                    </#list>
                 </tbody>
             </table>
-
+            
             <#else>
             <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
                 <span class="lead">Non hai richieste di tirocinio in attesa.</span>
             </div>
-        </#if>
-    </div>
-
-
-
-    <div class="tab-pane fade pt-4" id="nav-tiro-ok" role="tabpanel" aria-labelledby="nav-tiro-attivi-tab">
-        <#if (candidature_attesa?size>0)>
-        <table class="table table-hover mt-5" id="tableTirociniAttivi" cellspacing="0">
-            <thead class="bg-primary text-white">
-            <tr>
-                <th>Tirocinio</th>
-                <th>Luogo</th>
-                <th>Tutore</th>
-                <th>CFU</th>
-                <th>Ore</th>
-                <th>Inizio</th>
-                <th>Fine</th>
-                <th>Documento</th>
-            </tr>
-            </thead>
-
-            <tbody>
-            <#list candidature_attive as candidatura>
-            <tr>
-
-                <td>
-                    <a href="#">
-                        ${candidatura.offertaTirocinio.titolo}
-                    </a>
-                </td>
-                <td>${candidatura.offertaTirocinio.luogo}</td>
-                <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
-                <td>${candidatura.cfu}</td>
-                <td>${candidatura.cfu * 25} h</td>
-                <td>${candidatura.inizioTirocinio?date}</td>
-                <td>${candidatura.fineTirocinio?date}</td>
-                <td>
-                    <form method="get" action="download">
-                        <input name="tipo" type="hidden" value="candidatura" />
-                        <input width="60px" readonly name="res" value="${candidatura.srcDocCandidatura}"/>
-                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
-                            <i class="fa fa-file"></i>
-                        </button>
-                    </form>
-                </td>
-
-            </tr>
-            </#list>
-            </tbody>
-        </table>
-
-        <#else>
-        <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
-            <span class="lead">Attualmente non ci sono tirocini ai quali stai prendendo parte.</span>
+            </#if>
         </div>
-    </#if>
-</div>
-
-
-<div class="tab-pane fade pt-4" id="nav-tiro-end" role="tabpanel" aria-labelledby="nav-tiro-finiti-tab">
-    <#if (candidature_finite?size>0)>
-    <table class="table table-hover mt-5" id="tableTirociniFiniti" cellspacing="0">
-        <thead class="bg-primary text-white">
-        <tr>
-            <th>Tirocinio</th>
-            <th>Luogo</th>
-            <th>Tutore</th>
-            <th>CFU</th>
-            <th>Ore</th>
-            <th>Inizio</th>
-            <th>Fine</th>
-            <th>Documento</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <#list candidature_finite as candidatura>
-        <tr>
-
-            <td>
-                <a href="#">
-                    ${candidatura.offertaTirocinio.titolo}
-                </a>
-            </td>
-            <td>${candidatura.offertaTirocinio.luogo}</td>
-            <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
-            <td>${candidatura.cfu}</td>
-            <td>${candidatura.cfu * 25} h</td>
-            <td>${candidatura.inizioTirocinio?date}</td>
-            <td>${candidatura.fineTirocinio?date}</td>
-            <td>
-                <form method="get" action="download">
-                    <input name="tipo" type="hidden" value="candidatura" />
-                    <input width="60px" readonly name="res" value="${candidatura.srcDocCandidatura}"/>
-                    <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
-                        <i class="fa fa-file"></i>
-                    </button>
-                </form>
-            </td>
-
-        </tr>
-        </#list>
-        </tbody>
-    </table>
-
-    <#else>
-    <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
-        <span class="lead">Non hai ancora concluso nessun tirocinio.</span>
+            
+            
+            
+        <div class="tab-pane fade pt-4" id="nav-tiro-ok" role="tabpanel" aria-labelledby="nav-tiro-attivi-tab">
+            <#if (candidature_attesa?size>0)>
+            <table class="table table-hover mt-5" id="tableTirociniAttivi" cellspacing="0">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Tirocinio</th>
+                        <th>Luogo</th>
+                        <th>Tutore</th>
+                        <th>CFU</th>
+                        <th>Ore</th>
+                        <th>Inizio</th>
+                        <th>Fine</th>
+                        <th>Documento</th>
+                    </tr>
+                </thead>
+                    
+                <tbody>
+                    <#list candidature_attive as candidatura>
+                        <tr>
+                        
+                        <td>
+                            <a href="#">
+                                ${candidatura.offertaTirocinio.titolo}
+                            </a>
+                        </td>
+                        <td>${candidatura.offertaTirocinio.luogo}</td>
+                        <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                        <td>${candidatura.cfu}</td>
+                        <td>${candidatura.cfu * 25} h</td>
+                        <td>${candidatura.inizioTirocinio?date}</td>
+                        <td>${candidatura.fineTirocinio?date}</td>
+                        <td>
+                            <form method="get" action="download">
+                                <input name="tipo" type="hidden" value="candidatura" />
+                                <input width="60px" readonly name="res" value="${candidatura.srcDocCandidatura}"/>
+                                <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                                    <i class="fa fa-file"></i>
+                                </button>
+                            </form>
+                        </td>
+                            
+                    </tr>
+                    </#list>
+                </tbody>
+            </table>
+                
+            <#else>
+            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                <span class="lead">Attualmente non ci sono tirocini ai quali stai prendendo parte.</span>
+            </div>
+            </#if>
+        </div>
+            
+            
+        <div class="tab-pane fade pt-4" id="nav-tiro-end" role="tabpanel" aria-labelledby="nav-tiro-finiti-tab">
+            <#if (candidature_finite?size>0)>
+            <table class="table table-hover mt-5" id="tableTirociniFiniti" cellspacing="0">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Tirocinio</th>
+                        <th>Luogo</th>
+                        <th>Tutore</th>
+                        <th>CFU</th>
+                        <th>Ore</th>
+                        <th>Inizio</th>
+                        <th>Fine</th>
+                        <th>Documento</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                    
+                <tbody>
+                    <#list candidature_finite as candidatura>
+                        <tr>
+                        
+                        <td>
+                            <a href="#">
+                                ${candidatura.offertaTirocinio.titolo}
+                            </a>
+                        </td>
+                        <td>${candidatura.offertaTirocinio.luogo}</td>
+                        <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                        <td>${candidatura.cfu}</td>
+                        <td>${candidatura.cfu * 25} h</td>
+                        <td>${candidatura.inizioTirocinio?date}</td>
+                        <td>${candidatura.fineTirocinio?date}</td>
+                        <td>
+                            <form method="get" action="download">
+                                <input name="tipo" type="hidden" value="candidatura" />
+                                <input width="60px" readonly name="res" value="${candidatura.srcDocCandidatura}"/>
+                                <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                                    <i class="fa fa-file"></i>
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <a style="text-decoration: none;" title="Visualizza resoconto" target="_blank" href="docs?tipo=2&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}">
+                                <button type="button" class="btn btn-primary text-white">
+                                    <i class="fa fa-file-download"></i>
+                                </button>
+                            </a>
+                                
+                            <a style="text-decoration: none;" title="Valuta l'azienda" href="#">
+                                <button type="button" class="btn btn-primary text-white">
+                                    <i class="fas fa-star"></i>
+                                </button>
+                            </a>
+                        </td>
+                            
+                    </tr>
+                    </#list>
+                </tbody>
+            </table>
+                
+            <#else>
+            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                <span class="lead">Non hai ancora concluso nessun tirocinio.</span>
+            </div>
+            </#if>
+        </div>
+            
+            
+        <div class="tab-pane fade pt-4" id="nav-tiro-no" role="tabpanel" aria-labelledby="nav-tiro-rifiutati-tab">
+            <#if (candidature_rifiutate?size>0)>
+            <table class="table table-hover mt-5" id="tableTirociniRifiutati" cellspacing="0">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Tirocinio</th>
+                        <th>Luogo</th>
+                        <th>Tutore</th>
+                        <th>CFU</th>
+                        <th>Ore</th>
+                        <th>Data Richiesta</th>
+                    </tr>
+                </thead>
+                    
+                <tbody>
+                    <#list candidature_rifiutate as candidatura>
+                        <tr>
+                        
+                        <td>
+                            <a href="#">
+                                ${candidatura.offertaTirocinio.titolo}
+                            </a>
+                        </td>
+                        <td>${candidatura.offertaTirocinio.luogo}</td>
+                        <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                        <td>${candidatura.cfu}</td>
+                        <td>${candidatura.cfu * 25} h</td>
+                        <td>${candidatura.tms?date}</td>
+                            
+                    </tr>
+                    </#list>
+                </tbody>
+            </table>
+                
+            <#else>
+            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                <span class="lead">Non ci sono richieste di candidatura rifiutate.</span>
+            </div>
+            </#if>
+        </div>
     </div>
-</#if>
-</div>
-
-
-<div class="tab-pane fade pt-4" id="nav-tiro-no" role="tabpanel" aria-labelledby="nav-tiro-rifiutati-tab">
-    <#if (candidature_rifiutate?size>0)>
-    <table class="table table-hover mt-5" id="tableTirociniRifiutati" cellspacing="0">
-        <thead class="bg-primary text-white">
-        <tr>
-            <th>Tirocinio</th>
-            <th>Luogo</th>
-            <th>Tutore</th>
-            <th>CFU</th>
-            <th>Ore</th>
-            <th>Data Richiesta</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <#list candidature_rifiutate as candidatura>
-        <tr>
-
-            <td>
-                <a href="#">
-                    ${candidatura.offertaTirocinio.titolo}
-                </a>
-            </td>
-            <td>${candidatura.offertaTirocinio.luogo}</td>
-            <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
-            <td>${candidatura.cfu}</td>
-            <td>${candidatura.cfu * 25} h</td>
-            <td>${candidatura.tms?date}</td>
-
-        </tr>
-        </#list>
-        </tbody>
-    </table>
-
-    <#else>
-    <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
-        <span class="lead">Non ci sono richieste di candidatura rifiutate.</span>
-    </div>
-</#if>
-</div>
-</div>
-
+        
 </div>
 </div>
 
@@ -270,22 +284,22 @@
 
 <script>
     $(document).ready(function() {
-
+        
         $('#tableTirociniAttesa').DataTable( {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
-
+        
         $('#tableTirociniAttivi').DataTable( {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
-
+        
         $('#tableTirociniFiniti').DataTable( {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
-
+        
         $('#tableTirociniRifiutati').DataTable( {
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
-
+        
     });
 </script>

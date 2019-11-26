@@ -4,6 +4,7 @@
  */
 package it.univaq.ingweb.internshiptutor.data.impl;
 
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
 
 
@@ -19,6 +20,7 @@ public class TutoreTirocinioImpl implements TutoreTirocinio {
     private String cognome;
     private String email;
     private String telefono;
+    private Azienda azienda;
 
     public TutoreTirocinioImpl() {
         this.id = 0;
@@ -26,6 +28,7 @@ public class TutoreTirocinioImpl implements TutoreTirocinio {
         this.cognome = "";
         this.email = "";
         this.telefono = "";
+        this.azienda = null;
     }
     
     @Override
@@ -77,5 +80,17 @@ public class TutoreTirocinioImpl implements TutoreTirocinio {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    @Override
+    public Azienda getAzienda() {
+        return azienda;
+    }
+
+    @Override
+    public void setAzienda(Azienda azienda) {
+        this.azienda = azienda;
+    }
+    
+    
     
 }

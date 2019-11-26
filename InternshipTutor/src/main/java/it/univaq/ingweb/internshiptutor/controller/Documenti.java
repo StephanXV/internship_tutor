@@ -13,8 +13,7 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
-import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
-import it.univaq.ingweb.internshiptutor.data.model.Studente;
+import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +72,16 @@ public class Documenti extends InternshipTutorBaseController {
             throws IOException, ServletException, TemplateManagerException {
         int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+        try {
+            Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
+            request.setAttribute("resoconto", resoconto);
+            Candidatura c = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
+            request.setAttribute("candidatura", c);
+            TemplateResult res = new TemplateResult(getServletContext());
+            res.activateNoOutline("doc_resoconto.ftl.html", request, response);  
+        } catch (DataException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override

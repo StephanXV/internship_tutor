@@ -29,4 +29,8 @@ public interface TutoreTirocinio {
     String getTelefono();
     
     void setTelefono(String tel);
+    
+    Azienda getAzienda();
+    
+    void setAzienda(Azienda az);
 }

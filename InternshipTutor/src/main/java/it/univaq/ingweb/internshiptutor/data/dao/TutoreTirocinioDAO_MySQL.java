@@ -38,8 +38,8 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
             sTutoreTirocinioById = connection.prepareStatement("SELECT * FROM tutore_tirocinio WHERE ID=?");
-            iTutoreTirocinio = connection.prepareStatement("INSERT INTO tutore_tirocinio (nome, cognome, email, telefono)"
-                    + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            iTutoreTirocinio = connection.prepareStatement("INSERT INTO tutore_tirocinio (nome, cognome, email, telefono, id_azienda)"
+                    + "values (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dTutoreTirocinio = connection.prepareStatement("DELETE FROM tutore_tirocinio WHERE id=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
@@ -75,6 +75,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
             tt.setCognome(rs.getString("cognome"));
             tt.setEmail(rs.getString("email"));
             tt.setTelefono(rs.getString("telefono"));
+            tt.setId_azienda(rs.getInt("id_azienda"));
             return tt;
         } catch (SQLException ex) {
             throw new DataException("Unable to create TutoreTirocinio object form ResultSet", ex);
@@ -110,6 +111,10 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
             iTutoreTirocinio.setString(2, tt.getCognome());
             iTutoreTirocinio.setString(3, tt.getEmail());
             iTutoreTirocinio.setString(4, tt.getTelefono());
+            if (tt.getAzienda() != null)
+                iTutoreTirocinio.setInt(5, tt.getAzienda().getUtente().getId());
+            else
+                iTutoreTirocinio.setNull(5, java.sql.Types.INTEGER);
             if (iTutoreTirocinio.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database
                     //per il record appena inserito, usiamo il metodo

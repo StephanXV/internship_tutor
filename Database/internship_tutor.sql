@@ -65,7 +65,10 @@ create table tutore_tirocinio (
     nome varchar(50) not null,
     cognome varchar(50) not null,
     email varchar(100) not null unique,
-    telefono varchar(20) not null unique
+    telefono varchar(20) not null unique,
+    id_azienda integer unsigned not null,
+	constraint tutore_tirocinio_azienda foreign key(id_azienda)
+		references azienda(id_utente) on delete cascade on update cascade
 );
 
 create table offerta_tirocinio (

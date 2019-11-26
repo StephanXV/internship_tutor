@@ -3,10 +3,7 @@
 	values ('Paolo', 'Rossi', 'paolo.rossi@mail.it', '3832283647'),
 		   ('Marco', 'Rossi', 'marco.rossi@mail.it', '3832221317');
     
-insert into tutore_tirocinio (nome, cognome, email, telefono)
-	values ('Antonio', 'Rossi', 'antonio.rossi@mail.it', '3232412647'),
-           ('Sofia', 'Rossi', 'sofia.rossi@mail.it', '323232317');
-           
+
 insert into tutore_uni (nome, cognome, email, telefono)
 	values ('Lucia', 'Rossi', 'lucia.rossi@mail.it', '383121332'),
            ('Giorgio', 'Rossi', 'giorgio.rossi@mail.it', '321483647');
@@ -28,7 +25,11 @@ insert into azienda (id_utente, ragione_sociale, indirizzo, citta, cap, provinci
            (3, 'Microsoft', 'Via Avignone 10', 'Roma', '00144', 'RM', 'Claudio Rossi', '39274837218',
            'Tribunale Ordinario di Roma', 'convenzione_41598925698264908571573730186680.pdf', 'Utilizzo dell\'intelligenza artificiale per sviluppare sistemi di riconoscimento 
 		   facciale; sviluppo di siti web con Angular 6', 1, 'Informatica', '2019-08-27', 12, 2);
-           
+
+ insert into tutore_tirocinio (nome, cognome, email, telefono, id_azienda)
+	values ('Antonio', 'Rossi', 'antonio.rossi@mail.it', '3232412647', 2),
+           ('Sofia', 'Rossi', 'sofia.rossi@mail.it', '323232317', 2);
+                     
 insert into studente (id_utente, nome, cognome, codice_fiscale, data_nascita, citta_nascita, provincia_nascita,
 					 citta_residenza, provincia_residenza, cap_residenza, telefono, corso_laurea, handicap)
 	values (4, 'Stefano', 'Florio', 'FLRSFN97H08E372H', '1997-06-08', 'Vasto', 'CH', 'Vasto', 'CH', '66054', '3937726352', 'Informatica', false),

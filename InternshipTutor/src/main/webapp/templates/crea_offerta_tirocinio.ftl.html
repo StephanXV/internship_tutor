@@ -1,0 +1,75 @@
+<#if MSG?has_content> <!-- check if content exist and is not empty -->
+<div class="container" xmlns="http://java.sun.com/jsf/html">
+    <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
+        <#outputformat "plainText">${MSG}</#outputformat>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+</#if>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            <div class="card text-center">
+                <div class="card-header">
+                    <i class="fas fa-share-square mr-2"></i>Richiesta Tirocinio
+                </div>
+                <div class="card-body">
+                    <form role="form" method="post" action="crea_offerta_tirocinio">
+                        <div class="form-group">
+                            <input class="form-control" name="titolo" placeholder="Titolo *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="luogo" placeholder="Luogo *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="settore" placeholder="Settore *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="orari" placeholder="Orari" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="durata" placeholder="Durata (mesi)" type="number" min="1" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="obiettivi" placeholder="Obiettivi *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="modalita" placeholder="Modalità *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="facilitazioni" placeholder="Facilitazioni" type="text" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="nome" placeholder="Nome *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="cognome" placeholder="Cognome *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="email" placeholder="Email *" type="text" required/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="telefono" placeholder="Telefono *" type="text" required/>
+                        </div>
+                        
+                        <input name="submit" class="btn btn-primary btn-request-tiro" type="submit" value="Invia la tua candidatura">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<script src="js/scroll.js"></script>
