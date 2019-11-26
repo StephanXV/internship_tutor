@@ -77,51 +77,58 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
         Candidatura c = new CandidaturaImpl();
 
-        //if all parameters are checked fai tutto else errore
+        //controlli lato server
+        if (SecurityLayer.checkNumericBool(request.getParameter("n")) && SecurityLayer.checkNumericBool(request.getParameter("tutore")) && SecurityLayer.checkNumericBool(request.getParameter("cfu"))) {
 
-        try {
-            c.setStudente(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(u));
-            c.setOffertaTirocinio(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(SecurityLayer.checkNumeric(request.getParameter("n"))));
+            try {
+                c.setStudente(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(u));
+                c.setOffertaTirocinio(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(SecurityLayer.checkNumeric(request.getParameter("n"))));
 
-            c.setTutoreUni(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(SecurityLayer.checkNumeric(request.getParameter("id_tutore"))));
-            c.setCfu(Integer.parseInt(request.getParameter("cfu")));
-            //set corsoLaure obbligatorio
+                c.setTutoreUni(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(SecurityLayer.checkNumeric(request.getParameter("tutore"))));
+                c.setCfu(Integer.parseInt(request.getParameter("cfu")));
+                //set corsoLaure obbligatorio
 
-            if (request.getParameter("laurea") != null && request.getParameter("laurea").length() > 0) {
-                c.setLaurea(request.getParameter("laurea"));
+                if (request.getParameter("laurea") != null && request.getParameter("laurea").length() > 0) {
+                    c.setLaurea(request.getParameter("laurea"));
+                }
+
+                if (request.getParameter("dottorato") != null && request.getParameter("dottorato").length() > 0) {
+                    c.setDottoratoRicerca(request.getParameter("dottorato"));
+                }
+
+                if (request.getParameter("specializzazione") != null && request.getParameter("specializzazione").length() > 0) {
+                    c.setSpecializzazione(request.getParameter("specializzazione"));
+                }
+
+                if (request.getParameter("diploma") != null && request.getParameter("diploma").length() > 0) {
+                    c.setDiploma(request.getParameter("diploma"));
+                }
+
+                //insert candidatura
+                ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
+                try {
+                    response.sendRedirect("home");
+                } catch (IOException e) {
+                    request.setAttribute("exception", e);
+                    action_error(request, response);
+                }
+
+            } catch (DataException e) {
+                Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Impossibile richiedere la candidatura");
+                request.setAttribute("errore", "ERRORE");
+                action_error(request, response);
+                return;
             }
 
-            if (request.getParameter("dottorato") != null && request.getParameter("dottorato").length() > 0) {
-                c.setDottoratoRicerca(request.getParameter("dottorato"));
-            }
-
-            if (request.getParameter("specializzazione") != null && request.getParameter("specializzazione").length() > 0) {
-                c.setSpecializzazione(request.getParameter("specializzazione"));
-            }
-
-            if (request.getParameter("diploma") != null && request.getParameter("diploma").length() > 0) {
-                c.setDiploma(request.getParameter("diploma"));
-            }
-
-            //insert candidatura
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
-
-        } catch (DataException e) {
-            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Impossibile richiedere la candidatura");
-            request.setAttribute("errore", "ERRORE");
+        } else {
+            request.setAttribute("message", "errore_convalida");
+            request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
             action_error(request, response);
-            return;
         }
 
-        //mettere il template activate
-        try {
-            response.sendRedirect("home");
-        } catch (IOException e) {
-            request.setAttribute("exception", e);
-            action_error(request, response);
-        }
+
 
     }
     

@@ -9,7 +9,6 @@
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/richiesta_tirocinio.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/richiesta_tirocinio.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -281,6 +280,7 @@
       <workItem from="1574235855647" duration="8884000" />
       <workItem from="1574606275490" duration="13156000" />
       <workItem from="1574670606395" duration="22327000" />
+      <workItem from="1574755342419" duration="1903000" />
     </task>
     <servers />
   </component>
