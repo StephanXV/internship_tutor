@@ -30,7 +30,7 @@
                 
                 <thead>
                     <tr class="bg-primary">
-                        <th class="text-white">Data</th>
+                        <th class="text-white">Data richiesta</th>
                         <th class="text-white">Studente</th>
                         <th class="text-white">Corso di laurea</th>
                         <th class="text-white">Cfu richiesti</th>
@@ -52,7 +52,7 @@
                         <td>${richiesta_cand.tutoreUni.nome} ${richiesta_cand.tutoreUni.cognome}</td>
                         <td>
                             <a style="text-decoration: none;" href="dettaglio_candidatura?st=${richiesta_cand.studente.utente.id}&ot=${richiesta_cand.offertaTirocinio.id}">
-                                <button type="button" class="btn btn-primary text-white">
+                                <button type="button" title="Vedi dettagli" class="btn btn-primary text-white">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </a>
@@ -98,7 +98,7 @@
                         <td>${cand_accettata.fineTirocinio}</td>
                         <td>
                             <a style="text-decoration: none;" href="dettaglio_candidatura?st=${cand_accettata.studente.utente.id}&ot=${cand_accettata.offertaTirocinio.id}">
-                                <button type="button" class="btn btn-primary text-white">
+                                <button type="button" title="Vedi dettagli" class="btn btn-primary text-white">
                                     <i class="fas fa-search"></i>
                                 </button>
                             </a>
@@ -128,7 +128,7 @@
                         <th class="text-white">Tirocinante</th>
                         <th class="text-white">Data inizio</th>
                         <th class="text-white">Data fine</th>
-                        <th class="text-white">Compilazione resoconto</th>
+                        <th class="text-white">Azioni</th>
                     </tr>
                 </thead>
                 <!--Table head-->
@@ -142,8 +142,14 @@
                         <td>${tiro_terminato.fineTirocinio}</td>
                         <td> 
                             <a style="text-decoration: none;" href="compila_resoconto?st=${tiro_terminato.studente.utente.id}&ot=${tiro_terminato.offertaTirocinio.id}">
-                                <button type="button" class="btn btn-primary text-white">
+                                <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
                                     <i class="fas fa-pencil-alt"></i>
+                                </button>
+                            </a>
+                            
+                            <a style="text-decoration: none;" href="dettaglio_candidatura?st=${tiro_terminato.studente.utente.id}&ot=${tiro_terminato.offertaTirocinio.id}">
+                                <button type="button" title="Vedi dettagli" class="btn btn-primary text-white">
+                                    <i class="fas fa-search"></i>
                                 </button>
                             </a>
                         </td>

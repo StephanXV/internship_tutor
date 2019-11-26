@@ -1,5 +1,43 @@
 <div class="container">
-    
+    <#if resoconto??>
+    <form method="post" action="compila_resoconto?ot=${id_ot}&st=${id_st}">
+        <div class="p-3 mb-3 bg-light text-center">
+            <span class="lead">Resoconto già compilato</span>
+            <div class="row my-2">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="bg-primary text-white input-group-text">Ore effettive</span>
+                        </div>
+                        <input readonly type="text" value="${resoconto.oreEffettive}" name="ore_effettive" class="form-control">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row my-2">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="bg-primary text-white input-group-text">Descrizine delle attività svolte</span>
+                        </div>
+                        <textarea readonly name="desc_attivita" rows="6" class="form-control">${resoconto.descAttivita}</textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row my-2">
+                <div class="col">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="bg-primary text-white input-group-text">Giudizio finale</span>
+                        </div>
+                        <textarea readonly name="giudizio" rows="4" class="form-control">${resoconto.giudizio}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <#else>
     <!-- Dati Resoconto -->
     <form method="post" action="compila_resoconto?ot=${id_ot}&st=${id_st}">
         <div class="p-3 mb-3 bg-light text-center">
@@ -46,4 +84,5 @@
             </div>
         </div>
     </form>
+    </#if>
 </div>
