@@ -19,14 +19,14 @@
         <form method="post" action="tirocini">
             <div class="form-group float-label-control pl-3 pr-3">
                 <label for="titolo"><b>Ricerca per titolo...</b></label>
-                <input name="titolo" placeholder="Ricerca per titolo..." value="${p_titolo}" type="text" class="form-control" id="titolo">
+                <input name="titolo" placeholder="Ricerca per titolo..." value="${p_titolo!}" type="text" class="form-control" id="titolo">
             </div>
 
             <div class="row searchFilters">
                 <div class="col-12 col-md-4 pl-3 pr-3">
                     <div class="form-group">
                         <label for="competenze"><i class="fas fa-book pr-2"></i><b>Corso di studi</b></label>
-                        <input name="corso" placeholder="Corso..." value="${p_corso}" type="text" class="form-control" id="competenze">
+                        <input name="corso" placeholder="Corso..." value="${p_corso!}" type="text" class="form-control" id="competenze">
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@
                 <div class="col-12 col-md-4 pl-3 pr-3">
                     <div class="form-group">
                         <label for="settore"><i class="fas fa-briefcase pr-2"></i><b>Settore</b></label>
-                        <input name="settore" placeholder="Settore..." value="${p_settore}" type="text" class="form-control" id="settore">
+                        <input name="settore" placeholder="Settore..." value="${p_settore!}" type="text" class="form-control" id="settore">
                     </div>
                 </div>
             </div>
@@ -63,7 +63,7 @@
                 <div class="col-12 col-md-4 pl-3 pr-3">
                     <div class="form-group">
                         <label for="obiettivi"><i class="fas fa-crosshairs pr-2"></i><b>Obiettivi</b></label>
-                        <input name="obiettivi" placeholder="Obiettivi..." value="${p_obiettivi}" type="text" class="form-control" id="obiettivi">
+                        <input name="obiettivi" placeholder="Obiettivi..." value="${p_obiettivi!}" type="text" class="form-control" id="obiettivi">
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@
                 <div class="col-12 col-md-4 pl-3 pr-3">
                     <div class="form-group">
                         <label for="luogo"><i class="fas fa-map-marker-alt pr-2"></i><b>Luogo</b></label>
-                        <input name="luogo" placeholder="Luogo..." value="${p_luogo}" type="text" class="form-control" id="luogo">
+                        <input name="luogo" placeholder="Luogo..." value="${p_luogo!}" type="text" class="form-control" id="luogo">
                     </div>
                 </div>
             </div>
@@ -93,7 +93,7 @@
     </div>
 </div>
 
-
+<#if (tirocini??)>
 <#if (tirocini?size>0)>
 <div style="margin-top: 65px">
 <table class="table table-hover" id="tableListaTirocini" cellspacing="0">
@@ -140,6 +140,7 @@
     </div>
 </#if>
 </div>
+</#if>
 
 
 
@@ -151,8 +152,8 @@
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
 
-        document.getElementById("selecth").value = "${p_durata}";
-        document.getElementById("selectFacilitazioni").value = "${p_facilitazioni}";
+        document.getElementById("selecth").value = "${p_durata!}";
+        document.getElementById("selectFacilitazioni").value = "${p_facilitazioni!}";
 
     });
 </script>

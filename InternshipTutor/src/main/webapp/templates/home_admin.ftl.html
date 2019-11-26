@@ -166,33 +166,41 @@
                             </div>
                         </#if></div>
 
-                        <div class="tab-pane fade tabData" id="nav-canc" role="tabpanel" aria-labelledby="nav-rifiutate-tab">
-                            <table class="table" cellspacing="0">
+                        <div class="tab-pane fade pt-4 tabData" id="nav-canc" role="tabpanel" aria-labelledby="nav-rifiutate-tab">
+                            <#if (az_rifiutate?size>0)>
+                            <table class="table table-hover nowrap" id="myTableConv" cellspacing="0">
                                 <thead>
                                 <tr>
-                                    <th>Contest Name</th>
-                                    <th>Date</th>
-                                    <th>Award Position</th>
+                                    <th>Azienda</th>
+                                    <th>Richiesta respinta</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+
+                                <#list az_rifiutate as az_rifiutata>
                                 <tr>
-                                    <td><a href="#">Work 1</a></td>
-                                    <td>Doe</td>
-                                    <td>john@example.com</td>
+
+                                    <td>${az_rifiutata.ragioneSociale}</td>
+                                    <td>
+                                        <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_rifiutata.utente.id}">
+                                            <button type="button" class="btn btn-primary text-white">
+                                                <i class="fa fa-file-download"></i>
+                                            </button>
+                                        </a>
+                                    </td>
+                                    
+
                                 </tr>
-                                <tr>
-                                    <td><a href="#">Work 2</a></td>
-                                    <td>Moe</td>
-                                    <td>mary@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">Work 3</a></td>
-                                    <td>Dooley</td>
-                                    <td>july@example.com</td>
-                                </tr>
+                                </#list>
+
                                 </tbody>
                             </table>
+
+                            <#else>
+                            <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+                                <span class="lead">Non ci sono richieste di convenzionamento respinte</span>
+                            </div>
+                        </#if>
                         </div></div>
 
                     </div>

@@ -7,12 +7,10 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -36,11 +34,17 @@ public class CompilaResoconto extends InternshipTutorBaseController {
             throws ServletException, IOException, TemplateManagerException {
         int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-        request.setAttribute("id_ot", id_ot);
-        request.setAttribute("id_st", id_st);
-        TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("compila_resoconto.ftl.html", request, response);
-        
+        try {
+            Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
+            if (resoconto != null) 
+                request.setAttribute("resoconto", resoconto);
+            request.setAttribute("id_ot", id_ot);
+            request.setAttribute("id_st", id_st);
+            TemplateResult res = new TemplateResult(getServletContext());
+            res.activate("compila_resoconto.ftl.html", request, response);
+        } catch (DataException ex) {
+            Logger.getLogger(CompilaResoconto.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private void action_invia_resoconto(HttpServletRequest request, HttpServletResponse response)
