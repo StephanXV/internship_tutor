@@ -123,8 +123,9 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             }
 
         } else {
-            request.setAttribute("message", "errore_convalida");
-            request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
+            request.setAttribute("message", "errore gestito");
+            request.setAttribute("title", "I campi inseriti non sono corretti. Riprova!");
+            request.setAttribute("errore", "Errore di_convalidazione");
             action_error(request, response);
         }
 
