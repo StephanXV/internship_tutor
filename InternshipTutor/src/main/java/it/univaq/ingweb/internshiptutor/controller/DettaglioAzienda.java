@@ -36,10 +36,10 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
             int az = SecurityLayer.checkNumeric(request.getParameter("n"));
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
-                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("nome_utente", s.getAttribute("username"));
             }
 
-            action_default(request, response, az);
+            action_default(request, response, az, (String)s.getAttribute("tipologia"));
 
         } else {
             request.setAttribute("message", "errore gestito");
@@ -49,12 +49,12 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, int az) {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int az, String tipo) {
         TemplateResult res = new TemplateResult(getServletContext());
         Azienda azienda = null;
 
         try {
-            //request.setAttribute("tipo", "st");
+            request.setAttribute("tipo", tipo);
 
             azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(az);
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);

@@ -36,9 +36,10 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         }
     }
 
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, String tipo) throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Tirocini");
+        request.setAttribute("tipo", tipo);
         res.activate("ricerca_tirocini.ftl.html", request, response);
     }
 
@@ -50,6 +51,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         String settore = "%";
         String titolo = "%";
         boolean facilitazioni = false;
+        HttpSession s = SecurityLayer.checkSession(request);
 
         if ((request.getParameter("facilitazioni") == null || request.getParameter("facilitazioni").length() < 1)
             && (request.getParameter("corso") == null || request.getParameter("corso").length() < 1)
@@ -61,7 +63,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
 
             request.setAttribute("noSearch", "Inserire almeno un parametro per avviare la ricerca!");
             try {
-                action_default(request,response);
+                action_default(request,response, (String) s.getAttribute("tipologia"));
             } catch (IOException | ServletException | TemplateManagerException e) {
                 e.printStackTrace();
             }
@@ -107,7 +109,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         try {
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().searchOffertaTirocinio(durata, titolo, facilitazioni, luogo, settore, obiettivi, corso);
             request.setAttribute("tirocini", tirocini);
-            action_default(request,response);
+            action_default(request,response, (String) s.getAttribute("tipologia"));
         } catch (DataException | IOException | ServletException | TemplateManagerException e) {
             e.printStackTrace();
         }
@@ -126,7 +128,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             if (request.getParameter("submit") != null && request.getParameter("submit").equals("Cerca")) {
                 action_ricerca(request,response);
             } else {
-                action_default(request, response);
+                action_default(request, response, (String) s.getAttribute("tipologia"));
             }
 
         } catch (IOException ex) {
