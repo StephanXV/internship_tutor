@@ -5,7 +5,6 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
-import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.impl.OffertaTirocinioImpl;
 import it.univaq.ingweb.internshiptutor.data.impl.TutoreTirocinioImpl;
@@ -30,6 +29,9 @@ public class CreaOffertaTirocinio extends InternshipTutorBaseController {
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+        } else {
+            request.setAttribute("referrer", "crea_offerta_tirocinio.ftl.html");
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
     
@@ -75,7 +77,7 @@ public class CreaOffertaTirocinio extends InternshipTutorBaseController {
                     ot.setDurata(SecurityLayer.checkNumeric(request.getParameter("durata")));
                     ot.setObiettivi(request.getParameter("obiettivi"));
                     ot.setModalita(request.getParameter("modalita"));
-                                        
+                    
                     if (request.getParameter("orari") != null && request.getParameter("orari").length() > 0) {
                         ot.setOrari(request.getParameter("orari"));
                     }
@@ -148,6 +150,7 @@ public class CreaOffertaTirocinio extends InternshipTutorBaseController {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
             }
             if (request.getParameter("submitOfferta") != null) {
                 action_crea_offerta(request, response);

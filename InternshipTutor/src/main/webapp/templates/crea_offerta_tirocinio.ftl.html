@@ -26,7 +26,7 @@
                                 <select class="form-control" name="tutore" required>
                                     <option value="" disabled selected>Tutore tirocinio *</option>
                                     <#list tutori_tirocinio as tt>
-                                    <option value="${tt.id}">${tt.nome} ${tt.cognome}</option>
+                                    <option value="${tt.id}">${tt.nome} ${tt.cognome}, ${tt.email}, ${tt.telefono}</option>
                                     </#list>
                                 </select>
                                 

@@ -185,6 +185,7 @@ public class Home extends InternshipTutorBaseController {
             } else {
                 int id_utente = (int)s.getAttribute("id_utente");
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
                 switch ((String) s.getAttribute("tipologia")) {
                     case "ad":
                         action_admin(request, response, id_utente);

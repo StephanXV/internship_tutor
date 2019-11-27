@@ -11,9 +11,7 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.ingweb.internshiptutor.data.impl.CandidaturaImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
-import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import java.io.IOException;
 import java.util.List;
@@ -37,6 +35,7 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
             }
 
             action_default(request, response, az, (String)s.getAttribute("tipologia"));
