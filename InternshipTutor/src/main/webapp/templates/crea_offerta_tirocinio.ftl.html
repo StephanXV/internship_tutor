@@ -21,6 +21,26 @@
                 <div class="card-body">
                     <form role="form" method="post" action="crea_offerta_tirocinio">
                         <div class="form-group">
+                            <div class="input-group">
+                                
+                                <select class="form-control" name="tt" required>
+                                    <option value="" disabled selected>Tutore tirocinio *</option>
+                                    <#list tutori_tirocinio as tt>
+                                    <option value="${tt.id}">${tt.nome} ${tt.cognome}</option>
+                                    </#list>
+                                </select>
+                                
+                                <div class="input-group-append">
+                                    <span class="input-group-text" >
+                                        <a class="click_to_scroll" style="text-decoration: none;" data-toggle="tooltip" data-placement="right" title="Aggiungi un nuovo tutore universitario" href="#newTut">
+                                            <i class="fas fa-plus"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <input class="form-control" name="titolo" placeholder="Titolo *" type="text" required/>
                         </div>
                         <div class="form-group">
