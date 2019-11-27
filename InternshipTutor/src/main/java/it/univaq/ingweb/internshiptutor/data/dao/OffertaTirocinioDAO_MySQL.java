@@ -154,15 +154,14 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             iOffertaTirocinio.setString(6, ot.getObiettivi());
             iOffertaTirocinio.setString(7, ot.getModalita());
             iOffertaTirocinio.setString(8, ot.getFacilitazioni());
-            iOffertaTirocinio.setString(9, ot.getLuogo());
             if (ot.getAzienda() != null)
-                iOffertaTirocinio.setInt(10, ot.getAzienda().getUtente().getId());
+                iOffertaTirocinio.setInt(9, ot.getAzienda().getUtente().getId());
+            else
+                iOffertaTirocinio.setNull(9, java.sql.Types.INTEGER);
+            if (ot.getTutoreTirocinio() != null)
+                iOffertaTirocinio.setInt(10, ot.getTutoreTirocinio().getId());
             else
                 iOffertaTirocinio.setNull(10, java.sql.Types.INTEGER);
-            if (ot.getTutoreTirocinio() != null)
-                iOffertaTirocinio.setInt(11, ot.getTutoreTirocinio().getId());
-            else
-                iOffertaTirocinio.setNull(11, java.sql.Types.INTEGER);
             if (iOffertaTirocinio.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database
                     //per il record appena inserito, usiamo il metodo

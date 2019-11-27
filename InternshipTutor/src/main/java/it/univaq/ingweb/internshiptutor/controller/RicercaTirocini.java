@@ -123,7 +123,10 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
             }
+            
+            request.setAttribute("activeTirocini", "active");
 
             if (request.getParameter("submit") != null && request.getParameter("submit").equals("Cerca")) {
                 action_ricerca(request,response);

@@ -61,6 +61,7 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
             }
             int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
             if (request.getParameter("convalida").equals("si")) {

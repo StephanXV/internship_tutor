@@ -84,6 +84,7 @@ public class CompilaResoconto extends InternshipTutorBaseController {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
             }
             
             if (request.getParameter("submit") != null) {

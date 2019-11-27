@@ -2,6 +2,7 @@ package it.univaq.ingweb.internshiptutor.controller;
 
 import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.StreamResult;
+import it.univaq.ingweb.framework.security.SecurityLayer;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -46,6 +48,11 @@ public class Download extends InternshipTutorBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
         try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+            }
             if(request.getParameter("tipo").equals("convenzione"))
                 action_download_convenzione(request, response);
             else if(request.getParameter("tipo").equals("candidatura"))

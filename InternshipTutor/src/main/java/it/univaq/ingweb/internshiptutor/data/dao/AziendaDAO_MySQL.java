@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
-    private PreparedStatement sAziendaById;
+    private PreparedStatement sAziendaById, sAziendaByUtenteUsername;
     private PreparedStatement sAziendeByStato;
     private PreparedStatement iAzienda, uAziendaStato, dAzienda, uAziendaDoc;
 
@@ -36,6 +36,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
         try {
             super.init();
             sAziendaById = connection.prepareStatement("SELECT * FROM azienda WHERE id_utente=?");
+            sAziendaByUtenteUsername = connection.prepareStatement("SELECT az.* FROM azienda as az JOIN utente as ut WHERE az.id_utente = ut.id AND ut.username=?");
             sAziendeByStato = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=?");
             iAzienda = connection.prepareStatement ("INSERT INTO azienda (id_utente, ragione_sociale, indirizzo, citta, cap,"
                     + " provincia, rappresentante_legale, piva, foro_competente, tematiche, corso_studio, durata_convenzione,"
@@ -52,6 +53,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     public void destroy() throws DataException {
         try {
             sAziendaById.close();
+            sAziendaByUtenteUsername.close();
             sAziendeByStato.close();
             iAzienda.close();
             uAziendaStato.close();
@@ -106,6 +108,21 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             }
         } catch (SQLException ex) {
             throw new DataException("Unable to load azienda by Id", ex);
+        }
+        return null;
+    }
+    
+     @Override
+    public Azienda getAzienda(String ut_username) throws DataException {
+        try {
+            sAziendaByUtenteUsername.setString(1, ut_username);
+            try (ResultSet rs = sAziendaByUtenteUsername.executeQuery()) {
+                if (rs.next()) {
+                    return createAzienda(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load azienda by utente username", ex);
         }
         return null;
     }
@@ -188,6 +205,8 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             throw new DataException("Unable to update azienda documento", ex);
         }
     }
+    
+    
     
     
     
