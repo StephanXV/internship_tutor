@@ -35,6 +35,7 @@ public class DettagliTirocinio extends InternshipTutorBaseController{
                 HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", s.getAttribute("username"));
+                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
             }
 
             action_default(request, response, tir);
@@ -50,7 +51,6 @@ public class DettagliTirocinio extends InternshipTutorBaseController{
     private void action_default(HttpServletRequest request, HttpServletResponse response, int tir) {
         TemplateResult res = new TemplateResult(getServletContext());
         OffertaTirocinio tirocinio = null;
-
         try {
             tirocinio = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(tir);
             request.setAttribute("tirocinio", tirocinio);
