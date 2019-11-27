@@ -1,0 +1,124 @@
+<div class="container">
+    
+    <#if (tirocinio?size>0)>
+    <div class="p-3 mb-3 bg-light text-center">
+        <span class="lead">Dati offerta di tirocinio</span>
+        <div class="row my-2">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Nome azienda</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.azienda.ragioneSociale}" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Luogo</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.luogo}" class="form-control">
+                </div>
+            </div>
+        </div>
+        
+        <div class="row my-2">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Titolo</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.titolo}" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Durata</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.durata}" class="form-control">
+                </div>
+            </div>
+        </div>    
+            
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Settore</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.settore}" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Orari</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.orari!"Non specificato"}" class="form-control">
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Obiettivi</span>
+                    </div>
+                    <textarea readonly class="form-control">${tirocinio.obiettivi}</textarea>
+                </div>
+            </div>
+        </div>    
+         
+        <div class="row mb-2">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Modalità</span>
+                    </div>
+                    <textarea readonly class="form-control">${tirocinio.modalita}</textarea>
+                </div>
+            </div>
+        </div>
+            
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Facilitazioni</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.facilitazioni!"Non specificato"}" class="form-control"/>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Tutore tirocinio</span>
+                    </div>
+                    <input readonly type="text" value="${tirocinio.tutoreTirocinio.nome} ${tirocinio.tutoreTirocinio.cognome}" class="form-control">
+                </div>
+            </div>
+            
+        </div> 
+        
+        
+        <div class="row mb-6">
+            <div class="col text-center">
+                <a href="richiesta_tirocinio?n=${tirocinio.id}">
+                    <button class="btn btn-primary" style="border-radius: 20px">Richiedi tirocinio</button>
+                </a>
+            </div>
+        </div>
+        
+    </div> 
+    </#if>
+    
+</div>
+
+

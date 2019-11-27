@@ -50,9 +50,7 @@
                     <th>Obiettivi</th>
                     <th>Luogo</th>
                     <th>Durata</th>
-                    <#if (tipo == "st")>
-                        <th>Azioni</th>
-                    </#if>
+                    <th>Azioni</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,13 +66,14 @@
                     <td>${tirocinio.obiettivi}</td>
                     <td>${tirocinio.luogo}</td>
                     <td>${tirocinio.durata} mesi</td>
-                    <#if (tipo == "st")>
                     <td>
-                        <a href="richiesta_tirocinio?n=${tirocinio.id}">
-                            <button class="btn btn-primary" style="border-radius: 20px">Richiedi tirocinio</button>
+                        <a style="text-decoration: none;" href="dettagli_tirocinio?n=${tirocinio.id}">
+                            <button type="button" class="btn btn-primary text-white">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </a>
                     </td>
-                    </#if>
+                          
                 </tr>
                 </#list>
                 </tbody>
