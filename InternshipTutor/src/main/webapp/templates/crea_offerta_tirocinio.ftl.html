@@ -16,14 +16,14 @@
         <div class="col-12 col-md-8 mx-auto">
             <div class="card text-center">
                 <div class="card-header">
-                    <i class="fas fa-share-square mr-2"></i>Richiesta Tirocinio
+                    <i class="fas fa-share-square mr-2"></i>Crea una nuova offerta di tirocinio
                 </div>
                 <div class="card-body">
                     <form role="form" method="post" action="crea_offerta_tirocinio">
                         <div class="form-group">
                             <div class="input-group">
                                 
-                                <select class="form-control" name="tt" required>
+                                <select class="form-control" name="tutore" required>
                                     <option value="" disabled selected>Tutore tirocinio *</option>
                                     <#list tutori_tirocinio as tt>
                                     <option value="${tt.id}">${tt.nome} ${tt.cognome}</option>
@@ -32,7 +32,7 @@
                                 
                                 <div class="input-group-append">
                                     <span class="input-group-text" >
-                                        <a class="click_to_scroll" style="text-decoration: none;" data-toggle="tooltip" data-placement="right" title="Aggiungi un nuovo tutore universitario" href="#newTut">
+                                        <a class="click_to_scroll" style="text-decoration: none;" data-toggle="tooltip" data-placement="right" title="Aggiungi un nuovo tutore di tirocinio" href="#newTut">
                                             <i class="fas fa-plus"></i>
                                         </a>
                                     </span>
@@ -53,31 +53,46 @@
                             <input class="form-control" name="orari" placeholder="Orari" type="text" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="durata" placeholder="Durata (mesi)" type="number" min="1" required/>
+                            <input class="form-control" name="durata" placeholder="Durata (mesi) *" type="number" min="1" required/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="obiettivi" placeholder="Obiettivi *" type="text" required/>
+                            <textarea class="form-control" name="obiettivi" placeholder="Obiettivi *" type="text" required></textarea>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="modalita" placeholder="Modalità *" type="text" required/>
+                            <textarea class="form-control" name="modalita" placeholder="Modalità *" type="text" required></textarea>
                         </div>
                         <div class="form-group">
                             <input class="form-control" name="facilitazioni" placeholder="Facilitazioni" type="text" />
                         </div>
+                        <input name="submitOfferta" class="btn btn-primary btn-request-tiro" type="submit" value="Aggiungi l'offerta di tirocinio">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="newTut" style="margin-top: 150px">
+        <div class="col-12 col-md-8 mx-auto" style="padding-top: 70px">
+            <div class="card text-center">
+                <div class="card-header">
+                    <i class="fas fa-user-plus mr-2"></i>Aggiungi un nuovo tutore di tirocinio
+                </div>
+                <div class="card-body">
+                    <form role="form" method="post" action="crea_offerta_tirocinio">
                         <div class="form-group">
-                            <input class="form-control" name="nome" placeholder="Nome *" type="text" required/>
+                            <input class="form-control" name="name" placeholder="Nome *" type="text" required />
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="cognome" placeholder="Cognome *" type="text" required/>
+                            <input class="form-control" name="surname" placeholder="Cognome *" type="text" required/>
                         </div>
                         <div class="form-group">
                             <input class="form-control" name="email" placeholder="Email *" type="text" required/>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" name="telefono" placeholder="Telefono *" type="text" required/>
+                            <input class="form-control" name="telefono" placeholder="Telefono *" type="text" required />
                         </div>
-                        
-                        <input name="submit" class="btn btn-primary btn-request-tiro" type="submit" value="Invia la tua candidatura">
+
+                        <input name="submitTutore" class="btn btn-primary btn-request-tiro" type="submit" value="Aggiungi tutore di tirocinio">
                     </form>
                 </div>
             </div>

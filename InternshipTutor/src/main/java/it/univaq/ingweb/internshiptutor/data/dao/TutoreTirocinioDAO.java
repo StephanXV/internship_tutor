@@ -6,8 +6,10 @@
 package it.univaq.ingweb.internshiptutor.data.dao;
 
 import it.univaq.ingweb.framework.data.DataException;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
 import java.sql.ResultSet;
+import java.util.List;
 
 /**
  *
@@ -20,6 +22,8 @@ public interface TutoreTirocinioDAO {
     TutoreTirocinio createTutoreTirocinio(ResultSet rs) throws DataException;
     
     TutoreTirocinio getTutoreTirocinio(int id) throws DataException;
+    
+    List<TutoreTirocinio> getTutoriTirocinio(Azienda az) throws DataException;
     
     int insertTutoreTirocinio(TutoreTirocinio tt) throws DataException;
     

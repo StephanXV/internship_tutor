@@ -8,12 +8,15 @@ package it.univaq.ingweb.internshiptutor.data.dao;
 import it.univaq.ingweb.framework.data.DAO;
 import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
 import it.univaq.ingweb.internshiptutor.data.proxy.TutoreTirocinioProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -23,6 +26,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
 
     
     private PreparedStatement sTutoreTirocinioById;
+    private PreparedStatement sTutoriTirocinioByAzienda;
     private PreparedStatement iTutoreTirocinio;
     private PreparedStatement dTutoreTirocinio;
 
@@ -38,6 +42,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
             //precompiliamo tutte le query utilizzate nella classe
             //precompile all the queries uses in this class
             sTutoreTirocinioById = connection.prepareStatement("SELECT * FROM tutore_tirocinio WHERE ID=?");
+            sTutoriTirocinioByAzienda = connection.prepareStatement("SELECT * FROM tutore_tirocinio WHERE id_azienda=?");
             iTutoreTirocinio = connection.prepareStatement("INSERT INTO tutore_tirocinio (nome, cognome, email, telefono, id_azienda)"
                     + "values (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dTutoreTirocinio = connection.prepareStatement("DELETE FROM tutore_tirocinio WHERE id=?");
@@ -52,6 +57,7 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
         //also closing PreparedStamenents is a good practice...
         try {
             sTutoreTirocinioById.close();
+            sTutoriTirocinioByAzienda.close();
             iTutoreTirocinio.close();
             dTutoreTirocinio.close();
           
@@ -153,8 +159,21 @@ public class TutoreTirocinioDAO_MySQL extends DAO implements TutoreTirocinioDAO 
             throw new DataException("Unable to delete tutore tirocinio", ex);
         } 
     }
-    
-    
-    
+
+    @Override
+    public List<TutoreTirocinio> getTutoriTirocinio(Azienda az) throws DataException {
+        List<TutoreTirocinio> result = new ArrayList();
+        try {
+            sTutoriTirocinioByAzienda.setInt(1, az.getUtente().getId());
+            try (ResultSet rs = sTutoriTirocinioByAzienda.executeQuery()) {
+                while (rs.next()) {
+                    result.add((TutoreTirocinio) getTutoreTirocinio(rs.getInt("id")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to load tutori tirocinio of the azienda " + az.getRagioneSociale(), ex);
+        }
+        return result;
+    }
 }
 
