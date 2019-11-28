@@ -186,6 +186,14 @@
         <servlet-name>DettagliTirocinio</servlet-name>
         <url-pattern>/dettagli_tirocinio</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ValutazioneAzienda</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.ValutazioneAzienda</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ValutazioneAzienda</servlet-name>
+        <url-pattern>/valutazione</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

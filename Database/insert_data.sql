@@ -61,6 +61,6 @@ insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, 
            
            
 insert into valutazione (id_studente, id_azienda, stelle)
-	values (5, 3, 4);
+	values (5, 3, 8);
            
 			

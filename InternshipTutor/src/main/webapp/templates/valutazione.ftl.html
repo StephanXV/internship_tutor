@@ -1,0 +1,119 @@
+<#if valutazione??>
+<div class="col-8 mx-auto p-4">
+    <form action="valutazione?st=${id_st}&az=${id_az}" method="post">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Azienda <strong>${az.ragioneSociale} </strong>già valutata</h1>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <fieldset class="rating">
+                        <#if valutazione.stelle == 10>
+                        <input type="radio" checked name="rating" value="10" /><label class = "full" for="star5" title="5"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="10" /><label class = "full" for="star5" title="5"></label>
+                        </#if>
+                        <#if valutazione.stelle == 9>
+                        <input type="radio" checked name="rating" value="9" /><label class="half" for="star4half" title="4.5"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="9" /><label class="half" for="star4half" title="4.5"></label>
+                        </#if>
+                        <#if valutazione.stelle == 8>
+                        <input type="radio" checked name="rating" value="8" /><label class = "full" for="star4" title="4"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="8" /><label class = "full" for="star4" title="4"></label>
+                        </#if>
+                        <#if valutazione.stelle == 7>
+                        <input type="radio" checked name="rating" value="7" /><label class="half" for="star3half" title="3.5"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="7" /><label class="half" for="star3half" title="3.5"></label>
+                        </#if>
+                        <#if valutazione.stelle == 6>
+                        <input type="radio" checked name="rating" value="6" /><label class = "full" for="star3" title="3"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="6" /><label class = "full" for="star3" title="3"></label>
+                        </#if>
+                        <#if valutazione.stelle == 5>
+                        <input type="radio" checked name="rating" value="5" /><label class="half" for="star2half" title="2.5"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="5" /><label class="half" for="star2half" title="2.5"></label>
+                        </#if>
+                        <#if valutazione.stelle == 4>
+                        <input type="radio" checked name="rating" value="4" /><label class = "full" for="star2" title="2"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="4" /><label class = "full" for="star2" title="2"></label>
+                        </#if>
+                        <#if valutazione.stelle == 3>
+                        <input type="radio" checked name="rating" value="3" /><label class="half" for="star1half" title="1.5"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="3" /><label class="half" for="star1half" title="1.5"></label>
+                        </#if>
+                        <#if valutazione.stelle == 2>
+                        <input type="radio" checked name="rating" value="2" /><label class = "full" for="star1" title="1"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="2" /><label class = "full" for="star1" title="1"></label>
+                        </#if>
+                        <#if valutazione.stelle == 1>
+                        <input type="radio" checked name="rating" value="1" /><label class="half" for="starhalf" title="0.5"></label>
+                        <#else>
+                        <input type="radio" name="rating" value="1" /><label class="half" for="starhalf" title="0.5"></label>
+                        </#if>
+                    </fieldset>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col text-center">
+                    <a href="home" title="Torna indietro" class="btn btn-lg btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    
+                    <button type='submit' name='submit' value='submit' class="btn btn-lg bg-success text-white">
+                        <i class="fas fa-check"></i>   
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<#else>
+<div class="col-8 mx-auto p-4">
+    <form action="valutazione?st=${id_st}&az=${id_az}" method="post">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Valuta l'azienda <strong>${az.ragioneSociale}</strong></h1>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <fieldset class="rating">
+                        <input type="radio" id="star5" name="rating" value="10" /><label class = "full" for="star5" title="5"></label>
+                        <input type="radio" id="star4half" name="rating" value="9" /><label class="half" for="star4half" title="4.5"></label>
+                        <input type="radio" id="star4" name="rating" value="8" /><label class = "full" for="star4" title="4"></label>
+                        <input type="radio" id="star3half" name="rating" value="7" /><label class="half" for="star3half" title="3.5"></label>
+                        <input type="radio" id="star3" name="rating" value="6" /><label class = "full" for="star3" title="3"></label>
+                        <input type="radio" id="star2half" name="rating" value="5" /><label class="half" for="star2half" title="2.5"></label>
+                        <input type="radio" id="star2" name="rating" value="4" /><label class = "full" for="star2" title="2"></label>
+                        <input type="radio" id="star1half" name="rating" value="3" /><label class="half" for="star1half" title="1.5"></label>
+                        <input type="radio" id="star1" name="rating" value="2" /><label class = "full" for="star1" title="1"></label>
+                        <input type="radio" id="starhalf" name="rating" value="1" /><label class="half" for="starhalf" title="0.5"></label>
+                    </fieldset>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col text-center">
+                    <a href="home" title="Torna indietro" class="btn btn-lg btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+                    
+                    <button type='submit' name='submit' value='submit' class="btn btn-lg bg-success text-white">
+                        <i class="fas fa-check"></i>   
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</#if>

@@ -5,11 +5,10 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
-import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
-import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
+import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Stefano Florio
  */
-public class CompilaResoconto extends InternshipTutorBaseController {
+public class ValutazioneAzienda extends InternshipTutorBaseController {
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -32,48 +31,48 @@ public class CompilaResoconto extends InternshipTutorBaseController {
     
     private void action_default(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TemplateManagerException {
-        int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
+        int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
         try {
-            Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
-            if (resoconto != null) 
-                request.setAttribute("resoconto", resoconto);
-            request.setAttribute("id_ot", id_ot);
+            Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
+            request.setAttribute("az", az);
+            Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().getValutazione(id_az, id_st);
+            if (valutazione != null) {
+                System.out.println(valutazione);
+                request.setAttribute("valutazione", valutazione);
+            }
+            request.setAttribute("id_az", id_az);
             request.setAttribute("id_st", id_st);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("compila_resoconto.ftl.html", request, response);
+            res.activate("valutazione.ftl.html", request, response);
         } catch (DataException ex) {
-            Logger.getLogger(CompilaResoconto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ValutazioneAzienda.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private void action_invia_resoconto(HttpServletRequest request, HttpServletResponse response)
+    private void action_valuta(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TemplateManagerException {
         int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-        int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
+        int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
         
         try {
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st);
-            OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
-            Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().createResoconto();
-            resoconto.setOreEffettive(SecurityLayer.checkNumeric(request.getParameter("ore_effettive")));
-            resoconto.setDescAttivita(SecurityLayer.issetString(request.getParameter("desc_attivita")));
-            resoconto.setGiudizio(SecurityLayer.issetString(request.getParameter("giudizio")));
-            resoconto.setStudente(st);
-            resoconto.setOffertaTirocinio(ot);
-            int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().insertResoconto(resoconto);
+            Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
+            Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().createValutazione();
+            valutazione.setAzienda(az);
+            valutazione.setStudente(st);
+            valutazione.setStelle(SecurityLayer.checkNumeric(request.getParameter("rating")));
+            int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().insertValutazione(valutazione);
             if (insert != 1) {
-                request.setAttribute("message", "errore_resoconto");
-                request.setAttribute("errore", "I dati del resoconto non sono validi, riprova");
+                request.setAttribute("message", "errore_valutazione");
+                request.setAttribute("errore", "I dati della valutazione non sono validi, riprova");
                 action_error(request, response);
             }
-            response.sendRedirect("gestione_candidati?ot="+id_ot);
+            response.sendRedirect("home");
             
         } catch (DataException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
-        } catch (SecurityLayerException ex) {
-            Logger.getLogger(CompilaResoconto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -88,7 +87,7 @@ public class CompilaResoconto extends InternshipTutorBaseController {
             }
             
             if (request.getParameter("submit") != null) {
-                action_invia_resoconto(request, response);
+                action_valuta(request, response);
             }
             else
                 action_default(request, response);

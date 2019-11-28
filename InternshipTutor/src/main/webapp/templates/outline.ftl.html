@@ -4,95 +4,96 @@
     <head>
         <title>Internship Tutor</title>
         <script type="text/javascript" src="js/docs.js"></script>
-
+            
         <!-- bootstrap -->
         <#include "/bootstrap.ftl.html">
-        <link rel="stylesheet" href="styles/main.css" type="text/css">
-        <link rel="stylesheet" href="styles/card.css" type="text/css">
-        <link rel="stylesheet" href="styles/datatables_tab.css" type="text/css">
-        <link href="styles/footer.css" rel="stylesheet" type="text/css">
-        <link href="styles/form.css" rel="stylesheet" type="text/css">
-        <link href="styles/timeline.css" rel="stylesheet" type="text/css">
-        
+        <link rel="stylesheet" href="styles/main.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/card.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/datatables_tab.css" type="text/css"/>
+        <link href="styles/footer.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/form.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/timeline.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/stars.css" rel="stylesheet" type="text/css"/>
+            
     </head>
-
+        
     <body>
-
-    <noscript>
-        <link href="styles/noscript.css" rel="stylesheet" type="text/css">
-    </noscript>
-
-    <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-lg fixed-top">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="home">
-            <img src="images/logo_it.png" width="40px" height="40px" class="d-inline-block align-top" alt="logo" title="logo">
-        </a>
-
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 drop-men">
-                <li class="nav-item ${activeHome!}">
-                    <#switch (tipologia)>
-                    <#case 'ad'>
-                    <a class="nav-link" href="home">Dashboard admin<span class="sr-only">(current)</span></a>
-                    <#break>
-                    <#case 'az'>
-                    <a class="nav-link" href="home">Dashboard azienda<span class="sr-only">(current)</span></a>
-                    <#break>
-                    <#case 'st'>
-                    <a class="nav-link" href="home">Dashboard studente<span class="sr-only">(current)</span></a>
-                    <#break>
-                    </#switch>
-                </li>
-                <li class="nav-item ${activeAziende!}">
-                    <a class="nav-link" href="aziende">Aziende convenzionate</a>
-                </li>
-                <li class="nav-item ${activeTirocini!}">
-                    <a class="nav-link " href="tirocini">Offerte di tirocinio</a>
-                </li>
-                <li class="nav-item ${activeTest!}">
-                    <a class="nav-link " href="test">Test</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav justify-content-end">
-
-                <!-- Dropdown -->
-                <li class="nav-item dropdown active float-right">
-                    <#if nome_utente??>
-                    <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user-circle"></i>&nbsp;
-                        <b> ${nome_utente}</b>
-                        <noscript>
-                            <div class="divider_menu"></div>
-                        </noscript>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profilo</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </div>
-                    <#else>
-                    <a class="nav-link" href="login"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Login</a>
-                    </#if>
-                </li>
+        
+        <noscript>
+            <link href="styles/noscript.css" rel="stylesheet" type="text/css">
+        </noscript>
+            
+        <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-lg fixed-top">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="home">
+                <img src="images/logo_it.png" width="40px" height="40px" class="d-inline-block align-top" alt="logo" title="logo">
+            </a>
+                
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0 drop-men">
+                    <li class="nav-item ${activeHome!}">
+                        <#switch (tipologia)>
+                        <#case 'ad'>
+                        <a class="nav-link" href="home">Dashboard admin<span class="sr-only">(current)</span></a>
+                        <#break>
+                        <#case 'az'>
+                        <a class="nav-link" href="home">Dashboard azienda<span class="sr-only">(current)</span></a>
+                        <#break>
+                        <#case 'st'>
+                        <a class="nav-link" href="home">Dashboard studente<span class="sr-only">(current)</span></a>
+                        <#break>
+                        </#switch>
+                    </li>
+                    <li class="nav-item ${activeAziende!}">
+                        <a class="nav-link" href="aziende">Aziende convenzionate</a>
+                    </li>
+                    <li class="nav-item ${activeTirocini!}">
+                        <a class="nav-link " href="tirocini">Offerte di tirocinio</a>
+                    </li>
+                    <li class="nav-item ${activeTest!}">
+                        <a class="nav-link " href="test">Test</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav justify-content-end">
+                    
+                    <!-- Dropdown -->
+                    <li class="nav-item dropdown active float-right">
+                        <#if nome_utente??>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user-circle"></i>&nbsp;
+                            <b> ${nome_utente}</b>
+                            <noscript>
+                                <div class="divider_menu"></div>
+                            </noscript>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profilo</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </div>
+                        <#else>
+                        <a class="nav-link" href="login"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Login</a>
+                        </#if>
+                    </li>
                     <noscript>
                         <#if nome_utente??>
-                            <li class="nav-item float-right">
-                                <a class="nav-link" href="logout">Logout</a>
-                            </li>
+                        <li class="nav-item float-right">
+                            <a class="nav-link" href="logout">Logout</a>
+                        </li>
                         </#if>
                     </noscript>
-            </ul>
+                </ul>
+            </div>
+        </nav>
+            
+        <div class=" container-fluid bodyContent">
+            <#include content_tpl>
         </div>
-    </nav>
-
-    <div class=" container-fluid bodyContent">
-       <#include content_tpl>
-    </div>
-
-    <#include "/footer.ftl.html">
-
+            
+        <#include "/footer.ftl.html">
+            
     </body>
 </html>

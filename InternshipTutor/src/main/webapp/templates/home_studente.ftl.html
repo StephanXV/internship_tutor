@@ -141,8 +141,8 @@
                         <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
                         <td>${candidatura.cfu}</td>
                         <td>${candidatura.cfu * 25} h</td>
-                        <td>${candidatura.inizioTirocinio?date}</td>
-                        <td>${candidatura.fineTirocinio?date}</td>
+                        <td>${candidatura.inizioTirocinio!}</td>
+                        <td>${candidatura.fineTirocinio!}</td>
                         <td>
                             <form method="get" action="download">
                                 <input name="tipo" type="hidden" value="candidatura" />
@@ -196,8 +196,8 @@
                         <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
                         <td>${candidatura.cfu}</td>
                         <td>${candidatura.cfu * 25} h</td>
-                        <td>${candidatura.inizioTirocinio?date}</td>
-                        <td>${candidatura.fineTirocinio?date}</td>
+                        <td>${candidatura.inizioTirocinio!}</td>
+                        <td>${candidatura.fineTirocinio!}</td>
                         <td>
                             <form method="get" action="download">
                                 <input name="tipo" type="hidden" value="candidatura" />
@@ -208,17 +208,19 @@
                             </form>
                         </td>
                         <td>
-                            <a style="text-decoration: none;" title="Visualizza resoconto" target="_blank" href="docs?tipo=2&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}">
-                                <button type="button" class="btn btn-primary text-white">
+                            <a style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
+                                <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
                                     <i class="fa fa-file-download"></i>
                                 </button>
                             </a>
-                                
-                            <a style="text-decoration: none;" title="Valuta l'azienda" href="#">
-                                <button type="button" class="btn btn-primary text-white">
+                             
+                            <form action="valutazione" method="get">
+                                <input name="az" hidden value="${candidatura.offertaTirocinio.azienda.utente.id}"/>
+                                <input name="st" hidden value="${candidatura.studente.utente.id}"/>
+                                <button type="submit" title="Valuta l'azienda" class="btn btn-primary text-white">
                                     <i class="fas fa-star"></i>
                                 </button>
-                            </a>
+                            </form>
                         </td>
                             
                     </tr>
