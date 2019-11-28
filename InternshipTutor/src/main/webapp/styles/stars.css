@@ -12,7 +12,6 @@ fieldset, label { margin: 0; padding: 0; }
 .rating { 
     border: none;
     float: left;
-    margin-left: 5%;
 }
 
 .rating > input { display: none; } 
