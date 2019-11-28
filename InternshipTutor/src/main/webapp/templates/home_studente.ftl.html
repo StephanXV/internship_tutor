@@ -208,19 +208,23 @@
                             </form>
                         </td>
                         <td>
-                            <a style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
-                                <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
-                                    <i class="fa fa-file-download"></i>
-                                </button>
-                            </a>
+                            <div class="d-flex flex-row justify-content-between">
+                                
+                                    <a style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
+                                        <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
+                                            <i class="fa fa-file-download"></i>
+                                        </button>
+                                    </a>
                              
-                            <form action="valutazione" method="get">
-                                <input name="az" hidden value="${candidatura.offertaTirocinio.azienda.utente.id}"/>
-                                <input name="st" hidden value="${candidatura.studente.utente.id}"/>
-                                <button type="submit" title="Valuta l'azienda" class="btn btn-primary text-white">
-                                    <i class="fas fa-star"></i>
-                                </button>
-                            </form>
+                                    <form action="valutazione" method="get">
+                                        <input name="az" hidden value="${candidatura.offertaTirocinio.azienda.utente.id}"/>
+                                        <input name="st" hidden value="${candidatura.studente.utente.id}"/>
+                                        <button type="submit" title="Valuta l'azienda" class="btn btn-primary text-white">
+                                            <i class="fas fa-star"></i>
+                                        </button>
+                                    </form>
+                                
+                            </div>
                         </td>
                             
                     </tr>

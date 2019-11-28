@@ -10,12 +10,14 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
 import java.io.IOException;
+import static java.lang.System.console;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 /**
  *
@@ -38,7 +40,7 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             request.setAttribute("az", az);
             Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().getValutazione(id_az, id_st);
             if (valutazione != null) {
-                System.out.println(valutazione);
+                System.out.println(""+valutazione.getStelle());
                 request.setAttribute("valutazione", valutazione);
             }
             request.setAttribute("id_az", id_az);
