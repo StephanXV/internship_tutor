@@ -39,6 +39,14 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+
+                if (!s.getAttribute("tipologia").equals("st")) {
+                    request.setAttribute("message", "errore gestito");
+                    request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
+                    request.setAttribute("errore", "401 Unauthorized");
+                    action_error(request, response);
+                    return;
+                }
             }
                 if (request.getParameter("submit") != null) {
                     action_request(request, response);

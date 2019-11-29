@@ -1,123 +1,57 @@
 <div class="container">
     
     <#if (tirocinio?size>0)>
-    <div class="p-3 mb-3 bg-light text-center">
-        <span class="lead">Dati offerta di tirocinio</span>
-        <div class="row my-2">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Nome azienda</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.azienda.ragioneSociale}" class="form-control">
+    <div class="card shadow rounded">
+        <h5 class="card-header text-center">${tirocinio.titolo}</h5>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-10 mx-auto col-md-5 card border-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-briefcase pr-2"></i><strong>Azienda:</strong> ${tirocinio.azienda.ragioneSociale}</li>
+                            <li class="list-group-item"><i class="far fa-building pr-2"></i><strong>Settore:</strong> ${tirocinio.settore}</li>
+                            <li class="list-group-item"><i class="fas fa-map-marker-alt pr-2"></i><strong>Luogo:</strong> ${tirocinio.luogo}</li>
+                            <li class="list-group-item"><i class="fas fa-user pr-2"></i><strong>Tutore Universitario:</strong> ${tirocinio.tutoreTirocinio.nome}</li>
+                        </ul>
                 </div>
+
+                <div class="col-10 mx-auto col-md-5 card border-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="far fa-clock pr-2"></i><strong>Orari:</strong> ${tirocinio.orari!"Non specificato"}</li>
+                        <li class="list-group-item"><i class="fas fa-hourglass-start pr-2"></i><strong>Durata:</strong> ${tirocinio.durata}</li>
+                        <li class="list-group-item"><i class="fas fa-hands-helping pr-2"></i><strong>Facilitazioni:</strong> ${tirocinio.facilitazioni!"Non specificato"}</li>
+                        <li class="list-group-item"><i class="fas fa-power-off pr-2"></i><strong>Attivo:</strong> Si</li>
+                    </ul>
+                </div>
+
             </div>
 
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Luogo</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.luogo}" class="form-control">
-                </div>
+            <div class="card border-bottom-0 border-left-0 border-right-0 text-center mt-5">
+            <div class="card-body">
+                <h4 class="card-title"><i class="fas fa-money-check fa-xs pr-2"></i> Modalità</h4>
+                <p class="card-text">${tirocinio.modalita}</p>
             </div>
-        </div>
-        
-        <div class="row my-2">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Titolo</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.titolo}" class="form-control">
-                </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Durata</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.durata}" class="form-control">
-                </div>
+            <div class="card border-bottom-0 border-left-0 border-right-0 text-center mt-3">
+            <div class="card-body">
+                <h4 class="card-title"><i class="fas fa-crosshairs fa-sm pr-2"></i> Obiettivi</h4>
+                <p class="card-text">${tirocinio.obiettivi}</p>
             </div>
-        </div>    
-            
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Settore</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.settore}" class="form-control">
-                </div>
             </div>
 
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Orari</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.orari!"Non specificato"}" class="form-control">
-                </div>
-            </div>
-            
         </div>
+    </div>
+
         
-        <div class="row mb-2">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Obiettivi</span>
-                    </div>
-                    <textarea readonly class="form-control">${tirocinio.obiettivi}</textarea>
-                </div>
-            </div>
-        </div>    
-         
-        <div class="row mb-2">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Modalità</span>
-                    </div>
-                    <textarea readonly class="form-control">${tirocinio.modalita}</textarea>
-                </div>
-            </div>
-        </div>
-            
-        <div class="row mb-2">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Facilitazioni</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.facilitazioni!"Non specificato"}" class="form-control"/>
-                </div>
-            </div>
-            
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="bg-primary text-white input-group-text">Tutore tirocinio</span>
-                    </div>
-                    <input readonly type="text" value="${tirocinio.tutoreTirocinio.nome} ${tirocinio.tutoreTirocinio.cognome}" class="form-control">
-                </div>
-            </div>
-            
-        </div> 
-        
-        <#if (tipologia == "st")>
-        <div class="row mb-6">
+
+        <div class="row mb-6" style="margin-top: 45px">
             <div class="col text-center">
                 <a href="richiesta_tirocinio?n=${tirocinio.id}">
-                    <button class="btn btn-primary" style="border-radius: 20px">Richiedi tirocinio</button>
+                    <button class="btn btn-primary" style="border-radius: 20px; width: 30vw"><i class="fas fa-share pr-2"></i> Richiedi tirocinio</button>
                 </a>
             </div>
         </div>
-        </#if>
-        
-    </div> 
     </#if>
     
 </div>
