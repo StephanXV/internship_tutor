@@ -26,7 +26,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="home">
+        <a class="navbar-brand logo" href="#">
             <img src="images/logo_it.png" width="40px" height="40px" class="d-inline-block align-top" alt="logo" title="logo">
         </a>
 
@@ -34,7 +34,9 @@
 
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 drop-men">
                 <li class="nav-item ${activeHome!}">
-                    <#switch (tipologia)>
+                   <a class="nav-link" href="home">Home<span class="sr-only">(current)</span></a>
+
+                   <!-- <#switch (tipologia)>
                     <#case 'ad'>
                     <a class="nav-link" href="home">Dashboard admin<span class="sr-only">(current)</span></a>
                     <#break>
@@ -44,13 +46,13 @@
                     <#case 'st'>
                     <a class="nav-link" href="home">Dashboard studente<span class="sr-only">(current)</span></a>
                     <#break>
-                    </#switch>
+                    </#switch> -->
                 </li>
                 <li class="nav-item ${activeAziende!}">
-                    <a class="nav-link" href="aziende">Aziende convenzionate</a>
+                    <a class="nav-link" href="aziende">Aziende</a>
                 </li>
                 <li class="nav-item ${activeTirocini!}">
-                    <a class="nav-link " href="tirocini">Offerte di tirocinio</a>
+                    <a class="nav-link " href="tirocini">Tirocini</a>
                 </li>
                 <li class="nav-item ${activeTest!}">
                     <a class="nav-link " href="test">Test</a>

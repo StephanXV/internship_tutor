@@ -36,11 +36,21 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         }
     }
 
-    private void action_default(HttpServletRequest request, HttpServletResponse response, String tipo) throws IOException, ServletException, TemplateManagerException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession s = SecurityLayer.checkSession(request);
+        if (s!= null) {
+            request.setAttribute("nome_utente", (String)s.getAttribute("username"));
+            request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+        }
+
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Tirocini");
-        request.setAttribute("tipo", tipo);
-        res.activate("ricerca_tirocini.ftl.html", request, response);
+        try {
+            res.activate("ricerca_tirocini.ftl.html", request, response);
+        } catch (TemplateManagerException e) {
+            request.setAttribute("exception", e);
+            action_error(request, response);
+        }
     }
 
     private void action_ricerca(HttpServletRequest request, HttpServletResponse response) {
@@ -51,7 +61,6 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         String settore = "%";
         String titolo = "%";
         boolean facilitazioni = false;
-        HttpSession s = SecurityLayer.checkSession(request);
 
         if ((request.getParameter("facilitazioni") == null || request.getParameter("facilitazioni").length() < 1)
             && (request.getParameter("corso") == null || request.getParameter("corso").length() < 1)
@@ -62,11 +71,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             && (request.getParameter("durata") == null || request.getParameter("durata").length() < 1)) {
 
             request.setAttribute("noSearch", "Inserire almeno un parametro per avviare la ricerca!");
-            try {
-                action_default(request,response, (String) s.getAttribute("tipologia"));
-            } catch (IOException | ServletException | TemplateManagerException e) {
-                e.printStackTrace();
-            }
+            action_default(request,response);
 
             return;
         }
@@ -109,17 +114,16 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         try {
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().searchOffertaTirocinio(durata, titolo, facilitazioni, luogo, settore, obiettivi, corso);
             request.setAttribute("tirocini", tirocini);
-            action_default(request,response, (String) s.getAttribute("tipologia"));
-        } catch (DataException | IOException | ServletException | TemplateManagerException e) {
-            e.printStackTrace();
+            action_default(request,response);
+        } catch (DataException e) {
+            request.setAttribute("exception", e);
+            action_error(request, response);
         }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
@@ -131,18 +135,9 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             if (request.getParameter("submit") != null && request.getParameter("submit").equals("Cerca")) {
                 action_ricerca(request,response);
             } else {
-                action_default(request, response, (String) s.getAttribute("tipologia"));
+                action_default(request, response);
             }
 
-        } catch (IOException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-
-        }
     }
 
 }
