@@ -53,10 +53,10 @@ insert into offerta_tirocinio (luogo, settore, orari, durata, titolo, obiettivi,
 insert into candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, cfu, stato_candidatura,
 						src_documento_candidatura, data_inizio, data_fine, tms)
 	values (4, 1, 1, 6, 0, null, null, null, current_timestamp()),
-		   (5, 1, 2, 3, 1, null, '2019-11-21', '2020-1-27', current_timestamp()),
+		   (5, 1, 2, 3, 1, null, '2019-11-21', '2019-1-27', current_timestamp()),
            (6, 1, 1, 4, 0, null, null, null, current_timestamp()),
-           (4, 2, 2, 6, 1, null, '2019-12-21', '2020-1-27', current_timestamp()),
-           (5, 2, 2, 3, 2, null, '2019-11-21', '2020-1-27', current_timestamp()),
+           (4, 2, 2, 6, 1, null, '2019-11-21', '2020-01-28', current_timestamp()),
+           (5, 2, 2, 3, 2, null, '2019-11-21', '2019-11-27', current_timestamp()),
            (6, 2, 1, 3, 0, null, null, null, current_timestamp());
            
            
