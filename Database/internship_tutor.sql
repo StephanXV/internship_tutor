@@ -138,7 +138,7 @@ create table resoconto (
 create table valutazione (
 	id_studente integer unsigned not null,
     id_azienda integer unsigned not null, 
-    stelle integer(1) unsigned not null,
+    stelle integer(2) unsigned not null,
     constraint valutazione_unica unique (id_studente, id_azienda),
     constraint studente_valutazione foreign key(id_studente) 
 		references studente(id_utente) on update cascade on delete cascade,

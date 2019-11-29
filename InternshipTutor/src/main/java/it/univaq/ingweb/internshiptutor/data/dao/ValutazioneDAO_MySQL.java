@@ -75,17 +75,21 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
         } catch(SQLException ex) {
             throw new DataException("Unable to create valutazione from result set", ex);
         }
+         System.out.println(v.toString());
+        System.out.println("funziona3");
         return v;
     }
     
     @Override
     public Valutazione getValutazione(int id_azienda, int id_studente) throws DataException {
         try {
-            sValutazione.setInt(1, id_azienda);
-            sValutazione.setInt(2, id_studente);
+            sValutazione.setInt(1, id_studente);
+            sValutazione.setInt(2, id_azienda);
             try (ResultSet rs = sValutazione.executeQuery()) {
-                if (rs.next())
+                if (rs.next()){
+                    System.out.println("funziona2");
                     return createValutazione(rs);
+                }
             }
         } catch(SQLException ex) {
             throw new DataException("Unable to load valutazione by azienda and studente", ex);

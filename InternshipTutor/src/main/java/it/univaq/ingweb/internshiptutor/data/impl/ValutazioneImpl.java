@@ -53,5 +53,11 @@ public class ValutazioneImpl implements Valutazione {
     public void setStelle(int stelle) {
         this.stelle = stelle;
     }   
+
+    @Override
+    public String toString() {
+        return "ValutazioneImpl{" + "studente=" + studente + ", azienda=" + azienda + ", stelle=" + stelle + '}';
+    }
+    
     
 }

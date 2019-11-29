@@ -4,18 +4,19 @@
     <head>
         <title>Internship Tutor</title>
         <script type="text/javascript" src="js/docs.js"></script>
-
+            
         <!-- bootstrap -->
         <#include "/bootstrap.ftl.html">
-        <link rel="stylesheet" href="styles/main.css" type="text/css">
-        <link rel="stylesheet" href="styles/card.css" type="text/css">
-        <link rel="stylesheet" href="styles/datatables_tab.css" type="text/css">
-        <link href="styles/footer.css" rel="stylesheet" type="text/css">
-        <link href="styles/form.css" rel="stylesheet" type="text/css">
-        <link href="styles/timeline.css" rel="stylesheet" type="text/css">
-        
+        <link rel="stylesheet" href="styles/main.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/card.css" type="text/css"/>
+        <link rel="stylesheet" href="styles/datatables_tab.css" type="text/css"/>
+        <link href="styles/footer.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/form.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/timeline.css" rel="stylesheet" type="text/css"/>
+        <link href="styles/stars.css" rel="stylesheet" type="text/css"/>
+            
     </head>
-
+        
     <body>
 
     <noscript>
@@ -79,22 +80,23 @@
                     <a class="nav-link" href="login"><i class="fas fa-sign-in-alt"></i>&nbsp;&nbsp;Login</a>
                     </#if>
                 </li>
+
                     <noscript>
                         <#if nome_utente??>
-                            <li class="nav-item float-right">
-                                <a class="nav-link" href="logout">Logout</a>
-                            </li>
+                        <li class="nav-item float-right">
+                            <a class="nav-link" href="logout">Logout</a>
+                        </li>
                         </#if>
                     </noscript>
-            </ul>
+                </ul>
+            </div>
+        </nav>
+            
+        <div class=" container-fluid bodyContent">
+            <#include content_tpl>
         </div>
-    </nav>
-
-    <div class=" container-fluid bodyContent">
-       <#include content_tpl>
-    </div>
-
-    <#include "/footer.ftl.html">
-
+            
+        <#include "/footer.ftl.html">
+            
     </body>
 </html>
