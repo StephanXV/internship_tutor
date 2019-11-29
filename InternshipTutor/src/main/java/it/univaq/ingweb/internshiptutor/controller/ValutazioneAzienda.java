@@ -78,6 +78,27 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
         }
     }
     
+    private void action_cancella_valutazione(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, TemplateManagerException {
+        int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+        int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
+        
+        try {
+            int delete = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().deleteValutazione(id_az, id_st);
+            
+            if (delete != 1) {
+                request.setAttribute("message", "errore_valutazione");
+                request.setAttribute("errore", "Non è stato possibile cancellare la valutazione, riprova");
+                action_error(request, response);
+            }
+            response.sendRedirect("valutazione?st="+id_st+"&az="+id_az);
+            
+        } catch (DataException ex) {
+            request.setAttribute("exception", ex);
+            action_error(request, response);
+        }
+    }
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -91,6 +112,8 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             if (request.getParameter("submit") != null) {
                 action_valuta(request, response);
             }
+            else if (request.getParameter("delete") != null)
+                action_cancella_valutazione(request, response);
             else
                 action_default(request, response);
         } catch (TemplateManagerException ex) {
