@@ -5,8 +5,12 @@
  */
 package it.univaq.ingweb.internshiptutor.data.proxy;
 
+import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
+import it.univaq.ingweb.internshiptutor.data.dao.TutoreUniDAO;
 import it.univaq.ingweb.internshiptutor.data.impl.TutoreUniImpl;
+import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
+import java.util.logging.Level;
 
 
 /**
@@ -56,6 +60,26 @@ public class TutoreUniProxy extends TutoreUniImpl {
         super.setTelefono(telefono);
         this.dirty = true;
     }
+
+    @Override
+    public void setOccorrenze(int occorrenze) {
+        super.setOccorrenze(occorrenze);
+        this.dirty = true;
+    }
+
+    @Override
+    public int getOccorrenze() {
+        if (super.getOccorrenze() == 0) {
+            try {
+                super.setTirocinantiAttivi(((TutoreUniDAO) dataLayer.getDAO(TutoreUni.class)).getOccorrenze(this));
+            } catch (DataException ex) {
+                Logger.getLogger(TutoreUniProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getOccorrenze();
+    }
+    
+    
 
 
     //METODI DEL PROXY

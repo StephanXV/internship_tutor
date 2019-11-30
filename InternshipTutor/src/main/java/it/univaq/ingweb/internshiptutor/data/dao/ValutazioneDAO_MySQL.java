@@ -26,7 +26,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
 
     private PreparedStatement sValutazione;
     private PreparedStatement sValutazioniByStudente, sValutazioniByAzienda;
-    private PreparedStatement iValutazione;
+    private PreparedStatement iValutazione, dValutazione;
     
     public ValutazioneDAO_MySQL(DataLayer d) {
         super(d);
@@ -41,6 +41,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
             sValutazioniByAzienda = connection.prepareStatement("SELECT * FROM valutazione WHERE id_azienda=?");
             iValutazione = connection.prepareStatement("INSERT INTO valutazione (id_studente, id_azienda, "
                     + "stelle) VALUES (?,?,?)");
+            dValutazione = connection.prepareStatement("DELETE FROM valutazione WHERE id_azienda=? AND id_studente=?");
         } catch(SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -54,6 +55,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
             sValutazioniByStudente.close();
             sValutazioniByAzienda.close();
             iValutazione.close();
+            dValutazione.close();
         } catch(SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -147,6 +149,18 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
         } 
     }
 
+    @Override
+    public int deleteValutazione(int id_az, int id_st) throws DataException {
+        try {
+            dValutazione.setInt(1, id_az);
+            dValutazione.setInt(2, id_st);
+            return dValutazione.executeUpdate();
+        } catch(SQLException ex) {
+            throw new DataException("Unable to delete valutazione", ex);
+        } 
+    }
+
+    
     
    
     

@@ -24,7 +24,7 @@ import java.util.List;
 public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
     private PreparedStatement sAziendaById, sAziendaByUtenteUsername;
-    private PreparedStatement sAziendeByStato;
+    private PreparedStatement sAziendeByStato, sTirocinantiAttivi;
     private PreparedStatement iAzienda, uAziendaStato, dAzienda, uAziendaDoc;
 
     public AziendaDAO_MySQL(DataLayer d) {
@@ -38,6 +38,8 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             sAziendaById = connection.prepareStatement("SELECT * FROM azienda WHERE id_utente=?");
             sAziendaByUtenteUsername = connection.prepareStatement("SELECT az.* FROM azienda as az JOIN utente as ut WHERE az.id_utente = ut.id AND ut.username=?");
             sAziendeByStato = connection.prepareStatement("SELECT id_utente FROM azienda WHERE stato_convenzione=?");
+            sTirocinantiAttivi = connection.prepareStatement("SELECT count(*) as tirocinanti_attivi FROM azienda as a JOIN offerta_tirocinio as ot JOIN candidatura as c\n" +
+"	WHERE a.id_utente=? AND a.id_utente = ot.id_azienda AND c.id_offerta_tirocinio = ot.id AND c.stato_candidatura = 1");
             iAzienda = connection.prepareStatement ("INSERT INTO azienda (id_utente, ragione_sociale, indirizzo, citta, cap,"
                     + " provincia, rappresentante_legale, piva, foro_competente, tematiche, corso_studio, durata_convenzione,"
                     + " id_responsabile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -55,6 +57,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             sAziendaById.close();
             sAziendaByUtenteUsername.close();
             sAziendeByStato.close();
+            sTirocinantiAttivi.close();
             iAzienda.close();
             uAziendaStato.close();
             dAzienda.close();
@@ -87,7 +90,8 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             a.setTematiche(rs.getString("tematiche"));
             a.setStatoConvenzione(rs.getInt("stato_convenzione"));
             a.setCorsoStudio(rs.getString("corso_studio"));
-            a.setInizioConvenzione(rs.getDate("inizio_convenzione"));
+            if (rs.getDate("inizio_convenzione") != null) 
+                a.setInizioConvenzione(rs.getDate("inizio_convenzione").toLocalDate());
             a.setDurataConvenzione(rs.getInt("durata_convenzione"));
             a.setId_respTirocini(rs.getInt("id_responsabile"));
             
@@ -205,9 +209,20 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             throw new DataException("Unable to update azienda documento", ex);
         }
     }
-    
-    
-    
-    
-    
+
+    @Override
+    public int getTirocinantiAttivi(Azienda az) throws DataException {
+        try {
+            sTirocinantiAttivi.setInt(1, az.getUtente().getId());
+             try (ResultSet rs = sTirocinantiAttivi.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("tirocinanti_attivi");
+                }
+            }
+            
+        } catch (SQLException ex) {
+            throw new DataException("Unable to get tirocinanti attivi by azienda", ex);
+        }
+        return 0;
+    } 
 }

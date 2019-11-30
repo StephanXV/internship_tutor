@@ -6,15 +6,18 @@ package it.univaq.ingweb.internshiptutor.data.proxy;
 
 import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.data.DataLayer;
+import it.univaq.ingweb.internshiptutor.data.dao.AziendaDAO;
 import it.univaq.ingweb.internshiptutor.data.dao.OffertaTirocinioDAO;
 import it.univaq.ingweb.internshiptutor.data.dao.RespTirociniDAO;
 import it.univaq.ingweb.internshiptutor.data.dao.UtenteDAO;
 import it.univaq.ingweb.internshiptutor.data.dao.ValutazioneDAO;
 import it.univaq.ingweb.internshiptutor.data.impl.AziendaImpl;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -153,7 +156,7 @@ public class AziendaProxy extends AziendaImpl {
     }
 
     @Override
-    public void setInizioConvenzione(Date inizioConvenzione) {
+    public void setInizioConvenzione(LocalDate inizioConvenzione) {
         super.setInizioConvenzione(inizioConvenzione);
     }
 
@@ -197,6 +200,26 @@ public class AziendaProxy extends AziendaImpl {
         super.setValutazioni(valutazioni);
         this.dirty = true;
     }
+
+    @Override
+    public void setTirocinantiAttivi(int tirocinantiAttivi) {
+        super.setTirocinantiAttivi(tirocinantiAttivi);
+        this.dirty = true;
+    }
+
+    @Override
+    public int getTirocinantiAttivi() {
+        if (super.getTirocinantiAttivi() == 0) {
+            try {
+                super.setTirocinantiAttivi(((AziendaDAO) dataLayer.getDAO(Azienda.class)).getTirocinantiAttivi(this));
+            } catch (DataException ex) {
+                Logger.getLogger(AziendaProxy.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return super.getTirocinantiAttivi();
+    }
+    
+    
 
     //METODI DEL PROXY
     //PROXY-ONLY METHODS
