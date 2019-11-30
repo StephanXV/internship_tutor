@@ -17,7 +17,13 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -115,6 +121,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
                 //insert candidatura
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
+                this.sendMail(c);
                 try {
                     response.sendRedirect("home");
                 } catch (IOException e) {
@@ -140,6 +147,39 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
 
 
+    }
+    
+    private void sendMail(Candidatura c) {
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
+        String sDate = formatter.format(date);
+        try {
+            File fileAz = new File(getServletContext().getRealPath("") + File.separatorChar + "mails" + File.separatorChar + sDate + "mail_tutore_az.txt");
+            FileWriter fw = new FileWriter(fileAz);
+            BufferedWriter bw = new BufferedWriter(fw);
+            String message = "From: internship.tutor@univaq.it \n" + "To: " + c.getOffertaTirocinio().getTutoreTirocinio().getEmail() + "\n"
+            + "Message: Lo studente " + c.getStudente().getCognome() + " " + c.getStudente().getNome() + 
+            ", frequentante il seguente corso di laurea: " + c.getStudente().getCorsoLaurea() 
+            + ", ha richiesto l'effetuazione del tirocinio: " + c.getOffertaTirocinio().getTitolo() 
+            + ", per un totale di: " + c.getCfu() + " CFU"; 
+            bw.write(message);            
+            bw.flush();
+            bw.close();
+            File fileUni = new File(getServletContext().getRealPath("") + File.separatorChar + "mails" + File.separatorChar + sDate + "mail_tutore_uni.txt");
+            FileWriter fw2 = new FileWriter(fileUni);
+            BufferedWriter bw2 = new BufferedWriter(fw2);
+            String message2 = "From: internship.tutor@univaq.it \n" + "To: " + c.getTutoreUni().getEmail() + "\n"
+            + "Message: Lo studente " + c.getStudente().getCognome() + " " + c.getStudente().getNome() + 
+            ", frequentante il seguente corso di laurea: " + c.getStudente().getCorsoLaurea() 
+            + ", ha richiesto l'effetuazione del tirocinio: " + c.getOffertaTirocinio().getTitolo() 
+            + ", presso l'azienda: " + c.getOffertaTirocinio().getAzienda().getRagioneSociale() + ", per un totale di: " + c.getCfu() + " CFU"; 
+            bw2.write(message2);            
+            bw2.flush();
+            bw2.close();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
     }
     
     private void action_default(HttpServletRequest request, HttpServletResponse response) {

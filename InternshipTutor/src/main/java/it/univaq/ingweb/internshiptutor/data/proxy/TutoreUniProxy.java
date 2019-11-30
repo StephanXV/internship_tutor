@@ -11,6 +11,7 @@ import it.univaq.ingweb.internshiptutor.data.dao.TutoreUniDAO;
 import it.univaq.ingweb.internshiptutor.data.impl.TutoreUniImpl;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -71,7 +72,7 @@ public class TutoreUniProxy extends TutoreUniImpl {
     public int getOccorrenze() {
         if (super.getOccorrenze() == 0) {
             try {
-                super.setTirocinantiAttivi(((TutoreUniDAO) dataLayer.getDAO(TutoreUni.class)).getOccorrenze(this));
+                super.setOccorrenze(((TutoreUniDAO) dataLayer.getDAO(TutoreUni.class)).getOccorrenze(this));
             } catch (DataException ex) {
                 Logger.getLogger(TutoreUniProxy.class.getName()).log(Level.SEVERE, null, ex);
             }
