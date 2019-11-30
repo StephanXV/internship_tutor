@@ -4,6 +4,7 @@
  */
 package it.univaq.ingweb.internshiptutor.data.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -65,9 +66,9 @@ public interface Azienda {
     
     void setStatoConvenzione(int sc);
     
-    Date getInizioConvenzione();
+    LocalDate getInizioConvenzione();
     
-    void setInizioConvenzione(Date ic);
+    void setInizioConvenzione(LocalDate ic);
     
     int getDurataConvenzione();
     
@@ -87,5 +88,8 @@ public interface Azienda {
     
     void addValutazione(Valutazione val);
 
+    int getTirocinantiAttivi();
+    
+    void setTirocinantiAttivi(int ta);
     
 }

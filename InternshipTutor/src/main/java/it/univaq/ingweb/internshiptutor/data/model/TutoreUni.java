@@ -29,5 +29,9 @@ public interface TutoreUni {
     String getTelefono();
     
     void setTelefono(String tel);
+    
+    int getOccorrenze();
+    
+    void setOccorrenze(int occ);
 }
 

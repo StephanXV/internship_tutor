@@ -25,7 +25,7 @@ import java.util.List;
 public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
 
     private PreparedStatement allTutoreUni;
-    private PreparedStatement sTutoreUniById;
+    private PreparedStatement sTutoreUniById, sTutoreOcc;
     private PreparedStatement iTutoreUni, dTutoreUni;
 
     public TutoreUniDAO_MySQL(DataLayer d) 
@@ -42,6 +42,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             //precompile all the queries uses in this class
             allTutoreUni = connection.prepareStatement("SELECT * FROM tutore_uni");
             sTutoreUniById = connection.prepareStatement("SELECT * FROM tutore_uni WHERE id=?");
+            sTutoreOcc = connection.prepareStatement("select count(*) as occorrenze from candidatura as c where c.id_tutore_uni=?");
             iTutoreUni = connection.prepareStatement("INSERT INTO tutore_uni (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dTutoreUni = connection.prepareStatement("DELETE FROM tutore_uni WHERE id=1");
@@ -56,6 +57,7 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
         //also closing PreparedStamenents is a good practice...
         try {
             sTutoreUniById.close();
+            sTutoreOcc.close();
             iTutoreUni.close();
             allTutoreUni.close();
             dTutoreUni.close();
@@ -166,5 +168,22 @@ public class TutoreUniDAO_MySQL extends DAO implements TutoreUniDAO {
             throw new DataException("Unable to delete tutore università", ex);
         }
     }
+
+    @Override
+    public int getOccorrenze(TutoreUni tu) throws DataException {
+        try {
+            sTutoreOcc.setInt(1, tu.getId());
+            try (ResultSet rs = sTutoreOcc.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("occorrenze");
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataException("Unable to get tutore università occorrenze", ex);
+        }
+        return 0;
+    }
+    
+    
       
 }

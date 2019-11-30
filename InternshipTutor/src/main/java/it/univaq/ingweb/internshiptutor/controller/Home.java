@@ -99,8 +99,21 @@ public class Home extends InternshipTutorBaseController {
         try {
             // dati dell'azienda
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_utente);
-            request.setAttribute("nome_utente", az.getRagioneSociale());
+            
+            
+            // controllo che la convenzione non sia scaduta
+            LocalDate now = LocalDate.now();
+            LocalDate inizio_conv = az.getInizioConvenzione();
+            int durata = az.getDurataConvenzione();
+            LocalDate fine_conv = inizio_conv.plusMonths(durata);
+            if (az.getStatoConvenzione() != 3 && az.getStatoConvenzione() != 2 && now.compareTo(fine_conv) > 0) {
+                ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAziendaStato(3, az.getUtente().getId());
+                response.sendRedirect("home");
+            }
+            
             request.setAttribute("azienda", az);
+            request.setAttribute("nome_utente", az.getRagioneSociale());
+           
             
             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
             List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
