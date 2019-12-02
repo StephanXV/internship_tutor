@@ -92,4 +92,8 @@ public interface Azienda {
     
     void setTirocinantiAttivi(int ta);
     
+    Double getMediaValutazioni();
+    
+    void setMediaValutazioni(Double mv);
+    
 }

@@ -35,6 +35,7 @@ public class AziendaImpl implements Azienda {
     private List<OffertaTirocinio> offerteTirocinio;
     private List<Valutazione> valutazioni;
     private int tirocinantiAttivi;
+    private Double mediaValutazioni;
 
     public AziendaImpl(){
         this.utente = null;
@@ -252,6 +253,18 @@ public class AziendaImpl implements Azienda {
     public void setTirocinantiAttivi(int tirocinantiAttivi) {
         this.tirocinantiAttivi = tirocinantiAttivi;
     }
+
+    @Override
+    public Double getMediaValutazioni() {
+        return mediaValutazioni;
+    }
+
+    @Override
+    public void setMediaValutazioni(Double mediaValutazioni) {
+        this.mediaValutazioni = mediaValutazioni;
+    }
+    
+    
 
     @Override
     public String toString() {
