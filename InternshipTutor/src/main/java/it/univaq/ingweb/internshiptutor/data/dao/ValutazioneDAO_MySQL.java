@@ -77,8 +77,6 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
         } catch(SQLException ex) {
             throw new DataException("Unable to create valutazione from result set", ex);
         }
-         System.out.println(v.toString());
-        System.out.println("funziona3");
         return v;
     }
     
@@ -89,7 +87,6 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
             sValutazione.setInt(2, id_azienda);
             try (ResultSet rs = sValutazione.executeQuery()) {
                 if (rs.next()){
-                    System.out.println("funziona2");
                     return createValutazione(rs);
                 }
             }
@@ -106,7 +103,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
             sValutazioniByAzienda.setInt(1, az.getUtente().getId());
             try (ResultSet rs = sValutazioniByAzienda.executeQuery()) {
                 while(rs.next()) {
-                    result.add(getValutazione(rs.getInt("id_studente"), rs.getInt("id_azienda")));
+                    result.add(getValutazione(rs.getInt("id_azienda"), rs.getInt("id_studente")));
                 }
             }
         } catch(SQLException ex) {
@@ -122,7 +119,7 @@ public class ValutazioneDAO_MySQL extends DAO implements ValutazioneDAO {
             sValutazioniByStudente.setInt(1, st.getUtente().getId());
             try (ResultSet rs = sValutazioniByStudente.executeQuery()) {
                 while(rs.next()) {
-                    result.add(getValutazione(rs.getInt("id_studente"), rs.getInt("id_azienda")));
+                    result.add(getValutazione(rs.getInt("id_azienda"), rs.getInt("id_studente")));
                 }
             }
         } catch(SQLException ex) {

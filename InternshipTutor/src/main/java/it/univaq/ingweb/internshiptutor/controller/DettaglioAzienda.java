@@ -13,6 +13,7 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
+import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
@@ -53,8 +54,14 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
         Azienda azienda = null;
 
         try {
-
             azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(az);
+      
+            // calcolo dei dati per le statistiche dell'azienda
+            if (azienda.getValutazioni().size() > 0) {
+                System.out.println(azienda.getValutazioni());
+                request.setAttribute("media_valutazioni", azienda.getMediaValutazioni(azienda.getValutazioni()));
+            }
+            
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
             request.setAttribute("tirocini", tirocini);
             request.setAttribute("azienda", azienda);

@@ -94,6 +94,8 @@ public interface Azienda {
     
     Double getMediaValutazioni();
     
+    Double getMediaValutazioni(List<Valutazione> list);
+    
     void setMediaValutazioni(Double mv);
     
 }

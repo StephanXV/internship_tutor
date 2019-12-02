@@ -264,7 +264,18 @@ public class AziendaImpl implements Azienda {
         this.mediaValutazioni = mediaValutazioni;
     }
     
-    
+    public Double getMediaValutazioni(List<Valutazione> list) {
+        Double media;
+        Double sum = 0.0;
+        for (Valutazione v: list) {
+            System.out.println(v);
+            sum += v.getStelle();
+        }
+        sum /= 2;
+        media = sum/list.size();
+        return media;
+    }
+        
 
     @Override
     public String toString() {
