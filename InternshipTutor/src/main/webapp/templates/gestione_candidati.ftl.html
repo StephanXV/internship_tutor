@@ -44,9 +44,13 @@
                 <tbody>
                     <#list richieste_cand as richiesta_cand>
                     <tr>
-                        
+
                         <td>${richiesta_cand.tms}</td>
-                        <td>${richiesta_cand.studente.nome} ${richiesta_cand.studente.cognome}</td>
+                        <td>
+                            <a href="profilo?visualize=true&prof=${richiesta_cand.studente.utente.id}">
+                                ${richiesta_cand.studente.nome} ${richiesta_cand.studente.cognome}
+                            </a>
+                        </td>
                         <td>${richiesta_cand.studente.corsoLaurea}</td>
                         <td>${richiesta_cand.cfu}</td>
                         <td>${richiesta_cand.tutoreUni.nome} ${richiesta_cand.tutoreUni.cognome}</td>

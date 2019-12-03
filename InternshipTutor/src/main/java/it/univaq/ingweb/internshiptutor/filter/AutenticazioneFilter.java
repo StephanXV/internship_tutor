@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter("/richiesta_tirocinio") //per richiesta tirocinio
+@WebFilter({"/richiesta_tirocinio", "/profilo"}) //per richiesta tirocinio
 public class AutenticazioneFilter implements Filter {
 
 

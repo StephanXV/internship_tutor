@@ -1,44 +1,47 @@
 <!-- if student -->
-<div class="card text-center">
+<#if studente?has_content && visualize==null>
+<div class="card text-center shadow p-3 mb-5 bg-white rounded">
     <div class="card-body">
         <!-- if no foto -->
         <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px">
 
         <h2 class="text-center" style="margin-top: 15px">
-            Nome Cognome
+            ${studente.nome} ${studente.cognome}
         </h2>
 
         <div class="row" style="margin-top: 60px">
             <div class="col-6 mx-auto">
                 <div class="row">
-                    <div class="col-4 my-auto mx-auto">
-                        <b>Tirocini</b><br>
-                        5
+                    <div class="col-10 col-md-4 my-auto mx-auto">
+                        <b>Tirocini In Corso</b><br>
+                        ${candidature_attive}
                     </div>
-                    <div class="col-4 my-auto mx-auto">
-                        <b>Tirocini</b><br>
-                        5
+                    <div class="col-10 col-md-4 my-auto mx-auto">
+                        <b>Tirocini Conclusi</b><br>
+                        ${candidature_finite}
                     </div>
-                    <div class="col-4 my-auto mx-auto">
-                        <b>Tirocini</b><br>
-                        5
+                    <div class="col-10 col-md-4 my-auto mx-auto">
+                        <b>Tirocini In Attesa</b><br>
+                        ${candidature_attesa}
                     </div>
                 </div>
             </div>
         </div>
 
-        <form role="form" method="post" action="#" style="margin-top: 55px;">
+        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
             <div class="row">
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="nome" placeholder="nome" type="text" required/>
+                        <label for="nome_st" class="label-left">Nome</label>
+                        <input class="form-control" id="nome_st" name="nome" value="${studente.nome}" placeholder="nome" type="text" required/>
                     </div>
                 </div>
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="cognome" placeholder="cognome" type="text" required/>
+                        <label for="cognome_st" class="label-left">Email</label>
+                        <input class="form-control" id="cognome_st" name="cognome" value="${studente.cognome}" placeholder="cognome" type="text" required/>
                     </div>
                 </div>
 
@@ -46,15 +49,17 @@
 
             <div class="row">
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="email" placeholder="email" type="email" required/>
+                        <label for="email_st" class="label-left">Email</label>
+                        <input class="form-control" id="email_st" name="email" value="${email}" placeholder="email" type="email" required/>
                     </div>
                 </div>
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="username" placeholder="username" type="text" required/>
+                        <label for="username_st" class="label-left">Username</label>
+                        <input class="form-control" id="username_st" name="username" value="${username}" placeholder="username" type="text" required/>
                     </div>
                 </div>
 
@@ -62,25 +67,28 @@
 
             <div class="row">
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="row">
-                        <div class="col-6 mx-auto">
+                        <div class="col-10 col-md-6 mx-auto">
                             <div class="form-group">
-                                <input class="form-control" name="data_nasc" placeholder="data di nascita" onfocus="(this.type='date')" type="text" required/>
+                                <label for="data_nasc_st" class="label-left">Data Di Nascita</label>
+                                <input class="form-control" id="data_nasc_st" name="data_nasc" value="${studente.dataNascita}" placeholder="data di nascita" onfocus="(this.type='date')" type="text" required/>
                             </div>
                         </div>
 
-                        <div class="col-6 mx-auto">
+                        <div class="col-10 col-md-6 mx-auto">
                             <div class="form-group">
-                                <input class="form-control" name="prov_nasc" placeholder="provincia di nascita" type="text" required/>
+                                <label for="prov_nasc_st" class="label-left">Provincia Di Nascita</label>
+                                <input class="form-control" id="prov_nasc_st" name="prov_nasc" value="${studente.provinciaNascita}" placeholder="provincia di nascita" type="text" required/>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="luogo_nasc" placeholder="luogo di nascita" type="text" required/>
+                        <label for="luogo_nasc_st" class="label-left">Luogo Di Nascita</label>
+                        <input class="form-control" id="luogo_nasc_st" name="luogo_nasc" value="${studente.cittaNascita}" placeholder="luogo di nascita" type="text" required/>
                     </div>
                 </div>
 
@@ -88,40 +96,65 @@
             </div>
 
             <div class="row">
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="row">
-                        <div class="col-6 mx-auto">
+                        <div class="col-10 col-md-6 mx-auto">
                             <div class="form-group">
-                                <input class="form-control" name="cap" placeholder="cap di residenza" type="number" required/>
+                                <label for="residenza_cap_st" class="label-left">Cap Residenza</label>
+                                <input class="form-control" id="residenza_cap_st" name="cap" value="${studente.capResidenza}" placeholder="cap di residenza" type="number" required/>
                             </div>
                         </div>
 
-                        <div class="col-6 mx-auto">
+                        <div class="col-10 col-md-6 mx-auto">
                             <div class="form-group">
-                                <input class="form-control" name="residenza_prov" placeholder="provincia di residenza" type="text" required/>
+                                <label for="residenza_prov_st" class="label-left">Provincia Residenza</label>
+                                <input class="form-control" id="residenza_prov_st" name="residenza_prov" value="${studente.provinciaResidenza}" placeholder="provincia di residenza" type="text" required/>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="residenza_citta" placeholder="città di residenza" type="text" required/>
+                        <label for="residenza_citta_st" class="label-left">Citt&agrave; Residenza</label>
+                        <input class="form-control" id="residenza_citta_st" name="residenza_citta" value="${studente.cittaResidenza}" placeholder="città di residenza" type="text" required/>
                     </div>
                 </div>
             </div>
 
             <div class="row">
 
-                <div class="col-5 mx-auto">
-                    <div class="form-group">
-                        <input class="form-control" name="telefono" placeholder="telefono" type="number" required/>
+                <div class="col-10 col-md-5 mx-auto">
+
+                    <div class="row">
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="form-group">
+                                <label for="telefono_st" class="label-left">Telefono</label>
+                                <input class="form-control" id="telefono_st" name="telefono" value="${studente.telefono}" placeholder="telefono" type="text" required/>
+                            </div>
+                        </div>
+
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="form-group">
+                                <label for="handicap" class="label-left">Handicap</label>
+                                <select id="handicap" class="form-control" name="handicap" required>
+                                    <option name="handicap" ${selected_handicap_si!} value="true">Si</option>
+                                    <option name="handicap" ${selected_handicap_no!} value="false">No</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
+
+
+
+
                 </div>
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="corso" placeholder="corso" type="text" required/>
+                        <label for="corso_st" class="label-left">Corso Di Studi</label>
+                        <input class="form-control" id="corso_st" name="corso" value="${studente.corsoLaurea}" placeholder="corso" type="text" required/>
                     </div>
                 </div>
 
@@ -129,20 +162,344 @@
 
             <div class="row">
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="handicap" placeholder="handicap" type="text" required/>
+                        <label for="cf" class="label-left">Codice Fiscale</label>
+                        <input class="form-control" id="cf" value="${cf}" name="cf" placeholder="codice fiscale" type="text" required/>
                     </div>
                 </div>
 
-                <div class="col-5 mx-auto">
+                <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <input class="form-control" name="pw" placeholder="password" type="password" required/>
+                        <label for="pw_st" class="label-left">Password</label>
+                        <input class="form-control" id="pw_st" name="pw_st" placeholder="Nuova Password" type="password" required/>
                     </div>
                 </div>
 
             </div>
+
+            <input name="submit" class="btn btn-primary" type="submit" value="Modifica" style="border-radius: 20px; width: 160px; margin-top: 30px">
 
         </form>
     </div>
 </div>
+</#if>
+
+
+
+<#if admin?has_content>
+<div class="card text-center shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body">
+        <!-- if no foto -->
+        <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px">
+
+        <h2 class="text-center" style="margin-top: 30px">
+            ADMIN
+        </h2>
+
+        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
+            <div class="row">
+
+                <div class="col-8 mx-auto">
+                    <div class="form-group">
+                        <label for="usern_ad" class="label-left">Username</label>
+                        <input class="form-control" id="usern_ad" name="username" value="${admin.username}" placeholder="username" type="text" required/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-8 mx-auto">
+                    <div class="form-group">
+                        <label for="email_ad" class="label-left">Email</label>
+                        <input class="form-control" id="email_ad" name="email" value="${admin.email}" placeholder="email" type="text" required/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-8 mx-auto">
+                    <div class="form-group">
+                        <label for="pw" class="label-left">Password</label>
+                        <input class="form-control" id="pw" name="pw" placeholder="Nuova Password" type="password"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <input name="submit" class="btn btn-primary" type="submit" value="Modifica" style="border-radius: 20px; width: 160px; margin-top: 30px">
+
+        </form>
+    </div>
+</div>
+</#if>
+
+
+<#if azienda?has_content>
+<div class="card text-center shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body">
+        <!-- if no foto -->
+        <img src="https://www.vector-eps.com/wp-content/gallery/city-buildings-flat-vectors-design/city-buildings-flat-vectors-design3.jpg" class="rounded-circle" style="height: 250px; width: 250px">
+
+        <h2 class="text-center" style="margin-top: 15px">
+            ${azienda.ragioneSociale}
+        </h2>
+
+        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
+
+            <div class="row">
+                <div class="col-md-5 mx-auto">
+                    <label class="info-campi-profilo">Dati Azienda</label>
+                    <div class="form-group">
+                        <label for="rag_soc" class="label-left">Ragione Sociale</label>
+                        <input type="text" id="rag_soc" class="form-control" name="ragione_sociale" value="${azienda.ragioneSociale}" placeholder="Ragione Sociale" type="text" autofocus required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="p_iva" class="label-left">P. IVA</label>
+                        <input type="text" id="p_iva" class="form-control" value="${azienda.piva}" name="piva" placeholder="Partita Iva" type="number"  required />
+                    </div>
+                    <div class="form-group">
+                        <label for="city" class="label-left">Citt&agrave;</label>
+                        <input id="city" class="form-control" value="${azienda.citta}" name="citta" placeholder="Citta" type="text" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="provincia" class="label-left">Provincia</label>
+                                <input id="provincia" class="form-control" value="${azienda.provincia}"  name="provincia" placeholder="Provincia" maxlength="2" type="text" required />
+                            </div>
+                            <div class="col">
+                                <label for="cap" class="label-left">CAP</label>
+                                <input id="cap" class="form-control"  name="cap" value="${azienda.cap}" placeholder="CAP" type="number" maxlength="5" minlength="5" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="label-left">Indirizzo</label>
+                        <input id="address" class="form-control"  name="indirizzo" value="${azienda.indirizzo}" placeholder="Indirizzo" type="text" required />
+                    </div>
+                </div>
+                <div class="col-md-5 mx-auto">
+                    <label class="info-campi-profilo">Dati Tirocinio / Legali</label>
+                    <div class="form-group">
+                        <label for="rappr_leg" class="label-left">Rappresentante Legale</label>
+                        <input id="rappr_leg" class="form-control" value="${azienda.rappresentanteLegale}" name="rappresentante_legale" placeholder="Rappr. Legale (Nome Cognome)" type="text" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="foro" class="label-left">Foro Competente</label>
+                        <input id="foro" class="form-control" value="${azienda.foroCompetente}" name="foro_competente" placeholder="Foro Competente" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="durata" class="label-left">Durata</label>
+                        <input id="durata" class="form-control" name="durata" value="${azienda.durataConvenzione}" placeholder="Durata della Convenzione (Mesi)" min="1" type="number" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="corso" class="label-left">Corso di Studi</label>
+                        <input id="corso" class="form-control" value="${azienda.corsoStudio}" name="corso_studio"  placeholder="Corso di Studio" type="text" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="tematiche" class="label-left">Tematiche</label>
+                        <textarea id="tematiche" class="form-control" value="${azienda.tematiche}" name="tematiche" placeholder="Tematiche" style="height: 38px" required></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+                <div class="col-md-5 mx-auto">
+                    <label class="info-campi-profilo">Dati Responsabile Tirocinio</label>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="nome_tir" class="label-left">Nome</label>
+                                <input  id="nome_tir" class="form-control" value="${azienda.respTirocini.nome}" name="nome_rt" placeholder="Nome" type="text" required/>
+                            </div>
+                            <div class="col">
+                                <label for="cogn_tir" class="label-left">Cognome</label>
+                                <input id="cogn_tir" class="form-control" value="${azienda.respTirocini.cognome}" name="cognome_rt" placeholder="Cognome" type="text" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email_tir" class="label-left">Email</label>
+                        <input id="email_tir" class="form-control" value="${azienda.respTirocini.email}" name="email_rt" placeholder="Email" type="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono_tir" class="label-left">Telefono</label>
+                        <input id="telefono_tir" class="form-control" value="${azienda.respTirocini.telefono}" name="telefono_rt" placeholder="Telefono" type="tel" required/>
+                    </div>
+                </div>
+
+                <div class="col-md-5 mx-auto">
+                    <label class="info-campi-profilo">Dati Utente</label>
+                    <div class="form-group">
+                        <label for="usern" class="label-left">Username</label>
+                        <input id="usern" value="${azienda.utente.username}" class="form-control" name="username" placeholder="Username" type="text" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="label-left">Email</label>
+                        <input id="email" value="${azienda.utente.email}" class="form-control" name="email" placeholder="Email" type="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass" class="label-left">Password</label>
+                        <input id="pass" class="form-control" name="pw" placeholder="Nuova Password" type="password"/>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <input name="submit" class="btn btn-primary" type="submit" value="Modifica" style="border-radius: 20px; width: 160px; margin-top: 30px">
+
+        </form>
+    </div>
+</div>
+</#if>
+
+
+<#if visualize?has_content && studente?has_content>
+<div class="card text-center shadow p-3 mb-5 bg-white rounded">
+    <div class="card-body">
+        <!-- if no foto -->
+        <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px">
+
+        <h2 class="text-center" style="margin-top: 30px">
+            ${studente.nome} ${studente.cognome}
+        </h2>
+
+        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
+            <div class="row">
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="nome_st_v" class="label-left">Nome</label>
+                        <input class="form-control" id="nome_st_v" name="nome" value="${studente.nome}" placeholder="nome" type="text" readonly/>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="cognome_st_v" class="label-left">Email</label>
+                        <input class="form-control" id="cognome_st_v" name="cognome" value="${studente.cognome}" placeholder="cognome" type="text" readonly/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="email_st_v" class="label-left">Email</label>
+                        <input class="form-control" id="email_st_v" name="email" value="${email}" placeholder="email" type="text" readonly/>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="username_st_v" class="label-left">Username</label>
+                        <input class="form-control" id="username_st_v" name="username" value="${username}" placeholder="username" type="text" readonly/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="row">
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="form-group">
+                                <label for="data_nasc_st_v" class="label-left">Data Di Nascita</label>
+                                <input class="form-control" id="data_nasc_st_v" name="data_nasc" value="${studente.dataNascita}" placeholder="data di nascita" type="text" readonly/>
+                            </div>
+                        </div>
+
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="form-group">
+                                <label for="prov_nasc_st_v" class="label-left">Provincia Di Nascita</label>
+                                <input class="form-control" id="prov_nasc_st_v" name="prov_nasc" value="${studente.provinciaNascita}" placeholder="provincia di nascita" type="text" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="luogo_nasc_st_v" class="label-left">Luogo Di Nascita</label>
+                        <input class="form-control" id="luogo_nasc_st_v" name="luogo_nasc" value="${studente.cittaNascita}" placeholder="luogo di nascita" type="text" readonly/>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="row">
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="form-group">
+                                <label for="residenza_cap_st_v" class="label-left">Cap Residenza</label>
+                                <input class="form-control" id="residenza_cap_st_v" name="cap" value="${studente.capResidenza}" placeholder="cap di residenza" type="text" readonly/>
+                            </div>
+                        </div>
+
+                        <div class="col-10 col-md-6 mx-auto">
+                            <div class="form-group">
+                                <label for="residenza_prov_st_v" class="label-left">Provincia Residenza</label>
+                                <input class="form-control" id="residenza_prov_st_v" name="residenza_prov" value="${studente.provinciaResidenza}" placeholder="provincia di residenza" type="text" readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="residenza_citta_st_v" class="label-left">Citt&agrave; Residenza</label>
+                        <input class="form-control" id="residenza_citta_st_v" name="residenza_citta" value="${studente.cittaResidenza}" placeholder="città di residenza" type="text" readonly/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="telefono_st_v" class="label-left">Telefono</label>
+                        <input class="form-control" id="telefono_st_v" name="telefono" value="${studente.telefono}" placeholder="telefono" type="text" readonly/>
+                    </div>
+                </div>
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="corso_st_v" class="label-left">Corso Di Studi</label>
+                        <input class="form-control" id="corso_st_v" name="corso" value="${studente.corsoLaurea}" placeholder="corso" type="text" readonly/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-10 col-md-5 mx-auto">
+                        <div class="form-group">
+                            <label for="handicap_v" class="label-left">Handicap</label>
+                            <input class="form-control" id="handicap_v" value="${handicap}" name="handicap" placeholder="Handicap" type="text" readonly/>
+                        </div>
+                </div>
+
+                <div class="col-10 col-md-5 mx-auto">
+                    <div class="form-group">
+                        <label for="cf_v" class="label-left">Codice Fiscale</label>
+                        <input class="form-control" id="cf_v" value="${cf}" name="cf" placeholder="codice fiscale" type="text" readonly/>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+</#if>
