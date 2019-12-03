@@ -8,15 +8,7 @@
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/filter/AutenticazioneFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/filter/AutenticazioneFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/datatables_tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/datatables_tab.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/form.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/gestione_candidati.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/gestione_candidati.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/profilo.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/profilo.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -296,6 +288,7 @@
       <workItem from="1575019189907" duration="394000" />
       <workItem from="1575041802584" duration="4928000" />
       <workItem from="1575370417537" duration="11379000" />
+      <workItem from="1575384634383" duration="682000" />
     </task>
     <servers />
   </component>
