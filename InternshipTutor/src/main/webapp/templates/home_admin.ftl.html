@@ -69,7 +69,7 @@
                                 <#list az_registrate as az_registrata>
                                 <tr>
 
-                                    <td>${az_registrata.ragioneSociale}</td>
+                                    <td><a  href="azienda?n=${az_registrata.utente.id}">${az_registrata.ragioneSociale}</a></td>
                                     <td>
                                         <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}">
                                             <button type="button" class="btn btn-primary text-white">
@@ -142,7 +142,7 @@
                                 <#list az_convenzionate as az_convenzionata>
                                 <tr>
 
-                                    <td>${az_convenzionata.ragioneSociale}</td>
+                                    <td><a  href="azienda?n=${az_convenzionata.utente.id}">${az_convenzionata.ragioneSociale}</a></td>
                                     <td>${az_convenzionata.inizioConvenzione}</td>
                                     <td>${az_convenzionata.durataConvenzione}</td>
                                     <td>
@@ -168,7 +168,7 @@
 
                         <div class="tab-pane fade pt-4 tabData" id="nav-canc" role="tabpanel" aria-labelledby="nav-rifiutate-tab">
                             <#if (az_rifiutate?size>0)>
-                            <table class="table table-hover nowrap" id="myTableConv" cellspacing="0">
+                            <table class="table table-hover nowrap" id="myTableRif" cellspacing="0">
                                 <thead>
                                 <tr>
                                     <th>Azienda</th>
@@ -180,7 +180,7 @@
                                 <#list az_rifiutate as az_rifiutata>
                                 <tr>
 
-                                    <td>${az_rifiutata.ragioneSociale}</td>
+                                    <td><a  href="azienda?n=${az_rifiutata.utente.id}">${az_rifiutata.ragioneSociale}</a></td>
                                     <td>
                                         <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_rifiutata.utente.id}">
                                             <button type="button" class="btn btn-primary text-white">
@@ -221,6 +221,10 @@
     $('#myTableConvAz').DataTable( {
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     } );
+
+        $('#myTableRif').DataTable( {
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        } );
 });
 </script>
 

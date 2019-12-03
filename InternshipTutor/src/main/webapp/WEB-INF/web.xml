@@ -51,6 +51,14 @@
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ProfiloController</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.ProfiloController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfiloController</servlet-name>
+        <url-pattern>/profilo</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ListaAziende</servlet-name>
         <servlet-class>it.univaq.ingweb.internshiptutor.controller.ListaAziende</servlet-class>
     </servlet>

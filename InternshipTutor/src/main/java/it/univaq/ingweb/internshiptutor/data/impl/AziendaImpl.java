@@ -35,6 +35,7 @@ public class AziendaImpl implements Azienda {
     private List<OffertaTirocinio> offerteTirocinio;
     private List<Valutazione> valutazioni;
     private int tirocinantiAttivi;
+    private Double mediaValutazioni;
 
     public AziendaImpl(){
         this.utente = null;
@@ -252,6 +253,29 @@ public class AziendaImpl implements Azienda {
     public void setTirocinantiAttivi(int tirocinantiAttivi) {
         this.tirocinantiAttivi = tirocinantiAttivi;
     }
+
+    @Override
+    public Double getMediaValutazioni() {
+        return mediaValutazioni;
+    }
+
+    @Override
+    public void setMediaValutazioni(Double mediaValutazioni) {
+        this.mediaValutazioni = mediaValutazioni;
+    }
+    
+    public Double getMediaValutazioni(List<Valutazione> list) {
+        Double media;
+        Double sum = 0.0;
+        for (Valutazione v: list) {
+            System.out.println(v);
+            sum += v.getStelle();
+        }
+        sum /= 2;
+        media = sum/list.size();
+        return media;
+    }
+        
 
     @Override
     public String toString() {

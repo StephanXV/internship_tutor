@@ -102,7 +102,9 @@
                             <tr>
                             
                             <td>
-                                <span>${ot_attiva.titolo}</span>
+                                <a href="dettagli_tirocinio?n=${ot_attiva.id}" style="color: black;">
+                                    ${ot_attiva.titolo}
+                                </a>
                             </td>
                             <td>
                                 <span class="mr-1">${ot_attiva.candidature?size}</span>
@@ -151,7 +153,9 @@
                         <#list ot_disattive as ot_disattiva>
                         <tr>
                             <td>
-                                <span>${ot_disattiva.titolo}</span>
+                                <a href="dettagli_tirocinio?n=${ot_disattiva.id}" style="color: black;">
+                                    ${ot_disattiva.titolo}
+                                </a>
                             </td>
                             <td>
                                 <span class="mr-1">${ot_disattiva.candidature?size}</span>

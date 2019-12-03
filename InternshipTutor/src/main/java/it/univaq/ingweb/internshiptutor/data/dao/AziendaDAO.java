@@ -35,4 +35,6 @@ public interface AziendaDAO {
     int updateAziendaDocumento(int id_az, String src) throws DataException;
     
     int getTirocinantiAttivi(Azienda az) throws DataException;
+    
+    List<Azienda> getBestFiveAziende() throws DataException;
 }

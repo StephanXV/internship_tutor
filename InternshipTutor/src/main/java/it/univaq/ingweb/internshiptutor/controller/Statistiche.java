@@ -14,13 +14,10 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -60,6 +57,15 @@ public class Statistiche extends InternshipTutorBaseController {
             if (tutori_uni.size() > 5)
                 tutori_uni.subList(0, 5);
             
+            // prende le 5 offerte di tirocinio con più richieste totali
+            List<OffertaTirocinio> ots = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getBestFiveOffertaTirocinio();
+            
+            // prende le 5 aziende con le valutazioni migliori
+            List<Azienda> best_az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getBestFiveAziende();
+            System.out.println(best_az);
+            
+            request.setAttribute("best_aziende", best_az);
+            request.setAttribute("best_offerte", ots);
             request.setAttribute("tutori_uni", tutori_uni);
             request.setAttribute("aziende", aziende);
             TemplateResult res = new TemplateResult(getServletContext());

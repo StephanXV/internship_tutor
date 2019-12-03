@@ -7,28 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_18.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_18.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_21.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_21.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_28.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_28.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jasypt_jasypt_1_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jasypt_jasypt_1_9_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_3_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_3_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/InternshipTutor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/InternshipTutor.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettagli_tirocinio.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettagli_tirocinio.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_anonimo.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_anonimo.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/richiesta_tirocinio.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/richiesta_tirocinio.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,8 +35,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -305,6 +285,10 @@
       <workItem from="1574868354184" duration="6330000" />
       <workItem from="1574926821017" duration="3394000" />
       <workItem from="1574952545484" duration="5716000" />
+      <workItem from="1575019189907" duration="394000" />
+      <workItem from="1575041802584" duration="4928000" />
+      <workItem from="1575370417537" duration="11379000" />
+      <workItem from="1575384634383" duration="682000" />
     </task>
     <servers />
   </component>

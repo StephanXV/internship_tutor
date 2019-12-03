@@ -218,8 +218,12 @@ public class AziendaProxy extends AziendaImpl {
         }
         return super.getTirocinantiAttivi();
     }
-    
-    
+
+    @Override
+    public void setMediaValutazioni(Double mediaValutazioni) {
+        super.setMediaValutazioni(mediaValutazioni);
+        this.dirty = true;
+    }    
 
     //METODI DEL PROXY
     //PROXY-ONLY METHODS
