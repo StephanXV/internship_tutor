@@ -18,6 +18,7 @@ public class TutoreUniImpl implements TutoreUni {
     private String cognome;
     private String email;
     private String telefono;
+    private int occorrenze;
 
     public TutoreUniImpl() {
         this.id = 0;
@@ -76,5 +77,17 @@ public class TutoreUniImpl implements TutoreUni {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
+    @Override
+    public int getOccorrenze() {
+        return occorrenze;
+    }
+
+    @Override
+    public void setOccorrenze(int occorrenze) {
+        this.occorrenze = occorrenze;
+    }
+    
+    
     
 }

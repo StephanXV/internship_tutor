@@ -1,0 +1,165 @@
+
+<script>
+    window.onload = function () {
+        
+        var chart1 = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            theme: "light2",
+            title:{
+                text: "Aziende con più tirocinanti"
+            },
+            axisY: {
+                title: "Tirocinanti attivi",
+                titleFontColor: "#4F81BC",
+                lineColor: "#4F81BC",
+                labelFontColor: "#4F81BC",
+                tickColor: "#4F81BC"
+            },
+            toolTip: {
+                shared: true
+            },
+            data: [{
+                    type: "column",
+                    name: "Tirocinanti attivi", 
+                    yValueFormatString: "#,##0.#",
+                    dataPoints: [
+                        
+                        <#list aziende as azienda> { label: "${azienda.ragioneSociale}",  y: ${azienda.tirocinantiAttivi} },</#list>
+                           
+                        ]
+                    }]
+            });
+            chart1.render();
+            chart1 = {};
+            
+            var chart2 = new CanvasJS.Chart("chartContainer2", {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Tutori universitari più richiesti"
+                },
+                axisY: {
+                    title: "Richieste",
+                    titleFontColor: "#4F81BC",
+                    lineColor: "#4F81BC",
+                    labelFontColor: "#4F81BC",
+                    tickColor: "#4F81BC"
+                },
+                toolTip: {
+                    shared: true
+                },
+                data: [{
+                        type: "column",
+                        name: "Richieste", 
+                        yValueFormatString: "#,##0.#",
+                        dataPoints: [
+                        
+                            <#list tutori_uni as tutore> { label: "${tutore.nome} ${tutore.cognome}",  y: ${tutore.occorrenze} },</#list>
+                           
+                            ]
+                        }]
+                });
+                chart2.render();
+                chart2 = {};
+                
+                var chart3 = new CanvasJS.Chart("chartContainer3", {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Offerte di tirocinio più richieste"
+                },
+                axisY: {
+                    title: "Richieste",
+                    titleFontColor: "#4F81BC",
+                    lineColor: "#4F81BC",
+                    labelFontColor: "#4F81BC",
+                    tickColor: "#4F81BC"
+                },
+                toolTip: {
+                    shared: true
+                },
+                data: [{
+                        type: "column",
+                        name: "Richieste", 
+                        yValueFormatString: "#,##0.#",
+                        dataPoints: [
+                        
+                            <#list best_offerte as ot> { label: "${ot.titolo} (${ot.azienda.ragioneSociale})",  y: ${ot.candidature?size} },</#list>
+                           
+                            ]
+                        }]
+                });
+                chart3.render();
+                chart3 = {};
+                
+                var chart4 = new CanvasJS.Chart("chartContainer4", {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Aziende migliori"
+                },
+                axisY: {
+                    title: "Media voto",
+                    titleFontColor: "#4F81BC",
+                    lineColor: "#4F81BC",
+                    labelFontColor: "#4F81BC",
+                    tickColor: "#4F81BC"
+                },
+                axisY2: {
+                    
+                    title: "Numero di voti",
+                    titleFontColor: "#C0504E",
+                    lineColor: "#C0504E",
+                    labelFontColor: "#C0504E",
+                    tickColor: "#C0504E"
+                },
+                toolTip: {
+                    shared: true
+                },
+                data: [{
+                        type: "column",
+                        name: "Media voto", 
+                        yValueFormatString: "#,##0.# Stelle",
+                        dataPoints: [
+                        
+                            <#list best_aziende as az> { label: "${az.ragioneSociale}",  y: ${az.mediaValutazioni} },</#list>
+                           
+                            ]
+                        },
+                        {
+                        type: "column",
+                        axisYType: "secondary",
+                        name: "Numero di voti", 
+                        yValueFormatString: "#,##0.#",
+                        dataPoints: [
+                        
+                            <#list best_aziende as az> { label: "${az.ragioneSociale}",  y: ${az.valutazioni?size} },</#list>
+                           
+                            ]
+                        }]
+                });
+                chart4.render();
+                chart4 = {};
+            }
+</script>
+
+<div class="container">
+    <div class="row bg-light p-4 mb-4">
+        <div class="col-md">
+            <div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+        </div>
+        <div class="col-md">
+            <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+        </div>
+    </div>
+    
+    <div class="row bg-light p-4">
+        <div class="col-md ">
+            <div id="chartContainer3" style="height: 370px; width: 100%;"></div>
+        </div>
+        <div class="col-md">
+            <div id="chartContainer4" style="height: 370px; width: 100%;"></div>
+        </div>
+    </div>
+</div>
+

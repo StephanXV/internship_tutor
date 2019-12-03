@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package it.univaq.ingweb.internshiptutor.controller;
 
 import it.univaq.ingweb.framework.data.DataException;
@@ -18,6 +18,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,7 +47,7 @@ public class Home extends InternshipTutorBaseController {
         
         request.setAttribute("page_title", "Home anonimo");
         TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("home_anonimo.ftl.html", request, response);    
+        res.activate("home_anonimo.ftl.html", request, response);
     }
     
     private void action_admin(HttpServletRequest request, HttpServletResponse response, int id_utente) throws IOException {
@@ -72,7 +73,7 @@ public class Home extends InternshipTutorBaseController {
             } else {
                 request.setAttribute("num_az_convenzionate", 0);
             }
-
+            
             // lista azinde rifiutate
             List<Azienda> az_rifiutate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(2);
             request.setAttribute("az_rifiutate", az_rifiutate);
@@ -92,26 +93,39 @@ public class Home extends InternshipTutorBaseController {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   
+    
     private void action_azienda(HttpServletRequest request, HttpServletResponse response, int id_utente)
             throws IOException {
         try {
             // dati dell'azienda
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_utente);
-            request.setAttribute("nome_utente", az.getRagioneSociale());
+            
+            
+            // controllo che la convenzione non sia scaduta
+            LocalDate now = LocalDate.now();
+            LocalDate inizio_conv = az.getInizioConvenzione();
+            int durata = az.getDurataConvenzione();
+            LocalDate fine_conv = inizio_conv.plusMonths(durata);
+            if (az.getStatoConvenzione() != 3 && az.getStatoConvenzione() != 2 && now.compareTo(fine_conv) > 0) {
+                ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAziendaStato(3, az.getUtente().getId());
+                response.sendRedirect("home");
+            }
+            
             request.setAttribute("azienda", az);
+            request.setAttribute("nome_utente", az.getRagioneSociale());
+           
             
             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
             List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
             request.setAttribute("ot_attive", tirocini_attivi);
             
-             // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
+            // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
             List<OffertaTirocinio> tirocini_disattivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, false);
             request.setAttribute("ot_disattive", tirocini_disattivi);
             
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Home azienda");
-        
+            
             res.activate("home_azienda.ftl.html", request, response);
         } catch (TemplateManagerException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,42 +134,50 @@ public class Home extends InternshipTutorBaseController {
         }
     }
     
-    private void action_studente(HttpServletRequest request, HttpServletResponse response, int id_utente) 
+    private void action_studente(HttpServletRequest request, HttpServletResponse response, int id_utente)
             throws IOException {
-        try { 
+        try {
             // dati dello studente
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_utente);
             request.setAttribute("nome_utente", st.getNome() + " " + st.getCognome());
             
             // lista delle candidature dello studente
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(st);
-            List<Candidatura> attesa = new ArrayList<Candidatura>();
-            List<Candidatura> attiva = new ArrayList<Candidatura>();
-            List<Candidatura> finita = new ArrayList<Candidatura>();
-            List<Candidatura> rifiutata = new ArrayList<Candidatura>();
-
+            List<Candidatura> attesa = new ArrayList<>();
+            List<Candidatura> attiva = new ArrayList<>();
+            List<Candidatura> finita = new ArrayList<>();
+            List<Candidatura> rifiutata = new ArrayList<>();
+            
+            LocalDate now = LocalDate.now();
+            
             for (Candidatura c: candidature){
+                
                 switch (c.getStatoCandidatura()) {
                     case 0 :
                         attesa.add(c);
                         break;
-
+                        
                     case 1 :
-                        attiva.add(c);
+                        if (now.compareTo(c.getFineTirocinio()) > 0) {
+                            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(2, c.getStudente().getUtente().getId(), c.getOffertaTirocinio().getId());
+                            finita.add(c);
+                        } else {
+                            attiva.add(c);
+                        }
                         break;
-
+                        
                     case 2:
                         finita.add(c);
                         break;
-
+                        
                     case 3:
-                        finita.add(c);
+                        rifiutata.add(c);
                         break;
-
+                        
                     default: break;
                 }
             }
-
+            
             request.setAttribute("candidature_attesa", attesa);
             request.setAttribute("candidature_attive", attiva);
             request.setAttribute("candidature_finite", finita);
@@ -163,14 +185,14 @@ public class Home extends InternshipTutorBaseController {
             
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Home studente");
-        
+            
             res.activate("home_studente.ftl.html", request, response);
         } catch (TemplateManagerException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         } catch (DataException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
     
     @Override
@@ -178,7 +200,7 @@ public class Home extends InternshipTutorBaseController {
             throws ServletException, IOException {
         try {
             request.setAttribute("activeHome", "active");
-
+            
             HttpSession s = SecurityLayer.checkSession(request);
             if (s == null) {
                 action_anonymous(request, response);
@@ -205,5 +227,5 @@ public class Home extends InternshipTutorBaseController {
             action_error(request, response);
         }
     }
-
+    
 }

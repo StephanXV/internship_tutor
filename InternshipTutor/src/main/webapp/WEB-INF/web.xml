@@ -202,6 +202,14 @@
         <servlet-name>ValutazioneAzienda</servlet-name>
         <url-pattern>/valutazione</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>Statistiche</servlet-name>
+        <servlet-class>it.univaq.ingweb.internshiptutor.controller.Statistiche</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Statistiche</servlet-name>
+        <url-pattern>/statistiche</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

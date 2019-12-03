@@ -7,10 +7,11 @@ package it.univaq.ingweb.internshiptutor.data.impl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
+import java.util.List;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class ValutazioneImpl implements Valutazione {
     
@@ -58,6 +59,7 @@ public class ValutazioneImpl implements Valutazione {
     public String toString() {
         return "ValutazioneImpl{" + "studente=" + studente + ", azienda=" + azienda + ", stelle=" + stelle + '}';
     }
+    
     
     
 }

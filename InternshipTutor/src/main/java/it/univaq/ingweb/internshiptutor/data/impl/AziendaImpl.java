@@ -3,8 +3,10 @@ package it.univaq.ingweb.internshiptutor.data.impl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
+import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -27,11 +29,13 @@ public class AziendaImpl implements Azienda {
     private String tematiche;
     private String corsoStudio;
     private int statoConvenzione; // 0=in attesa, 1=convenzionata, 2=rifiutata, 3=scaduta
-    private Date inizioConvenzione;
+    private LocalDate inizioConvenzione;
     private int durataConvenzione;
     private RespTirocini respTirocini;
     private List<OffertaTirocinio> offerteTirocinio;
     private List<Valutazione> valutazioni;
+    private int tirocinantiAttivi;
+    private Double mediaValutazioni;
 
     public AziendaImpl(){
         this.utente = null;
@@ -185,12 +189,12 @@ public class AziendaImpl implements Azienda {
     }
 
     @Override
-    public Date getInizioConvenzione() {
+    public LocalDate getInizioConvenzione() {
         return inizioConvenzione;
     }
 
     @Override
-    public void setInizioConvenzione(Date inizioConvenzione) {
+    public void setInizioConvenzione(LocalDate inizioConvenzione) {
         this.inizioConvenzione = inizioConvenzione;
     }
 
@@ -239,12 +243,43 @@ public class AziendaImpl implements Azienda {
     public void setRespTirocini(RespTirocini respTirocini) {
         this.respTirocini = respTirocini;
     }
+    
+    @Override
+    public int getTirocinantiAttivi() {
+        return tirocinantiAttivi;
+    }
+
+    @Override
+    public void setTirocinantiAttivi(int tirocinantiAttivi) {
+        this.tirocinantiAttivi = tirocinantiAttivi;
+    }
+
+    @Override
+    public Double getMediaValutazioni() {
+        return mediaValutazioni;
+    }
+
+    @Override
+    public void setMediaValutazioni(Double mediaValutazioni) {
+        this.mediaValutazioni = mediaValutazioni;
+    }
+    
+    public Double getMediaValutazioni(List<Valutazione> list) {
+        Double media;
+        Double sum = 0.0;
+        for (Valutazione v: list) {
+            System.out.println(v);
+            sum += v.getStelle();
+        }
+        sum /= 2;
+        media = sum/list.size();
+        return media;
+    }
+        
 
     @Override
     public String toString() {
-        return "AziendaImpl{" + "utente=" + utente + ", ragioneSociale=" + ragioneSociale + ", indirizzo=" + indirizzo + ", citta=" + citta + ", cap=" + cap + ", provincia=" + provincia + ", rappresentanteLegale=" + rappresentanteLegale + ", piva=" + piva + ", foroCompetente=" + foroCompetente + ", srcDocConvenzione=" + srcDocConvenzione + ", tematiche=" + tematiche + ", corsoStudio=" + corsoStudio + ", statoConvenzione=" + statoConvenzione + ", inizioConvenzione=" + inizioConvenzione + ", durataConvenzione=" + durataConvenzione + ", respTirocini=" + respTirocini + ", offerteTirocinio=" + offerteTirocinio + ", valutazioni=" + valutazioni + '}';
+        return "AziendaImpl{" + "utente=" + utente + ", ragioneSociale=" + ragioneSociale + ", indirizzo=" + indirizzo + ", citta=" + citta + ", cap=" + cap + ", provincia=" + provincia + ", rappresentanteLegale=" + rappresentanteLegale + ", piva=" + piva + ", foroCompetente=" + foroCompetente + ", srcDocConvenzione=" + srcDocConvenzione + ", tematiche=" + tematiche + ", corsoStudio=" + corsoStudio + ", statoConvenzione=" + statoConvenzione + ", inizioConvenzione=" + inizioConvenzione + ", durataConvenzione=" + durataConvenzione + ", respTirocini=" + respTirocini + ", offerteTirocinio=" + offerteTirocinio + ", valutazioni=" + valutazioni + ", tirocinantiAttivi=" + tirocinantiAttivi+'}';
     }
-
-    
     
 }

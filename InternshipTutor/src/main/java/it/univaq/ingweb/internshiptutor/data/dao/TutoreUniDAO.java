@@ -23,4 +23,6 @@ public interface TutoreUniDAO {
     int insertTutoreUni(TutoreUni tu) throws DataException;
     
     int deleteTutoreUni(int id) throws DataException;
+    
+    int getOccorrenze(TutoreUni tu) throws DataException;
 }

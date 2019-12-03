@@ -26,7 +26,7 @@ import java.util.List;
 public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDAO {
     
     private PreparedStatement sOffertaTirocinio;
-    private PreparedStatement sOfferteTirocinioByAzienda, sOfferteTirocinioByAttiva;
+    private PreparedStatement sOfferteTirocinioByAzienda, sOfferteTirocinioByAttiva, sBestFive;
     private PreparedStatement iOffertaTirocinio, uOffertaTirocinioAttiva;
     private PreparedStatement ricercaTirocinio;
     private PreparedStatement ricercaTirocinioFac;
@@ -47,7 +47,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             uOffertaTirocinioAttiva = connection.prepareStatement("UPDATE offerta_tirocinio SET attiva=? WHERE id=?");
             ricercaTirocinio = connection.prepareStatement(" SELECT t.*, a.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ?)");
             ricercaTirocinioFac = connection.prepareStatement(" SELECT t.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ? and t.facilitazioni is not null)");
-            
+            sBestFive = connection.prepareStatement("select ot.*, count(*) as richieste from offerta_tirocinio ot join candidatura c where ot.id = c.id_offerta_tirocinio group by ot.id having richieste > 0 order by richieste desc limit 5");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -62,6 +62,7 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
             sOfferteTirocinioByAttiva.close();
             iOffertaTirocinio.close();
             uOffertaTirocinioAttiva.close();
+            sBestFive.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -239,7 +240,24 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
                 }
             }
         } catch (SQLException ex) {
-            throw new DataException("Unable to search offerta tirocinio", ex);
+            throw new DataException("Unable to search offerte tirocinio", ex);
         }
     }
+
+    @Override
+    public List<OffertaTirocinio> getBestFiveOffertaTirocinio() throws DataException {
+        List<OffertaTirocinio> result = new ArrayList();
+        try {
+            try (ResultSet rs = sBestFive.executeQuery()) {
+                while(rs.next()) {
+                    result.add(createOffertaTirocinio(rs));
+                }
+            }
+            return result;
+         } catch (SQLException ex) {
+            throw new DataException("Unable to search best five offerte tirocinio", ex);
+        }
+    }
+    
+    
 }

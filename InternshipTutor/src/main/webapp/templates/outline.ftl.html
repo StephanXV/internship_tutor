@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Internship Tutor</title>
-        <script type="text/javascript" src="js/docs.js"></script>
-            
+                    
         <!-- bootstrap -->
         <#include "/bootstrap.ftl.html">
         <link rel="stylesheet" href="styles/main.css" type="text/css"/>
@@ -36,18 +35,6 @@
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0 drop-men">
                 <li class="nav-item ${activeHome!}">
                    <a class="nav-link" href="home">Home<span class="sr-only">(current)</span></a>
-
-                   <!-- <#switch (tipologia)>
-                    <#case 'ad'>
-                    <a class="nav-link" href="home">Dashboard admin<span class="sr-only">(current)</span></a>
-                    <#break>
-                    <#case 'az'>
-                    <a class="nav-link" href="home">Dashboard azienda<span class="sr-only">(current)</span></a>
-                    <#break>
-                    <#case 'st'>
-                    <a class="nav-link" href="home">Dashboard studente<span class="sr-only">(current)</span></a>
-                    <#break>
-                    </#switch> -->
                 </li>
                 <li class="nav-item ${activeAziende!}">
                     <a class="nav-link" href="aziende">Aziende</a>
@@ -55,9 +42,13 @@
                 <li class="nav-item ${activeTirocini!}">
                     <a class="nav-link " href="tirocini">Tirocini</a>
                 </li>
-                <li class="nav-item ${activeTest!}">
-                    <a class="nav-link " href="test">Test</a>
+                <#if tipologia??>
+                <#if tipologia == 'ad'>
+                <li class="nav-item ${activeStat!}">
+                    <a class="nav-link " href="statistiche">Statistiche</a>
                 </li>
+                </#if>
+                </#if>
             </ul>
             <ul class="navbar-nav justify-content-end">
 
