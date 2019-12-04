@@ -1,3 +1,15 @@
+<#if MSG?has_content> <!-- check if content exist and is not empty -->
+<div class="container" xmlns="http://java.sun.com/jsf/html">
+    <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
+        <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
+        <#outputformat "plainText">${MSG}</#outputformat>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+</#if>
+
 <!-- if student -->
 <#if studente?has_content && !visualize??>
 <div class="card text-center shadow p-3 mb-5 bg-white rounded">
@@ -40,7 +52,7 @@
 
                 <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
-                        <label for="cognome_st" class="label-left">Email</label>
+                        <label for="cognome_st" class="label-left">Cognome</label>
                         <input class="form-control" id="cognome_st" name="cognome" value="${studente.cognome}" placeholder="cognome" type="text" required/>
                     </div>
                 </div>
@@ -138,8 +150,14 @@
                             <div class="form-group">
                                 <label for="handicap" class="label-left">Handicap</label>
                                 <select id="handicap" class="form-control" name="handicap" required>
-                                    <option name="handicap" ${selected_handicap_si!} value="true">Si</option>
-                                    <option name="handicap" ${selected_handicap_no!} value="false">No</option>
+                                    <#if studente.handicap>
+                                    <option name="handicap" selected value="true">Si</option>
+                                    <option name="handicap" value="false">No</option>
+                                    <#else>
+                                    <option name="handicap" value="true">Si</option>
+                                    <option name="handicap" selected value="false">No</option>
+                                    </#if>
+                                  
                                 </select>
                             </div>
                         </div>
@@ -172,7 +190,7 @@
                 <div class="col-10 col-md-5 mx-auto">
                     <div class="form-group">
                         <label for="pw_st" class="label-left">Password</label>
-                        <input class="form-control" id="pw_st" name="pw_st" placeholder="Nuova Password" type="password" required/>
+                        <input class="form-control" id="pw_st" name="pw_st" placeholder="Nuova Password" type="password"/>
                     </div>
                 </div>
 
@@ -303,7 +321,7 @@
                     </div>
                     <div class="form-group">
                         <label for="tematiche" class="label-left">Tematiche</label>
-                        <textarea id="tematiche" class="form-control" value="${azienda.tematiche}" name="tematiche" placeholder="Tematiche" style="height: 38px" required></textarea>
+                        <textarea id="tematiche" class="form-control" name="tematiche" placeholder="Tematiche" style="height: 38px" required>${azienda.tematiche}</textarea>
                     </div>
 
                 </div>

@@ -25,7 +25,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
     private PreparedStatement sAziendaById, sAziendaByUtenteUsername;
     private PreparedStatement sAziendeByStato, sTirocinantiAttivi, sBestFive;
-    private PreparedStatement iAzienda, uAziendaStato, dAzienda, uAziendaDoc;
+    private PreparedStatement iAzienda, uAziendaStato, dAzienda, uAziendaDoc, uAzienda;
 
     public AziendaDAO_MySQL(DataLayer d) {
         super(d);
@@ -47,6 +47,8 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             dAzienda = connection.prepareStatement("DELETE FROM azienda WHERE id_utente=?");
             uAziendaDoc = connection.prepareStatement("UPDATE azienda SET src_documento_convenzione=?, inizio_convenzione=? WHERE id_utente=?");
             sBestFive = connection.prepareStatement("select a.*,avg(v.stelle) as media from azienda a join valutazione v where a.id_utente = v.id_azienda group by a.id_utente having media > 0 order by media");
+            uAzienda = connection.prepareStatement("UPDATE azienda SET ragione_sociale=?, indirizzo=?, citta=?, cap=?,"
+                    + " provincia=?, rappresentante_legale=?, piva=?, foro_competente=?, tematiche=?, corso_studio=?, durata_convenzione=? WHERE id_utente=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -64,6 +66,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             dAzienda.close();
             uAziendaDoc.close();
             sBestFive.close();
+            uAzienda.close();
         } catch(SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -242,6 +245,29 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             return result;
          } catch (SQLException ex) {
             throw new DataException("Unable to get best five aziende", ex);
+        }
+    }
+    
+    
+    @Override
+    public int updateAzienda(Azienda az) throws DataException {
+        try {
+            uAzienda.setString(1, az.getRagioneSociale());
+            uAzienda.setString(2, az.getIndirizzo());
+            uAzienda.setString(3, az.getCitta());
+            uAzienda.setString(4, az.getCap());
+            uAzienda.setString(5, az.getProvincia());
+            uAzienda.setString(6, az.getRappresentanteLegale());
+            uAzienda.setString(7, az.getPiva());
+            uAzienda.setString(8, az.getForoCompetente());
+            uAzienda.setString(9, az.getTematiche());
+            uAzienda.setString(10, az.getCorsoStudio());
+            uAzienda.setInt(11, az.getDurataConvenzione());
+            uAzienda.setInt(12, az.getUtente().getId());
+            return uAzienda.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new DataException("Unable to update azienda", ex);
         }
     }
     

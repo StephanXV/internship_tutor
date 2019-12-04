@@ -22,7 +22,7 @@ import java.sql.Statement;
 public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
     
     private PreparedStatement sUtenteById, sUtenteByLogin, sUtenteByUser;
-    private PreparedStatement iUtente, dUtente;
+    private PreparedStatement iUtente, dUtente, uUtente;
     private PreparedStatement sCheckUtenteExist;
 
     public UtenteDAO_MySQL(DataLayer d) {
@@ -43,6 +43,7 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             iUtente = connection.prepareStatement("INSERT INTO utente (email, username, pw, tipologia)"
                     + "values(?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dUtente = connection.prepareStatement("DELETE FROM utente WHERE id=?");
+            uUtente = connection.prepareStatement("UPDATE utente SET email=?, username=?, pw=?, tipologia=? WHERE id=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -57,6 +58,9 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             sUtenteByLogin.close();
             iUtente.close();
             dUtente.close();
+            sUtenteByLogin.close();
+            sUtenteByUser.close();
+            sCheckUtenteExist.close();
           
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
@@ -205,4 +209,18 @@ public class UtenteDAO_MySQL extends DAO implements UtenteDAO {
             throw new DataException("Unable to delete utente", ex);
         }
     } 
+    
+    @Override
+    public int updateUtente(Utente ut) throws DataException {
+        try {
+            uUtente.setString(1, ut.getEmail());
+            uUtente.setString(2, ut.getUsername());
+            uUtente.setString(3, ut.getPw());
+            uUtente.setString(4, ut.getTipologia());
+            uUtente.setInt(5, ut.getId());
+            return uUtente.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to update utente", ex);
+        }
+    }
 }

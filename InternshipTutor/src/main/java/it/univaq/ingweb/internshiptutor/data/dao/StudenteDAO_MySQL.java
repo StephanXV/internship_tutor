@@ -24,7 +24,7 @@ import java.time.LocalDate;
 public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
     
     private PreparedStatement sStudenteById;
-    private PreparedStatement iStudente;
+    private PreparedStatement iStudente, uStudente;
 
     public StudenteDAO_MySQL(DataLayer d) {
         super(d);
@@ -39,6 +39,9 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
                     + "codice_fiscale, data_nascita, citta_nascita, provincia_nascita, citta_residenza, "
                     + "provincia_residenza, cap_residenza, telefono, corso_laurea, handicap) values "
                     + "(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+            uStudente = connection.prepareStatement("UPDATE studente SET nome=?, cognome=?, "
+                    + "codice_fiscale=?, data_nascita=?, citta_nascita=?, provincia_nascita=?, citta_residenza=?, "
+                    + "provincia_residenza=?, cap_residenza=?, telefono=?, corso_laurea=?, handicap=? WHERE id_utente=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -50,6 +53,7 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
         try {
             sStudenteById.close();
             iStudente.close();
+            uStudente.close();
          } catch(SQLException ex) {
             throw new DataException("Error closing statements", ex);
         }
@@ -125,12 +129,27 @@ public class StudenteDAO_MySQL extends DAO implements StudenteDAO {
         }
     }
     
-    
-    
-    
-    
-    
-    
-    
+     @Override
+    public int updateStudente(Studente st) throws DataException {
+        try {
+            uStudente.setString(1, st.getNome());
+            uStudente.setString(2, st.getCognome());
+            uStudente.setString(3, st.getCF());
+            uStudente.setDate(4, java.sql.Date.valueOf(st.getDataNascita()));
+            uStudente.setString(5, st.getCittaNascita());
+            uStudente.setString(6, st.getProvinciaNascita());
+            uStudente.setString(7, st.getCittaResidenza());
+            uStudente.setString(8, st.getProvinciaResidenza());
+            uStudente.setString(9, st.getCapResidenza());
+            uStudente.setString(10, st.getTelefono());
+            uStudente.setString(11, st.getCorsoLaurea());
+            uStudente.setBoolean(12, st.isHandicap());
+            uStudente.setInt(13, st.getUtente().getId());
+            return uStudente.executeUpdate();
+            
+        } catch (SQLException ex) {
+            throw new DataException("Unable to update studente", ex);
+        }
+    }    
     
 }
