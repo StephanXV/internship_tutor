@@ -30,4 +30,6 @@ public interface UtenteDAO {
     int insertUtente(Utente ut) throws DataException;
     
     int deleteUtente(int id) throws DataException;
+    
+    int updateUtente(Utente ut) throws DataException;
 }

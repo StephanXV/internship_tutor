@@ -23,7 +23,7 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
 
     
     private PreparedStatement sRespTirociniById;
-    private PreparedStatement iRespTirocini, dRespTirocini;
+    private PreparedStatement iRespTirocini, dRespTirocini, uRespTirocini;
 
     public RespTirociniDAO_MySQL(DataLayer d) {
         super(d);
@@ -40,6 +40,7 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
             iRespTirocini = connection.prepareStatement("INSERT INTO responsabile_tirocini (nome, cognome, email, telefono)"
                     + "values (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dRespTirocini = connection.prepareStatement("DELETE FROM responsabile_tirocini WHERE id=?");
+            uRespTirocini = connection.prepareStatement("UPDATE responsabile_tirocini SET nome=?, cognome=?, email=?, telefono=? WHERE id=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor data layer", ex);
         }
@@ -52,6 +53,8 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
         try {
             sRespTirociniById.close();
             iRespTirocini.close();
+            dRespTirocini.close();
+            uRespTirocini.close();
           
         } catch (SQLException ex) {
             //
@@ -143,6 +146,20 @@ public class RespTirociniDAO_MySQL extends DAO implements RespTirociniDAO {
             return dRespTirocini.executeUpdate();
         } catch (SQLException ex) {
             throw new DataException("Unable to delete responsabile tirocini", ex);
+        }
+    }
+    
+    @Override
+    public int updateRespTirocini(RespTirocini rt) throws DataException {
+        try {
+            uRespTirocini.setString(1, rt.getNome());
+            uRespTirocini.setString(2, rt.getCognome());
+            uRespTirocini.setString(3, rt.getEmail());
+            uRespTirocini.setString(4, rt.getTelefono());
+            uRespTirocini.setInt(5, rt.getId());
+            return uRespTirocini.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataException("Unable to update responsabile tirocini", ex);
         }
     }
     
