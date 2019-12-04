@@ -1,31 +1,16 @@
-<noscript>
-<style>
-    button.butt_js {
-        visibility: hidden!important;
-    }
-    
-    a.a_no_js {
-        color: white!important;
-    }
-    a.a_no_js:hover {
-        color: white!important;
-    }
-</style>
-</noscript>
-
 <div class="container-fluid table-responsive-lg mt-3">
     <div class="row mb-3">
         <div class="col bg-light mx-2 py-2 text-center">
-            <h5>${nome_tirocinio!"Titolo Tirocinio"}</h5>
+            <h2>${nome_tirocinio!"Titolo Tirocinio"}</h2>
         </div>
     </div>
-    <div class="row mb-3">
+    <div class="row mb-5">
         
         <#if (richieste_cand?size>0)>
         <!-- colonna 1 -->
-        <div class="col bg-light mx-2 py-2">
+        <div class="col bg-light mx-2 py-2 tabData">
             <h4>Candidature</h4> <br>
-            <table class="table table-hover" id="myTableCand">
+            <table class="table table-hover nowrap" id="myTableCand">
                 <!--Table head-->
                 
                 <thead>
@@ -56,8 +41,8 @@
                         <td>${richiesta_cand.tutoreUni.nome} ${richiesta_cand.tutoreUni.cognome}</td>
                         <td>
                             <a style="text-decoration: none;" href="dettaglio_candidatura?st=${richiesta_cand.studente.utente.id}&ot=${richiesta_cand.offertaTirocinio.id}">
-                                <button type="button" title="Vedi dettagli" class="btn btn-primary text-white">
-                                    <i class="fas fa-search"></i>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="Vedi dettagli" class="btn btn-primary text-white">
+                                    <i class="fas fa-eye"></i>
                                 </button>
                             </a>
                         </td>
@@ -79,9 +64,9 @@
     <div class="row">
         <#if (cand_accettate?size>0)>
         <!-- colonna 2 -->
-        <div class="col bg-light py-2 mx-2">
+        <div class="col bg-light py-2 mx-2 mt-2 tabData tabDouble">
             <h4>Tirocinanti attivi</h4> <br>
-            <table class="table table-hover" id="myTableCandAcc">
+            <table class="table table-hover nowrap" id="myTableCandAcc">
                 <!--Table head-->
                 <thead>
                     <tr class="bg-primary">
@@ -97,13 +82,17 @@
                     <#list cand_accettate as cand_accettata>
                     <tr>
                         
-                        <td>${cand_accettata.studente.nome} ${cand_accettata.studente.cognome}</td>
+                        <td>
+                            <a href="profilo?visualize=true&prof=${cand_accettata.studente.utente.id}">
+                                ${cand_accettata.studente.nome} ${cand_accettata.studente.cognome}
+                            </a>
+                        </td>
                         <td>${cand_accettata.inizioTirocinio}</td>
                         <td>${cand_accettata.fineTirocinio}</td>
                         <td>
                             <a style="text-decoration: none;" href="dettaglio_candidatura?st=${cand_accettata.studente.utente.id}&ot=${cand_accettata.offertaTirocinio.id}">
-                                <button type="button" title="Vedi dettagli" class="btn btn-primary text-white">
-                                    <i class="fas fa-search"></i>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="Vedi dettagli" class="btn btn-primary text-white">
+                                    <i class="fas fa-eye"></i>
                                 </button>
                             </a>
                         </td>
@@ -116,16 +105,16 @@
             <!--Table-->
         </div>
         <#else>
-        <div class="col bg-light mx-2 py-4 text-center">
+        <div class="col bg-light mx-2 py-4 text-center mt-2 tabDouble">
             <span class="lead">Non ci sono tirocinanti in corso</span>
         </div>
         </#if>
         
         <#if (tiro_terminati?size>0)>
         <!-- colonna 2 -->
-        <div class="col bg-light py-2 mx-2">
+        <div class="col bg-light py-2 mx-2 mt-2 tabData tabDouble">
             <h4>Resoconti</h4> <br>
-            <table class="table table-hover" id="myTableCandTer">
+            <table class="table table-hover nowrap" id="myTableCandTer">
                 <!--Table head-->
                 <thead>
                     <tr class="bg-primary">
@@ -141,19 +130,23 @@
                     <#list tiro_terminati as tiro_terminato>
                     <tr>
                         
-                        <td>${tiro_terminato.studente.nome} ${tiro_terminato.studente.cognome}</td>
+                        <td>
+                            <a href="profilo?visualize=true&prof=${tiro_terminato.studente.utente.id}">
+                                ${tiro_terminato.studente.nome} ${tiro_terminato.studente.cognome}
+                            </a>
+                        </td>
                         <td>${tiro_terminato.inizioTirocinio}</td>
                         <td>${tiro_terminato.fineTirocinio}</td>
                         <td> 
                             <a style="text-decoration: none;" href="compila_resoconto?st=${tiro_terminato.studente.utente.id}&ot=${tiro_terminato.offertaTirocinio.id}">
-                                <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="Compila resoconto" class="btn btn-primary text-white">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
                             </a>
                             
                             <a style="text-decoration: none;" href="dettaglio_candidatura?st=${tiro_terminato.studente.utente.id}&ot=${tiro_terminato.offertaTirocinio.id}">
-                                <button type="button" title="Vedi dettagli" class="btn btn-primary text-white">
-                                    <i class="fas fa-search"></i>
+                                <button type="button" data-toggle="tooltip" data-placement="right" title="Vedi dettagli" class="btn btn-primary text-white">
+                                    <i class="fas fa-eye"></i>
                                 </button>
                             </a>
                         </td>
@@ -166,7 +159,7 @@
             <!--Table-->
         </div>
         <#else>
-        <div class="col bg-light mx-2 py-4 text-center">
+        <div class="col bg-light mx-2 py-4 text-center mt-2 tabDouble">
             <span class="lead">Non ci sono tirocinanti che hanno concluso il tirocinio</span>
         </div>
         </#if>
@@ -186,5 +179,11 @@
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
     } );
 } );
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>
 

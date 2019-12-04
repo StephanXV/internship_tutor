@@ -7,13 +7,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_18.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_18.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_21.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_21.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_28.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_28.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jasypt_jasypt_1_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jasypt_jasypt_1_9_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_3_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_3_1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/noscript.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/noscript.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/datatables_tab.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/datatables_tab.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_candidatura.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_candidatura.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/footer.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/footer.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/gestione_candidati.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/gestione_candidati.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,9 +69,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="localRepository" value="C:\Users\EnricoMonte\Dati\apache-maven-3.6.2" />
         <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
-        <option name="userSettingsFile" value="C:\Users\EnricoMonte\Dati\apache-maven-3.6.2\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
     <option name="importingSettings">
@@ -295,6 +304,7 @@
       <workItem from="1575370417537" duration="11379000" />
       <workItem from="1575384634383" duration="682000" />
       <workItem from="1575402036936" duration="7657000" />
+      <workItem from="1575473075522" duration="6736000" />
     </task>
     <servers />
   </component>

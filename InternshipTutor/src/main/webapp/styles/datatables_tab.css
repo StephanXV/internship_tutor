@@ -46,6 +46,12 @@
     }
 }
 
+@media (max-width: 1055px) {
+    .tabDouble {
+        flex-basis: auto!important;
+    }
+}
+
 .tab-student{
     padding-left: 40px;
     padding-right: 40px;

@@ -57,7 +57,7 @@
 </div>
 
 
-<div class="tab-student">
+<div class="tab-student home-studente-js">
     <nav>
         <div class="nav nav-tabs nav-fill tab-table" id="nav-tab" role="tablist">
             <a class="nav-item nav-link item-tab-table active" id="nav-tiro_attesa-tab" data-toggle="tab" href="#nav-tiro-att" role="tab" aria-controls="nav-tiro_attesa-tab" aria-selected="true" >In Attesa</a>
@@ -127,11 +127,11 @@
                         <th>Documento</th>
                     </tr>
                 </thead>
-                    
+
                 <tbody>
                     <#list candidature_attive as candidatura>
                         <tr>
-                        
+
                         <td>
                             <a href="dettagli_tirocinio?n=${candidatura.offertaTirocinio.id}" style="color: black">
                                 ${candidatura.offertaTirocinio.titolo}
@@ -152,12 +152,12 @@
                                 </button>
                             </form>
                         </td>
-                            
+
                     </tr>
                     </#list>
                 </tbody>
             </table>
-                
+
             <#else>
             <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
                 <span class="lead">Attualmente non ci sono tirocini ai quali stai prendendo parte.</span>
@@ -284,7 +284,229 @@
     </div>
         
 </div>
-</div>
+
+<noscript>
+
+    <h2 class="text-center mt-5">In Attesa</h2>
+    <div class="row mt-3 pr-3 pl-3">
+        <#if (candidature_attesa?size>0)>
+        <table class="table table-hover mt-3">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>Tirocinio</th>
+                <th>Luogo</th>
+                <th>Tutore</th>
+                <th>CFU</th>
+                <th>Ore</th>
+                <th>Data Richiesta</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <#list candidature_attesa as candidatura>
+            <tr>
+
+                <td>
+                    <a href="dettagli_tirocinio?n=${candidatura.offertaTirocinio.id}" style="color: black">
+                        ${candidatura.offertaTirocinio.titolo}
+                    </a>
+                </td>
+                <td>${candidatura.offertaTirocinio.luogo}</td>
+                <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                <td>${candidatura.cfu}</td>
+                <td>${candidatura.cfu * 25} h</td>
+                <td>${candidatura.tms?date}</td>
+
+            </tr>
+            </#list>
+            </tbody>
+        </table>
+
+        <#else>
+        <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+            <span class="lead">Non hai richieste di tirocinio in attesa.</span>
+        </div>
+    </#if>
+    </div>
+
+
+
+    <h2 class="text-center mt-5">Attive</h2>
+    <div class="row mt-3 pr-3 pl-3">
+        <#if (candidature_attive?size>0)>
+        <table class="table table-hover mt-3">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>Tirocinio</th>
+                <th>Luogo</th>
+                <th>Tutore</th>
+                <th>CFU</th>
+                <th>Ore</th>
+                <th>Inizio</th>
+                <th>Fine</th>
+                <th>Documento</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <#list candidature_attive as candidatura>
+            <tr>
+
+                <td>
+                    <a href="dettagli_tirocinio?n=${candidatura.offertaTirocinio.id}" style="color: black">
+                        ${candidatura.offertaTirocinio.titolo}
+                    </a>
+                </td>
+                <td>${candidatura.offertaTirocinio.luogo}</td>
+                <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                <td>${candidatura.cfu}</td>
+                <td>${candidatura.cfu * 25} h</td>
+                <td>${candidatura.inizioTirocinio!}</td>
+                <td>${candidatura.fineTirocinio!}</td>
+                <td>
+                    <form method="get" action="download">
+                        <input name="tipo" type="hidden" value="candidatura" />
+                        <input readonly name="res" value="${candidatura.srcDocCandidatura}"/>
+                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                            <i class="fa fa-file"></i>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            </#list>
+            </tbody>
+        </table>
+
+        <#else>
+        <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+            <span class="lead">Attualmente non ci sono tirocini ai quali stai prendendo parte.</span>
+        </div>
+    </#if>
+    </div>
+
+
+    <h2 class="text-center mt-5">Finite</h2>
+    <div class="row mt-3 pr-3 pl-3">
+        <#if (candidature_finite?size>0)>
+        <table class="table table-hover mt-3">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>Tirocinio</th>
+                <th>Luogo</th>
+                <th>Tutore</th>
+                <th>CFU</th>
+                <th>Ore</th>
+                <th>Inizio</th>
+                <th>Fine</th>
+                <th>Documento</th>
+                <th>Azioni</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <#list candidature_finite as candidatura>
+            <tr>
+
+                <td>
+                    <a href="dettagli_tirocinio?n=${candidatura.offertaTirocinio.id}" style="color: black">
+                        ${candidatura.offertaTirocinio.titolo}
+                    </a>
+                </td>
+                <td>${candidatura.offertaTirocinio.luogo}</td>
+                <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                <td>${candidatura.cfu}</td>
+                <td>${candidatura.cfu * 25} h</td>
+                <td>${candidatura.inizioTirocinio!}</td>
+                <td>${candidatura.fineTirocinio!}</td>
+                <td>
+                    <form method="get" action="download">
+                        <input name="tipo" type="hidden" value="candidatura" />
+                        <input readonly name="res" value="${candidatura.srcDocCandidatura}"/>
+                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                            <i class="fa fa-file"></i>
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <div class="d-flex flex-row justify-content-between">
+
+                        <a style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
+                            <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
+                                <i class="fa fa-file-download"></i>
+                            </button>
+                        </a>
+
+
+                        <form action="valutazione" method="get">
+                            <input name="az" hidden value="${candidatura.offertaTirocinio.azienda.utente.id}"/>
+                            <input name="st" hidden value="${candidatura.studente.utente.id}"/>
+                            <button type="submit" title="Valuta l'azienda" class="btn btn-primary text-white">
+                                <i class="fas fa-star"></i>
+                            </button>
+                        </form>
+
+                    </div>
+                </td>
+
+            </tr>
+            </#list>
+            </tbody>
+        </table>
+
+        <#else>
+        <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+            <span class="lead">Non hai ancora concluso nessun tirocinio.</span>
+        </div>
+    </#if>
+    </div>
+
+
+
+    <h2 class="text-center mt-5">Rifiutate</h2>
+    <div class="row mt-3 pr-3 pl-3">
+        <#if (candidature_rifiutate?size>0)>
+        <table class="table table-hover mt-3">
+            <thead class="bg-primary text-white">
+            <tr>
+                <th>Tirocinio</th>
+                <th>Luogo</th>
+                <th>Tutore</th>
+                <th>CFU</th>
+                <th>Ore</th>
+                <th>Data Richiesta</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <#list candidature_rifiutate as candidatura>
+            <tr>
+
+                <td>
+                    <a href="dettagli_tirocinio?n=${candidatura.offertaTirocinio.id}" style="color: black">
+                        ${candidatura.offertaTirocinio.titolo}
+                    </a>
+                </td>
+                <td>${candidatura.offertaTirocinio.luogo}</td>
+                <td>${candidatura.tutoreUni.nome} ${candidatura.tutoreUni.cognome} </td>
+                <td>${candidatura.cfu}</td>
+                <td>${candidatura.cfu * 25} h</td>
+                <td>${candidatura.tms?date}</td>
+
+            </tr>
+            </#list>
+            </tbody>
+        </table>
+
+        <#else>
+        <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
+            <span class="lead">Non ci sono richieste di candidatura rifiutate.</span>
+        </div>
+    </#if>
+    </div>
+
+</noscript>
+
 
 
 
