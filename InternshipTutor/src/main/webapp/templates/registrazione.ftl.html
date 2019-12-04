@@ -21,7 +21,7 @@
         <div class="col-md-9 register-right">
             <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link ${activeAzienda!}" id="azienda-tab" data-toggle="tab" href="#azienda" role="tab" aria-controls="home" aria-selected="${ariaAzienda}">
+                    <a class="nav-link ${activeAzienda!}" id="azienda-tab" data-toggle="tab" href="#azienda" role="tab" aria-controls="azienda-tab" aria-selected="${ariaAzienda}">
                         Azienda
                     </a>
                     <noscript>
@@ -29,7 +29,7 @@
                     </noscript>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link ${activeStudente!}" id="studente-tab" data-toggle="tab" href="#studente" role="tab" aria-controls="profile" aria-selected="${ariaStudente}">
+                    <a class="nav-link ${activeStudente!}" id="studente-tab" data-toggle="tab" href="#studente" role="tab" aria-controls="studente-tab" aria-selected="${ariaStudente}">
                         Studente
                     </a>
                     <noscript>
@@ -59,7 +59,7 @@
                                             <input id="provincia" class="form-control"  name="provincia" placeholder="Provincia" maxlength="2" type="text" required />
                                         </div>
                                         <div class="col">
-                                            <input id="cap" class="form-control"  name="cap" placeholder="CAP" type="number" maxlength="5" minlength="5" required />
+                                            <input id="cap" class="form-control"  name="cap" placeholder="CAP" type="number" required />
                                         </div>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                                     <input class="form-control" name="provincia_residenza" placeholder="Pronvincia di Residenza (Sigla)" type="text" minlength="2" maxlength="2" required/>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" name="cap_residenza" placeholder="CAP" type="number" minlength="5" maxlength="5" required/>
+                                    <input class="form-control" name="cap_residenza" placeholder="CAP" type="number" required/>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" name="username" placeholder="Username" type="text" required/>
