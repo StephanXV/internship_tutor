@@ -85,7 +85,7 @@
             
             <div class="tab-pane fade show active pt-4" id="nav-tiro-active" role="tabpanel" aria-labelledby="nav-offerte_attive-tab">
                 <#if (ot_attive?size>0)>
-                <table class="table table-hover mt-5" id="myTableTiroAtt" cellspacing="0">
+                <table class="table table-hover mt-5" id="myTableTiroAtt">
                     <thead>
                         <tr class="bg-primary">
                             <th class="text-white">Titolo</th>
@@ -139,7 +139,7 @@
                 
             <div class="tab-pane fade pt-4" id="nav-tiro-noactive" role="tabpanel" aria-labelledby="nav-offerte_disattive-tab">
                 <#if (ot_disattive?size>0)>
-                <table class="table table-hover mt-5" id="myTableTiroDis" cellspacing="0">
+                <table class="table table-hover mt-5" id="myTableTiroDis">
                     <thead>
                         <tr class="bg-primary">
                             <th class="text-white">Titolo</th>
@@ -198,7 +198,7 @@
     <h2 class="text-center mt-5">Attive</h2>
     <div class="row mt-3 pr-3 pl-3">
         <#if (ot_attive?size>0)>
-        <table class="table table-hover mt-3" cellspacing="0">
+        <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
             <tr class="bg-primary">
                 <th class="text-white">Titolo</th>
@@ -253,7 +253,7 @@
     <h2 class="text-center mt-5">Disattive</h2>
     <div class="row mt-3 pr-3 pl-3">
         <#if (ot_disattive?size>0)>
-        <table class="table table-hover mt-3" cellspacing="0">
+        <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
             <tr class="bg-primary">
                 <th class="text-white">Titolo</th>

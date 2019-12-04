@@ -150,14 +150,17 @@
                             <div class="form-group">
                                 <label for="handicap" class="label-left">Handicap</label>
                                 <select id="handicap" class="form-control" name="handicap" required>
+                                    
                                     <#if studente.handicap>
+                                    <option class="hidden" value="" disabled selected>Portatore di handicap</option>
                                     <option name="handicap" selected value="true">Si</option>
                                     <option name="handicap" value="false">No</option>
                                     <#else>
+                                    <option class="hidden" value="" disabled selected>Portatore di handicap</option>
                                     <option name="handicap" value="true">Si</option>
                                     <option name="handicap" selected value="false">No</option>
                                     </#if>
-                                  
+                                 
                                 </select>
                             </div>
                         </div>
