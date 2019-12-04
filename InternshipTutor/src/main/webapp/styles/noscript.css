@@ -2,6 +2,27 @@
     display: block;
 }
 
+@media (max-width: 990px) {
+    .divider_menu{
+        display: none !important;
+    }
+
+    .logout-nav{
+        float: left!important;
+    }
+}
 .dettaglio-azienda-js{
+    display: none;
+}
+
+.home-admin-js{
+    display: none;
+}
+
+.home-studente-js{
+    display: none;
+}
+
+.home-azienda-js{
     display: none;
 }
