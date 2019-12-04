@@ -34,7 +34,7 @@
                     
                     <div class="col-10 mx-auto col-md-5 mapouter">
                         <div class="gmap_canvas">
-                            <iframe width="100%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=${azienda.indirizzo}%20${azienda.citta}%20${azienda.provincia}%20${azienda.cap}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                            <iframe style="width:100%; height:100%;" id="gmap_canvas" src="https://maps.google.com/maps?q=${azienda.indirizzo}%20${azienda.citta}%20${azienda.provincia}%20${azienda.cap}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" ></iframe>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             
             <div class="tab-pane fade pt-4 tabData" id="nav-tirocini" role="tabpanel" aria-labelledby="nav-tirocini-tab">
                 <#if (tirocini?size>0)>
-                <table class="table table-hover mt-5 nowrap" id="tableListaTirocini" cellspacing="0">
+                <table class="table table-hover mt-5 nowrap" id="tableListaTirocini">
                     <thead class="bg-primary text-white">
                         <tr>
                             <th>Tirocinio</th>
@@ -259,7 +259,7 @@
         <h2 class="text-center mt-5">Tirocini</h2>
         <div class="row mt-3 pr-3 pl-3 tabData">
             <#if (tirocini?size>0)>
-            <table class="table table-hover mt-3 nowrap" cellspacing="0">
+            <table class="table table-hover mt-3 nowrap" >
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>Tirocinio</th>
