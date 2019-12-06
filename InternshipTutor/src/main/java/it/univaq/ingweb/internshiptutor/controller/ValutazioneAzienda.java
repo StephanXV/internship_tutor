@@ -10,7 +10,6 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
 import java.io.IOException;
-import static java.lang.System.console;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -33,9 +32,10 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
     
     private void action_default(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TemplateManagerException {
-        int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
-        int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+        
         try {
+            int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
+            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
             request.setAttribute("az", az);
             Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().getValutazione(id_az, id_st);
@@ -48,16 +48,18 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("valutazione.ftl.html", request, response);
         } catch (DataException ex) {
-            Logger.getLogger(ValutazioneAzienda.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", "Unable to load from database");
+        } catch (NumberFormatException ex) {
+            request.setAttribute("message", "Parametro errato");
+            action_error(request, response);
         }
     }
     
     private void action_valuta(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TemplateManagerException {
-        int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-        int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
-        
         try {
+            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+            int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st);
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
             Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().createValutazione();
@@ -71,19 +73,20 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
                 action_error(request, response);
             }
             response.sendRedirect("home");
-            
         } catch (DataException ex) {
-            request.setAttribute("exception", ex);
+            request.setAttribute("message", "Unable to load from database");
+            action_error(request, response);
+        } catch (NumberFormatException ex) {
+            request.setAttribute("message", "Parametro errato");
             action_error(request, response);
         }
     }
     
     private void action_cancella_valutazione(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, TemplateManagerException {
-        int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-        int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
-        
         try {
+            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+            int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
             int delete = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().deleteValutazione(id_az, id_st);
             
             if (delete != 1) {
@@ -94,7 +97,10 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             response.sendRedirect("valutazione?st="+id_st+"&az="+id_az);
             
         } catch (DataException ex) {
-            request.setAttribute("exception", ex);
+            request.setAttribute("message", "Unable to load from database");
+            action_error(request, response);
+        } catch (NumberFormatException ex) {
+            request.setAttribute("message", "Parametro errato");
             action_error(request, response);
         }
     }

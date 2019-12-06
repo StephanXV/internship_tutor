@@ -104,7 +104,6 @@
         <th>Obiettivi</th>
         <th>Luogo</th>
         <th>Durata</th>
-        <th>Azioni</th>
     </tr>
     </thead>
     <tbody>
@@ -112,7 +111,7 @@
     <tr>
 
         <td>
-            <a href="#">
+            <a href="dettagli_tirocinio?n=${tirocinio.id}">
                 ${tirocinio.titolo}
             </a>
         </td>
@@ -120,14 +119,6 @@
         <td>${tirocinio.obiettivi}</td>
         <td>${tirocinio.luogo}</td>
         <td>${tirocinio.durata} mesi</td>
-        <td>
-            <a style="text-decoration: none;" href="dettagli_tirocinio?n=${tirocinio.id}">
-                <button type="button" class="btn btn-primary text-white">
-                    <i class="fas fa-search"></i>
-                </button>
-            </a>
-        </td>
-
     </tr>
     </#list>
     </tbody>

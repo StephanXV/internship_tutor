@@ -20,9 +20,6 @@
                 </div>
                 <div class="card-body">
                     <form role="form" method="post" action="richiesta_tirocinio?n=${tirocinio}">
-                            <!-- <div class="form-group">
-                                <input class="form-control" name="corso" placeholder="Corso Di Laurea *" type="text" autofocus required />
-                            </div> -->
                             <div class="form-group">
 
                                 <div class="input-group">
@@ -45,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" name="cfu" placeholder="CFU richiesti *" type="number" required/>
+                                <input class="form-control" name="cfu" placeholder="CFU richiesti *" type="number" min="1" required/>
                             </div>
                             <div class="form-group">
                                 <input class="form-control" name="laurea" placeholder="Laurea (Se Acquisita)" type="text" />

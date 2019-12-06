@@ -13,7 +13,6 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class Statistiche extends InternshipTutorBaseController {
     
@@ -41,18 +40,18 @@ public class Statistiche extends InternshipTutorBaseController {
         try {
             // prende le 5 aziende con più tirocinanti attivi
             List<Azienda> aziende = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
-            for (Azienda a: aziende) {
+            aziende.forEach((a) -> {
                 a.getTirocinantiAttivi();
-            }
+            });
             aziende.sort(Comparator.comparing(Azienda::getTirocinantiAttivi).reversed());
             if (aziende.size() > 5)
                 aziende.subList(0, 5);
             
             // prende i 5 tutori universatori più richiesti
             List<TutoreUni> tutori_uni = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutori();
-            for (TutoreUni tu: tutori_uni) {
+            tutori_uni.forEach((tu) -> {
                 tu.getOccorrenze();
-            }
+            });
             tutori_uni.sort(Comparator.comparing(TutoreUni::getOccorrenze).reversed());
             if (tutori_uni.size() > 5)
                 tutori_uni.subList(0, 5);
@@ -70,27 +69,24 @@ public class Statistiche extends InternshipTutorBaseController {
             request.setAttribute("aziende", aziende);
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("statistiche.ftl.html", request, response);
-        } catch (TemplateManagerException e) {
-            request.setAttribute("exception", e);
+        } catch (TemplateManagerException | DataException ex) {
+            request.setAttribute("exception", ex);
             action_error(request, response);
-        } catch (DataException ex) {
-            Logger.getLogger(Statistiche.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
-        
         HttpSession s = SecurityLayer.checkSession(request);
-        if (s!= null) {
+        if (s!= null && "ad".equals((String)s.getAttribute("tipologia"))) {
             request.setAttribute("nome_utente", (String)s.getAttribute("username"));
             request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+            request.setAttribute("activeStat", "active");
+            action_default(request, response);
+        } else {
+            request.setAttribute("message", "Access denied");
+            action_error(request, response);
         }
-        
-        request.setAttribute("activeStat", "active");
-        action_default(request, response);
-        
     }
-    
 }

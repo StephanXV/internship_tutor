@@ -16,7 +16,6 @@ import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class Home extends InternshipTutorBaseController {
     
     private void action_anonymous(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
-        
         request.setAttribute("page_title", "Home anonimo");
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("home_anonimo.ftl.html", request, response);
@@ -88,9 +86,11 @@ public class Home extends InternshipTutorBaseController {
             request.setAttribute("page_title", "Dashboard admin");
             res.activate("home_admin.ftl.html", request, response);
         } catch (TemplateManagerException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (DataException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", "Unable to load dati admin");
+            action_error(request, response);
         }
     }
     
@@ -106,6 +106,7 @@ public class Home extends InternshipTutorBaseController {
                 LocalDate inizio_conv = az.getInizioConvenzione();
                 int durata = az.getDurataConvenzione();
                 LocalDate fine_conv = inizio_conv.plusMonths(durata);
+                // se è scaduta nego l'accesso all'azienda
                 if (az.getStatoConvenzione() != 3 && az.getStatoConvenzione() != 2 && now.compareTo(fine_conv) > 0) {
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAziendaStato(az.getUtente().getId(), 3);
                     response.sendRedirect("home");
@@ -115,12 +116,11 @@ public class Home extends InternshipTutorBaseController {
             request.setAttribute("azienda", az);
             request.setAttribute("nome_utente", az.getRagioneSociale());
             
-            
-            // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
+            // lista delle offerte di tirocinio attive dell'azienda
             List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
             request.setAttribute("ot_attive", tirocini_attivi);
             
-            // lista delle offerte di tirocinio dell'azienda (sia attive che oscurate)
+            // lista delle offerte di tirocinio disattive dell'azienda
             List<OffertaTirocinio> tirocini_disattivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, false);
             request.setAttribute("ot_disattive", tirocini_disattivi);
             
@@ -129,9 +129,11 @@ public class Home extends InternshipTutorBaseController {
             
             res.activate("home_azienda.ftl.html", request, response);
         } catch (TemplateManagerException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (DataException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", "Unable to load dati azienda");
+            action_error(request, response);
         }
     }
     
@@ -159,6 +161,7 @@ public class Home extends InternshipTutorBaseController {
                         break;
                         
                     case 1 :
+                        // check sulla data di fine tirocinio: se è stata superata il tirocinio cambia stato
                         if (now.compareTo(c.getFineTirocinio()) > 0) {
                             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(2, c.getStudente().getUtente().getId(), c.getOffertaTirocinio().getId());
                             finita.add(c);
@@ -189,9 +192,11 @@ public class Home extends InternshipTutorBaseController {
             
             res.activate("home_studente.ftl.html", request, response);
         } catch (TemplateManagerException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (DataException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", "Unable to load dati studente");
+            action_error(request, response);
         }
         
     }
@@ -203,10 +208,8 @@ public class Home extends InternshipTutorBaseController {
             request.setAttribute("activeHome", "active");
             
             HttpSession s = SecurityLayer.checkSession(request);
-            if (s == null) {
-                action_anonymous(request, response);
-            } else {
-                int id_utente = (int)s.getAttribute("id_utente");
+            if (s != null) {
+                int id_utente = (int) s.getAttribute("id_utente");
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
                 switch ((String) s.getAttribute("tipologia")) {
@@ -217,13 +220,12 @@ public class Home extends InternshipTutorBaseController {
                         action_studente(request, response, id_utente);
                         break;
                     case "az":
-                        action_azienda(request, response, id_utente);
+                        action_azienda(request, response, id_utente);      
                 }
+            } else {
+                action_anonymous(request, response);
             }
-        } catch (IOException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (TemplateManagerException ex) {
+        } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

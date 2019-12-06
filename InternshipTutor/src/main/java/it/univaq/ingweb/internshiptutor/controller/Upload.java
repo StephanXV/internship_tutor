@@ -24,15 +24,15 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
  * @author Stefano Florio
  */
 public class Upload extends InternshipTutorBaseController {
-
+    
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
-           (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else {
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
-
+    
     private void action_upload_convenzione(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, Exception {
         // current timestamp
         Date date = new Date();
@@ -42,7 +42,7 @@ public class Upload extends InternshipTutorBaseController {
         int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
         Part file_to_upload = request.getPart("convenzionetoupload");
         if (file_to_upload.getContentType().equals("application/pdf")) {
-
+            
             //create a file (with a unique name) and copy the uploaded file to it
             //creiamo un nuovo file (con nome univoco) e copiamoci il file scaricato
             File uploaded_file = File.createTempFile("convenzione_",  sDate +".pdf", new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory")));
@@ -59,7 +59,8 @@ public class Upload extends InternshipTutorBaseController {
         }
     }
     
-    private void action_upload_candidatura(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, Exception {
+    private void action_upload_candidatura(HttpServletRequest request, HttpServletResponse response) 
+            throws SQLException, IOException, NamingException, NoSuchAlgorithmException, Exception {
         // current timestamp
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
@@ -69,7 +70,7 @@ public class Upload extends InternshipTutorBaseController {
         int id_offerta_tirocinio = SecurityLayer.checkNumeric(request.getParameter("ot"));
         Part file_to_upload = request.getPart("candidaturatoupload");
         if (file_to_upload.getContentType().equals("application/pdf")) {
-
+            
             //create a file (with a unique name) and copy the uploaded file to it
             //creiamo un nuovo file (con nome univoco) e copiamoci il file scaricato
             File uploaded_file = File.createTempFile("candidatura_",  sDate +".pdf", new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory")));
@@ -85,7 +86,7 @@ public class Upload extends InternshipTutorBaseController {
             response.sendRedirect("gestione_candidati?convalida=si&st="+id_studente+"&ot="+id_offerta_tirocinio+"&src="+uploaded_file.getName());
         }
     }
-
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
@@ -94,28 +95,24 @@ public class Upload extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            }
-            if (request.getParameter("tipo").equals("convenzione")) {
-                if (request.getPart("convenzionetoupload") != null) {
-                    action_upload_convenzione(request, response);
+                if (request.getParameter("tipo").equals("convenzione")) {
+                    if (request.getPart("convenzionetoupload") != null) {
+                        action_upload_convenzione(request, response);
+                    }
+                } else if (request.getParameter("tipo").equals("candidatura")) {
+                    if (request.getPart("candidaturatoupload") != null) {
+                        action_upload_candidatura(request, response);
+                    }
+                    request.setAttribute("exception", new Exception("Nothing to upload!"));
+                    action_error(request, response);
                 }
-            } else if (request.getParameter("tipo").equals("candidatura")) {
-                if (request.getPart("candidaturatoupload") != null) {
-                    action_upload_candidatura(request, response);
-                }
-                request.setAttribute("exception", new Exception("Nothing to upload!"));
-                action_error(request, response);
+            } else {
+                request.setAttribute("exception", "Access denied");
             }
         } catch (NamingException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
-        } catch (SQLException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (FileUploadException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (SQLException | FileUploadException | NoSuchAlgorithmException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
         } catch (Exception ex) {

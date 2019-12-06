@@ -7,12 +7,8 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
-import javafx.scene.control.Alert;
 import org.jasypt.util.password.BasicPasswordEncryptor;
-
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 public class Login extends InternshipTutorBaseController {
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-    
+        
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -107,11 +103,7 @@ public class Login extends InternshipTutorBaseController {
                 action_login(request, response);
             else 
                 action_default(request, response);
-        } catch (IOException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-
-        } catch (TemplateManagerException ex) {
+        } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
 

@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package it.univaq.ingweb.internshiptutor.controller;
 
 import it.univaq.ingweb.framework.data.DataException;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public class ListaAziende extends InternshipTutorBaseController {
     
@@ -34,20 +34,23 @@ public class ListaAziende extends InternshipTutorBaseController {
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
-
+    
     private void action_default(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, TemplateManagerException, DataException {
-        TemplateResult res = new TemplateResult(getServletContext());
-        List<Azienda> azConvenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
-        request.setAttribute("aziende_convenzionate", azConvenzionate);
-        request.setAttribute("page_title", "Aziende");
-        res.activate("lista_aziende.ftl.html", request, response);
+            throws IOException, ServletException, TemplateManagerException {
+        try {
+            TemplateResult res = new TemplateResult(getServletContext());
+            List<Azienda> azConvenzionate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(1);
+            request.setAttribute("aziende_convenzionate", azConvenzionate);
+            request.setAttribute("page_title", "Aziende");
+            res.activate("lista_aziende.ftl.html", request, response);
+        } catch (DataException ex) {
+            request.setAttribute("message", "Unable to load aziende convenzionate");
+        }
     }
     
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
@@ -56,18 +59,9 @@ public class ListaAziende extends InternshipTutorBaseController {
             }
             request.setAttribute("activeAziende", "active");
             action_default(request, response);
-
-        } catch (IOException ex) {
+        } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
-
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-
-        } catch (DataException ex) {
-            Logger.getLogger(ListaAziende.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
+    } 
 }

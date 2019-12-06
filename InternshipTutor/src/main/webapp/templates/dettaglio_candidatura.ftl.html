@@ -280,23 +280,33 @@
                 
                 
             </div>
-
-            <div class="row my-3">
-                <div class="col-md-4 mx-auto">
-                    <a style="text-decoration: none;" target="_blank" href="docs?tipo=1&st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}" data-toggle="tooltip" data-placement="right" title="Scarica Documento">
-                        <button type="button" class="btn btn-primary text-white">
-                            <i class="fa fa-file-download"></i>
-                        </button>
-                    </a>
-                </div>
-
-            </div>
             
         </form>
         
-        <div class="row my-2 mt-5">
-
-            <div class="col-md-6 text-right">
+        <div class="row my-2 mt-5"> 
+            <div class="col-md-3">
+                <span class="lead">Scarica documento</span>
+            </div>
+            <div class="col-md-6">
+                <span class="lead mb-2">Upload documento firmato</span>
+            </div>
+            <div class="col-md-3">
+                <span class="lead mb-2">Respingi candidato</span>
+            </div>
+        </div>
+        
+        <div class="row my-2">
+            <div class="col-md-3">
+                
+                <a style="text-decoration: none;" target="_blank" href="docs?tipo=1&st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}" data-toggle="tooltip" data-placement="right" title="Scarica Documento">
+                    <button type="button" class="btn btn-primary text-white">
+                        <i class="fa fa-file-download"></i>&nbsp;Candidatura
+                    </button>
+                </a>
+            </div>
+            
+            <div class="col-md-6">
+                
                 <form method='post' action='upload' enctype='multipart/form-data'>
                     <input type="hidden" name="st" value="${candidatura.studente.utente.id}" />
                     <input type="hidden" name="ot" value="${candidatura.offertaTirocinio.id}" />
@@ -305,12 +315,9 @@
                     <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
                         Accetta richiesta
                     </button>
-
                 </form>
-
             </div>
-            
-            <div class="col-md-6 text-left">
+            <div class="col-md-3">
                 <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
                     Rifiuta richiesta
                 </button>  
@@ -338,9 +345,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>               
         </div>
     </div>
+    
     <#else>
     
     <div class="p-3 mb-3 bg-light text-center">
@@ -375,7 +383,7 @@
             </div>
         </div>
     </div>
-   
+    
     </#if>
     
 </div>

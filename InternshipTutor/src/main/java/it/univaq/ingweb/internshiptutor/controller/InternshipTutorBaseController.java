@@ -39,15 +39,9 @@ public abstract class InternshipTutorBaseController extends HttpServlet {
             datalayer.init();
             request.setAttribute("datalayer", datalayer);
             processRequest(request, response);
-            HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null) {
-                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
-                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            }
         } catch (Exception ex) {
-            ex.printStackTrace(); //for debugging only
             (new FailureResult(getServletContext())).activate(
-                    (ex.getMessage() != null || ex.getCause() == null) ? ex.getMessage() : ex.getCause().getMessage(), request, response);
+                    (ex.getCause() == null || ex.getMessage() != null) ? ex.getMessage() : ex.getCause().getMessage(), request, response);
         }
     }
 

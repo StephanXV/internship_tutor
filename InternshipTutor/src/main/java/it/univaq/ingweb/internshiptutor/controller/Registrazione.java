@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Stefano Florio
+ * @author Enrico Monte
  */
 public class Registrazione extends InternshipTutorBaseController {
 
@@ -47,7 +47,6 @@ public class Registrazione extends InternshipTutorBaseController {
                 request.setAttribute("ariaStudente", "false");
                 request.setAttribute("ariaAzienda", "true");
             }
-
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
@@ -278,7 +277,6 @@ public class Registrazione extends InternshipTutorBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
@@ -303,18 +301,13 @@ public class Registrazione extends InternshipTutorBaseController {
                         action_open_reg(request, response);
                     }
             }
-        } catch (IOException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-
-        } catch (TemplateManagerException ex) {
+        } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
 
         }
     }
-
-    }
+}
 
 
 

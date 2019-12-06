@@ -1,12 +1,8 @@
 package it.univaq.ingweb.internshiptutor.controller;
 
-import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
-import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
-import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,15 +42,15 @@ public class Logout extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+                action_logout(request, response);
+            } else {
+                request.setAttribute("message", "Access denied");
+                action_error(request, response);
             }
-            action_logout(request, response);
-        } catch (IOException ex) {
+        } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
 
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
         }
     }
 }
