@@ -147,7 +147,9 @@ public class CreaOffertaTirocinio extends InternshipTutorBaseController {
                     action_default(request, response, az);
                 }
             } else {
-                request.setAttribute("message", "Access denied");
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
             }
         } catch (TemplateManagerException ex) {

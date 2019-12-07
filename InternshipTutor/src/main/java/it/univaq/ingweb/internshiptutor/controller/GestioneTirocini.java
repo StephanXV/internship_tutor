@@ -50,18 +50,22 @@ public class GestioneTirocini extends InternshipTutorBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-        
         try {
             HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null) {
+            if (s!= null && "az".equals((String)s.getAttribute("tipologia"))) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            }
-            if(request.getParameter("action").equals("attiva")) {
-                action_attiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
-            }
-            else if(request.getParameter("action").equals("disattiva")) {
-                action_disattiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
+                if (request.getParameter("action").equals("attiva")) {
+                    action_attiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
+                }
+                else if (request.getParameter("action").equals("disattiva")) {
+                    action_disattiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
+                }
+            } else {
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
         } catch (NumberFormatException ex) {
             request.setAttribute("message", "Parametro errato");

@@ -282,6 +282,10 @@ public class Registrazione extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Accesso già eseguito: non è possibile effettuare una registrazione da loggato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
             if (request.getParameter("submitStudente") != null) {
                 action_registrazione_studente(request, response);

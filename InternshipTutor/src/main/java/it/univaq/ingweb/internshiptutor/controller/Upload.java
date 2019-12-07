@@ -107,7 +107,10 @@ public class Upload extends InternshipTutorBaseController {
                     action_error(request, response);
                 }
             } else {
-                request.setAttribute("exception", "Access denied");
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
         } catch (NamingException ex) {
             request.setAttribute("exception", ex);

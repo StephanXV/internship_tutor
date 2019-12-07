@@ -10,8 +10,6 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,15 +111,19 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+                if (request.getParameter("submit") != null) {
+                    action_valuta(request, response);
+                }
+                else if (request.getParameter("delete") != null)
+                    action_cancella_valutazione(request, response);
+                else
+                    action_default(request, response);
+            } else {
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
-            
-            if (request.getParameter("submit") != null) {
-                action_valuta(request, response);
-            }
-            else if (request.getParameter("delete") != null)
-                action_cancella_valutazione(request, response);
-            else
-                action_default(request, response);
         } catch (TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
