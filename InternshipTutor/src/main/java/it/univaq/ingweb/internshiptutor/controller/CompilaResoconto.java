@@ -7,6 +7,7 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
@@ -30,12 +31,20 @@ public class CompilaResoconto extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response)
+    private void action_default(HttpServletRequest request, HttpServletResponse response, HttpSession s)
             throws ServletException, IOException, TemplateManagerException {
         
         try {
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+            OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
+            Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda((String)s.getAttribute("id_utente"));
+            if (!az.getOfferteTirocinio().contains(ot)) {
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
+            }
             Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
             if (resoconto != null) {
                 request.setAttribute("resoconto", resoconto);
@@ -56,13 +65,21 @@ public class CompilaResoconto extends InternshipTutorBaseController {
         }
     }
     
-    private void action_invia_resoconto(HttpServletRequest request, HttpServletResponse response)
+    private void action_invia_resoconto(HttpServletRequest request, HttpServletResponse response, HttpSession s)
             throws ServletException, IOException, TemplateManagerException {
         try {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st);
             OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
+            Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda((String)s.getAttribute("id_utente"));
+            if (!az.getOfferteTirocinio().contains(ot)) {
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
+            }
+            
             Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().createResoconto();
             if (st != null && ot != null && resoconto != null) {
                 resoconto.setOreEffettive(SecurityLayer.checkNumeric(request.getParameter("ore_effettive")));
@@ -102,10 +119,10 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
                 if (request.getParameter("submit") != null) {
-                    action_invia_resoconto(request, response);
+                    action_invia_resoconto(request, response, s);
                 }
                 else
-                    action_default(request, response);
+                    action_default(request, response, s);
             } else {
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");

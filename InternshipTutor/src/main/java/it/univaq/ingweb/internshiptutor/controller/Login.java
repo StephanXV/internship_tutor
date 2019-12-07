@@ -12,7 +12,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -64,7 +63,7 @@ public class Login extends InternshipTutorBaseController {
                             response.sendRedirect(request.getParameter("referrer"));
                         } else { //se non è studente --> non autorizzato
                             request.setAttribute("message", "errore gestito");
-                            request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
+                            request.setAttribute("title", "Utente non autorizzato");
                             request.setAttribute("errore", "401 Unauthorized");
                             action_error(request, response);
                         }
@@ -94,11 +93,6 @@ public class Login extends InternshipTutorBaseController {
             throws ServletException {
         
         try {
-            HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null) {
-                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
-                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            }
             if (request.getParameter("login") != null)
                 action_login(request, response);
             else

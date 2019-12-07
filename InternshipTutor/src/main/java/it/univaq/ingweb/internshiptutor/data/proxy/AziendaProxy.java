@@ -18,7 +18,6 @@ import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

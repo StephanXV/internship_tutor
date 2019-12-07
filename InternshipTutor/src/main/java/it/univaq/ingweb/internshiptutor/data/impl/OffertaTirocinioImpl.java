@@ -181,6 +181,11 @@ public class OffertaTirocinioImpl implements OffertaTirocinio {
     public void setTutoreTirocinio(TutoreTirocinio tutoreTirocinio) {
         this.tutoreTirocinio = tutoreTirocinio;
     }
+
+    @Override
+    public String toString() {
+        return "OffertaTirocinioImpl{" + "id=" + id + ", luogo=" + luogo + ", settore=" + settore + ", orari=" + orari + ", durata=" + durata + ", titolo=" + titolo + ", obiettivi=" + obiettivi + ", facilitazioni=" + facilitazioni + ", modalita=" + modalita + ", attiva=" + attiva + ", tutoreTirocinio=" + tutoreTirocinio + ", azienda=" + azienda + ", candidature=" + candidature + '}';
+    }
     
     
     
