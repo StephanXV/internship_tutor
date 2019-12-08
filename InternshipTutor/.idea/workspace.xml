@@ -7,16 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_javax_mail_1_6_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/InternshipTutor_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/InternshipTutor_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/InternshipTutor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/InternshipTutor.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/footer.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/footer.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/footer.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/footer.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Registrazione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Registrazione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -297,7 +295,8 @@
       <workItem from="1575384634383" duration="682000" />
       <workItem from="1575402036936" duration="7657000" />
       <workItem from="1575473075522" duration="6736000" />
-      <workItem from="1575797168015" duration="3776000" />
+      <workItem from="1575797168015" duration="4173000" />
+      <workItem from="1575825568066" duration="3372000" />
     </task>
     <servers />
   </component>

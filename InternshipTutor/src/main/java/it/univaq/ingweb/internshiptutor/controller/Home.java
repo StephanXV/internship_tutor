@@ -16,6 +16,8 @@ import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,6 +32,8 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Home extends InternshipTutorBaseController {
+    //logger (log4J)
+    final static Logger logger = Logger.getLogger(Home.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -39,15 +43,14 @@ public class Home extends InternshipTutorBaseController {
         }
     }
     
-    private void action_anonymous(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, TemplateManagerException {
+    private void action_anonymous(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException {
         request.setAttribute("page_title", "Home anonimo");
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("home_anonimo.ftl.html", request, response);
     }
     
-    private void action_admin(HttpServletRequest request, HttpServletResponse response, int id_utente) throws IOException {
-        try {
+    private void action_admin(HttpServletRequest request, HttpServletResponse response, int id_utente) throws DataException, TemplateManagerException  {
+
             // dati dell'admin
             Utente ut = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().getUtente(id_utente);
             request.setAttribute("nome_utente", ut.getUsername());
@@ -83,18 +86,10 @@ public class Home extends InternshipTutorBaseController {
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Dashboard admin");
             res.activate("home_admin.ftl.html", request, response);
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to load dati admin");
-            action_error(request, response);
-        }
     }
     
-    private void action_azienda(HttpServletRequest request, HttpServletResponse response, int id_utente)
-            throws IOException {
-        try {
+    private void action_azienda(HttpServletRequest request, HttpServletResponse response, int id_utente) throws IOException, DataException, TemplateManagerException {
+
             // dati dell'azienda
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_utente);
             
@@ -126,18 +121,9 @@ public class Home extends InternshipTutorBaseController {
             request.setAttribute("page_title", "Home azienda");
             
             res.activate("home_azienda.ftl.html", request, response);
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to load dati azienda");
-            action_error(request, response);
-        }
     }
     
-    private void action_studente(HttpServletRequest request, HttpServletResponse response, int id_utente)
-            throws IOException {
-        try {
+    private void action_studente(HttpServletRequest request, HttpServletResponse response, int id_utente) throws DataException, TemplateManagerException {
             // dati dello studente
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_utente);
             request.setAttribute("nome_utente", st.getNome() + " " + st.getCognome());
@@ -189,14 +175,6 @@ public class Home extends InternshipTutorBaseController {
             request.setAttribute("page_title", "Home studente");
             
             res.activate("home_studente.ftl.html", request, response);
-        } catch (TemplateManagerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to load dati studente");
-            action_error(request, response);
-        }
-        
     }
     
     @Override
@@ -223,7 +201,8 @@ public class Home extends InternshipTutorBaseController {
             } else {
                 action_anonymous(request, response);
             }
-        } catch (IOException | TemplateManagerException ex) {
+        } catch (IOException | TemplateManagerException | DataException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

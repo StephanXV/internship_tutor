@@ -51,7 +51,7 @@ public class Registrazione extends InternshipTutorBaseController {
         }
     }
 
-    private void action_open_reg(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_open_reg(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Registrazione");
         res.activate("registrazione.ftl.html", request, response);
