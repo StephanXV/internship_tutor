@@ -22,14 +22,15 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.sun.mail.smtp.SMTPTransport;
+import org.apache.log4j.Logger;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -43,28 +44,37 @@ import java.util.Properties;
  * @author Enry
  */
 public class RichiestaTirocinio extends InternshipTutorBaseController {
-    
+
+    //logger
+    final static Logger logger = Logger.getLogger(RichiestaTirocinio.class);
+
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        HttpSession s = SecurityLayer.checkSession(request);
-        if (s!= null) {
-            request.setAttribute("nome_utente", (String)s.getAttribute("username"));
-            request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            
-            if (!s.getAttribute("tipologia").equals("st")) {
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
-                request.setAttribute("errore", "401 Unauthorized");
-                action_error(request, response);
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s != null) {
+                request.setAttribute("nome_utente", (String) s.getAttribute("username"));
+                request.setAttribute("tipologia", (String) s.getAttribute("tipologia"));
+
+                if (!s.getAttribute("tipologia").equals("st")) {
+                    request.setAttribute("message", "errore gestito");
+                    request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
+                    request.setAttribute("errore", "401 Unauthorized");
+                    action_error(request, response);
+                    return;
+                }
             }
-        }
-        if (request.getParameter("submit") != null) {
-            action_request(request, response);
-        } else if (request.getParameter("submitTutore") != null) {
-            action_addAutore(request, response);
-        } else {
-            action_default(request, response);
+            if (request.getParameter("submit") != null) {
+                action_request(request, response);
+            } else if (request.getParameter("submitTutore") != null) {
+                action_addAutore(request, response);
+            } else {
+                action_default(request, response);
+            }
+        } catch (IOException e) {
+            logger.error("Exception : ", e);
+            request.setAttribute("exception", e);
+            action_error(request, response);
         }
     }
     
@@ -83,69 +93,73 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
                 request.setAttribute("alert", "success");
                 action_default(request, response);
             } catch (DataException e) {
-                Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
+                logger.error("Exception : ", e);
                 request.setAttribute("message", "errore_convalida");
                 request.setAttribute("errore", "Tutore non aggiunto! Verifica che il tutore non sia già presente");
                 action_error(request, response);
             }
+        } else {
+            logger.error("Campi errati, potenzialmente dannosi");
+            request.setAttribute("message", "errore_convalida");
+            request.setAttribute("errore", "Tutore non aggiunto! Verifica che il tutore non sia già presente");
+            action_error(request, response);
         }
     }
     
-    private void action_request (HttpServletRequest request, HttpServletResponse response) {
+    private void action_request (HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession s = SecurityLayer.checkSession(request);
-        int u = (int) s.getAttribute("id_utente");
-        
-        Candidatura c = new CandidaturaImpl();
-        
-        //controlli lato server
-        if (SecurityLayer.checkNumericBool(request.getParameter("n")) && SecurityLayer.checkNumericBool(request.getParameter("tutore")) && SecurityLayer.checkNumericBool(request.getParameter("cfu"))) {
-            
-            try {
-                c.setStudente(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(u));
-                c.setOffertaTirocinio(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(SecurityLayer.checkNumeric(request.getParameter("n"))));
-                
-                c.setTutoreUni(((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(SecurityLayer.checkNumeric(request.getParameter("tutore"))));
-                c.setCfu(Integer.parseInt(request.getParameter("cfu")));
-                
-                if (request.getParameter("laurea") != null && request.getParameter("laurea").length() > 0) {
-                    c.setLaurea(request.getParameter("laurea"));
-                }
-                
-                if (request.getParameter("dottorato") != null && request.getParameter("dottorato").length() > 0) {
-                    c.setDottoratoRicerca(request.getParameter("dottorato"));
-                }
-                
-                if (request.getParameter("specializzazione") != null && request.getParameter("specializzazione").length() > 0) {
-                    c.setSpecializzazione(request.getParameter("specializzazione"));
-                }
-                
-                if (request.getParameter("diploma") != null && request.getParameter("diploma").length() > 0) {
-                    c.setDiploma(request.getParameter("diploma"));
-                }
-                
-                //insert candidatura
-                ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
-                //invio email
-                this.sendMail(c, request, response);
+        if (s != null) {
+            int utente_id_session = (int) s.getAttribute("id_utente");
+
+            Candidatura c = new CandidaturaImpl();
+
+            //controlli lato server
+            if (SecurityLayer.checkNumericBool(request.getParameter("n")) && SecurityLayer.checkNumericBool(request.getParameter("tutore")) && SecurityLayer.checkNumericBool(request.getParameter("cfu"))) {
+
                 try {
+                    c.setStudente(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getStudenteDAO().getStudente(utente_id_session));
+                    c.setOffertaTirocinio(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(SecurityLayer.checkNumeric(request.getParameter("n"))));
+
+                    c.setTutoreUni(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(SecurityLayer.checkNumeric(request.getParameter("tutore"))));
+                    c.setCfu(Integer.parseInt(request.getParameter("cfu")));
+
+                    if (request.getParameter("laurea") != null && request.getParameter("laurea").length() > 0) {
+                        c.setLaurea(request.getParameter("laurea"));
+                    }
+
+                    if (request.getParameter("dottorato") != null && request.getParameter("dottorato").length() > 0) {
+                        c.setDottoratoRicerca(request.getParameter("dottorato"));
+                    }
+
+                    if (request.getParameter("specializzazione") != null && request.getParameter("specializzazione").length() > 0) {
+                        c.setSpecializzazione(request.getParameter("specializzazione"));
+                    }
+
+                    if (request.getParameter("diploma") != null && request.getParameter("diploma").length() > 0) {
+                        c.setDiploma(request.getParameter("diploma"));
+                    }
+
+                    //insert candidatura
+                    ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
+                    //invio email
+                    this.sendMail(c, request, response);
                     response.sendRedirect("home");
-                } catch (IOException e) {
-                    request.setAttribute("exception", e);
+
+                } catch (DataException ex) {
+                    logger.error("Exception : " + ex);
+                    request.setAttribute("message", "errore gestito");
+                    request.setAttribute("title", "Hai già una candidatura attiva per questa offerta di tirocinio");
+                    request.setAttribute("errore", "ERRORE");
                     action_error(request, response);
                 }
-                
-            } catch (DataException ex) {
+
+            } else {
+                logger.error("Campi errati, potenzialmente dannosi");
                 request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Hai già una candidatura attiva per questa offerta di tirocinio");
-                request.setAttribute("errore", "ERRORE");
+                request.setAttribute("title", "I campi inseriti non sono corretti. Riprova!");
+                request.setAttribute("errore", "Errore di_convalidazione");
                 action_error(request, response);
             }
-            
-        } else {
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "I campi inseriti non sono corretti. Riprova!");
-            request.setAttribute("errore", "Errore di_convalidazione");
-            action_error(request, response);
         }
     }
     
@@ -251,6 +265,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
 
         } catch (MessagingException e) {
+            logger.error("Exception : ", e);
             request.setAttribute("exception", e);
             action_error(request, response);
         }
@@ -298,13 +313,9 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             tutori = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutori();
             request.setAttribute("tutori", tutori);
             request.setAttribute("tirocinio", n);
-            try {
-                res.activate("richiesta_tirocinio.ftl.html", request, response);
-            } catch (TemplateManagerException e) {
-                request.setAttribute("exception", e);
-                action_error(request, response);
-            }
-        } catch (DataException e) {
+            res.activate("richiesta_tirocinio.ftl.html", request, response);
+        } catch (DataException | TemplateManagerException e) {
+            logger.error("Exception : ", e);
             request.setAttribute("exception", e);
             action_error(request, response);
         }

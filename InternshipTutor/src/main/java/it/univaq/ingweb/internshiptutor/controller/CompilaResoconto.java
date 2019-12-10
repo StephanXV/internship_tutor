@@ -11,6 +11,8 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class CompilaResoconto extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(CompilaResoconto.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -31,53 +36,56 @@ public class CompilaResoconto extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, HttpSession s)
-            throws ServletException, IOException, TemplateManagerException {
-        
-        try {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws TemplateManagerException, DataException {
+
+        if (SecurityLayer.checkNumericBool(request.getParameter("ot")) && SecurityLayer.checkNumericBool(request.getParameter("st"))) {
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-            OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
-            Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda((String)s.getAttribute("id_utente"));
+
+            OffertaTirocinio ot = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
+            Azienda az = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getAziendaDAO().getAzienda((String) s.getAttribute("id_utente"));
+
             if (!az.getOfferteTirocinio().contains(ot)) {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
+                return;
             }
-            Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
-            if (resoconto != null) {
-                request.setAttribute("resoconto", resoconto);
-                request.setAttribute("id_ot", id_ot);
-                request.setAttribute("id_st", id_st);
-                TemplateResult res = new TemplateResult(getServletContext());
-                res.activate("compila_resoconto.ftl.html", request, response);
-            } else {
-                request.setAttribute("message", "Unable to load resoconto");
-                action_error(request, response);
-            }
-        } catch (DataException ex) {
-            request.setAttribute("message", "Data access exception: " + ex.getMessage());
-            action_error(request, response);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parameters exception: " + ex.getMessage());
+
+            Resoconto resoconto = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
+
+            request.setAttribute("resoconto", resoconto);
+            request.setAttribute("id_ot", id_ot);
+            request.setAttribute("id_st", id_st);
+            TemplateResult res = new TemplateResult(getServletContext());
+            res.activate("compila_resoconto.ftl.html", request, response);
+        } else {
+            logger.error("Errore campi, potenzialmente dannosi");
+            request.setAttribute("message", "errore gestito");
+            request.setAttribute("title", "Errore nel compilamento dei campi");
+            request.setAttribute("errore", "404 not found");
             action_error(request, response);
         }
+
     }
     
-    private void action_invia_resoconto(HttpServletRequest request, HttpServletResponse response, HttpSession s)
-            throws ServletException, IOException, TemplateManagerException {
+    private void action_invia_resoconto(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws IOException, DataException {
         try {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st);
             OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda((String)s.getAttribute("id_utente"));
+
             if (!az.getOfferteTirocinio().contains(ot)) {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
+                return;
             }
             
             Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().createResoconto();
@@ -89,30 +97,31 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 resoconto.setOffertaTirocinio(ot);
                 int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().insertResoconto(resoconto);
                 if (insert != 1) {
-                    request.setAttribute("message", "errore_resoconto");
+                    logger.error("Utente non autorizzato");
+                    request.setAttribute("message", "errore gestito");
+                    request.setAttribute("title", "Errore di compilazione campi");
                     request.setAttribute("errore", "I dati del resoconto non sono validi, riprova");
                     action_error(request, response);
+                    return;
                 }
                 response.sendRedirect("gestione_candidati?ot="+id_ot);
             } else {
-                request.setAttribute("message", "Unable to load studente, tirocinio or resoconto");
+                logger.error("Utente non autorizzato");
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Risorsa non trovata");
+                request.setAttribute("errore", "404 NOT FOUND");
                 action_error(request, response);
+                return;
             }
-        } catch (DataException ex) {
-            request.setAttribute("message", "Data access exception: " + ex.getMessage());
-            action_error(request, response);
-        } catch (SecurityLayerException ex) {
+        }  catch (SecurityLayerException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parameters exception: " + ex.getMessage());
             action_error(request, response);
         }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null && "az".equals(s.getAttribute("tipologia"))) {
@@ -124,12 +133,14 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 else
                     action_default(request, response, s);
             } else {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
             }
-        } catch (TemplateManagerException ex) {
+        } catch (TemplateManagerException | DataException | IOException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
