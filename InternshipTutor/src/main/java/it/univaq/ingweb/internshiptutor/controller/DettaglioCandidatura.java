@@ -6,7 +6,9 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
+import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import java.io.IOException;
 import java.time.LocalDate;
 import javax.servlet.ServletException;
@@ -29,11 +31,9 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
         
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response)
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_ot, int id_st)
             throws ServletException, IOException, TemplateManagerException {
         try {
-            int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
-            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             Candidatura candidatura = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
             request.setAttribute("candidatura", candidatura);
             
@@ -48,12 +48,10 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
         }
     }
     
-    private void action_salva_date(HttpServletRequest request, HttpServletResponse response)
+    private void action_salva_date(HttpServletRequest request, HttpServletResponse response, int id_ot, int id_st)
             throws ServletException, IOException, TemplateManagerException {
         
         try {
-            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-            int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             LocalDate inizio_tirocinio = LocalDate.parse(request.getParameter("inizio_tirocinio"));
             LocalDate fine_tirocinio = LocalDate.parse(request.getParameter("fine_tirocinio"));
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaDate(inizio_tirocinio,
@@ -72,17 +70,21 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
             throws ServletException, IOException {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null && ("st".equals((String)s.getAttribute("tipologia")) || "az".equals((String)s.getAttribute("tipologia")))) {
+            if (s!= null && "az".equals((String)s.getAttribute("tipologia"))) {
+                int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
+                int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
                 if (request.getParameter("tipo") != null) {
                     if (request.getParameter("tipo").equals("salva_date"))
-                        action_salva_date(request, response);
+                        action_salva_date(request, response, id_ot, id_st);
                 }
                 else
-                    action_default(request, response);
+                    action_default(request, response, id_ot, id_st);
             } else {
-                request.setAttribute("message", "Access denied");
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
             }
         } catch (TemplateManagerException ex) {

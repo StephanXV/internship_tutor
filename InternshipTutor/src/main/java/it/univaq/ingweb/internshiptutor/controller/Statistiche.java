@@ -15,8 +15,6 @@ import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
 import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -85,7 +83,9 @@ public class Statistiche extends InternshipTutorBaseController {
             request.setAttribute("activeStat", "active");
             action_default(request, response);
         } else {
-            request.setAttribute("message", "Access denied");
+            request.setAttribute("message", "errore gestito");
+            request.setAttribute("title", "Utente non autorizzato");
+            request.setAttribute("errore", "401 Unauthorized");
             action_error(request, response);
         }
     }

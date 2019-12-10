@@ -29,9 +29,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.mail.smtp.SMTPTransport;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import java.util.Date;
+import java.util.Properties;
+
 /**
  *
- * @author Giuseppe Gasbarro
+ * @author Enry
  */
 public class RichiestaTirocinio extends InternshipTutorBaseController {
     
@@ -48,7 +57,6 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
                 request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
-                return;
             }
         }
         if (request.getParameter("submit") != null) {
@@ -117,7 +125,8 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
                 
                 //insert candidatura
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().insertCandidatura(c);
-                this.sendMail(c);
+                //invio email
+                this.sendMail(c, request, response);
                 try {
                     response.sendRedirect("home");
                 } catch (IOException e) {
@@ -140,8 +149,115 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
         }
     }
     
-    private void sendMail(Candidatura c) {
-        Date date = new Date();
+    private void sendMail(Candidatura c, HttpServletRequest request, HttpServletResponse response) {
+
+        String SMTP_SERVER = "smtp.gmail.com";
+        String USERNAME = "it.internshiptutor@gmail.com";
+        String PASSWORD = "DisimIT15";
+
+        String EMAIL_FROM = "it.internshiptutor@gmail.com";
+        String EMAIL_TO_TUTORE_AZIENDA = c.getOffertaTirocinio().getTutoreTirocinio().getEmail();
+        String EMAIL_TO_TUTORE_UNIVERSITA = c.getTutoreUni().getEmail();
+        String EMAIL_TO_CC = "";
+
+        String EMAIL_SUBJECT = "Richiesta Candidatura di Tirocinio";
+
+        String EMAIL_TEXT_TUTORE_AZIENDA =
+                "Lo studente " + c.getStudente().getCognome() + " " + c.getStudente().getNome() +
+                ", frequentante il seguente corso di laurea: " + c.getStudente().getCorsoLaurea()
+                + ", ha richiesto l'effettuazione del tirocinio: " + c.getOffertaTirocinio().getTitolo()
+                + ", per un totale di: " + c.getCfu() + " CFU";
+
+        String EMAIL_TEXT_TUTORE_UNIVERSITA =
+                "Lo studente " + c.getStudente().getCognome() + " " + c.getStudente().getNome()
+                 + ", frequentante il seguente corso di laurea: " + c.getStudente().getCorsoLaurea()
+                 + ", ha richiesto l'effettuazione del tirocinio: " + c.getOffertaTirocinio().getTitolo()
+                 + ", presso l'azienda: " + c.getOffertaTirocinio().getAzienda().getRagioneSociale() + ", per un totale di: " + c.getCfu() + " CFU";
+
+
+
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.host", SMTP_SERVER); //optional, defined in SMTPTransport
+        prop.put("mail.smtp.auth", "true"); //autenticazione
+        prop.put("mail.smtp.port", "587"); // default port gmail
+        prop.put("mail.smtp.starttls.enable", "true"); //TLS
+
+
+        Session session = Session.getInstance(prop, null);
+        Message msg_azienda = new MimeMessage(session);
+        Message msg_univerista = new MimeMessage(session);
+
+        try {
+
+            /* email al tutore tirocini azienda */
+            // from
+            msg_azienda.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to
+            msg_azienda.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(EMAIL_TO_TUTORE_AZIENDA + "," + EMAIL_FROM, false));
+
+            // cc
+            msg_azienda.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(EMAIL_TO_CC, false));
+
+            // subject
+            msg_azienda.setSubject(EMAIL_SUBJECT);
+
+            // content
+            msg_azienda.setText(EMAIL_TEXT_TUTORE_AZIENDA);
+
+            msg_azienda.setSentDate(new Date());
+
+
+
+            /* email al tutore tirocini università */
+            // from
+            msg_univerista.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to --> la manda in copia anche al mittente per verifica
+            msg_univerista.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(EMAIL_TO_TUTORE_UNIVERSITA + "," + EMAIL_FROM, false));
+
+            // cc
+            msg_univerista.setRecipients(Message.RecipientType.CC,
+                    InternetAddress.parse(EMAIL_TO_CC, false));
+
+            // subject
+            msg_univerista.setSubject(EMAIL_SUBJECT);
+
+            // content
+            msg_univerista.setText(EMAIL_TEXT_TUTORE_UNIVERSITA);
+
+            msg_univerista.setSentDate(new Date());
+
+
+            ////////////////////    SEND   /////////////////////////
+
+            // Get SMTPTransport
+            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+
+            // connect
+            t.connect(SMTP_SERVER, USERNAME, PASSWORD);
+
+            // send both MAIL
+            t.sendMessage(msg_azienda, msg_azienda.getAllRecipients()); //msg azienda
+            t.sendMessage(msg_univerista, msg_univerista.getAllRecipients()); //msg università
+
+            System.out.println("Response: " + t.getLastServerResponse()); //status
+
+            t.close();
+
+
+
+        } catch (MessagingException e) {
+            request.setAttribute("exception", e);
+            action_error(request, response);
+        }
+
+
+
+        /*Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
         String sDate = formatter.format(date);
         try {
@@ -169,7 +285,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
             bw2.close();
         }
         catch(IOException e) {
-        }
+        } */
     }
     
     

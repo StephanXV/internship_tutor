@@ -12,7 +12,6 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 public class Login extends InternshipTutorBaseController {
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-        
+    
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -29,42 +28,42 @@ public class Login extends InternshipTutorBaseController {
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
-
+    
     private void action_default(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Login");
-
+        
         //passamano del referrer (prima a login html poi alla servlet che valida il login)
         if (request.getParameter("referrer") != null) {
             request.setAttribute("referrer", request.getParameter("referrer") + "?" + request.getParameter("referrer_res"));
         }
-
+        
         res.activate("login.ftl.html", request, response);
     }
     
     private void action_login(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException, TemplateManagerException {
-
+        
         /*Per vedere la pass criptata di un utente con pass non criptata
         String password = request.getParameter("pw");
         String encryptedPassword = passwordEncryptor.encryptPassword(password);
         System.out.println("pass admin " + encryptedPassword);*/
-
+        
         try {
             if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString("pw")) {
-
+                
                 Utente ut = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtenteByUser(request.getParameter("username"));
-
+                
                 if (ut != null && passwordEncryptor.checkPassword(request.getParameter("pw"), ut.getPw())) {
                     SecurityLayer.createSession(request, ut.getUsername(), ut.getId(), ut.getTipologia());
-
+                    
                     if (request.getParameter("referrer") != null) {
                         if (ut.getTipologia().equals("st")) {
                             response.sendRedirect(request.getParameter("referrer"));
                         } else { //se non è studente --> non autorizzato
                             request.setAttribute("message", "errore gestito");
-                            request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
+                            request.setAttribute("title", "Utente non autorizzato");
                             request.setAttribute("errore", "401 Unauthorized");
                             action_error(request, response);
                         }
@@ -88,26 +87,21 @@ public class Login extends InternshipTutorBaseController {
             action_error(request, response);
         }
     }
-
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-
+        
         try {
-            HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null) {
-                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
-                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            }
-            if(request.getParameter("login") != null)
+            if (request.getParameter("login") != null)
                 action_login(request, response);
-            else 
+            else
                 action_default(request, response);
         } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
-
+            
         }
     }
-
+    
 }

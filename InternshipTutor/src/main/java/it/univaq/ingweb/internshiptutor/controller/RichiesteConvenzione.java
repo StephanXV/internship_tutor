@@ -70,15 +70,20 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null) {
+            if (s!= null && "ad".equals((String)s.getAttribute("tipologia"))) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-            }
-            int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
-            if (request.getParameter("convalida").equals("si")) {
-                action_accetta(request, response, id_azienda);
-            } else if  (request.getParameter("convalida").equals("no")) {
-                action_rifiuta(request, response, id_azienda);
+                int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
+                if (request.getParameter("convalida").equals("si")) {
+                    action_accetta(request, response, id_azienda);
+                } else if  (request.getParameter("convalida").equals("no")) {
+                    action_rifiuta(request, response, id_azienda);
+                }
+            } else {
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
         } catch (TemplateManagerException ex) {
             request.setAttribute("exception", ex);

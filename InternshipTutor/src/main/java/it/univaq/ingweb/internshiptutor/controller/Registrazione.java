@@ -51,7 +51,7 @@ public class Registrazione extends InternshipTutorBaseController {
         }
     }
 
-    private void action_open_reg(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException {
+    private void action_open_reg(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Registrazione");
         res.activate("registrazione.ftl.html", request, response);
@@ -282,6 +282,10 @@ public class Registrazione extends InternshipTutorBaseController {
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Accesso già eseguito: non è possibile effettuare una registrazione da loggato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
             if (request.getParameter("submitStudente") != null) {
                 action_registrazione_studente(request, response);

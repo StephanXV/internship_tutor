@@ -73,7 +73,9 @@ public class Download extends InternshipTutorBaseController {
                 else if(request.getParameter("tipo").equals("candidatura"))
                     action_download_candidatura(request, response);
             } else {
-                request.setAttribute("message", "Access denied");
+               request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
             }   
         } catch (IOException ex) {

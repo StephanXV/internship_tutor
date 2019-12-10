@@ -6,6 +6,10 @@
     flex-shrink: 0;
 }
 
+.contacts_footer{
+    pointer-events: none;
+}
+
 footer a {
     color: #ffffff;
     text-decoration: none !important;

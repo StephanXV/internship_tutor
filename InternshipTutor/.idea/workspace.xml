@@ -6,7 +6,16 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="" />
+    <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/InternshipTutor_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/InternshipTutor_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/InternshipTutor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/InternshipTutor.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Registrazione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Registrazione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +77,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/images" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -80,10 +89,10 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/webapp/images" />
       <recent name="C:\Users\enrico monte\Documents\GitHub\internship_tutor\InternshipTutor\src\main\webapp\templates" />
       <recent name="$PROJECT_DIR$/src/main/webapp/templates" />
       <recent name="$PROJECT_DIR$/src/main/webapp/styles" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -289,6 +298,8 @@
       <workItem from="1575402036936" duration="7657000" />
       <workItem from="1575473075522" duration="6736000" />
       <workItem from="1575992406078" duration="262000" />
+      <workItem from="1575797168015" duration="4173000" />
+      <workItem from="1575825568066" duration="3372000" />
     </task>
     <servers />
   </component>

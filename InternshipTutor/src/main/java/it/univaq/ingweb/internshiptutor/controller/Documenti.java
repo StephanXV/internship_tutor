@@ -113,6 +113,11 @@ public class Documenti extends InternshipTutorBaseController {
                     case 2: // documento di resoconto non firmato
                         action_doc_resoconto(request, response);
                 }
+            } else {
+                request.setAttribute("message", "errore gestito");
+                request.setAttribute("title", "Utente non autorizzato");
+                request.setAttribute("errore", "401 Unauthorized");
+                action_error(request, response);
             }
         } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);

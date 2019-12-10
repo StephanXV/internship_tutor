@@ -11,6 +11,8 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
+import org.apache.log4j.Logger;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +23,9 @@ import javax.servlet.http.HttpSession;
  * @author Enrico Monte
  */
 public class RicercaTirocini extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(RicercaTirocini.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -30,19 +35,13 @@ public class RicercaTirocini extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response) {
-        try {
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException {
             TemplateResult res = new TemplateResult(getServletContext());
             request.setAttribute("page_title", "Tirocini");
             res.activate("ricerca_tirocini.ftl.html", request, response);
-        } catch (TemplateManagerException e) {
-            request.setAttribute("exception", e);
-            action_error(request, response);
-        }
     }
     
-    private void action_ricerca(HttpServletRequest request, HttpServletResponse response) {
-        try {
+    private void action_ricerca(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException, DataException {
             String obiettivi = "%";
             String corso = "%";
             String durata = "%";
@@ -104,26 +103,30 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().searchOffertaTirocinio(durata, titolo, facilitazioni, luogo, settore, obiettivi, corso);
             request.setAttribute("tirocini", tirocini);
             action_default(request,response);
-        } catch (DataException ex) {
-            request.setAttribute("exception", "Unable to load offerte di tirocinio");
-            action_error(request, response);
-        }
     }
     
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
-        
-        request.setAttribute("activeTirocini", "active");
-        
-        HttpSession s = SecurityLayer.checkSession(request);
-        if (s!= null) {
-            request.setAttribute("nome_utente", (String)s.getAttribute("username"));
-            request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+        try {
+
+            request.setAttribute("activeTirocini", "active");
+
+            HttpSession s = SecurityLayer.checkSession(request);
+            if (s != null) {
+                request.setAttribute("nome_utente", (String) s.getAttribute("username"));
+                request.setAttribute("tipologia", (String) s.getAttribute("tipologia"));
+            }
+            if (request.getParameter("submit") != null && request.getParameter("submit").equals("Cerca")) {
+                action_ricerca(request, response);
+            } else {
+                action_default(request, response);
+            }
+
+        } catch (TemplateManagerException | DataException e) {
+            logger.error("Exception : ", e);
+            request.setAttribute("exception", e);
+            action_error(request, response);
         }
-        if (request.getParameter("submit") != null && request.getParameter("submit").equals("Cerca")) {
-            action_ricerca(request,response);
-        } else {
-            action_default(request, response);
-        }  
+
     } 
 }

@@ -76,11 +76,7 @@ public class Test extends InternshipTutorBaseController {
             request.setAttribute("activeTest", "active");
             action_default(request, response);
 
-        } catch (IOException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-
-        } catch (TemplateManagerException ex) {
+        } catch (IOException | TemplateManagerException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
 
