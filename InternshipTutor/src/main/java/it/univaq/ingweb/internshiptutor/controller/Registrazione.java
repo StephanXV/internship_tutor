@@ -134,7 +134,7 @@ public class Registrazione extends InternshipTutorBaseController {
                         az.setCorsoStudio(request.getParameter("corso_studio"));
                         az.setRespTirocini(rt);
                         az.setUtente(ut);
-                        az.setDurataConvenzione(SecurityLayer.checkNumeric(request.getParameter("durata")));
+                        az.setDurataConvenzione(Integer.parseInt(request.getParameter("durata")));
                         int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
                         if (insert != 1) {
                             TYPE="AZIENDA";

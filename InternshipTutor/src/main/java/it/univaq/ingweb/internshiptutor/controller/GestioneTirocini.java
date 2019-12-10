@@ -5,6 +5,8 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class GestioneTirocini extends InternshipTutorBaseController {
+    //logger
+    final static Logger logger = Logger.getLogger(GestioneTirocini.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -25,52 +29,38 @@ public class GestioneTirocini extends InternshipTutorBaseController {
         }
     }
     
-    private void action_disattiva(HttpServletRequest request, HttpServletResponse response, int id_ot)
-            throws ServletException, IOException, TemplateManagerException {
-        try {
+    private void action_disattiva(HttpServletRequest request, HttpServletResponse response, int id_ot) throws ServletException, IOException, TemplateManagerException, DataException {
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, false);
             response.sendRedirect("home");
-        } catch (DataException ex) {
-            request.setAttribute("exception", "Unable to update offerta tirocinio");
-            action_error(request, response);
-        }
     }
     
-    private void action_attiva(HttpServletRequest request, HttpServletResponse response, int id_ot)
-            throws ServletException, IOException, TemplateManagerException {
-        try {
+    private void action_attiva(HttpServletRequest request, HttpServletResponse response, int id_ot) throws IOException, DataException {
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, true);
             response.sendRedirect("home");
-        } catch (DataException ex) {
-            request.setAttribute("exception", "Unable to update offerta tirocinio");
-            action_error(request, response);
-        }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null && "az".equals((String)s.getAttribute("tipologia"))) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-                if (request.getParameter("action").equals("attiva")) {
+                if (SecurityLayer.checkString(request.getParameter("action")) && request.getParameter("action").equals("attiva")) {
                     action_attiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
                 }
-                else if (request.getParameter("action").equals("disattiva")) {
+                else if (SecurityLayer.checkString(request.getParameter("action")) && request.getParameter("action").equals("disattiva")) {
                     action_disattiva(request, response, SecurityLayer.checkNumeric(request.getParameter("ot")));
                 }
             } else {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
             }
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-            action_error(request, response);
-        } catch (IOException | TemplateManagerException ex) {
+        } catch (IOException | NumberFormatException | TemplateManagerException | ServletException | DataException ex) {
+            logger.error("Exception: ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

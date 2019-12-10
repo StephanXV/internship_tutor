@@ -124,7 +124,7 @@ public class SecurityLayer {
             //if the conversion fails, an exception is raised
             return Integer.parseInt(s);
         } else {
-            throw new NumberFormatException("String argument is null");
+            throw new NumberFormatException("impossibile convertire");
         }
     }
 
@@ -202,7 +202,7 @@ public class SecurityLayer {
     public static String issetString(String s) throws SecurityLayerException {
         //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
         //convert the string to a number, ensuring its validity
-        if (s != null) {
+        if (s != null && s.length() > 0) {
             //se la conversione fallisce, viene generata un'eccezione
             //if the conversion fails, an exception is raised
             return s;

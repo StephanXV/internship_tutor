@@ -58,7 +58,7 @@ public class Login extends InternshipTutorBaseController {
                     SecurityLayer.createSession(request, ut.getUsername(), ut.getId(), ut.getTipologia());
 
                     //per richiesta tirocinio vedo il referrer
-                    if (request.getParameter("referrer") != null) {
+                    if (request.getParameter("referrer") != null && !request.getParameter("referrer").equals("login.ftl.html")) {
                         if (ut.getTipologia().equals("st")) {
                             response.sendRedirect(request.getParameter("referrer"));
                         } else { //se non è studente --> non autorizzato
@@ -67,6 +67,7 @@ public class Login extends InternshipTutorBaseController {
                             request.setAttribute("title", "Utente non autorizzato");
                             request.setAttribute("errore", "401 Unauthorized");
                             action_error(request, response);
+                            return;
                         }
                     } else { //se non c'è un reffer vai a home (accesso normale)
                         response.sendRedirect("home");

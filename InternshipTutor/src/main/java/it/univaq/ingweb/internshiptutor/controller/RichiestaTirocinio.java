@@ -118,9 +118,9 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
                 try {
                     c.setStudente(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getStudenteDAO().getStudente(utente_id_session));
-                    c.setOffertaTirocinio(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(SecurityLayer.checkNumeric(request.getParameter("n"))));
+                    c.setOffertaTirocinio(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(Integer.parseInt(request.getParameter("n"))));
 
-                    c.setTutoreUni(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(SecurityLayer.checkNumeric(request.getParameter("tutore"))));
+                    c.setTutoreUni(((InternshipTutorDataLayer) request.getAttribute("datalayer")).getTutoreUniDAO().getTutoreUni(Integer.parseInt(request.getParameter("tutore"))));
                     c.setCfu(Integer.parseInt(request.getParameter("cfu")));
 
                     if (request.getParameter("laurea") != null && request.getParameter("laurea").length() > 0) {
@@ -307,7 +307,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) {
         TemplateResult res = new TemplateResult(getServletContext());
         int n = SecurityLayer.checkNumeric(request.getParameter("n"));
-        
+
         List<TutoreUni> tutori;
         try {
             tutori = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutori();

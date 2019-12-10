@@ -13,10 +13,10 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,12 +27,14 @@ import javax.servlet.http.HttpSession;
  * @author Giuseppe Gasbarro
  */
 public class DettaglioAzienda extends InternshipTutorBaseController {
+    //logger
+    final static Logger logger = Logger.getLogger(DettaglioAzienda.class);
 
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             if (SecurityLayer.checkNumericBool(request.getParameter("n"))) {
-                int id_azienda = SecurityLayer.checkNumeric(request.getParameter("n"));
+                int id_azienda =  Integer.parseInt(request.getParameter("n"));
                 HttpSession s = SecurityLayer.checkSession(request);
                 if (s!= null) {
                     request.setAttribute("nome_utente", s.getAttribute("username"));
@@ -40,40 +42,45 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
                 }
                 action_default(request, response, id_azienda);
             } else {
+                logger.error("parametro azienda sbagliato, impossibile recuperare azienda");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Impossibile trovare l'azienda");
                 request.setAttribute("errore", "404 NOT FOUND");
                 action_error(request, response);
+                return;
             }
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
+        } catch (TemplateManagerException | DataException ex) {
+            logger.error("Exception : ", ex);
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_azienda) {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_azienda) throws TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
-        Azienda azienda;
 
-        try {
-            azienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
-            
+        Azienda azienda = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
+        if (azienda != null) {
+            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
+
             // calcolo dei dati per le statistiche dell'azienda
             if (azienda.getValutazioni().size() > 0) {
-                System.out.println(azienda.getValutazioni());
                 request.setAttribute("media_valutazioni", azienda.getMediaValutazioni(azienda.getValutazioni()));
             }
-            List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
+
+
             request.setAttribute("tirocini", tirocini);
             request.setAttribute("azienda", azienda);
             request.setAttribute("page_title", "Azienda:" + azienda.getRagioneSociale());
             res.activate("dettaglio_azienda.ftl.html", request, response);
-        } catch (NullPointerException | DataException | TemplateManagerException ex){
-            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            logger.error("parametro azienda sbagliato, impossibile recuperare azienda");
             request.setAttribute("message", "errore gestito");
             request.setAttribute("title", "Impossibile trovare l'azienda");
             request.setAttribute("errore", "404 NOT FOUND");
             action_error(request, response);
-        }  
+            return;
+        }
     }
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {

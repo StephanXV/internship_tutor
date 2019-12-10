@@ -178,8 +178,7 @@ public class Home extends InternshipTutorBaseController {
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             request.setAttribute("activeHome", "active");
             

@@ -4,6 +4,8 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.StreamResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Download extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Download.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -26,59 +31,55 @@ public class Download extends InternshipTutorBaseController {
         }
     }
     
-    private void action_download_convenzione (HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        try{
+    private void action_download_convenzione (HttpServletRequest request, HttpServletResponse response) throws IOException, SecurityLayerException, FileNotFoundException {
             String nome_doc = SecurityLayer.issetString(request.getParameter("res"));
             StreamResult result = new StreamResult(getServletContext());
             File downloaded_file = new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory") + File.separatorChar + nome_doc);
             request.setAttribute("contentType", "application/pdf");
             result.activate(downloaded_file, request, response);
-        } catch (FileNotFoundException  ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (SecurityLayerException ex) {
-            request.setAttribute("message", "Parameter error");
-            action_error(request, response);
-        }
+
     }
     
-    private void action_download_candidatura (HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        try {
+    private void action_download_candidatura (HttpServletRequest request, HttpServletResponse response) throws IOException, SecurityLayerException {
             String nome_doc = SecurityLayer.issetString(request.getParameter("res"));
             StreamResult result = new StreamResult(getServletContext());
             File downloaded_file = new File(getServletContext().getRealPath("") + File.separatorChar + getServletContext().getInitParameter("uploads.directory") + File.separatorChar + nome_doc);
             request.setAttribute("contentType", "application/pdf");
             result.activate(downloaded_file, request, response);
-        } catch (FileNotFoundException  ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        } catch (SecurityLayerException ex) {
-            request.setAttribute("message", "Parameter error");
-            action_error(request, response);
-        }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-                if(request.getParameter("tipo").equals("convenzione"))
+
+                if(SecurityLayer.checkString(request.getParameter("tipo")) && request.getParameter("tipo").equals("convenzione")) {
                     action_download_convenzione(request, response);
-                else if(request.getParameter("tipo").equals("candidatura"))
+                }
+                else if (SecurityLayer.checkString(request.getParameter("tipo")) && request.getParameter("tipo").equals("candidatura")) {
                     action_download_candidatura(request, response);
+                } else {
+                    throw new SecurityLayerException("campi non rispettati");
+                }
+
             } else {
-               request.setAttribute("message", "errore gestito");
+                logger.error("Utente non autorizzato");
+                request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
+                return;
             }   
-        } catch (IOException ex) {
+        } catch (FileNotFoundException ex) {
+            logger.error("Risorsa non trovata", ex);
+            request.setAttribute("message", "Risorsa non trovata");
+            request.setAttribute("errore", "404 Not Found");
+            action_error(request, response);
+        } catch (IOException | SecurityLayerException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

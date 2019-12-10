@@ -7,6 +7,8 @@ package it.univaq.ingweb.internshiptutor.controller;
 
 import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -20,6 +22,9 @@ import javax.sql.DataSource;
  * @author Stefano Florio
  */
 public abstract class InternshipTutorBaseController extends HttpServlet {
+
+    //logger
+    final static Logger logger = Logger.getLogger(InternshipTutorBaseController.class);
 
     @Resource(name = "jdbc/itdb")
     private DataSource ds;
@@ -38,8 +43,8 @@ public abstract class InternshipTutorBaseController extends HttpServlet {
             request.setAttribute("datalayer", datalayer);
             processRequest(request, response);
         } catch (Exception ex) {
-            (new FailureResult(getServletContext())).activate(
-                    (ex.getCause() == null || ex.getMessage() != null) ? ex.getMessage() : ex.getCause().getMessage(), request, response);
+            logger.error("Exception: ", ex);
+            (new FailureResult(getServletContext())).activate(ex, request, response);
         }
     }
 

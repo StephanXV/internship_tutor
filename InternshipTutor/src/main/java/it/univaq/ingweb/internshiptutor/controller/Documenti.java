@@ -10,13 +10,14 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
+import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,8 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Documenti extends InternshipTutorBaseController {
+    //logger
+    final static Logger logger = Logger.getLogger(Documenti.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -36,43 +39,39 @@ public class Documenti extends InternshipTutorBaseController {
         }
     }
     
-    private void action_doc_richiesta_convenzione(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, TemplateManagerException {
-        try {
+    private void action_doc_richiesta_convenzione(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, DataException, TemplateManagerException {
+
             int id_azienda = SecurityLayer.checkNumeric(request.getParameter("az"));
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
+
+            if (az == null) {
+                throw new DataException("risorsa non trovata");
+            }
+
             request.setAttribute("azienda", az);
             
             TemplateResult res = new TemplateResult(getServletContext());
             res.activateNoOutline("doc_convenzione.ftl.html", request, response);
-        } catch (DataException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-        }
+
     }
     
-    private void action_doc_richiesta_tirocinio(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, TemplateManagerException {
-        try {
+    private void action_doc_richiesta_tirocinio(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, DataException, TemplateManagerException {
+
             int id_studente = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_offerta_tirocinio = SecurityLayer.checkNumeric(request.getParameter("ot"));
             Candidatura rc = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_studente, id_offerta_tirocinio);
+
+            if (rc == null) {
+                throw new DataException("risorsa non trovata");
+            }
+
             request.setAttribute("rc", rc);
-            System.out.println(rc);
             
             TemplateResult res = new TemplateResult(getServletContext());
             res.activateNoOutline("doc_candidatura.ftl.html", request, response);
-        } catch (DataException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-        }
     }
     
-    private void action_doc_resoconto(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, TemplateManagerException {
-        try {
+    private void action_doc_resoconto(HttpServletRequest request, HttpServletResponse response) throws DataException, NumberFormatException, TemplateManagerException {
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             
@@ -81,19 +80,17 @@ public class Documenti extends InternshipTutorBaseController {
             
             Candidatura c = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
             request.setAttribute("candidatura", c);
+
+            if (resoconto == null || c == null) {
+                throw new DataException("Risorsa non trovata");
+            }
             
             TemplateResult res = new TemplateResult(getServletContext());
             res.activateNoOutline("doc_resoconto.ftl.html", request, response);
-        } catch (DataException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-        }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
@@ -114,16 +111,23 @@ public class Documenti extends InternshipTutorBaseController {
                         action_doc_resoconto(request, response);
                 }
             } else {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
+                return;
             }
-        } catch (IOException | TemplateManagerException ex) {
+        } catch (TemplateManagerException | NumberFormatException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
+        } catch (DataException e) {
+            logger.error("Risprsa non trovata: ", e);
+            request.setAttribute("message", "errore gestito");
+            request.setAttribute("title", "Risorsa non disponibile");
+            request.setAttribute("errore", "404 Not Found");
+            action_error(request, response);
         }
     }
     

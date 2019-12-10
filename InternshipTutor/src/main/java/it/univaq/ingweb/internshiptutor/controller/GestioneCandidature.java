@@ -9,22 +9,25 @@ import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 /**
  *
  * @author Stefano Florio
  */
 public class GestioneCandidature extends InternshipTutorBaseController {
+    //logger
+    final static Logger logger = Logger.getLogger(GestioneCandidature.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -34,11 +37,12 @@ public class GestioneCandidature extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TemplateManagerException {
-        int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
-        try {
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, DataException, TemplateManagerException {
+            int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
+            if (ot == null) {
+                 throw new DataException("Tirocinio non trovato");
+            }
             request.setAttribute("nome_tirocinio", ot.getTitolo());
             
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(ot);
@@ -84,57 +88,34 @@ public class GestioneCandidature extends InternshipTutorBaseController {
             
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("gestione_candidati.ftl.html", request, response);
-            
-        } catch (DataException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        }
     }
     
     
-    private void action_accetta_cand(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TemplateManagerException {
-        try {
+    private void action_accetta_cand(HttpServletRequest request, HttpServletResponse response) throws IOException, DataException, SecurityLayerException {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             String src = SecurityLayer.issetString(request.getParameter("src"));
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(1, id_st, id_ot);
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaDocumento(id_st, id_ot, src);
             response.sendRedirect("dettaglio_candidatura?st="+id_st+"&ot="+id_ot);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to update candidatura");
-            action_error(request, response);
-        } catch (SecurityLayerException ex) {
-            Logger.getLogger(GestioneCandidature.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-        }
+
     }
     
-    private void action_rifiuta_cand(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TemplateManagerException {
-        try {
+    private void action_rifiuta_cand(HttpServletRequest request, HttpServletResponse response) throws IOException, DataException {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(3, id_st, id_ot);
             response.sendRedirect("gestione_candidati?ot=" + id_ot);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to update candidatura");
-            action_error(request, response);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-        }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null && "az".equals((String)s.getAttribute("tipologia"))) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
-                if (null == request.getParameter("convalida")) {
+                if (request.getParameter("convalida") == null) {
                     action_default(request, response);
                 }
                 else switch (request.getParameter("convalida")) {
@@ -145,15 +126,19 @@ public class GestioneCandidature extends InternshipTutorBaseController {
                         action_rifiuta_cand(request, response);
                         break;
                     default:
+                        //throw
                         break;
                 }
             } else {
+                logger.error("utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
+                return;
             }
-        } catch (TemplateManagerException ex) {
+        } catch (TemplateManagerException | DataException | IOException | SecurityLayerException | NumberFormatException ex) {
+            logger.error("Exception: ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

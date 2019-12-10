@@ -186,7 +186,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                             azienda.setForoCompetente(request.getParameter("foro_competente"));
                             azienda.setTematiche(request.getParameter("tematiche"));
                             azienda.setCorsoStudio(request.getParameter("corso_studio"));
-                            azienda.setDurataConvenzione(SecurityLayer.checkNumeric(request.getParameter("durata")));
+                            azienda.setDurataConvenzione(Integer.parseInt(request.getParameter("durata")));
                             int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAzienda(azienda);
                             if (insert != 1) {
                                 request.setAttribute("message", "errore_convalida");
