@@ -36,8 +36,8 @@ public class Login extends InternshipTutorBaseController {
         TemplateResult res = new TemplateResult(getServletContext());
         request.setAttribute("page_title", "Login");
         
-        //passamano del referrer (prima a login html poi alla servlet che valida il login)
-        if (request.getParameter("referrer") != null) {
+        //passamano del referrer richiesta tirocinio (prima a login html poi alla servlet che valida il login)
+        if (request.getParameter("referrer") != null && !request.getParameter("referrer").equals("login.ftl.html")) { //il != login.html perchè quando c'è un errore passo il reffer per farlo tornare a lui
             request.setAttribute("referrer", request.getParameter("referrer") + "?" + request.getParameter("referrer_res"));
         }
         
@@ -89,7 +89,7 @@ public class Login extends InternshipTutorBaseController {
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         
         try {
             if (request.getParameter("login") != null)

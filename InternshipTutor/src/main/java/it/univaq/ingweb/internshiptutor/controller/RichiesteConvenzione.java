@@ -12,6 +12,8 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,8 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class RichiesteConvenzione extends InternshipTutorBaseController {
+    //logger
+    final static Logger logger = Logger.getLogger(RichiesteConvenzione.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -32,9 +36,7 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
         }
     }
     
-    private void action_accetta(HttpServletRequest request, HttpServletResponse response, int id_azienda)
-            throws IOException, ServletException, TemplateManagerException {
-        try {
+    private void action_accetta(HttpServletRequest request, HttpServletResponse response, int id_azienda) throws IOException, SecurityLayerException, DataException {
             String src = SecurityLayer.issetString(request.getParameter("src"));
             Azienda az =  ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
             az.setSrcDocConvenzione(src);
@@ -42,32 +44,22 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
             if (1 == ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAzienda(az)){
                 response.sendRedirect("home");
             } else {
-                action_error(request, response);
+                throw new DataException("Impossibile convalidare la richiesta");
             }
-        } catch (DataException | SecurityLayerException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        }
     }
     
-    private void action_rifiuta(HttpServletRequest request, HttpServletResponse response, int id_azienda)
-            throws IOException, ServletException, TemplateManagerException {
-        try {
+    private void action_rifiuta(HttpServletRequest request, HttpServletResponse response, int id_azienda) throws IOException, DataException {
             Azienda az =  ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
             az.setStatoConvenzione(2);
             if (1 == ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAzienda(az)){
                 response.sendRedirect("home");
             } else {
-                action_error(request, response);
+                throw new DataException("Impossibile rifiutare la richiesta");
             }
-        } catch (DataException ex) {
-            request.setAttribute("exception", ex);
-            action_error(request, response);
-        }
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null && "ad".equals((String)s.getAttribute("tipologia"))) {
@@ -80,12 +72,15 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
                     action_rifiuta(request, response, id_azienda);
                 }
             } else {
+                logger.error("UTENTE NON AUTORIZZATO");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
+                return;
             }
-        } catch (TemplateManagerException ex) {
+        } catch (NumberFormatException | IOException | SecurityLayerException | DataException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

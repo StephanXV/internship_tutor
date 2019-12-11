@@ -4,6 +4,8 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.controller.InternshipTutorBaseController;
+import it.univaq.ingweb.internshiptutor.controller.Login;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import javax.servlet.Filter;
@@ -21,6 +23,9 @@ import javax.servlet.http.HttpSession;
 @WebFilter({"/richiesta_tirocinio", "/profilo"}) //per richiesta tirocinio
 public class AutenticazioneFilter implements Filter {
 
+    //logger
+    final static Logger logger = Logger.getLogger(AutenticazioneFilter.class);
+
 
     public AutenticazioneFilter() {
         // TODO Auto-generated constructor stub
@@ -36,6 +41,7 @@ public class AutenticazioneFilter implements Filter {
         // place your code here
         String ref = null;
         HttpServletRequest requestHTTP = (HttpServletRequest)request;
+        logger.error("Pagina scatentante: " + requestHTTP.getRequestURI());
         System.err.println(requestHTTP.getRequestURI());
 
         HttpServletResponse responseHTTP = (HttpServletResponse)response;
@@ -49,10 +55,9 @@ public class AutenticazioneFilter implements Filter {
                 requestHTTP.getRequestURI().contains("/index")  || requestHTTP.getRequestURI().contains("/css") || requestHTTP.getRequestURI().contains("/img") || requestHTTP.getRequestURI().contains("/lib")*/) {
             chain.doFilter(request, response); //vai tranquillo
         } else {
+            logger.error("Accesso negato");
             System.err.println("ACCESSO NEGATO");
-            if (SecurityLayer.checkNumericBool(request.getParameter("n"))) {
-                System.out.println("richiesta_tirocinio?n=" + request.getParameter("n"));
-                System.out.println("login?referrer=richiesta_tirocinio&referrer_res=" +  request.getParameter("n"));
+            if (SecurityLayer.checkNumericBool(request.getParameter("n"))) { //n è il tirocinio da richiedere (se è definito vai a login ma tenendo in memoria il referrer)
                 responseHTTP.sendRedirect("login?referrer=richiesta_tirocinio&referrer_res=" + "n=" + request.getParameter("n"));
             } else {
                 responseHTTP.sendRedirect("login");

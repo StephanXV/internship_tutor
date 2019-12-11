@@ -13,6 +13,8 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
+import org.apache.log4j.Logger;
+
 import java.util.Comparator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +26,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Statistiche extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Statistiche.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -42,8 +47,9 @@ public class Statistiche extends InternshipTutorBaseController {
                 a.getTirocinantiAttivi();
             });
             aziende.sort(Comparator.comparing(Azienda::getTirocinantiAttivi).reversed());
-            if (aziende.size() > 5)
+            if (aziende.size() > 5) {
                 aziende.subList(0, 5);
+            }
             
             // prende i 5 tutori universatori più richiesti
             List<TutoreUni> tutori_uni = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getTutoreUniDAO().getTutori();
@@ -51,16 +57,16 @@ public class Statistiche extends InternshipTutorBaseController {
                 tu.getOccorrenze();
             });
             tutori_uni.sort(Comparator.comparing(TutoreUni::getOccorrenze).reversed());
-            if (tutori_uni.size() > 5)
+            if (tutori_uni.size() > 5) {
                 tutori_uni.subList(0, 5);
+            }
             
             // prende le 5 offerte di tirocinio con più richieste totali
             List<OffertaTirocinio> ots = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getBestFiveOffertaTirocinio();
             
             // prende le 5 aziende con le valutazioni migliori
             List<Azienda> best_az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getBestFiveAziende();
-            System.out.println(best_az);
-            
+
             request.setAttribute("best_aziende", best_az);
             request.setAttribute("best_offerte", ots);
             request.setAttribute("tutori_uni", tutori_uni);
@@ -68,6 +74,7 @@ public class Statistiche extends InternshipTutorBaseController {
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("statistiche.ftl.html", request, response);
         } catch (TemplateManagerException | DataException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
@@ -83,6 +90,7 @@ public class Statistiche extends InternshipTutorBaseController {
             request.setAttribute("activeStat", "active");
             action_default(request, response);
         } else {
+            logger.error("Utente non autorizzato");
             request.setAttribute("message", "errore gestito");
             request.setAttribute("title", "Utente non autorizzato");
             request.setAttribute("errore", "401 Unauthorized");

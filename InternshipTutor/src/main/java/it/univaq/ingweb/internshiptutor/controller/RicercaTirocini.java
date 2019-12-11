@@ -57,13 +57,15 @@ public class RicercaTirocini extends InternshipTutorBaseController {
                     && (request.getParameter("settore") == null || request.getParameter("settore").length() < 1)
                     && (request.getParameter("titolo") == null || request.getParameter("titolo").length() < 1)
                     && (request.getParameter("durata") == null || request.getParameter("durata").length() < 1)) {
-                
+
+                //se non ho inserito nessun parametro e ho premuto cerca torna il warning al html
                 request.setAttribute("noSearch", "Inserire almeno un parametro per avviare la ricerca!");
                 action_default(request,response);
                 
                 return;
             }
-            
+
+            //i set attribute sono per far vedere all'utente una volta che preme cerca i pareametri di ricerca inseriti (come value)
             if (request.getParameter("facilitazioni") != null && request.getParameter("facilitazioni").length() > 0 && request.getParameter("facilitazioni").equals("1")) {
                 facilitazioni = true;
                 request.setAttribute("p_facilitazioni", request.getParameter("facilitazioni"));
@@ -101,6 +103,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             
             
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().searchOffertaTirocinio(durata, titolo, facilitazioni, luogo, settore, obiettivi, corso);
+            //se nessun tirocinio controllato front end
             request.setAttribute("tirocini", tirocini);
             action_default(request,response);
     }

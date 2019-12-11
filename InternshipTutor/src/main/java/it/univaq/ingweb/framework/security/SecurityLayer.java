@@ -100,15 +100,6 @@ public class SecurityLayer {
     }
 
     //--------- DATA SECURITY ------------
-    //questa funzione aggiunge un backslash davanti a
-    //tutti i caratteri "pericolosi", usati per eseguire
-    //SQL injection attraverso i parametri delle form
-    //this function adds backslashes in front of
-    //all the "malicious" charcaters, usually exploited
-    //to perform SQL injection through form parameters
-    public static String addSlashes(String s) {
-        return s.replaceAll("(['\"\\\\])", "\\\\$1");
-    }
 
     //questa funzione rimuove gli slash aggiunti da addSlashes
     //this function removes the slashes added by addSlashes
@@ -152,52 +143,7 @@ public class SecurityLayer {
             }
 	    return false;
     }
-    
 
-    public static LocalDate issetDate(String parameter, String date) throws SecurityLayerException {
-        //convertiamo la stringa in data, ma assicuriamoci prima che sia valida
-        if (date != null) {
-            try {
-                return LocalDate.parse(date);
-            } catch (IllegalArgumentException ex) {
-                throw new SecurityLayerException("Formato dati errato");
-            }
-        } else {
-            throw new SecurityLayerException("Parametro obbligatorio: " + parameter);
-        }
-    }
-
-    public static int issetInt(String s) throws SecurityLayerException {
-
-        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
-        if (s != null) {
-            //se la conversione fallisce, viene generata un'eccezione
-            try {
-                return Integer.parseInt(s);
-            } catch (NumberFormatException ex) {
-                throw new SecurityLayerException("Formato dati non valido");
-            }
-        } else {
-            //Non specifica il campo di errore
-            throw new SecurityLayerException("Richiesta non valida");
-        }
-    }
-    
-    public static int issetInt(String parameter, String s) throws SecurityLayerException {
-
-        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
-        if (s != null) {
-            //se la conversione fallisce, viene generata un'eccezione
-            try {
-                return Integer.parseInt(s);
-            } catch (NumberFormatException ex) {
-                throw new SecurityLayerException("Formato dati non valido");
-            }
-        } else {
-            //Non specifica il campo di errore
-            throw new SecurityLayerException("Parametro obbligatorio: "+ parameter);
-        }
-    }
 
     public static String issetString(String s) throws SecurityLayerException {
         //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
@@ -211,21 +157,6 @@ public class SecurityLayer {
         }
     }
 
-    public static String issetString(String parameter, String s) throws SecurityLayerException {
-        //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida
-        //convert the string to a number, ensuring its validity
-        if (s != null) {
-            if (!s.isEmpty()) {
-                //se la conversione fallisce, viene generata un'eccezione
-                //if the conversion fails, an exception is raised
-                return s;
-            } else {
-                throw new SecurityLayerException("Parametro vuoto: " + parameter);
-            }
-        } else {
-            throw new SecurityLayerException("Parametro obbligatorio: " + parameter);
-        }
-    }
 
     public static boolean checkString(String s) throws IllegalArgumentException {
         //convertiamo la stringa in numero, ma assicuriamoci prima che sia valida

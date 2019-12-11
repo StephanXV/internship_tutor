@@ -9,6 +9,8 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,8 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class ValutazioneAzienda extends InternshipTutorBaseController {
+    //logger
+    final static Logger logger = Logger.getLogger(ValutazioneAzienda.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -28,10 +32,8 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TemplateManagerException {
-        
-        try {
+    private void action_default(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, TemplateManagerException, DataException {
+
             int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
@@ -45,17 +47,9 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             request.setAttribute("id_st", id_st);
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("valutazione.ftl.html", request, response);
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to load from database");
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-            action_error(request, response);
-        }
     }
     
-    private void action_valuta(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TemplateManagerException {
-        try {
+    private void action_valuta(HttpServletRequest request, HttpServletResponse response) throws IOException, NumberFormatException, DataException {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st);
@@ -66,46 +60,26 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             valutazione.setStelle(SecurityLayer.checkNumeric(request.getParameter("rating")));
             int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().insertValutazione(valutazione);
             if (insert != 1) {
-                request.setAttribute("message", "errore_valutazione");
-                request.setAttribute("errore", "I dati della valutazione non sono validi, riprova");
-                action_error(request, response);
+                throw new DataException("Inserimento non effettuato");
             }
             response.sendRedirect("home");
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to load from database");
-            action_error(request, response);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-            action_error(request, response);
-        }
     }
     
-    private void action_cancella_valutazione(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, TemplateManagerException {
-        try {
+    private void action_cancella_valutazione(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, IOException, DataException {
+
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
             int delete = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().deleteValutazione(id_az, id_st);
             
             if (delete != 1) {
-                request.setAttribute("message", "errore_valutazione");
-                request.setAttribute("errore", "Non è stato possibile cancellare la valutazione, riprova");
-                action_error(request, response);
+                throw new DataException("Cancellazione non effettuata");
             }
             response.sendRedirect("valutazione?st="+id_st+"&az="+id_az);
-            
-        } catch (DataException ex) {
-            request.setAttribute("message", "Unable to load from database");
-            action_error(request, response);
-        } catch (NumberFormatException ex) {
-            request.setAttribute("message", "Parametro errato");
-            action_error(request, response);
-        }
+
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
@@ -114,17 +88,20 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
                 if (request.getParameter("submit") != null) {
                     action_valuta(request, response);
                 }
-                else if (request.getParameter("delete") != null)
+                else if (request.getParameter("delete") != null) {
                     action_cancella_valutazione(request, response);
-                else
+                } else {
                     action_default(request, response);
+                }
             } else {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
             }
-        } catch (TemplateManagerException ex) {
+        } catch (TemplateManagerException | IOException | DataException | NumberFormatException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }

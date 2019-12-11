@@ -15,6 +15,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -28,8 +29,11 @@ import javax.servlet.http.HttpSession;
  */
 public class Registrazione extends InternshipTutorBaseController {
 
+    //logger
+    final static Logger logger = Logger.getLogger(Registrazione.class);
+
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-    private String TYPE = null;
+    private String TYPE = null; //in modo che quando ricarica la pag ritorna a azienda o studente
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
 
@@ -57,11 +61,11 @@ public class Registrazione extends InternshipTutorBaseController {
         res.activate("registrazione.ftl.html", request, response);
     }
     
-    private void action_registrazione_azienda(HttpServletRequest request, HttpServletResponse response) 
-            throws IOException, ServletException, TemplateManagerException {
+    private void action_registrazione_azienda(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException {
 
         try {
             RespTirocini rt = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().createRespTirocini();
+
             // controlli sul responsabile tirocini
             if (SecurityLayer.checkString(request.getParameter("nome_rt")) && SecurityLayer.checkString(request.getParameter("cognome_rt")) &&
                     SecurityLayer.checkEmail(request.getParameter("email_rt")) && SecurityLayer.checkTelefono(request.getParameter("telefono_rt"))){
@@ -72,16 +76,15 @@ public class Registrazione extends InternshipTutorBaseController {
                 rt.setTelefono(request.getParameter("telefono_rt"));
                 int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().insertRespTirocini(rt);
                 if (insert != 1) {
-                    TYPE="AZIENDA";
-                    request.setAttribute("message", "errore_convalida");
-                    request.setAttribute("errore", "I campi del responsabile tirocini non sono corretti. Riprova!");
-                    action_error(request, response);
+                    throw new DataException("Impossibile inserire resp tirocini");
                 }
             } else {
                 TYPE="AZIENDA";
+                logger.error("Campi resp tirocini errati");
                 request.setAttribute("message", "errore_convalida");
                 request.setAttribute("errore", "I campi del responsabile tirocini non sono corretti. Riprova!");
                 action_error(request, response);
+                return;
             }
             
             try {  
@@ -100,16 +103,15 @@ public class Registrazione extends InternshipTutorBaseController {
                     ut.setTipologia("az");
                     int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
                     if (insert != 1) {
-                        TYPE="AZIENDA";
-                        request.setAttribute("message", "errore_convalida");
-                        request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
-                        action_error(request, response);
+                        throw new DataException("Impossibile inserire utente");
                     }
                 } else {
                     TYPE="AZIENDA";
+                    logger.error("Campi utente errati");
                     request.setAttribute("message", "errore_convalida");
                     request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
                     action_error(request, response);
+                    return;
                 }
                 
                 try {
@@ -137,12 +139,9 @@ public class Registrazione extends InternshipTutorBaseController {
                         az.setDurataConvenzione(Integer.parseInt(request.getParameter("durata")));
                         int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().insertAzienda(az);
                         if (insert != 1) {
-                            TYPE="AZIENDA";
-                            request.setAttribute("message", "errore_convalida");
-                            request.setAttribute("errore", "I dati aziendali inseriti non sono validi. Riprova!");
-                            action_error(request, response);
+                            throw new DataException("Impossibile inserire azienda");
                         }
-
+                        //result OK
                         request.setAttribute("MSG", "Grazie per la registrazione. \nPotrai eseguire l'accesso non appena l'admin confermerà la vostra richiesta di convenzionamento");
                         request.setAttribute("ICON", "fas fa-check");
                         request.setAttribute("alert", "success");
@@ -150,31 +149,35 @@ public class Registrazione extends InternshipTutorBaseController {
                         res.activate("home_anonimo.ftl.html", request, response);
                     }  else {
                         TYPE="AZIENDA";
+                        logger.error("Campi azienda errati");
                         request.setAttribute("message", "errore_convalida");
                         request.setAttribute("errore", "I dati aziendali inseriti non sono validi. Riprova!");
                         action_error(request, response);
+                        return;
                     }
                 } catch (DataException ex) {
                     // se fallisce l'inserimento dell'azienda, cancella l'utente e il responsabile inseriti prima
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
                     ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
+                    logger.error("Exception : ", ex);
                     request.setAttribute("exception", ex);
                     action_error(request, response);
                 }
             } catch (DataException ex) {
                 // se fallisce l'inserimento dell'utente, cancella il responsabile inserito prima
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getRespTirociniDAO().deleteRespTirocini(rt.getId());
+                logger.error("Exception : ", ex);
                 request.setAttribute("exception", ex);
                 action_error(request, response);
             }
         } catch (DataException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }    
     }
     
-    private void action_registrazione_studente(HttpServletRequest request, HttpServletResponse response) 
-            throws IOException, ServletException, TemplateManagerException {
+    private void action_registrazione_studente(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException {
         try {
             Utente ut = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().createUtente();
                 // controlli sull'utente
@@ -190,8 +193,10 @@ public class Registrazione extends InternshipTutorBaseController {
                 ut.setPw(encryptedPassword);
                 ut.setEmail(request.getParameter("email"));
                 ut.setTipologia("st");
+                //check if user already exists (with the same credentials)
                 if (((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().checkUtenteExist(request.getParameter("username"), request.getParameter("email"))){
                     TYPE="STUDENT";
+                    logger.error("Utente già esistente");
                     request.setAttribute("message", "errore_convalida");
                     request.setAttribute("errore", "Email o Password gi&agrave; esistenti. Riprova!");
                     action_error(request, response);
@@ -199,17 +204,15 @@ public class Registrazione extends InternshipTutorBaseController {
                 }
                     int insert = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().insertUtente(ut);
                     if (insert != 1) {
-                        TYPE = "STUDENT";
-                        request.setAttribute("message", "errore_convalida");
-                        request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
-                        action_error(request, response);
-                        return;
+                        throw new DataException("Impossibile inserire l'utente");
                     }
             } else {
                 TYPE="STUDENT";
+                logger.error("I campi utente inseriti non sono corretti.");
                 request.setAttribute("message", "errore_convalida");
                 request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
                 action_error(request, response);
+                return;
             }
 
             try {
@@ -235,17 +238,13 @@ public class Registrazione extends InternshipTutorBaseController {
                     st.setCorsoLaurea(request.getParameter("corso_laurea"));
                     st.setHandicap(Boolean.valueOf(request.getParameter("handicap")));
                     st.setUtente(ut);
-                    
-                    System.out.println(st);
+
 
                     int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().insertStudente(st);
                     if (insert != 1){
-                        TYPE="STUDENT";
-                        request.setAttribute("message", "errore_convalida");
-                        request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
-                        action_error(request, response);
+                        throw new DataException("Impossibile inserire lo studente");
                     }
-
+                    //result OK
                     request.setAttribute("MSG", "Registrazione effettuata con successo!\nOra puoi accedere ed iniziare ad usare i nostri servizi");
                     request.setAttribute("ICON", "fas fa-check");
                     request.setAttribute("alert", "success");
@@ -255,19 +254,22 @@ public class Registrazione extends InternshipTutorBaseController {
 
                 } else {
                     TYPE="STUDENT";
+                    logger.error("I campi studente inseriti non sono corretti.");
                     request.setAttribute("message", "errore_convalida");
                     request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
                     action_error(request, response);
+                    return;
                 }
             } catch (DataException ex) {
                 // se fallisce l'inserimento dello studente, cancella l'utente inserito prima
+                logger.error("Exception: ", ex);
                 ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().deleteUtente(ut.getId());
                 request.setAttribute("exception", ex);
                 action_error(request, response);
             }
 
-        } catch (DataException ex) {
-            //request.setAttribute("exception", ex);
+        } catch (DataException ex) { //se fallisce lo studente
+            logger.error("Exception: ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
@@ -275,13 +277,10 @@ public class Registrazione extends InternshipTutorBaseController {
     }
         
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
-                request.setAttribute("nome_utente", (String)s.getAttribute("username"));
-                request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Accesso già eseguito: non è possibile effettuare una registrazione da loggato");
                 request.setAttribute("errore", "401 Unauthorized");
@@ -305,7 +304,8 @@ public class Registrazione extends InternshipTutorBaseController {
                         action_open_reg(request, response);
                     }
             }
-        } catch (IOException | TemplateManagerException ex) {
+        } catch (TemplateManagerException ex) {
+            logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
 

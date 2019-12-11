@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
+import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 
 /**
@@ -24,6 +26,9 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
  * @author Stefano Florio
  */
 public class Upload extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Upload.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -88,8 +93,7 @@ public class Upload extends InternshipTutorBaseController {
     }
     
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
@@ -107,6 +111,7 @@ public class Upload extends InternshipTutorBaseController {
                     action_error(request, response);
                 }
             } else {
+                logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
