@@ -60,7 +60,8 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
         TemplateResult res = new TemplateResult(getServletContext());
 
         Azienda azienda = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
-        if (azienda != null) {
+
+        if (azienda != null && azienda.getStatoConvenzione() == 1) {
             List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(azienda, true);
 
             // calcolo dei dati per le statistiche dell'azienda

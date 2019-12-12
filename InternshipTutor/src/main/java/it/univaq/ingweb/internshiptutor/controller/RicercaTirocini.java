@@ -40,6 +40,12 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             request.setAttribute("page_title", "Tirocini");
             res.activate("ricerca_tirocini.ftl.html", request, response);
     }
+
+    private void action_ricerca_tutti(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException, DataException {
+        List<OffertaTirocinio> tirocini = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getAllOfferteTirocinio();
+        request.setAttribute("tirocini", tirocini);
+        action_default(request,response);
+    }
     
     private void action_ricerca(HttpServletRequest request, HttpServletResponse response) throws TemplateManagerException, DataException {
             String obiettivi = "%";
@@ -121,7 +127,11 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             }
             if (request.getParameter("submit") != null && request.getParameter("submit").equals("Cerca")) {
                 action_ricerca(request, response);
-            } else {
+            }
+            else if (request.getParameter("all") != null && request.getParameter("all").equals("true")) {
+                action_ricerca_tutti(request, response);
+            }
+            else {
                 action_default(request, response);
             }
 
@@ -131,5 +141,7 @@ public class RicercaTirocini extends InternshipTutorBaseController {
             action_error(request, response);
         }
 
-    } 
+    }
+
+
 }

@@ -187,6 +187,7 @@ public class Home extends InternshipTutorBaseController {
                 int id_utente = (int) s.getAttribute("id_utente");
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+
                 switch ((String) s.getAttribute("tipologia")) {
                     case "ad":
                         action_admin(request, response, id_utente);
@@ -195,7 +196,8 @@ public class Home extends InternshipTutorBaseController {
                         action_studente(request, response, id_utente);
                         break;
                     case "az":
-                        action_azienda(request, response, id_utente);      
+                        action_azienda(request, response, id_utente);
+                        break;
                 }
             } else {
                 action_anonymous(request, response);

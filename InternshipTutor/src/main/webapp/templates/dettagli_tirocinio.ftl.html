@@ -1,6 +1,5 @@
 <div class="container">
-    
-    <#if (tirocinio?size>0)>
+
     <div class="card shadow rounded">
         <h5 class="card-header text-center">${tirocinio.titolo}</h5>
         <div class="card-body">
@@ -20,7 +19,7 @@
                         <li class="list-group-item"><i class="far fa-clock pr-2"></i><strong>Orari:</strong> ${tirocinio.orari!"Non specificato"}</li>
                         <li class="list-group-item"><i class="fas fa-hourglass-start pr-2"></i><strong>Durata:</strong> ${tirocinio.durata}</li>
                         <li class="list-group-item"><i class="fas fa-hands-helping pr-2"></i><strong>Facilitazioni:</strong> ${tirocinio.facilitazioni!"Non specificato"}</li>
-                        <li class="list-group-item"><i class="fas fa-power-off pr-2"></i><strong>Attivo:</strong> Si</li>
+                        <li class="list-group-item"><i class="fas fa-power-off pr-2"></i><strong>Attivo:</strong> ${attivo}</li>
                     </ul>
                 </div>
 
@@ -44,7 +43,7 @@
     </div>
 
         
-
+        <#if isAttiva?has_content>
         <div class="row mb-6" style="margin-top: 45px">
             <div class="col text-center">
                 <a href="richiesta_tirocinio?n=${tirocinio.id}">
@@ -52,7 +51,7 @@
                 </a>
             </div>
         </div>
-    </#if>
+        </#if>
     
 </div>
 

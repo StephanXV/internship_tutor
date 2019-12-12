@@ -36,8 +36,9 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
         
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_ot, int id_st) throws TemplateManagerException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_ot, int id_st, HttpSession s) throws TemplateManagerException {
         try {
+
             Candidatura candidatura = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
             if (candidatura == null) {
                 throw new DataException("Candidatura non trovata");
@@ -80,7 +81,7 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
                         action_salva_date(request, response, id_ot, id_st);
                 }
                 else
-                    action_default(request, response, id_ot, id_st);
+                    action_default(request, response, id_ot, id_st, s);
             } else {
                 logger.error("Utente non autorizzato");
                 request.setAttribute("message", "errore gestito");

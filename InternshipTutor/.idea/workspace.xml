@@ -7,34 +7,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_protobuf_protobuf_java_3_6_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_javax_mail_1_6_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_mail_javax_mail_1_6_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_activation_activation_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_javaee_web_api_7_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_17.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_18.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_8_0_18.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_9_0_21.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_annotations_api_9_0_21.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_28.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_28.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jasypt_jasypt_1_9_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jasypt_jasypt_1_9_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_3_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_bootstrap_4_3_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/framework/security/SecurityLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/framework/security/SecurityLayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ListaAziende.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ListaAziende.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Logout.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Logout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ProfiloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ProfiloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Registrazione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Registrazione.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/framework/result/FailureResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/framework/result/FailureResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettagliTirocinio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettagliTirocinio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioCandidatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioCandidatura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Documenti.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Documenti.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/GestioneCandidature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/GestioneCandidature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RicercaTirocini.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiesteConvenzione.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiesteConvenzione.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Statistiche.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Statistiche.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Upload.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Upload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ValutazioneAzienda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ValutazioneAzienda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO_MySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO_MySQL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/filter/AutenticazioneFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/filter/AutenticazioneFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettagli_tirocinio.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettagli_tirocinio.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_candidatura.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_candidatura.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/gestione_candidati.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/gestione_candidati.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/ricerca_tirocini.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/ricerca_tirocini.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -322,6 +311,8 @@
       <workItem from="1575825568066" duration="3372000" />
       <workItem from="1576002743479" duration="8848000" />
       <workItem from="1576061677166" duration="9007000" />
+      <workItem from="1576144061160" duration="4119000" />
+      <workItem from="1576156682531" duration="5654000" />
     </task>
     <servers />
   </component>

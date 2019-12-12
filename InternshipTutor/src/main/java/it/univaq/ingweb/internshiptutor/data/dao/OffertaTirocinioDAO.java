@@ -34,4 +34,6 @@ public interface OffertaTirocinioDAO {
     List<OffertaTirocinio> searchOffertaTirocinio(String durata, String titolo, boolean facilitazioni, String luogo, String settore, String obiettivi, String corsoStudio) throws DataException;
     
     List<OffertaTirocinio> getBestFiveOffertaTirocinio() throws DataException;
+
+    List<OffertaTirocinio> getAllOfferteTirocinio() throws DataException;
 }

@@ -39,7 +39,6 @@ public class AutenticazioneFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // TODO Auto-generated method stub
         // place your code here
-        String ref = null;
         HttpServletRequest requestHTTP = (HttpServletRequest)request;
         logger.error("Pagina scatentante: " + requestHTTP.getRequestURI());
         System.err.println(requestHTTP.getRequestURI());

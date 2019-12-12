@@ -7,6 +7,7 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import org.apache.log4j.Logger;
@@ -37,12 +38,19 @@ public class GestioneCandidature extends InternshipTutorBaseController {
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, DataException, TemplateManagerException {
+    private void action_default(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws NumberFormatException, DataException, TemplateManagerException {
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             OffertaTirocinio ot = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot);
             if (ot == null) {
                  throw new DataException("Tirocinio non trovato");
             }
+
+            Azienda currentAzienda = ot.getAzienda();
+            //controllo se l'utente loggato è un azienda e se l'offerta di tirocinio è stata emessa dall'azienda loggata
+            if (!s.getAttribute("tipologia").equals("az") || !s.getAttribute("id_utente").equals(currentAzienda.getUtente().getId())) {
+                throw new DataException("L'offerta di tirocinio non appartiene all'azienda loggata");
+            }
+
             request.setAttribute("nome_tirocinio", ot.getTitolo());
             
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(ot);
@@ -116,7 +124,7 @@ public class GestioneCandidature extends InternshipTutorBaseController {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
                 if (request.getParameter("convalida") == null) {
-                    action_default(request, response);
+                    action_default(request, response, s);
                 }
                 else switch (request.getParameter("convalida")) {
                     case "si":

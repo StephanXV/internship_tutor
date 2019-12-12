@@ -15,9 +15,10 @@
  */
 package it.univaq.ingweb.framework.result;
 
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +33,6 @@ public class FailureResult {
     private String TITLE = null;
     private String ICON = null;
     private String alertType = null;
-    private String ERR = null;
-    private String TITLE_ERR = null;
 
     protected ServletContext context;
     private final TemplateResult template;
@@ -45,23 +44,18 @@ public class FailureResult {
 
     /* se c'è un eccezione */
     public void activate(Exception exception, HttpServletRequest request, HttpServletResponse response) {
-        if (exception != null && exception.getMessage() != null) {
-            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, exception.getMessage());
-        } else if (exception != null) {
-            Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, exception.getClass().getName());
-        }
-
         try {
             request.setAttribute("err", "Errore Sconosciuto");
             request.setAttribute("type_err", "Impossibile completare la richiesta.");
             template.activate("error.ftl.html", request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (TemplateManagerException e) { //se non trovo il template
+            Logger.getLogger(FailureResult.class.getName()).error("Exception: ", e);
             try {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
             } catch (IOException ex) {
-                Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FailureResult.class.getName()).error("Exception: ", e);
             }
+
         }
     }
 
@@ -81,7 +75,7 @@ public class FailureResult {
                 try {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
                 } catch (IOException e) {
-                    Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(FailureResult.class.getName()).error("EXCEPTION: ", e);
                 }
             }
         } else { /* se sono errori gestiti */
@@ -94,7 +88,7 @@ public class FailureResult {
                 try {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
                 } catch (IOException e) {
-                    Logger.getLogger(FailureResult.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(FailureResult.class.getName()).error("EXCEPTION: ", e);
                 }
             }
         }

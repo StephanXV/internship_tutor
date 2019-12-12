@@ -1,6 +1,6 @@
 <div class="mx-auto dettaglio-azienda-js">
     
-    <#if (azienda?size>0)>
+    <#if (azienda?size>0 && azienda.statoConvenzione==1)>
     <div class="card border-0" style="margin-bottom: 30px">
         <div class="card-body">
             <h2 class="card-title text-center">${azienda.ragioneSociale}</h2>
@@ -216,12 +216,15 @@
             
         </div>
     </div>
-    
+
     <#else>
-    <div class="col bg-light pt-4 text-center" style="padding-bottom: 30px">
-        <span class="lead">OPSS.. L'azienda non è stata trovata</span>
+    <div class="jumbotron text-center" style="margin-bottom: 30px; margin-top: 60px">
+        <h1 class="display-4"><i class="far fa-times-circle mr-2"></i>OPSS...</h1>
+        <p class="lead">Nessun risultato.</p>
+        <hr class="my-4">
+        <p>Azienda non trovata</p>
     </div>
-    
+
     </#if>
     
 </div>

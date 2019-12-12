@@ -36,6 +36,12 @@ public class DettagliTirocinio extends InternshipTutorBaseController{
         if (tirocinio == null) {
             throw new DataException("Tirocinio non trovato");
         }
+        if (tirocinio.isAttiva()) {
+            request.setAttribute("attivo", "Si");
+            request.setAttribute("isAttiva", "yes");
+        } else {
+            request.setAttribute("attivo", "No");
+        }
         request.setAttribute("tirocinio", tirocinio);
         res.activate("dettagli_tirocinio.ftl.html", request, response);
     }
