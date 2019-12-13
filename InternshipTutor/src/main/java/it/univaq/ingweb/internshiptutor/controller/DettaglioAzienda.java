@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Giuseppe Gasbarro
+ * @author Enrico Monte
  */
 public class DettaglioAzienda extends InternshipTutorBaseController {
     //logger

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Stefano Florio
+ * @author Enrico Monte
  */
 public class Login extends InternshipTutorBaseController {
     //logger

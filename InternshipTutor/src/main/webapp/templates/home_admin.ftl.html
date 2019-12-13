@@ -58,10 +58,10 @@
                             <#if (az_registrate?size>0)>
                             <table class="table table-hover nowrap" id="myTableConv">
                                 <thead>
-                                <tr>
-                                    <th>Azienda</th>
-                                    <th>Richiesta</th>
-                                    <th>Upload</th>
+                                <tr class="bg-primary">
+                                    <th class="text-white">Azienda</th>
+                                    <th class="text-white">Richiesta</th>
+                                    <th class="text-white">Upload</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -71,13 +71,13 @@
 
                                     <td><a  href="azienda?n=${az_registrata.utente.id}">${az_registrata.ragioneSociale}</a></td>
                                     <td>
-                                        <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}">
+                                        <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}" data-toggle="tooltip" data-placement="right" title="Download Richiesta">
                                             <button type="button" class="btn btn-primary text-white">
                                                 <i class="fa fa-file-download"></i>
                                             </button>
                                         </a>
 
-                                        <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
+                                        <button type="button" title="Respingi Richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
 
@@ -109,7 +109,7 @@
                                             <input name="tipo" type="hidden" value="convenzione" />
                                             <input type='file' name='convenzionetoupload'/>
 
-                                            <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                                            <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white" data-toggle="tooltip" data-placement="right" title="Upload Richiesta">
                                                 <i class="fas fa-file-upload"></i>
                                             </button>
                                         </form>
@@ -131,11 +131,11 @@
                             <#if (az_convenzionate?size>0)>
                             <table class="table table-hover nowrap" id="myTableConvAz">
                                 <thead>
-                                <tr>
-                                    <th>Azienda</th>
-                                    <th>Attiva dal</th>
-                                    <th>Durata (mesi)</th>
-                                    <th>Documento</th>
+                                <tr class="bg-primary">
+                                    <th class="text-white">Azienda</th>
+                                    <th class="text-white">Attiva dal</th>
+                                    <th class="text-white">Durata (mesi)</th>
+                                    <th class="text-white">Documento</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -149,7 +149,7 @@
                                         <form method="get" action="download">
                                             <input name="tipo" type="hidden" value="convenzione" />
                                             <input style="width: 150px" readonly name="res" value="${az_convenzionata.srcDocConvenzione}"/>
-                                            <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white">
+                                            <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Richiesta">
                                                 <i class="fa fa-file"></i>
                                             </button>
                                         </form>
@@ -170,9 +170,9 @@
                             <#if (az_rifiutate?size>0)>
                             <table class="table table-hover nowrap" id="myTableRif">
                                 <thead>
-                                <tr>
-                                    <th>Azienda</th>
-                                    <th>Richiesta respinta</th>
+                                <tr class="bg-primary">
+                                    <th class="text-white">Azienda</th>
+                                    <th class="text-white">Richiesta respinta</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -182,7 +182,7 @@
 
                                     <td><a  href="azienda?n=${az_rifiutata.utente.id}">${az_rifiutata.ragioneSociale}</a></td>
                                     <td>
-                                        <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_rifiutata.utente.id}">
+                                        <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_rifiutata.utente.id}" data-toggle="tooltip" data-placement="right" title="Download Richiesta">
                                             <button type="button" class="btn btn-primary text-white">
                                                 <i class="fa fa-file-download"></i>
                                             </button>
@@ -220,10 +220,10 @@
         <#if (az_registrate?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
-            <tr>
-                <th>Azienda</th>
-                <th>Richiesta</th>
-                <th>Upload</th>
+            <tr class="bg-primary">
+                <th class="text-white">Azienda</th>
+                <th class="text-white">Richiesta</th>
+                <th class="text-white">Upload</th>
             </tr>
             </thead>
             <tbody>
@@ -233,14 +233,14 @@
 
                 <td><a  href="azienda?n=${az_registrata.utente.id}">${az_registrata.ragioneSociale}</a></td>
                 <td>
-                    <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}">
+                    <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_registrata.utente.id}" data-toggle="tooltip" data-placement="right" title="Download Richiesta">
                         <button type="button" class="btn btn-primary text-white">
                             <i class="fa fa-file-download"></i>
                         </button>
                     </a>
 
-                    <a href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}">
-                    <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js">
+                    <a href="richieste_convenzione?convalida=no&az=${az_registrata.utente.id}" data-toggle="tooltip" data-placement="right" title="Rifiuta Richiesta">
+                    <button type="button" class="btn bg-danger text-white butt_js">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                     </a>
@@ -250,7 +250,7 @@
                         <input name="tipo" type="hidden" value="convenzione" />
                         <input type='file' name='convenzionetoupload'/>
 
-                        <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                        <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white" data-toggle="tooltip" data-placement="right" title="Upload Richiesta">
                             <i class="fas fa-file-upload"></i>
                         </button>
                     </form>
@@ -276,11 +276,11 @@
         <#if (az_convenzionate?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
-            <tr>
-                <th>Azienda</th>
-                <th>Attiva dal</th>
-                <th>Durata (mesi)</th>
-                <th>Documento</th>
+            <tr class="bg-primary">
+                <th class="text-white">Azienda</th>
+                <th class="text-white">Attiva dal</th>
+                <th class="text-white">Durata (mesi)</th>
+                <th class="text-white">Documento</th>
             </tr>
             </thead>
             <tbody>
@@ -294,7 +294,7 @@
                     <form method="get" action="download">
                         <input name="tipo" type="hidden" value="convenzione" />
                         <input style="width: 150px" readonly name="res" value="${az_convenzionata.srcDocConvenzione}"/>
-                        <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white">
+                        <button type="submit" name="submit" value="download_convenzione" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Richiesta">
                             <i class="fa fa-file"></i>
                         </button>
                     </form>
@@ -318,9 +318,9 @@
         <#if (az_rifiutate?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
-            <tr>
-                <th>Azienda</th>
-                <th>Richiesta respinta</th>
+            <tr class="bg-primary">
+                <th class="text-white">Azienda</th>
+                <th class="text-white">Richiesta respinta</th>
             </tr>
             </thead>
             <tbody>
@@ -331,7 +331,7 @@
                 <td><a  href="azienda?n=${az_rifiutata.utente.id}">${az_rifiutata.ragioneSociale}</a></td>
                 <td>
                     <a style="text-decoration: none;" target="_blank" href="docs?tipo=0&az=${az_rifiutata.utente.id}">
-                        <button type="button" class="btn btn-primary text-white">
+                        <button type="button" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Richiesta">
                             <i class="fa fa-file-download"></i>
                         </button>
                     </a>
@@ -381,4 +381,10 @@
           }
         });
     } );
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 </script>

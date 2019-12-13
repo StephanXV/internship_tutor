@@ -45,8 +45,8 @@ public class OffertaTirocinioDAO_MySQL extends DAO implements OffertaTirocinioDA
                     + "durata, titolo, obiettivi, modalita, facilitazioni, id_azienda, id_tutore_tirocinio) values (?,?,?,?,?,?,?,?,?,?)"
                     , Statement.RETURN_GENERATED_KEYS);
             uOffertaTirocinioAttiva = connection.prepareStatement("UPDATE offerta_tirocinio SET attiva=? WHERE id=?");
-            ricercaTirocinio = connection.prepareStatement(" SELECT t.*, a.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ? and attiva=1))");
-            ricercaTirocinioFac = connection.prepareStatement(" SELECT t.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ? and t.facilitazioni is not null and attiva=1)");
+            ricercaTirocinio = connection.prepareStatement(" SELECT t.*, a.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ? and t.attiva=1)");
+            ricercaTirocinioFac = connection.prepareStatement(" SELECT t.* FROM offerta_tirocinio as t, azienda as a  where (t.id_azienda=a.id_utente) and (t.luogo like ? and t.settore like ? and t.titolo like ? and t.obiettivi like ? and t.durata like ? and a.corso_studio like ? and t.facilitazioni is not null and t.attiva=1)");
             sBestFive = connection.prepareStatement("select ot.*, count(*) as richieste from offerta_tirocinio ot join candidatura c where ot.id = c.id_offerta_tirocinio group by ot.id having richieste > 0 order by richieste desc limit 5");
             sAllOfferteTirocinio = connection.prepareStatement("select * from offerta_tirocinio where attiva=1");
         } catch (SQLException ex) {

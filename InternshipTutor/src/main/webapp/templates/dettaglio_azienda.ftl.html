@@ -240,7 +240,7 @@
         </div>
         
         <div class="row">
-            <div class="col-7 card border-0">
+            <div class="col-md-7 col-10 mx-auto card border-0">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><i class="fas fa-map-marker-alt pr-2"></i><strong>Indirizzo:</strong> ${azienda.indirizzo}, ${azienda.citta} (${azienda.provincia}), ${azienda.cap}</li>
@@ -253,7 +253,7 @@
                 </div>
             </div>
             
-            <div class="col-5 my-auto text-center">
+            <div class="col-md-5 col-10 mx-auto my-auto text-center">
                 <a class="text-center" href="https://maps.google.com/?q={azienda.cap}%20{azienda.citta}%20${azienda.indirizzo}%20${azienda.provincia}">
                     <button type="button" class="btn btn-primary">Mostra su Mappa</button>
                 </a>
@@ -278,7 +278,7 @@
                     <tr>
                         
                         <td>
-                            <a href="#">
+                            <a href="dettagli_tirocinio?n=${tirocinio.id}">
                                 ${tirocinio.titolo}
                             </a>
                         </td>

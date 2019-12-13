@@ -2,6 +2,14 @@
     display: block;
 }
 
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.reg_no_js {
+    display: none;
+}
+
 @media (max-width: 990px) {
     .divider_menu{
         display: none !important;

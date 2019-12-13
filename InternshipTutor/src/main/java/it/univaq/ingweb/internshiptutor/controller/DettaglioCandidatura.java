@@ -43,6 +43,14 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
             if (candidatura == null) {
                 throw new DataException("Candidatura non trovata");
             }
+
+            Azienda currentAzienda = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(id_ot).getAzienda();
+            //controllo se l'utente loggato è un azienda e se l'offerta di tirocinio è stata emessa dall'azienda loggata
+            if (!s.getAttribute("tipologia").equals("az") || !s.getAttribute("id_utente").equals(currentAzienda.getUtente().getId())) {
+                userNotAuthorized(request, response);
+                return;
+            }
+
             request.setAttribute("candidatura", candidatura);
             
             TemplateResult res = new TemplateResult(getServletContext());
@@ -56,7 +64,7 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
             action_error(request, response);
         }
     }
-    
+
     private void action_salva_date(HttpServletRequest request, HttpServletResponse response, int id_ot, int id_st) throws IllegalArgumentException, IOException, DataException {
             //check con throws IllegalArgument
             LocalDate inizio_tirocinio = SecurityLayer.checkDate(request.getParameter("inizio_tirocinio"));
@@ -83,11 +91,7 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
                 else
                     action_default(request, response, id_ot, id_st, s);
             } else {
-                logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
-                action_error(request, response);
+                userNotAuthorized(request, response);
                 return;
             }
         } catch (TemplateManagerException | IOException | DataException | IllegalArgumentException ex) {
@@ -95,5 +99,13 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
+    }
+
+    private void userNotAuthorized(HttpServletRequest request, HttpServletResponse response) {
+        logger.error("Utente non autorizzato");
+        request.setAttribute("message", "errore gestito");
+        request.setAttribute("title", "Utente non autorizzato");
+        request.setAttribute("errore", "401 Unauthorized");
+        action_error(request, response);
     }
 }

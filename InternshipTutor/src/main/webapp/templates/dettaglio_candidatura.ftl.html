@@ -197,6 +197,15 @@
                     </#if>
                 </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="bg-primary text-white input-group-text">Tirocinio</span>
+                    </div>
+                    <input readonly type="text" value="${candidatura.offertaTirocinio.titolo}" class="form-control">
+            </div>
+            </div>
             
         </div>
         
@@ -376,7 +385,7 @@
                 <form method="get" action="download">
                     <input name="tipo" type="hidden" value="candidatura" />
                     <input style="width: 150px" readonly name="res" value="${candidatura.srcDocCandidatura!}"/>
-                    <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                    <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Scarica Documento">
                         <i class="fa fa-file"></i>
                     </button>
                 </form>

@@ -21,6 +21,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
+/**
+ *
+ * @author Enrico Monte
+ */
 public class ProfiloController extends InternshipTutorBaseController {
     //logger
     final static Logger logger = Logger.getLogger(ProfiloController.class);
@@ -268,7 +272,7 @@ public class ProfiloController extends InternshipTutorBaseController {
 
             Utente ad = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().getUtente((int) s.getAttribute("id_utente"));
             // controlli sull'utente
-            if (SecurityLayer.checkString(request.getParameter("username")) && SecurityLayer.checkString(request.getParameter("pw")) &&
+            if (SecurityLayer.checkString(request.getParameter("username"))  &&
                     SecurityLayer.checkEmail(request.getParameter("email"))) {
 
                 if ("".equals(request.getParameter("pw")) || request.getParameter("pw") == null) { //se pass non cambiata

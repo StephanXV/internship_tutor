@@ -69,9 +69,9 @@
     
     <div class="tab-content" id="nav-tabContent">
         
-        <div class="tab-pane fade show active pt-4" id="nav-tiro-att" role="tabpanel" aria-labelledby="nav-tiro_attesa-tab">
+        <div class="tab-pane fade show active pt-4 tabData" id="nav-tiro-att" role="tabpanel" aria-labelledby="nav-tiro_attesa-tab">
             <#if (candidature_attesa?size>0)>
-            <table class="table table-hover mt-5" id="tableTirociniAttesa">
+            <table class="table table-hover mt-5 nowrap" id="tableTirociniAttesa">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>Tirocinio</th>
@@ -112,9 +112,9 @@
             
             
             
-        <div class="tab-pane fade pt-4" id="nav-tiro-ok" role="tabpanel" aria-labelledby="nav-tiro-attivi-tab">
+        <div class="tab-pane fade pt-4 tabData" id="nav-tiro-ok" role="tabpanel" aria-labelledby="nav-tiro-attivi-tab">
             <#if (candidature_attive?size>0)>
-            <table class="table table-hover mt-5" id="tableTirociniAttivi" cellspacing="0">
+            <table class="table table-hover mt-5 nowrap" id="tableTirociniAttivi" cellspacing="0">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>Tirocinio</th>
@@ -147,7 +147,7 @@
                             <form method="get" action="download">
                                 <input name="tipo" type="hidden" value="candidatura" />
                                 <input readonly name="res" value="${candidatura.srcDocCandidatura}"/>
-                                <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                                <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Candidatura">
                                     <i class="fa fa-file"></i>
                                 </button>
                             </form>
@@ -202,7 +202,7 @@
                             <form method="get" action="download">
                                 <input name="tipo" type="hidden" value="candidatura" />
                                 <input readonly name="res" value="${candidatura.srcDocCandidatura}"/>
-                                <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                                <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Candidatura">
                                     <i class="fa fa-file"></i>
                                 </button>
                             </form>
@@ -211,7 +211,7 @@
                             <div class="d-flex flex-row justify-content-between">
                                 
                                     <a style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
-                                        <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
+                                        <button type="button" data-toggle="tooltip" data-placement="right" title="Compila Resoconto" class="btn btn-primary text-white">
                                             <i class="fa fa-file-download"></i>
                                         </button>
                                     </a>
@@ -220,7 +220,7 @@
                                     <form action="valutazione" method="get">
                                         <input name="az" hidden value="${candidatura.offertaTirocinio.azienda.utente.id}"/>
                                         <input name="st" hidden value="${candidatura.studente.utente.id}"/>
-                                        <button type="submit" title="Valuta l'azienda" class="btn btn-primary text-white">
+                                        <button type="submit" data-toggle="tooltip" data-placement="right" title="Valuta Azienda" class="btn btn-primary text-white">
                                             <i class="fas fa-star"></i>
                                         </button>
                                     </form>
@@ -241,9 +241,9 @@
         </div>
             
             
-        <div class="tab-pane fade pt-4" id="nav-tiro-no" role="tabpanel" aria-labelledby="nav-tiro-rifiutati-tab">
+        <div class="tab-pane fade pt-4 tabData" id="nav-tiro-no" role="tabpanel" aria-labelledby="nav-tiro-rifiutati-tab">
             <#if (candidature_rifiutate?size>0)>
-            <table class="table table-hover mt-5" id="tableTirociniRifiutati" cellspacing="0">
+            <table class="table table-hover mt-5 nowrap" id="tableTirociniRifiutati" cellspacing="0">
                 <thead class="bg-primary text-white">
                     <tr>
                         <th>Tirocinio</th>
@@ -288,7 +288,7 @@
 <noscript>
 
     <h2 class="text-center mt-5">In Attesa</h2>
-    <div class="row mt-3 pr-3 pl-3">
+    <div class="row mt-3 pr-3 pl-3 tabData">
         <#if (candidature_attesa?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
@@ -332,7 +332,7 @@
 
 
     <h2 class="text-center mt-5">Attive</h2>
-    <div class="row mt-3 pr-3 pl-3">
+    <div class="row mt-3 pr-3 pl-3 tabData">
         <#if (candidature_attive?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
@@ -367,7 +367,7 @@
                     <form method="get" action="download">
                         <input name="tipo" type="hidden" value="candidatura" />
                         <input readonly name="res" value="${candidatura.srcDocCandidatura}"/>
-                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Candidatura">
                             <i class="fa fa-file"></i>
                         </button>
                     </form>
@@ -387,7 +387,7 @@
 
 
     <h2 class="text-center mt-5">Finite</h2>
-    <div class="row mt-3 pr-3 pl-3">
+    <div class="row mt-3 pr-3 pl-3 tabData">
         <#if (candidature_finite?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
@@ -423,7 +423,7 @@
                     <form method="get" action="download">
                         <input name="tipo" type="hidden" value="candidatura" />
                         <input readonly name="res" value="${candidatura.srcDocCandidatura}"/>
-                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white">
+                        <button type="submit" name="submit" value="download_candidatura" class="btn btn-primary text-white" data-toggle="tooltip" data-placement="right" title="Download Candidatura">
                             <i class="fa fa-file"></i>
                         </button>
                     </form>
@@ -432,7 +432,7 @@
                     <div class="d-flex flex-row justify-content-between">
 
                         <a style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
-                            <button type="button" title="Compila resoconto" class="btn btn-primary text-white">
+                            <button type="button" data-toggle="tooltip" data-placement="right" title="Compila Resoconto" class="btn btn-primary text-white">
                                 <i class="fa fa-file-download"></i>
                             </button>
                         </a>
@@ -441,7 +441,7 @@
                         <form action="valutazione" method="get">
                             <input name="az" hidden value="${candidatura.offertaTirocinio.azienda.utente.id}"/>
                             <input name="st" hidden value="${candidatura.studente.utente.id}"/>
-                            <button type="submit" title="Valuta l'azienda" class="btn btn-primary text-white">
+                            <button type="submit" data-toggle="tooltip" data-placement="right" title="Valuta Azienda" class="btn btn-primary text-white">
                                 <i class="fas fa-star"></i>
                             </button>
                         </form>
@@ -464,7 +464,7 @@
 
 
     <h2 class="text-center mt-5">Rifiutate</h2>
-    <div class="row mt-3 pr-3 pl-3">
+    <div class="row mt-3 pr-3 pl-3 tabData">
         <#if (candidature_rifiutate?size>0)>
         <table class="table table-hover mt-3">
             <thead class="bg-primary text-white">
@@ -530,5 +530,12 @@
             "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
         } );
         
+    });
+</script>
+
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
     });
 </script>

@@ -14,6 +14,7 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.impl.CandidaturaImpl;
 import it.univaq.ingweb.internshiptutor.data.impl.TutoreUniImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
+import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -315,6 +316,12 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
     private void action_default(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, TemplateManagerException, DataException {
         TemplateResult res = new TemplateResult(getServletContext());
         int n = SecurityLayer.checkNumeric(request.getParameter("n"));
+
+        //check if offerta tirocinio exists
+        OffertaTirocinio offerta = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOffertaTirocinio(n);
+        if (offerta == null) {
+            throw new DataException("Offerta di tirocinio non trovata");
+        }
 
         List<TutoreUni> tutori = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getTutoreUniDAO().getTutori();
         request.setAttribute("tutori", tutori);
