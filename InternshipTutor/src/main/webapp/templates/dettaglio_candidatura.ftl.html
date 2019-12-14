@@ -320,8 +320,8 @@
                     <input type="hidden" name="st" value="${candidatura.studente.utente.id}" />
                     <input type="hidden" name="ot" value="${candidatura.offertaTirocinio.id}" />
                     <input name="tipo" type="hidden" value="candidatura" />
-                    <input type='file' name='candidaturatoupload'/>
-                    <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white">
+                    <input type='file' name='candidaturatoupload' required/>
+                    <button type='submit' name='submit' value='upload' class="btn bg-success text-white">
                         Accetta richiesta
                     </button>
                 </form>
@@ -396,17 +396,6 @@
     </#if>
     
 </div>
-
-<script>
-    $(document).ready(function() {
-        $("input[name='candidaturatoupload']").change(function(){
-            if ($(this).val())
-            {
-                $("button[name='submit']").removeAttr('disabled');
-            }
-        });
-    } );
-</script>
 
 <script>
     $(document).ready(function(){

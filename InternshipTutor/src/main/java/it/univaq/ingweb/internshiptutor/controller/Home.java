@@ -96,7 +96,8 @@ public class Home extends InternshipTutorBaseController {
                 LocalDate fine_conv = inizio_conv.plusMonths(durata);
                 // se è scaduta nego l'accesso all'azienda
                 if (az.getStatoConvenzione() != 3 && az.getStatoConvenzione() != 2 && now.compareTo(fine_conv) > 0) {
-                    ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAziendaStato(az.getUtente().getId(), 3);
+                    az.setStatoConvenzione(3);
+                    ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAzienda(az);
                     response.sendRedirect("home");
                 }
             }

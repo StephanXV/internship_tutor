@@ -10,15 +10,11 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
-import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
-import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import javax.servlet.ServletException;
+import org.apache.log4j.Logger;;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -129,7 +125,6 @@ public class Documenti extends InternshipTutorBaseController {
                 }
             } else {
                 userNotAuthorized(request, response);
-                return;
             }
         } catch (TemplateManagerException ex) {
             logger.error("Exception : ", ex);
@@ -143,7 +138,6 @@ public class Documenti extends InternshipTutorBaseController {
             action_error(request, response);
         }
     }
-
 
     private void userNotAuthorized(HttpServletRequest request, HttpServletResponse response) {
         logger.error("Utente non autorizzato");

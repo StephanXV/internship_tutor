@@ -25,14 +25,10 @@ public interface AziendaDAO {
     Azienda getAzienda(String ut_username) throws DataException;
     
     List<Azienda> getAziendeByStato(int stato) throws DataException;
-        
-    int updateAziendaStato(int id_az, int stato) throws DataException;
     
     int insertAzienda(Azienda az) throws DataException;
     
     int deleteAzienda(int id_az) throws DataException;
-    
-    int updateAziendaDocumento(int id_az, String src) throws DataException;
     
     int getTirocinantiAttivi(Azienda az) throws DataException;
     

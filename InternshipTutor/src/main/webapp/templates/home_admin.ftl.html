@@ -107,9 +107,9 @@
                                     <td>
                                         <form method='post' action='upload?az=${az_registrata.utente.id}' enctype='multipart/form-data'>
                                             <input name="tipo" type="hidden" value="convenzione" />
-                                            <input type='file' name='convenzionetoupload'/>
+                                            <input type='file' name='convenzionetoupload' required/>
 
-                                            <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white" data-toggle="tooltip" data-placement="right" title="Upload Richiesta">
+                                            <button type='submit' name='submit' value='upload' class="btn bg-success text-white" data-toggle="tooltip" data-placement="right" title="Upload Richiesta">
                                                 <i class="fas fa-file-upload"></i>
                                             </button>
                                         </form>
@@ -248,7 +248,7 @@
                 <td>
                     <form method='post' action='upload?az=${az_registrata.utente.id}' enctype='multipart/form-data'>
                         <input name="tipo" type="hidden" value="convenzione" />
-                        <input type='file' name='convenzionetoupload'/>
+                        <input type='file' name='convenzionetoupload' required/>
 
                         <button type='submit' name='submit' value='upload' disabled class="btn bg-success text-white" data-toggle="tooltip" data-placement="right" title="Upload Richiesta">
                             <i class="fas fa-file-upload"></i>
@@ -372,16 +372,6 @@
 });
 </script>
 
-<script>
-    $(document).ready(function() {
-        $("input[name='convenzionetoupload']").change(function(){
-          if ($(this).val())
-          {
-            $("button[name='submit']").removeAttr('disabled');
-          }
-        });
-    } );
-</script>
 
 <script>
     $(document).ready(function(){

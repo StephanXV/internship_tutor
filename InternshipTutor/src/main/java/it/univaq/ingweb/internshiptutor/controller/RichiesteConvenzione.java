@@ -14,6 +14,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,6 +40,9 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
             Azienda az =  ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_azienda);
             az.setSrcDocConvenzione(src);
             az.setStatoConvenzione(1);
+            
+            LocalDate now = LocalDate.now();
+            az.setInizioConvenzione(now);
             if (1 == ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().updateAzienda(az)){
                 response.sendRedirect("home");
             } else {

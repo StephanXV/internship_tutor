@@ -25,7 +25,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     
     private PreparedStatement sAziendaById, sAziendaByUtenteUsername;
     private PreparedStatement sAziendeByStato, sTirocinantiAttivi, sBestFive;
-    private PreparedStatement iAzienda, uAziendaStato, dAzienda, uAziendaDoc, uAzienda;
+    private PreparedStatement iAzienda, dAzienda, uAzienda;
 
     public AziendaDAO_MySQL(DataLayer d) {
         super(d);
@@ -43,12 +43,10 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             iAzienda = connection.prepareStatement ("INSERT INTO azienda (id_utente, ragione_sociale, indirizzo, citta, cap,"
                     + " provincia, rappresentante_legale, piva, foro_competente, tematiche, corso_studio, durata_convenzione,"
                     + " id_responsabile) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-            uAziendaStato = connection.prepareStatement("UPDATE azienda SET stato_convenzione=? WHERE id_utente=?");
             dAzienda = connection.prepareStatement("DELETE FROM azienda WHERE id_utente=?");
-            uAziendaDoc = connection.prepareStatement("UPDATE azienda SET src_documento_convenzione=?, inizio_convenzione=? WHERE id_utente=?");
             sBestFive = connection.prepareStatement("select a.*,avg(v.stelle) as media from azienda a join valutazione v where a.id_utente = v.id_azienda group by a.id_utente having media > 0 order by media");
             uAzienda = connection.prepareStatement("UPDATE azienda SET ragione_sociale=?, indirizzo=?, citta=?, cap=?,"
-                    + " provincia=?, rappresentante_legale=?, piva=?, foro_competente=?, tematiche=?, corso_studio=?, durata_convenzione=?, stato_convenzione=? WHERE id_utente=?");
+                    + " provincia=?, rappresentante_legale=?, piva=?, foro_competente=?, tematiche=?, corso_studio=?, durata_convenzione=?, stato_convenzione=?, inizio_convenzione=?, src_documento_convenzione=? WHERE id_utente=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -62,9 +60,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             sAziendeByStato.close();
             sTirocinantiAttivi.close();
             iAzienda.close();
-            uAziendaStato.close();
             dAzienda.close();
-            uAziendaDoc.close();
             sBestFive.close();
             uAzienda.close();
         } catch(SQLException ex) {
@@ -153,17 +149,6 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
     }
 
     @Override
-    public int updateAziendaStato(int id_azienda, int stato) throws DataException {
-        try {
-            uAziendaStato.setInt(1, stato);
-            uAziendaStato.setInt(2, id_azienda);
-            return uAziendaStato.executeUpdate();
-        } catch (SQLException ex) {
-            throw new DataException("Unable to update azienda stato", ex);
-        }
-    }
-
-    @Override
     public int insertAzienda(Azienda az) throws DataException {
         try {
             if (az.getUtente() != null)
@@ -199,19 +184,6 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             return dAzienda.executeUpdate();
         } catch (SQLException ex) {
             throw new DataException("Unable to delete azienda", ex);
-        }
-    }
-
-    @Override
-    public int updateAziendaDocumento(int id_az, String src) throws DataException {
-        try {
-            LocalDate localDate = LocalDate.now();
-            uAziendaDoc.setString(1, src);
-            uAziendaDoc.setDate(2, java.sql.Date.valueOf(localDate));
-            uAziendaDoc.setInt(3, id_az);
-            return uAziendaDoc.executeUpdate();
-        } catch (SQLException ex) {
-            throw new DataException("Unable to update azienda documento", ex);
         }
     }
 
@@ -264,7 +236,9 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             uAzienda.setString(10, az.getCorsoStudio());
             uAzienda.setInt(11, az.getDurataConvenzione());
             uAzienda.setInt(12, az.getStatoConvenzione());
-            uAzienda.setInt(13, az.getUtente().getId());
+            uAzienda.setDate(13, java.sql.Date.valueOf(az.getInizioConvenzione().plusDays(1)));
+            uAzienda.setString(14, az.getSrcDocConvenzione());
+            uAzienda.setInt(15, az.getUtente().getId());
             
             return uAzienda.executeUpdate();
             
