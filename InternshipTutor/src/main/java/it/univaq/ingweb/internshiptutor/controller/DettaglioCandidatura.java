@@ -48,6 +48,8 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
                 userNotAuthorized(request, response);
                 return;
             }
+            
+            
 
             request.setAttribute("candidatura", candidatura);
             

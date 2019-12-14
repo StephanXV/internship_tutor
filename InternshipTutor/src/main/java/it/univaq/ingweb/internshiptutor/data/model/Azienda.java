@@ -5,12 +5,11 @@
 package it.univaq.ingweb.internshiptutor.data.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
  *
- * @author steph
+ * @author Stefano Florio
  */
 public interface Azienda {
     
@@ -69,6 +68,8 @@ public interface Azienda {
     LocalDate getInizioConvenzione();
     
     void setInizioConvenzione(LocalDate ic);
+    
+    LocalDate getFineConvenzione();
     
     int getDurataConvenzione();
     

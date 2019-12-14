@@ -3,10 +3,8 @@ package it.univaq.ingweb.internshiptutor.data.impl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
-import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,6 +28,7 @@ public class AziendaImpl implements Azienda {
     private String corsoStudio;
     private int statoConvenzione; // 0=in attesa, 1=convenzionata, 2=rifiutata, 3=scaduta
     private LocalDate inizioConvenzione;
+    private LocalDate fineConvenzione;
     private int durataConvenzione;
     private RespTirocini respTirocini;
     private List<OffertaTirocinio> offerteTirocinio;
@@ -131,6 +130,11 @@ public class AziendaImpl implements Azienda {
     @Override
     public String getPiva() {
         return piva;
+    }
+    
+    @Override
+    public LocalDate getFineConvenzione() {
+        return this.inizioConvenzione.plusMonths(this.durataConvenzione);
     }
 
     @Override

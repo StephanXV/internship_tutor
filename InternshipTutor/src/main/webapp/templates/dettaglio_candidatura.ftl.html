@@ -266,7 +266,7 @@
                         <div class="input-group-prepend">
                             <span class="bg-primary text-white input-group-text">Inizio tirocinio</span>
                         </div>
-                        <input name="inizio_tirocinio" placeholder="Inserisci data di inizio tirocinio" onfocus="(this.type='date')" type="text" value="${candidatura.inizioTirocinio!}" required class="form-control">
+                        <input name="inizio_tirocinio" placeholder="Inserisci data di inizio tirocinio" onfocus="(this.min='${candidatura.offertaTirocinio.azienda.inizioConvenzione}', this.max='${candidatura.offertaTirocinio.azienda.fineConvenzione}', this.type='date')" type="text" value="${candidatura.inizioTirocinio!}" required class="form-control">
                     </div>
                 </div>
                 
@@ -275,7 +275,7 @@
                         <div class="input-group-prepend">
                             <span class="bg-primary text-white input-group-text">Fine tirocinio</span>
                         </div>
-                        <input name="fine_tirocinio" placeholder="Inserisci data di fine tirocinio" onfocus="(this.type='date')" type="text" value="${candidatura.fineTirocinio!}" required class="form-control">
+                        <input name="fine_tirocinio" placeholder="Inserisci data di fine tirocinio" onfocus="(this.min='${candidatura.offertaTirocinio.azienda.inizioConvenzione}', this.max='${candidatura.offertaTirocinio.azienda.fineConvenzione}', this.type='date')" type="text" value="${candidatura.fineTirocinio!}" required class="form-control">
                     </div>
                 </div>
                 
@@ -377,7 +377,7 @@
                     <div class="input-group-prepend">
                         <span class="bg-primary text-white input-group-text">Fine tirocinio</span>
                     </div>
-                    <input name="fine_tirocinio" onfocus="(this.type='date')" type="text" value="${candidatura.fineTirocinio!}" readonly class="form-control">
+                    <input name="fine_tirocinio"  onfocus="(this.type='date')" type="text" value="${candidatura.fineTirocinio!}" readonly class="form-control">
                 </div>
             </div>
             
