@@ -71,6 +71,7 @@ public class Statistiche extends InternshipTutorBaseController {
             request.setAttribute("best_offerte", ots);
             request.setAttribute("tutori_uni", tutori_uni);
             request.setAttribute("aziende", aziende);
+            
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("statistiche.ftl.html", request, response);
         } catch (TemplateManagerException | DataException ex) {

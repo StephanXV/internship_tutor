@@ -148,6 +148,8 @@ public class ProfiloController extends InternshipTutorBaseController {
                 if (insert != 1) {
                     logger.error("errore di inserimento utente");
                     throw new DataException("Impossibile inserire utente");
+                } else {
+                    s.setAttribute("username", ut.getUsername());
                 }
             } else {
                 logger.error("errore di compilazione campi utente");
@@ -214,11 +216,13 @@ public class ProfiloController extends InternshipTutorBaseController {
 
                 ut.setUsername(request.getParameter("username"));
                 ut.setEmail(request.getParameter("email"));
-                ut.setTipologia("az");
+                ut.setTipologia("st");
                 int insert = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().updateUtente(ut);
                 if (insert != 1) {
                     logger.error("errore di inserimento utente");
                     throw new DataException("Impossibile inserire utente");
+                } else {
+                    s.setAttribute("username", ut.getUsername());
                 }
             } else {
                 logger.error("errore di inserimento utente");
@@ -286,11 +290,13 @@ public class ProfiloController extends InternshipTutorBaseController {
 
                 ad.setUsername(request.getParameter("username"));
                 ad.setEmail(request.getParameter("email"));
-                ad.setTipologia("az");
+                ad.setTipologia("ad");
                 int insert = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().updateUtente(ad);
                 if (insert != 1) {
                     logger.error("errore di inserimento utente");
                     throw new DataException("Impossibile inserire utente");
+                } else {
+                    s.setAttribute("username", ad.getUsername());
                 }
 
                 //result ok

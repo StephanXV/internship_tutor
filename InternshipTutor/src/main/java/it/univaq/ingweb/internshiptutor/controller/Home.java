@@ -15,14 +15,12 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
-import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -49,11 +47,8 @@ public class Home extends InternshipTutorBaseController {
         res.activate("home_anonimo.ftl.html", request, response);
     }
     
-    private void action_admin(HttpServletRequest request, HttpServletResponse response, int id_utente) throws DataException, TemplateManagerException  {
-
-            // dati dell'admin
-            Utente ut = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getUtenteDAO().getUtente(id_utente);
-            request.setAttribute("nome_utente", ut.getUsername());
+    private void action_admin(HttpServletRequest request, HttpServletResponse response)
+            throws DataException, TemplateManagerException  {
             
             // lista aziende registrate, ovvero in attesa di convenzione
             List<Azienda> az_registrate = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAziendeByStato(0);
@@ -107,7 +102,6 @@ public class Home extends InternshipTutorBaseController {
             }
             
             request.setAttribute("azienda", az);
-            request.setAttribute("nome_utente", az.getRagioneSociale());
             
             // lista delle offerte di tirocinio attive dell'azienda
             List<OffertaTirocinio> tirocini_attivi = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().getOfferteTirocinio(az, true);
@@ -126,7 +120,6 @@ public class Home extends InternshipTutorBaseController {
     private void action_studente(HttpServletRequest request, HttpServletResponse response, int id_utente) throws DataException, TemplateManagerException {
             // dati dello studente
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_utente);
-            request.setAttribute("nome_utente", st.getNome() + " " + st.getCognome());
             
             // lista delle candidature dello studente
             List<Candidatura> candidature = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidature(st);
@@ -190,7 +183,7 @@ public class Home extends InternshipTutorBaseController {
 
                 switch ((String) s.getAttribute("tipologia")) {
                     case "ad":
-                        action_admin(request, response, id_utente);
+                        action_admin(request, response);
                         break;
                     case "st":
                         action_studente(request, response, id_utente);

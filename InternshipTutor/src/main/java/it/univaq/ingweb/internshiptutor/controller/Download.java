@@ -71,7 +71,6 @@ public class Download extends InternshipTutorBaseController {
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
-                return;
             }   
         } catch (FileNotFoundException ex) {
             logger.error("Risorsa non trovata", ex);
