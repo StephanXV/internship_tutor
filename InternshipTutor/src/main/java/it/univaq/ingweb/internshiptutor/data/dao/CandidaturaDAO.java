@@ -35,8 +35,6 @@ public interface CandidaturaDAO {
     
     int updateCandidaturaStato(int stato, int id_st, int id_ot) throws DataException;
     
-    int updateCandidaturaDate(LocalDate it, LocalDate ft, int id_st, int id_ot) throws DataException;
-    
-    int updateCandidaturaDocumento(int id_st, int id_ot, String src) throws DataException;
+    int updateCandidatura(Candidatura c) throws DataException;
     
 }

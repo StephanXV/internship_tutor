@@ -103,8 +103,10 @@ public class GestioneCandidature extends InternshipTutorBaseController {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             String src = SecurityLayer.issetString(request.getParameter("src"));
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(1, id_st, id_ot);
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaDocumento(id_st, id_ot, src);
+            Candidatura c = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
+            c.setStatoCandidatura(1);
+            c.setSrcDocCandidatura(src);
+           ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidatura(c);
             response.sendRedirect("dettaglio_candidatura?st="+id_st+"&ot="+id_ot);
 
     }
@@ -112,7 +114,9 @@ public class GestioneCandidature extends InternshipTutorBaseController {
     private void action_rifiuta_cand(HttpServletRequest request, HttpServletResponse response) throws IOException, DataException {
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaStato(3, id_st, id_ot);
+            Candidatura c = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
+            c.setStatoCandidatura(3);
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidatura(c);
             response.sendRedirect("gestione_candidati?ot=" + id_ot);
     }
     

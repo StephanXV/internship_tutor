@@ -7,7 +7,6 @@ package it.univaq.ingweb.internshiptutor.controller;
 
 import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.result.FailureResult;
-import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
@@ -15,7 +14,6 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -77,7 +75,6 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
                 request.setAttribute("title", "Utente non autorizzato");
                 request.setAttribute("errore", "401 Unauthorized");
                 action_error(request, response);
-                return;
             }
         } catch (NumberFormatException | IOException | SecurityLayerException | DataException ex) {
             logger.error("Exception : ", ex);

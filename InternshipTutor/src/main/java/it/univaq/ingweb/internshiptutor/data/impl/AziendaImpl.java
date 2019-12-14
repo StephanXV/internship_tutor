@@ -6,8 +6,8 @@ import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -264,6 +264,7 @@ public class AziendaImpl implements Azienda {
         this.mediaValutazioni = mediaValutazioni;
     }
     
+    @Override
     public Double getMediaValutazioni(List<Valutazione> list) {
         Double media;
         Double sum = 0.0;

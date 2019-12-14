@@ -15,7 +15,6 @@ import it.univaq.ingweb.internshiptutor.data.proxy.CandidaturaProxy;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     
     private PreparedStatement sCandidatura;
     private PreparedStatement sCandidatureByStudente, sCandidatureByTirocinio, sCandidatureByTirocinioAndStato;
-    private PreparedStatement iCandidatura, uCandidaturaStato, uCandidaturaDate, uCandidaturaDoc;
+    private PreparedStatement iCandidatura, uCandidaturaStato, uCandidaturaDate, uCandidaturaDoc, uCandidatura;
 
     public CandidaturaDAO_MySQL(DataLayer d) {
         super(d);
@@ -43,7 +42,8 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             iCandidatura = connection.prepareStatement("INSERT INTO candidatura (id_studente, id_offerta_tirocinio, id_tutore_uni, "
                     + "cfu, diploma, laurea, dottorato_ricerca, specializzazione) VALUES (?,?,?,?,?,?,?,?)");
             uCandidaturaStato = connection.prepareStatement("UPDATE candidatura SET stato_candidatura=? WHERE id_studente=? AND id_offerta_tirocinio=?");
-            uCandidaturaDate = connection.prepareStatement("UPDATE candidatura SET data_inizio=?, data_fine=? WHERE id_studente=? AND id_offerta_tirocinio=?");
+            uCandidatura = connection.prepareStatement("UPDATE candidatura SET cfu=?, diploma=?, laurea=?, dottorato_ricerca=?, specializzazione=?,"
+                    + "src_documento_candidatura=?, data_inizio=?, data_fine=?, stato_candidatura=? WHERE id_offerta_tirocinio=? AND id_studente=?");
             uCandidaturaDoc = connection.prepareStatement("UPDATE candidatura SET src_documento_candidatura=? WHERE id_studente=? AND id_offerta_tirocinio=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
@@ -59,8 +59,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             sCandidatureByTirocinio.close();
             sCandidatureByTirocinioAndStato.close();
             iCandidatura.close();
-            uCandidaturaStato.close();
-            uCandidaturaDate.close();
+            uCandidaturaStato.close();;
             uCandidaturaDoc.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
@@ -200,29 +199,24 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             throw new DataException("Unable to update candidatura stato", ex);
         }
     }
-
-    @Override
-    public int updateCandidaturaDate(LocalDate it, LocalDate ft, int id_st, int id_ot) throws DataException {
-        try {
-            uCandidaturaDate.setDate(1, java.sql.Date.valueOf(it.plusDays(1)));
-            uCandidaturaDate.setDate(2, java.sql.Date.valueOf(ft.plusDays(1)));
-            uCandidaturaDate.setInt(3, id_st);
-            uCandidaturaDate.setInt(4, id_ot);
-            return uCandidaturaDate.executeUpdate();
-        } catch(SQLException ex) {
-            throw new DataException("Unable to update candidatura dates", ex);
-        }
-    } 
     
-     @Override
-    public int updateCandidaturaDocumento( int id_st, int id_ot, String src) throws DataException {
+    @Override
+    public int updateCandidatura(Candidatura c) throws DataException {
         try {
-            uCandidaturaDoc.setString(1, src);
-            uCandidaturaDoc.setInt(2, id_st);
-            uCandidaturaDoc.setInt(3, id_ot);
-            return uCandidaturaDoc.executeUpdate();
+            uCandidatura.setInt(1, c.getCfu());
+            uCandidatura.setString(2, c.getDiploma());
+            uCandidatura.setString(3, c.getLaurea());
+            uCandidatura.setString(4, c.getDottoratoRicerca());
+            uCandidatura.setString(5, c.getSpecializzazione());
+            uCandidatura.setString(6, c.getSrcDocCandidatura());
+            uCandidatura.setDate(7, java.sql.Date.valueOf(c.getInizioTirocinio().plusDays(1)));
+            uCandidatura.setDate(8, java.sql.Date.valueOf(c.getFineTirocinio().plusDays(1)));
+            uCandidatura.setInt(9, c.getStatoCandidatura());
+            uCandidatura.setInt(10, c.getOffertaTirocinio().getId());
+            uCandidatura.setInt(11, c.getStudente().getUtente().getId());
+            return uCandidatura.executeUpdate();
         } catch(SQLException ex) {
-            throw new DataException("Unable to update candidatura src doc", ex);
+            throw new DataException("Unable to update candidatura", ex);
         }
     } 
     

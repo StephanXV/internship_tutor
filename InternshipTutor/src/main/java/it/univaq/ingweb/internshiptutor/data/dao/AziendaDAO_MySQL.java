@@ -263,8 +263,9 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             uAzienda.setString(9, az.getTematiche());
             uAzienda.setString(10, az.getCorsoStudio());
             uAzienda.setInt(11, az.getDurataConvenzione());
-            uAzienda.setInt(12, az.getUtente().getId());
-            uAzienda.setInt(13, az.getStatoConvenzione());
+            uAzienda.setInt(12, az.getStatoConvenzione());
+            uAzienda.setInt(13, az.getUtente().getId());
+            
             return uAzienda.executeUpdate();
             
         } catch (SQLException ex) {

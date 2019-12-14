@@ -8,12 +8,10 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
-import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -69,7 +67,10 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
             //check con throws IllegalArgument
             LocalDate inizio_tirocinio = SecurityLayer.checkDate(request.getParameter("inizio_tirocinio"));
             LocalDate fine_tirocinio = SecurityLayer.checkDate(request.getParameter("fine_tirocinio"));
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidaturaDate(inizio_tirocinio, fine_tirocinio, id_st, id_ot);
+            Candidatura c = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
+            c.setInizioTirocinio(inizio_tirocinio);
+            c.setFineTirocinio(fine_tirocinio);
+            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().updateCandidatura(c);
             response.sendRedirect("dettaglio_candidatura?st="+id_st+"&ot="+id_ot);
     }
     
@@ -92,7 +93,6 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
                     action_default(request, response, id_ot, id_st, s);
             } else {
                 userNotAuthorized(request, response);
-                return;
             }
         } catch (TemplateManagerException | IOException | DataException | IllegalArgumentException ex) {
             logger.error("Exception: ", ex);
