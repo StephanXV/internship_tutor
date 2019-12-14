@@ -48,7 +48,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             uAziendaDoc = connection.prepareStatement("UPDATE azienda SET src_documento_convenzione=?, inizio_convenzione=? WHERE id_utente=?");
             sBestFive = connection.prepareStatement("select a.*,avg(v.stelle) as media from azienda a join valutazione v where a.id_utente = v.id_azienda group by a.id_utente having media > 0 order by media");
             uAzienda = connection.prepareStatement("UPDATE azienda SET ragione_sociale=?, indirizzo=?, citta=?, cap=?,"
-                    + " provincia=?, rappresentante_legale=?, piva=?, foro_competente=?, tematiche=?, corso_studio=?, durata_convenzione=? WHERE id_utente=?");
+                    + " provincia=?, rappresentante_legale=?, piva=?, foro_competente=?, tematiche=?, corso_studio=?, durata_convenzione=?, stato_convenzione=? WHERE id_utente=?");
         } catch (SQLException ex) {
             throw new DataException("Error initializing internship tutor datalayer", ex);
         }
@@ -264,6 +264,7 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             uAzienda.setString(10, az.getCorsoStudio());
             uAzienda.setInt(11, az.getDurataConvenzione());
             uAzienda.setInt(12, az.getUtente().getId());
+            uAzienda.setInt(13, az.getStatoConvenzione());
             return uAzienda.executeUpdate();
             
         } catch (SQLException ex) {
