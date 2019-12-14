@@ -89,8 +89,9 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
                 if (request.getParameter("tipo") != null && request.getParameter("tipo").equals("salva_date")) {
                         action_salva_date(request, response, id_ot, id_st);
                 }
-                else
+                else {
                     action_default(request, response, id_ot, id_st, s);
+                }
             } else {
                 userNotAuthorized(request, response);
             }

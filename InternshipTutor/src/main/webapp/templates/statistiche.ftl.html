@@ -147,7 +147,7 @@
                         yValueFormatString: "0.0 Stelle",
                         dataPoints: [
                         
-                            <#list best_aziende as az> { label: "${az.ragioneSociale}",  y: ${az.mediaValutazioni} },</#list>
+                            <#list best_aziende as az> { label: "${az.ragioneSociale}",  y: ${az.mediaValutazioni?round} },</#list>
                            
                             ]
                         },
