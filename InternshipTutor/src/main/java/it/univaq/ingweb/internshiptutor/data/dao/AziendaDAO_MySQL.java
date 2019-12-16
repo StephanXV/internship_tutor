@@ -236,7 +236,11 @@ public class AziendaDAO_MySQL extends DAO implements AziendaDAO {
             uAzienda.setString(10, az.getCorsoStudio());
             uAzienda.setInt(11, az.getDurataConvenzione());
             uAzienda.setInt(12, az.getStatoConvenzione());
-            uAzienda.setDate(13, java.sql.Date.valueOf(az.getInizioConvenzione().plusDays(1)));
+            if (az.getInizioConvenzione() != null) {
+                uAzienda.setDate(13, java.sql.Date.valueOf(az.getInizioConvenzione().plusDays(1)));
+            } else {
+                uAzienda.setNull(13, java.sql.Types.DATE);
+            }
             uAzienda.setString(14, az.getSrcDocConvenzione());
             uAzienda.setInt(15, az.getUtente().getId());
             

@@ -1,8 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+*/
 package it.univaq.ingweb.internshiptutor.data.dao;
 
 import it.univaq.ingweb.framework.data.DAO;
@@ -27,11 +27,11 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     private PreparedStatement sCandidatura;
     private PreparedStatement sCandidatureByStudente, sCandidatureByTirocinio, sCandidatureByTirocinioAndStato;
     private PreparedStatement iCandidatura, uCandidaturaStato, uCandidaturaDate, uCandidaturaDoc, uCandidatura;
-
+    
     public CandidaturaDAO_MySQL(DataLayer d) {
         super(d);
     }
-
+    
     @Override
     public void init() throws DataException {
         try {
@@ -50,16 +50,16 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         }
         super.init();
     }
-
+    
     @Override
     public void destroy() throws DataException {
-         try {
+        try {
             sCandidatura.close();
             sCandidatureByStudente.close();
             sCandidatureByTirocinio.close();
             sCandidatureByTirocinioAndStato.close();
             iCandidatura.close();
-            uCandidaturaStato.close();;
+            uCandidaturaStato.close();
             uCandidaturaDoc.close();
         } catch (SQLException ex) {
             throw new DataException("Error closing statements", ex);
@@ -71,7 +71,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
     public CandidaturaProxy createCandidatura() {
         return new CandidaturaProxy(getDataLayer());
     }
-
+    
     @Override
     public CandidaturaProxy createCandidatura(ResultSet rs) throws DataException {
         CandidaturaProxy c = createCandidatura();
@@ -82,7 +82,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             c.setCfu(rs.getInt("cfu"));
             c.setStatoCandidatura(rs.getInt("stato_candidatura"));
             c.setSrcDocCandidatura(rs.getString("src_documento_candidatura"));
-            if (rs.getDate("data_inizio") != null) 
+            if (rs.getDate("data_inizio") != null)
                 c.setInizioTirocinio(rs.getDate("data_inizio").toLocalDate());
             if (rs.getDate("data_fine") != null)
                 c.setFineTirocinio(rs.getDate("data_fine").toLocalDate());
@@ -112,7 +112,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         }
         return null;
     }
-
+    
     @Override
     public List<Candidatura> getCandidature(Studente st) throws DataException {
         List<Candidatura> result = new ArrayList();
@@ -128,7 +128,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         }
         return result;
     }
-
+    
     @Override
     public List<Candidatura> getCandidature(int id_ot, int stato) throws DataException {
         List<Candidatura> result = new ArrayList();
@@ -161,7 +161,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         }
         return result;
     }
-
+    
     @Override
     public int insertCandidatura(Candidatura c) throws DataException {
         try {
@@ -187,7 +187,7 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             throw new DataException("Unable to insert new candidatura", ex);
         }
     }
-
+    
     @Override
     public int updateCandidaturaStato(int stato, int id_st, int id_ot) throws DataException {
         try {
@@ -209,8 +209,16 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
             uCandidatura.setString(4, c.getDottoratoRicerca());
             uCandidatura.setString(5, c.getSpecializzazione());
             uCandidatura.setString(6, c.getSrcDocCandidatura());
-            uCandidatura.setDate(7, java.sql.Date.valueOf(c.getInizioTirocinio().plusDays(1)));
-            uCandidatura.setDate(8, java.sql.Date.valueOf(c.getFineTirocinio().plusDays(1)));
+            if (c.getInizioTirocinio() != null) {
+                uCandidatura.setDate(7, java.sql.Date.valueOf(c.getInizioTirocinio().plusDays(1)));
+            } else {
+                uCandidatura.setNull(7, java.sql.Types.DATE);
+            }
+            if (c.getFineTirocinio() != null) {
+                uCandidatura.setDate(8, java.sql.Date.valueOf(c.getFineTirocinio().plusDays(1)));
+            } else {
+                uCandidatura.setNull(8, java.sql.Types.DATE);
+            }
             uCandidatura.setInt(9, c.getStatoCandidatura());
             uCandidatura.setInt(10, c.getOffertaTirocinio().getId());
             uCandidatura.setInt(11, c.getStudente().getUtente().getId());
@@ -218,6 +226,6 @@ public class CandidaturaDAO_MySQL extends DAO implements CandidaturaDAO {
         } catch(SQLException ex) {
             throw new DataException("Unable to update candidatura", ex);
         }
-    } 
+    }
     
 }
