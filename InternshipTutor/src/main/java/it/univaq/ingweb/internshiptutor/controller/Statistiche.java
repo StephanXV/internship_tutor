@@ -91,6 +91,10 @@ public class Statistiche extends InternshipTutorBaseController {
             request.setAttribute("activeStat", "active");
             action_default(request, response);
         } else {
+            if (s!= null) {
+                request.setAttribute("nome_utente", (String) s.getAttribute("username"));
+                request.setAttribute("tipologia", (String) s.getAttribute("tipologia"));
+            }
             logger.error("Utente non autorizzato");
             request.setAttribute("message", "errore gestito");
             request.setAttribute("title", "Utente non autorizzato");

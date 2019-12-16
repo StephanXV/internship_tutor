@@ -8,23 +8,17 @@
   <component name="ChangeListManager">
     <list default="true" id="908a9a56-da35-4951-ae5c-88c65bbce7ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioAzienda.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioCandidatura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/DettaglioCandidatura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ProfiloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ProfiloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/RichiestaTirocinio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO_MySQL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/data/dao/OffertaTirocinioDAO_MySQL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Documenti.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Documenti.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Statistiche.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/Statistiche.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ValutazioneAzienda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/univaq/ingweb/internshiptutor/controller/ValutazioneAzienda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/validateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/validateForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/styles/noscript.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/styles/noscript.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/compila_resoconto.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/compila_resoconto.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_azienda.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_candidatura.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/dettaglio_candidatura.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_admin.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_anonimo.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_anonimo.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_azienda.ftl.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/outline.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/registrazione.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/registrazione.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/ricerca_tirocini.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/ricerca_tirocini.ftl.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/statistiche.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/statistiche.ftl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/profilo.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/profilo.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -316,6 +310,7 @@
       <workItem from="1576156682531" duration="5654000" />
       <workItem from="1576167962923" duration="773000" />
       <workItem from="1576224500933" duration="9875000" />
+      <workItem from="1576483924600" duration="13436000" />
     </task>
     <servers />
   </component>

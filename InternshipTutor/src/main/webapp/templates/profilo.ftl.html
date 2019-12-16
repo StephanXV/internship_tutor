@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
+        <form role="form" method="post" id="profileStudente" action="profilo" style="margin-top: 55px;">
             <div class="row">
 
                 <div class="col-10 col-md-5 mx-auto">
@@ -218,7 +218,7 @@
             ADMIN
         </h2>
 
-        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
+        <form role="form" method="post" id="profileAdmin" action="profilo" style="margin-top: 55px;">
             <div class="row">
 
                 <div class="col-8 mx-auto">
@@ -270,7 +270,7 @@
             ${azienda.ragioneSociale}
         </h2>
 
-        <form role="form" method="post" action="profilo" style="margin-top: 55px;">
+        <form role="form" id="profileAzienda" method="post" action="profilo" style="margin-top: 55px;">
 
             <div class="row">
                 <div class="col-md-5 mx-auto">
@@ -524,3 +524,6 @@
     </div>
 </div>
 </#if>
+
+
+<script type="text/javascript" src="js/validateForm.js"></script>l

@@ -6,12 +6,11 @@ import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
-import it.univaq.ingweb.internshiptutor.data.model.Azienda;
-import it.univaq.ingweb.internshiptutor.data.model.Studente;
-import it.univaq.ingweb.internshiptutor.data.model.Valutazione;
+import it.univaq.ingweb.internshiptutor.data.model.*;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,13 +28,12 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+        } else {
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         }
     }
     
-    private void action_default(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, TemplateManagerException, DataException {
-
-            int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
-            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+    private void action_default(HttpServletRequest request, HttpServletResponse response, int id_az, int id_st) throws NumberFormatException, TemplateManagerException, DataException {
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
             request.setAttribute("az", az);
             Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().getValutazione(id_az, id_st);
@@ -49,9 +47,7 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             res.activate("valutazione.ftl.html", request, response);
     }
     
-    private void action_valuta(HttpServletRequest request, HttpServletResponse response) throws IOException, NumberFormatException, DataException {
-            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-            int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
+    private void action_valuta(HttpServletRequest request, HttpServletResponse response, int id_az, int id_st) throws IOException, NumberFormatException, DataException {
             Studente st = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st);
             Azienda az = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getAziendaDAO().getAzienda(id_az);
             Valutazione valutazione = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().createValutazione();
@@ -65,10 +61,8 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
             response.sendRedirect("home");
     }
     
-    private void action_cancella_valutazione(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, IOException, DataException {
+    private void action_cancella_valutazione(HttpServletRequest request, HttpServletResponse response, int id_az, int id_st) throws NumberFormatException, IOException, DataException {
 
-            int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
-            int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
             int delete = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getValutazioneDAO().deleteValutazione(id_az, id_st);
             
             if (delete != 1) {
@@ -82,28 +76,46 @@ public class ValutazioneAzienda extends InternshipTutorBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
-            if (s!= null) {
+            if (s!= null && s.getAttribute("tipologia").equals("st")) {
                 request.setAttribute("nome_utente", (String)s.getAttribute("username"));
                 request.setAttribute("tipologia", (String)s.getAttribute("tipologia"));
+
+                int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+                int id_az = SecurityLayer.checkNumeric(request.getParameter("az"));
+
+                //check autorizzazione a vedere la risorsa
+                int idUtente_check = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st).getUtente().getId();
+                if (idUtente_check != (int) s.getAttribute("id_utente")) {
+                    userNotAuthorized(request, response);
+                    return;
+                }
+
                 if (request.getParameter("submit") != null) {
-                    action_valuta(request, response);
+                    action_valuta(request, response, id_az, id_st);
                 }
                 else if (request.getParameter("delete") != null) {
-                    action_cancella_valutazione(request, response);
+                    action_cancella_valutazione(request, response, id_az, id_st);
                 } else {
-                    action_default(request, response);
+                    action_default(request, response, id_az, id_st);
                 }
             } else {
-                logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
-                action_error(request, response);
+                userNotAuthorized(request, response);
+                return;
             }
         } catch (TemplateManagerException | IOException | DataException | NumberFormatException ex) {
             logger.error("Exception : ", ex);
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
+
+
+    }
+
+    private void userNotAuthorized(HttpServletRequest request, HttpServletResponse response) {
+        logger.error("Utente non autorizzato");
+        request.setAttribute("message", "errore gestito");
+        request.setAttribute("title", "Utente non autorizzato");
+        request.setAttribute("errore", "401 Unauthorized");
+        action_error(request, response);
     }
 }

@@ -329,7 +329,15 @@
             <div class="col-md-3">
                 <button type="button" title="Respingi la richiesta" class="btn bg-danger text-white butt_js" data-toggle="modal" data-target="#rejectModal">
                     Rifiuta richiesta
-                </button>  
+                </button>
+
+                <noscript>
+                    <a style="text-decoration: none;" target="_blank" href="gestione_candidati?convalida=no&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}" data-toggle="tooltip" data-placement="right" title="Respingi Richiesta">
+                        <button type="button" class="btn bg-danger text-white">
+                            Rifiuta richiesta
+                        </button>
+                    </a>
+                </noscript>
                 
                 <!-- Modal -->
                 <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

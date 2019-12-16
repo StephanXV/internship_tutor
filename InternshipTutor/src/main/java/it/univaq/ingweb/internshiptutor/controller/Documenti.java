@@ -14,6 +14,7 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
+import it.univaq.ingweb.internshiptutor.data.model.Utente;
 import org.apache.log4j.Logger;;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -67,6 +68,7 @@ public class Documenti extends InternshipTutorBaseController {
         //controllo se l'utente loggato è un azienda e se l'offerta di tirocinio è stata emessa dall'azienda loggata
         if (!s.getAttribute("tipologia").equals("az") || !s.getAttribute("id_utente").equals(currentAzienda.getUtente().getId())) {
             userNotAuthorized(request, response);
+            return;
         }
 
         Candidatura rc = ((InternshipTutorDataLayer) request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_studente, id_offerta_tirocinio);
@@ -84,6 +86,14 @@ public class Documenti extends InternshipTutorBaseController {
     private void action_doc_resoconto(HttpServletRequest request, HttpServletResponse response, HttpSession s) throws DataException, NumberFormatException, TemplateManagerException {
             int id_ot = SecurityLayer.checkNumeric(request.getParameter("ot"));
             int id_st = SecurityLayer.checkNumeric(request.getParameter("st"));
+
+            //check if tirocinio appartiene allo studente in sessione
+            int id_utente_tirocinio = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getStudenteDAO().getStudente(id_st).getUtente().getId();
+            if (id_utente_tirocinio != (int) s.getAttribute("id_utente")) {
+                userNotAuthorized(request, response);
+                return;
+            }
+
             
             Resoconto resoconto = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().getResoconto(id_st, id_ot);
             request.setAttribute("resoconto", resoconto);
@@ -91,7 +101,7 @@ public class Documenti extends InternshipTutorBaseController {
             Candidatura c = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getCandidaturaDAO().getCandidatura(id_st, id_ot);
             request.setAttribute("candidatura", c);
 
-            if (resoconto == null || c == null) {
+            if (resoconto == null || c == null || c.getStatoCandidatura() != 2) {
                 throw new DataException("Risorsa non trovata");
             }
             
@@ -125,6 +135,7 @@ public class Documenti extends InternshipTutorBaseController {
                 }
             } else {
                 userNotAuthorized(request, response);
+                return;
             }
         } catch (TemplateManagerException ex) {
             logger.error("Exception : ", ex);

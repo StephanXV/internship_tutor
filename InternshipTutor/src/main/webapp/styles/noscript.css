@@ -2,6 +2,10 @@
     display: block;
 }
 
+.butt_js{
+    display: none;
+}
+
 .dropdown-toggle::after {
     display: none !important;
 }
