@@ -45,11 +45,11 @@ public class FailureResult {
     public void activate(Exception exception, HttpServletRequest request, HttpServletResponse response) {
         String message;
         if (exception != null && exception.getMessage() != null) {
-            message = exception.getMessage();
+            message = "Errore sconosciuto";
         } else if (exception != null) {
-            message = exception.getClass().getName();
+            message = "Errore sconosciuto";
         } else {
-            message = "Unknown Error";
+            message = "Errore sconosciuto";
         }
         // chiama il passo 2 settando come message l'errore di eccezione
         activate(message, request, response);
