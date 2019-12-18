@@ -13,11 +13,7 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
-import org.apache.log4j.Logger;
-
-import java.io.IOException;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,9 +23,15 @@ import javax.servlet.http.HttpSession;
  * @author Enrico Monte
  */
 public class DettaglioAzienda extends InternshipTutorBaseController {
-    //logger
-    final static Logger logger = Logger.getLogger(DettaglioAzienda.class);
-
+    
+    private void action_error(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getAttribute("exception") != null) {
+            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+        } else {
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+        }
+    }
+    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -43,9 +45,7 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
                 action_default(request, response, id_azienda);
             } else {
                 logger.error("parametro azienda sbagliato, impossibile recuperare azienda");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Impossibile trovare l'azienda");
-                request.setAttribute("errore", "404 NOT FOUND");
+                request.setAttribute("message", "Impossibile trovare l'azienda");
                 action_error(request, response);
                 return;
             }
@@ -76,22 +76,13 @@ public class DettaglioAzienda extends InternshipTutorBaseController {
             res.activate("dettaglio_azienda.ftl.html", request, response);
         } else {
             logger.error("parametro azienda sbagliato, impossibile recuperare azienda");
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Impossibile trovare l'azienda");
-            request.setAttribute("errore", "404 NOT FOUND");
-            action_error(request, response);
+            request.setAttribute("message", "Impossibile trovare l'azienda");
+                action_error(request, response);
             return;
         }
     }
     
-    private void action_error(HttpServletRequest request, HttpServletResponse response) {
-        if (request.getAttribute("exception") != null) {
-            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
-        } else {
-            request.setAttribute("referrer", "dettaglio_azienda.ftl.html");
-            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
-        }
-    }
+    
 }
 
 

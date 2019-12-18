@@ -12,10 +12,6 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
-import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,11 +20,15 @@ import javax.servlet.http.HttpSession;
  *
  * @author Giuseppe Gasbarro
  */
-public class DettagliTirocinio extends InternshipTutorBaseController{
-    //logger
-    final static Logger logger = Logger.getLogger(DettagliTirocinio.class);
-
-
+public class DettagliTirocinio extends InternshipTutorBaseController {
+    
+    private void action_error(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getAttribute("exception") != null) {
+            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
+        } else {
+            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+        }
+    }
     
     private void action_default(HttpServletRequest request, HttpServletResponse response, int id_tirocinio) throws DataException, TemplateManagerException {
         TemplateResult res = new TemplateResult(getServletContext());
@@ -46,14 +46,6 @@ public class DettagliTirocinio extends InternshipTutorBaseController{
         res.activate("dettagli_tirocinio.ftl.html", request, response);
     }
     
-    private void action_error(HttpServletRequest request, HttpServletResponse response) {
-        if (request.getAttribute("exception") != null) {
-            (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
-        } else {
-            (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
-        }
-    }
-    
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -67,17 +59,12 @@ public class DettagliTirocinio extends InternshipTutorBaseController{
                 action_default(request, response, id_tirocinio);
             } else {
                 logger.error("Impossibile trovare il tirocinio");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Impossibile trovare il tirocinio");
-                request.setAttribute("errore", "404 NOT FOUND");
+                request.setAttribute("message", "Impossibile trovare il tirocinio");
                 action_error(request, response);
-                return;
             }
         } catch (DataException | TemplateManagerException ex) {
             logger.error("Exception: ", ex);
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Impossibile trovare il tirocinio");
-            request.setAttribute("errore", "404 NOT FOUND");
+            request.setAttribute("exception", ex);
             action_error(request, response);
         }
     }

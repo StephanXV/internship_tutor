@@ -14,8 +14,6 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
-import it.univaq.ingweb.internshiptutor.data.model.Utente;
-import org.apache.log4j.Logger;;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,9 +23,7 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Documenti extends InternshipTutorBaseController {
-    //logger
-    final static Logger logger = Logger.getLogger(Documenti.class);
-    
+   
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -143,18 +139,14 @@ public class Documenti extends InternshipTutorBaseController {
             action_error(request, response);
         } catch (DataException | NumberFormatException  e) {
             logger.error("Risorsa non trovata: ", e);
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Risorsa non disponibile");
-            request.setAttribute("errore", "404 Not Found");
+            request.setAttribute("exception", e);
             action_error(request, response);
         }
     }
 
     private void userNotAuthorized(HttpServletRequest request, HttpServletResponse response) {
         logger.error("Utente non autorizzato");
-        request.setAttribute("message", "errore gestito");
-        request.setAttribute("title", "Utente non autorizzato");
-        request.setAttribute("errore", "401 Unauthorized");
+        request.setAttribute("message", "Utente non autorizzato");
         action_error(request, response);
     }
     

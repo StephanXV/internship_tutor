@@ -15,8 +15,6 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,8 +28,6 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Home extends InternshipTutorBaseController {
-    //logger (log4J)
-    final static Logger logger = Logger.getLogger(Home.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

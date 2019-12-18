@@ -12,13 +12,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.naming.NamingException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-
-import org.apache.log4j.Logger;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 
 /**
@@ -27,9 +24,6 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
  */
 public class Upload extends InternshipTutorBaseController {
 
-    //logger
-    final static Logger logger = Logger.getLogger(Upload.class);
-    
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -61,6 +55,9 @@ public class Upload extends InternshipTutorBaseController {
                 }
             }
             response.sendRedirect("richieste_convenzione?convalida=si&az="+id_azienda+"&src="+uploaded_file.getName());
+        } else {
+            request.setAttribute("message", "Estensione non corretta del file. Si prega di caricare il file in formato pdf");
+                action_error(request, response);
         }
     }
     
@@ -112,9 +109,7 @@ public class Upload extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         } catch (NamingException ex) {

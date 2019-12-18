@@ -1,12 +1,9 @@
 package it.univaq.ingweb.internshiptutor.controller;
 
 import it.univaq.ingweb.framework.result.FailureResult;
-import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import org.apache.log4j.Logger;
-
 import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,9 +13,7 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Logout extends InternshipTutorBaseController {
-    //logger
-    final static Logger logger = Logger.getLogger(Logout.class);
-    
+       
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -47,9 +42,7 @@ public class Logout extends InternshipTutorBaseController {
                 action_logout(request, response);
             } else {
                 logger.error("Utente non autorizzato, sessione vuota");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Nessun utente in sessione, pertanto impossibile fare logout");
                 action_error(request, response);
             }
         } catch (IOException ex) {

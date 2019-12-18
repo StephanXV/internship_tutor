@@ -8,8 +8,6 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +19,6 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class DettaglioCandidatura extends InternshipTutorBaseController {
-
-    //logger
-    final static Logger logger = Logger.getLogger(DettaglioCandidatura.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -48,9 +43,6 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
                 userNotAuthorized(request, response);
                 return;
             }
-            
-            
-
             request.setAttribute("candidatura", candidatura);
             
             TemplateResult res = new TemplateResult(getServletContext());
@@ -58,10 +50,8 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
             
         } catch (DataException ex) {
             logger.error("Candidatura non trovata: ", ex);
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Candidatura non trovata");
-            request.setAttribute("errore", "404 Not Found");
-            action_error(request, response);
+            request.setAttribute("exception", ex);
+                action_error(request, response);
         }
     }
 
@@ -106,9 +96,7 @@ public class DettaglioCandidatura extends InternshipTutorBaseController {
 
     private void userNotAuthorized(HttpServletRequest request, HttpServletResponse response) {
         logger.error("Utente non autorizzato");
-        request.setAttribute("message", "errore gestito");
-        request.setAttribute("title", "Utente non autorizzato");
-        request.setAttribute("errore", "401 Unauthorized");
+        request.setAttribute("message", "Utente non autorizzato");
         action_error(request, response);
     }
 }

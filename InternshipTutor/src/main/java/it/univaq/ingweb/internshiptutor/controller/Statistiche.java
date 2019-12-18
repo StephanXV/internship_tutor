@@ -4,6 +4,7 @@
 * and open the template in the editor.
 */
 package it.univaq.ingweb.internshiptutor.controller;
+
 import it.univaq.ingweb.framework.data.DataException;
 import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
@@ -13,8 +14,6 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
-import org.apache.log4j.Logger;
-
 import java.util.Comparator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +26,6 @@ import javax.servlet.http.HttpSession;
  */
 public class Statistiche extends InternshipTutorBaseController {
 
-    //logger
-    final static Logger logger = Logger.getLogger(Statistiche.class);
-    
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -96,10 +92,8 @@ public class Statistiche extends InternshipTutorBaseController {
                 request.setAttribute("tipologia", (String) s.getAttribute("tipologia"));
             }
             logger.error("Utente non autorizzato");
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Utente non autorizzato");
-            request.setAttribute("errore", "401 Unauthorized");
-            action_error(request, response);
+            request.setAttribute("message", "Utente non autorizzato");
+                action_error(request, response);
         }
     }
 }

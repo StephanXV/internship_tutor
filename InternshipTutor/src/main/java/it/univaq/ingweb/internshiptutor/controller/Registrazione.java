@@ -15,10 +15,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
-import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
-import java.io.IOException;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -29,29 +26,18 @@ import javax.servlet.http.HttpSession;
  */
 public class Registrazione extends InternshipTutorBaseController {
 
-    //logger
-    final static Logger logger = Logger.getLogger(Registrazione.class);
-
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
     private String TYPE = null; //in modo che quando ricarica la pag ritorna a azienda o studente
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
-
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
-        } else {
-            request.setAttribute("referrer", "registrazione.ftl.html");
-            //per vedere se tornare alla corrispondente pagina studente o azienda
-            if (TYPE != null && TYPE.equals("STUDENT")) {
-                request.setAttribute("activeStudente", "active");
-                request.setAttribute("ariaStudente", "true");
-                request.setAttribute("ariaAzienda", "false");
-            } else if (TYPE != null && TYPE.equals("AZIENDA")) {
-                request.setAttribute("activeAzienda", "active");
-                request.setAttribute("ariaStudente", "false");
-                request.setAttribute("ariaAzienda", "true");
-            }
+        } else if (request.getAttribute("message") != null) {
+            
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+        } else if (request.getAttribute("alert_msg") != null) {
+            request.setAttribute("referrer", "registrazione.ftl.html");
+            (new FailureResult(getServletContext())).activateAlert((String) request.getAttribute("alert_msg"), request, response);
         }
     }
 
@@ -81,8 +67,7 @@ public class Registrazione extends InternshipTutorBaseController {
             } else {
                 TYPE="AZIENDA";
                 logger.error("Campi resp tirocini errati");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi del responsabile tirocini non sono corretti. Riprova!");
+                request.setAttribute("alert_msg", "Dati responsabile tirocini inseriti non validi");
                 action_error(request, response);
                 return;
             }
@@ -108,8 +93,7 @@ public class Registrazione extends InternshipTutorBaseController {
                 } else {
                     TYPE="AZIENDA";
                     logger.error("Campi utente errati");
-                    request.setAttribute("message", "errore_convalida");
-                    request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
+                    request.setAttribute("alert_msg", "Dati utente inseriti non validi");
                     action_error(request, response);
                     return;
                 }
@@ -150,8 +134,7 @@ public class Registrazione extends InternshipTutorBaseController {
                     }  else {
                         TYPE="AZIENDA";
                         logger.error("Campi azienda errati");
-                        request.setAttribute("message", "errore_convalida");
-                        request.setAttribute("errore", "I dati aziendali inseriti non sono validi. Riprova!");
+                        request.setAttribute("alert_msg", "Dati aziendali inseriti non validi");
                         action_error(request, response);
                         return;
                     }
@@ -197,8 +180,7 @@ public class Registrazione extends InternshipTutorBaseController {
                 if (((InternshipTutorDataLayer) request.getAttribute("datalayer")).getUtenteDAO().checkUtenteExist(request.getParameter("username"), request.getParameter("email"))){
                     TYPE="STUDENT";
                     logger.error("Utente già esistente");
-                    request.setAttribute("message", "errore_convalida");
-                    request.setAttribute("errore", "Email o Password gi&agrave; esistenti. Riprova!");
+                    request.setAttribute("alert_msg", "Username e/o Password non validi");
                     action_error(request, response);
                     return;
                 }
@@ -209,8 +191,7 @@ public class Registrazione extends InternshipTutorBaseController {
             } else {
                 TYPE="STUDENT";
                 logger.error("I campi utente inseriti non sono corretti.");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
+                request.setAttribute("alert_msg", "Dati inseriti non validi");
                 action_error(request, response);
                 return;
             }
@@ -255,8 +236,7 @@ public class Registrazione extends InternshipTutorBaseController {
                 } else {
                     TYPE="STUDENT";
                     logger.error("I campi studente inseriti non sono corretti.");
-                    request.setAttribute("message", "errore_convalida");
-                    request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
+                    request.setAttribute("alert_msg", "Dati inseriti non validi");
                     action_error(request, response);
                     return;
                 }
@@ -281,9 +261,7 @@ public class Registrazione extends InternshipTutorBaseController {
         try {
             HttpSession s = SecurityLayer.checkSession(request);
             if (s!= null) {
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Accesso già eseguito: non è possibile effettuare una registrazione da loggato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente in sessione, pertanto impossibile effettuare una nuova registrazione. Fare logout e riprovare");
                 action_error(request, response);
             }
             if (request.getParameter("submitStudente") != null) {

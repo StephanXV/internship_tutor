@@ -5,8 +5,6 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class GestioneTirocini extends InternshipTutorBaseController {
-    //logger
-    final static Logger logger = Logger.getLogger(GestioneTirocini.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -30,13 +26,13 @@ public class GestioneTirocini extends InternshipTutorBaseController {
     }
     
     private void action_disattiva(HttpServletRequest request, HttpServletResponse response, int id_ot) throws ServletException, IOException, TemplateManagerException, DataException {
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, false);
-            response.sendRedirect("home");
+        ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, false);
+        response.sendRedirect("home");
     }
     
     private void action_attiva(HttpServletRequest request, HttpServletResponse response, int id_ot) throws IOException, DataException {
-            ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, true);
-            response.sendRedirect("home");
+        ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getOffertaTirocinioDAO().updateOffertaTirocinioAttiva(id_ot, true);
+        response.sendRedirect("home");
     }
     
     @Override
@@ -54,9 +50,7 @@ public class GestioneTirocini extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         } catch (IOException | NumberFormatException | TemplateManagerException | ServletException | DataException ex) {

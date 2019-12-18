@@ -10,8 +10,6 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +20,6 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class CompilaResoconto extends InternshipTutorBaseController {
-    
-    //logger
-    final static Logger logger = Logger.getLogger(CompilaResoconto.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -50,9 +45,7 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 res.activate("compila_resoconto.ftl.html", request, response);
             } else {
                 logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         } else  if (s!= null && "az".equals(s.getAttribute("tipologia"))) {
@@ -64,9 +57,7 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 res.activate("compila_resoconto.ftl.html", request, response);
             } else {
                 logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         }
@@ -91,25 +82,19 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 int insert = ((InternshipTutorDataLayer)request.getAttribute("datalayer")).getResocontoDAO().insertResoconto(resoconto);
                 if (insert != 1) {
                     logger.error("Impossibile inserire resoconto tirocinio");
-                    request.setAttribute("message", "errore gestito");
-                    request.setAttribute("title", "Errore di compilazione campi");
-                    request.setAttribute("errore", "I dati del resoconto non sono validi, riprova");
+                    request.setAttribute("message", "Dati inseriti non validi");
                     action_error(request, response);
                     return;
                 }
                 response.sendRedirect("gestione_candidati?ot="+id_ot);
             } else {
                 logger.error("Risorsa non trovata");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Risorsa non trovata");
-                request.setAttribute("errore", "404 NOT FOUND");
+                request.setAttribute("message", "Risorsa non trovata");
                 action_error(request, response);
             }
         } else {
             logger.error("Utente non autorizzato");
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Utente non autorizzato");
-            request.setAttribute("errore", "401 Unauthorized");
+            request.setAttribute("message", "Utente non autorizzato");
             action_error(request, response);
         }
     }
@@ -132,9 +117,7 @@ public class CompilaResoconto extends InternshipTutorBaseController {
                 action_default(request, response, s);
             } else {
                 logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         } catch (TemplateManagerException | DataException | IOException | SecurityLayerException ex) {

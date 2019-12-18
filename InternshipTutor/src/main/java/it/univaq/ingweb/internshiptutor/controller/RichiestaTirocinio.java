@@ -16,21 +16,12 @@ import it.univaq.ingweb.internshiptutor.data.impl.TutoreUniImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import com.sun.mail.smtp.SMTPTransport;
-import org.apache.log4j.Logger;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -46,9 +37,6 @@ import java.util.Date;
 //soggetto a filtro
 public class RichiestaTirocinio extends InternshipTutorBaseController {
 
-    //logger
-    final static Logger logger = Logger.getLogger(RichiestaTirocinio.class);
-
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -58,9 +46,7 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
                 request.setAttribute("tipologia", (String) s.getAttribute("tipologia"));
 
                 if (!s.getAttribute("tipologia").equals("st")) {
-                    request.setAttribute("message", "errore gestito");
-                    request.setAttribute("title", "Devi essere uno studente per richiedere un tirocinio");
-                    request.setAttribute("errore", "401 Unauthorized");
+                    request.setAttribute("message", "Utente non autorizzato");
                     action_error(request, response);
                     return;
                 }
@@ -104,21 +90,19 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
                 action_default(request, response);
             } catch (DataException e) {
                 logger.error("Exception : ", e);
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "Tutore non aggiunto! Verifica che il tutore non sia già presente");
                 request.setAttribute("tutori", tutori);
+                request.setAttribute("alert_msg", "Impossibile inserire il tutore, verifica che non sia già presente");
                 action_error(request, response);
             }
         } else {
             logger.error("Campi errati, potenzialmente dannosi");
-            request.setAttribute("message", "errore_convalida");
-            request.setAttribute("errore", "Verifica i campi inseriti");
             request.setAttribute("tutori", tutori);
-            action_error(request, response);
+            request.setAttribute("alert_msg", "Dati inseriti non validi");
+                action_error(request, response);
         }
     }
     
-    private void action_request (HttpServletRequest request, HttpServletResponse response, HttpSession s) throws IOException {
+    private void action_request (HttpServletRequest request, HttpServletResponse response, HttpSession s) throws IOException, TemplateManagerException, DataException {
         int utente_id_session = (int) s.getAttribute("id_utente");
 
         Candidatura c = new CandidaturaImpl();
@@ -157,17 +141,13 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
             } catch (DataException ex) {
                 logger.error("Exception : " + ex);
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Hai già una candidatura attiva per questa offerta di tirocinio");
-                request.setAttribute("errore", "ERRORE");
+                request.setAttribute("alert_msg", "Hai già richiesto questo tirocinio, controlla la tua home");
                 action_error(request, response);
             }
 
         } else {
             logger.error("Campi errati, potenzialmente dannosi");
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "I campi inseriti non sono corretti. Riprova!");
-            request.setAttribute("errore", "Errore di_convalidazione");
+            request.setAttribute("alert_msg", "Dati inseriti non validi");
             action_error(request, response);
         }
     }
@@ -271,45 +251,11 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
 
             t.close();
 
-
-
         } catch (MessagingException e) {
             logger.error("Exception : ", e);
             request.setAttribute("exception", e);
             action_error(request, response);
         }
-
-
-
-        /*Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
-        String sDate = formatter.format(date);
-        try {
-            File fileAz = new File(getServletContext().getRealPath("") + File.separatorChar + "mails" + File.separatorChar + sDate + "mail_tutore_az.txt");
-            FileWriter fw = new FileWriter(fileAz);
-            BufferedWriter bw = new BufferedWriter(fw);
-            String message = "From: internship.tutor@univaq.it \n" + "To: " + c.getOffertaTirocinio().getTutoreTirocinio().getEmail() + "\n"
-                    + "Message: Lo studente " + c.getStudente().getCognome() + " " + c.getStudente().getNome() +
-                    ", frequentante il seguente corso di laurea: " + c.getStudente().getCorsoLaurea()
-                    + ", ha richiesto l'effetuazione del tirocinio: " + c.getOffertaTirocinio().getTitolo()
-                    + ", per un totale di: " + c.getCfu() + " CFU";
-            bw.write(message);
-            bw.flush();
-            bw.close();
-            File fileUni = new File(getServletContext().getRealPath("") + File.separatorChar + "mails" + File.separatorChar + sDate + "mail_tutore_uni.txt");
-            FileWriter fw2 = new FileWriter(fileUni);
-            BufferedWriter bw2 = new BufferedWriter(fw2);
-            String message2 = "From: internship.tutor@univaq.it \n" + "To: " + c.getTutoreUni().getEmail() + "\n"
-                    + "Message: Lo studente " + c.getStudente().getCognome() + " " + c.getStudente().getNome() +
-                    ", frequentante il seguente corso di laurea: " + c.getStudente().getCorsoLaurea()
-                    + ", ha richiesto l'effetuazione del tirocinio: " + c.getOffertaTirocinio().getTitolo()
-                    + ", presso l'azienda: " + c.getOffertaTirocinio().getAzienda().getRagioneSociale() + ", per un totale di: " + c.getCfu() + " CFU";
-            bw2.write(message2);
-            bw2.flush();
-            bw2.close();
-        }
-        catch(IOException e) {
-        } */
     }
     
     
@@ -333,10 +279,12 @@ public class RichiestaTirocinio extends InternshipTutorBaseController {
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
-        } else {
-            request.setAttribute("referrer", "richiesta_tirocinio.ftl.html");
+        } else if (request.getAttribute("message") != null) {
+            
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+        } else if (request.getAttribute("alert_msg") != null) {
+            request.setAttribute("referrer", "richiesta_tirocinio.ftl.html");
+            (new FailureResult(getServletContext())).activateAlert((String) request.getAttribute("alert_msg"), request, response);
         }
     }
-    
 }

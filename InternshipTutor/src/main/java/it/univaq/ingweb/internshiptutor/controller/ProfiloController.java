@@ -17,8 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 /**
@@ -26,15 +24,16 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
  * @author Enrico Monte
  */
 public class ProfiloController extends InternshipTutorBaseController {
-    //logger
-    final static Logger logger = Logger.getLogger(ProfiloController.class);
-    
+        
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
-        } else {
-            request.setAttribute("referrer", "profilo.ftl.html");
+        } else if (request.getAttribute("message") != null) {
+            
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
+        } else if (request.getAttribute("alert_msg") != null) {
+            request.setAttribute("referrer", "profilo.ftl.html");
+            (new FailureResult(getServletContext())).activateAlert((String) request.getAttribute("alert_msg"), request, response);
         }
     }
     
@@ -122,8 +121,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("errore di compilazione campi resp tirocini");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi del responsabile tirocini non sono corretti. Riprova!");
+                request.setAttribute("alert_msg", "Dati responsabile tirocini non validi");
                 action_error(request, response);
             }
 
@@ -153,8 +151,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("errore di compilazione campi utente");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
+                request.setAttribute("alert_msg", "Dati utente non validi");
                 action_error(request, response);
             }
 
@@ -193,8 +190,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 action_default(request, response, s); //riapri profilo modificato
             } else {
                 logger.error("errore di compilazione azienda");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I dati aziendali inseriti non sono validi. Riprova!");
+                request.setAttribute("alert_msg", "Dati aziendali non validi");
                 action_error(request, response);
             }
 
@@ -226,8 +222,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("errore di inserimento utente");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
+                request.setAttribute("alert_msg", "Dati utente non validi");
                 action_error(request, response);
             }
 
@@ -267,8 +262,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 action_default(request, response, s); //riapri profilo modificato
             } else {
                 logger.error("errore di compilazione studente");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi inseriti non sono corretti. Riprova!");
+                request.setAttribute("alert_msg", "Dati inseriti non validi");
                 action_error(request, response);
             }
 
@@ -308,8 +302,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 action_default(request, response, s); //riapri profilo modificato
             } else {
                 logger.error("errore di compilazione admin");
-                request.setAttribute("message", "errore_convalida");
-                request.setAttribute("errore", "I campi utente inseriti non sono validi. Riprova!");
+                request.setAttribute("alert_msg", "Dati utente non validi");
                 action_error(request, response);
             }
 
@@ -343,10 +336,8 @@ public class ProfiloController extends InternshipTutorBaseController {
 
         } else {
             logger.error("Security check sui parametri non superato");
-            request.setAttribute("message", "errore gestito");
-            request.setAttribute("title", "Errore Sconosciuto");
-            request.setAttribute("errore", "Non è stato possibile caricare la pagina. Riprova.");
-            action_error(request, response);
+            request.setAttribute("message", "Impossibile caricare la pagina");
+                action_error(request, response);
         }
 
     }
@@ -365,9 +356,7 @@ public class ProfiloController extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("Utente non autorizzato");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         } catch (TemplateManagerException | DataException | IOException ex) {

@@ -11,8 +11,6 @@ import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import javax.servlet.http.HttpServletRequest;
@@ -24,9 +22,7 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class RichiesteConvenzione extends InternshipTutorBaseController {
-    //logger
-    final static Logger logger = Logger.getLogger(RichiesteConvenzione.class);
-    
+
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
@@ -75,9 +71,7 @@ public class RichiesteConvenzione extends InternshipTutorBaseController {
                 }
             } else {
                 logger.error("UTENTE NON AUTORIZZATO");
-                request.setAttribute("message", "errore gestito");
-                request.setAttribute("title", "Utente non autorizzato");
-                request.setAttribute("errore", "401 Unauthorized");
+                request.setAttribute("message", "Utente non autorizzato");
                 action_error(request, response);
             }
         } catch (NumberFormatException | IOException | SecurityLayerException | DataException ex) {
