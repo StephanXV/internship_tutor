@@ -14,6 +14,8 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreUni;
+import org.apache.log4j.Logger;
+
 import java.util.Comparator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Statistiche extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Statistiche.class);
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

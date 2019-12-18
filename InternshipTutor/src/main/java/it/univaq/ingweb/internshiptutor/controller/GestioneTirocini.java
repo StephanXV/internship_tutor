@@ -5,6 +5,8 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.TemplateManagerException;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class GestioneTirocini extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(GestioneTirocini.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

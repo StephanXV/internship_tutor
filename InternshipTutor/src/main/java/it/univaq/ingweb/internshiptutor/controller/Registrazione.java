@@ -15,6 +15,7 @@ import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.RespTirocini;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +26,9 @@ import javax.servlet.http.HttpSession;
  * @author Enrico Monte
  */
 public class Registrazione extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Registrazione.class);
 
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
     private String TYPE = null; //in modo che quando ricarica la pag ritorna a azienda o studente

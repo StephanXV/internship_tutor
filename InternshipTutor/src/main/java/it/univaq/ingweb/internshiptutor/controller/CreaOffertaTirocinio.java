@@ -11,6 +11,8 @@ import it.univaq.ingweb.internshiptutor.data.impl.TutoreTirocinioImpl;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.TutoreTirocinio;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class CreaOffertaTirocinio extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(CreaOffertaTirocinio.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
