@@ -1,28 +1,11 @@
-.navbar-expand-lg:hover .collapse{
-    display: block;
-}
-
 .butt_js{
     display: none;
-}
-
-.dropdown-toggle::after {
-    display: none !important;
 }
 
 .reg_no_js {
     display: none;
 }
 
-@media (max-width: 990px) {
-    .divider_menu{
-        display: none !important;
-    }
-
-    .logout-nav{
-        float: left!important;
-    }
-}
 .dettaglio-azienda-js{
     display: none;
 }
