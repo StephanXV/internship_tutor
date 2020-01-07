@@ -21,7 +21,7 @@
     <div class="col-2 mx-auto notice-student notice-warning">
         <div class="row">
             <div class="col-9">
-                <strong>In sospeso</strong> <br>
+                <strong>In attesa</strong> <br>
                 ${candidature_attesa?size}
             </div>
             <div class="col-3 my-auto">
@@ -60,8 +60,8 @@
 <div class="tab-student home-studente-js">
     <nav>
         <div class="nav nav-tabs nav-fill tab-table" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link item-tab-table active" id="nav-tiro_attesa-tab" data-toggle="tab" href="#nav-tiro-att" role="tab" aria-controls="nav-tiro_attesa-tab" aria-selected="true" >In Attesa</a>
-            <a class="nav-item nav-link item-tab-table" id="nav-tiro-attivi-tab" data-toggle="tab" href="#nav-tiro-ok" role="tab" aria-controls="nav-tiro-attivi-tab" aria-selected="false" >Attivi</a>
+            <a class="nav-item nav-link item-tab-table active" id="nav-tiro-attivi-tab" data-toggle="tab" href="#nav-tiro-ok" role="tab" aria-controls="nav-tiro-attivi-tab" aria-selected="false" >Attivi</a>
+            <a class="nav-item nav-link item-tab-table" id="nav-tiro_attesa-tab" data-toggle="tab" href="#nav-tiro-att" role="tab" aria-controls="nav-tiro_attesa-tab" aria-selected="true" >In Attesa</a>
             <a class="nav-item nav-link item-tab-table" id="nav-tiro-finiti-tab" data-toggle="tab" href="#nav-tiro-end" role="tab" aria-controls="nav-tiro-finiti-tab" aria-selected="false" >Conclusi</a>
             <a class="nav-item nav-link item-tab-table" id="nav-tiro-rifiutati-tab" data-toggle="tab" href="#nav-tiro-no" role="tab" aria-controls="nav-tiro-rifiutati-tab" aria-selected="false" >Rifiutati</a>
         </div>
@@ -69,7 +69,7 @@
     
     <div class="tab-content" id="nav-tabContent">
         
-        <div class="tab-pane fade show active pt-4 tabData" id="nav-tiro-att" role="tabpanel" aria-labelledby="nav-tiro_attesa-tab">
+        <div class="tab-pane fade pt-4 tabData" id="nav-tiro-att" role="tabpanel" aria-labelledby="nav-tiro_attesa-tab">
             <#if (candidature_attesa?size>0)>
             <table class="table table-hover mt-5 nowrap" id="tableTirociniAttesa">
                 <thead class="bg-primary text-white">
@@ -112,7 +112,7 @@
             
             
             
-        <div class="tab-pane fade pt-4 tabData" id="nav-tiro-ok" role="tabpanel" aria-labelledby="nav-tiro-attivi-tab">
+        <div class="tab-pane fade show active pt-4 tabData" id="nav-tiro-ok" role="tabpanel" aria-labelledby="nav-tiro-attivi-tab">
             <#if (candidature_attive?size>0)>
             <table class="table table-hover mt-5 nowrap" id="tableTirociniAttivi" cellspacing="0">
                 <thead class="bg-primary text-white">
@@ -210,10 +210,10 @@
                         <td>
                             <div class="d-flex flex-row justify-content-between">
                                 
-                                    <a class="mr-1" style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
-                                        <button type="button" data-toggle="tooltip" data-placement="right" title="Mostra Resoconto" class="btn btn-primary text-white">
+                                    <a data-toggle="tooltip" data-placement="right" title="Mostra Resoconto" class="btn btn-primary text-whitemr-1" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
+                                     
                                             <i class="fa fa-file-download"></i>
-                                        </button>
+                                     
                                     </a>
                                     
                              
@@ -431,10 +431,10 @@
                 <td>
                     <div class="d-flex flex-row justify-content-between">
 
-                        <a class="mr-1" style="text-decoration: none;" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
-                            <button type="button" data-toggle="tooltip" data-placement="right" title="Mostra Resoconto" class="btn btn-primary text-white">
+                        <a data-toggle="tooltip" data-placement="right" title="Mostra Resoconto" class="btn btn-primary text-white mr-1" href="compila_resoconto?st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}">
+                          
                                 <i class="fa fa-file-download"></i>
-                            </button>
+                    
                         </a>
 
 

@@ -108,17 +108,15 @@
                             </td>
                             <td>
                                 <span class="mr-1">${ot_attiva.candidature?size}</span>
-                                <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}" data-toggle="tooltip" data-placement="right" title="Gestisci Candidature">
-                                    <button type="button" class="btn btn-primary text-white">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+                                <a class="btn btn-primary text-white" href="gestione_candidati?ot=${ot_attiva.id}" data-toggle="tooltip" data-placement="right" title="Gestisci Candidature">
+                                    <i class="fas fa-search"></i>
                                 </a>
                             </td>
                             <td>${ot_attiva.luogo}</td>
                             <td>${ot_attiva.durata}</td>
                             <td>
-                                <a href="gestione_tirocini?ot=${ot_attiva.id}&action=disattiva">
-                                    <button type="button" class="btn bg-danger text-white">Disattiva</button>
+                                <a class="btn bg-danger text-white" href="gestione_tirocini?ot=${ot_attiva.id}&action=disattiva">
+                                    Disattiva
                                 </a>
                             </td>
                                 
@@ -159,15 +157,13 @@
                             </td>
                             <td>
                                 <span class="mr-1">${ot_disattiva.candidature?size}</span>
-                                <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}" data-toggle="tooltip" data-placement="right" title="Gestisci Candidature">
-                                    <button type="button" class="btn btn-primary text-white">
-                                        <i class="fas fa-search"></i>
-                                    </button>
+                                <a class="btn btn-primary text-white" href="gestione_candidati?ot=${ot_disattiva.id}" data-toggle="tooltip" data-placement="right" title="Gestisci Candidature">
+                                    <i class="fas fa-search"></i>
                                 </a>
                             </td>
                             <td>
-                                <a href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
-                                    <button type="button" class="btn bg-success text-white">Attiva</button>
+                                <a class="btn bg-success text-white" href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
+                                    Attiva
                                 </a>
                             </td>
                         </tr>
@@ -221,10 +217,10 @@
                 </td>
                 <td>
                     <span class="mr-1">${ot_attiva.candidature?size}</span>
-                    <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}" data-toggle="tooltip" data-placement="right" title="Visualizza Dettagli">
-                        <button type="button" class="btn btn-primary text-white">
+                    <a class="btn btn-primary text-white" style="text-decoration: none;" href="gestione_candidati?ot=${ot_attiva.id}" data-toggle="tooltip" data-placement="right" title="Visualizza Dettagli">
+                       
                             <i class="fas fa-search"></i>
-                        </button>
+                    
                     </a>
                 </td>
                 <td>${ot_attiva.luogo}</td>
@@ -273,15 +269,15 @@
                 </td>
                 <td>
                     <span class="mr-1">${ot_disattiva.candidature?size}</span>
-                    <a style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}" data-toggle="tooltip" data-placement="right" title="Visualizza Dettagli">
-                        <button type="button" class="btn btn-primary text-white">
+                    <a class="btn btn-primary text-white" style="text-decoration: none;" href="gestione_candidati?ot=${ot_disattiva.id}" data-toggle="tooltip" data-placement="right" title="Visualizza Dettagli">
+                        
                             <i class="fas fa-search"></i>
-                        </button>
+           
                     </a>
                 </td>
                 <td>
-                    <a href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
-                        <button type="button" class="btn bg-success text-white">Attiva</button>
+                    <a class="btn bg-success text-white" href="gestione_tirocini?ot=${ot_disattiva.id}&action=attiva">
+                        Attiva
                     </a>
                 </td>
             </tr>
