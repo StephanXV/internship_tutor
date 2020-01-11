@@ -348,15 +348,24 @@
     $(document).ready(function() {
 
     $('#myTableConv').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "language":{
+                        url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Italian.json"
+                    }
     } );
 
     $('#myTableConvAz').DataTable( {
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "language":{
+                        url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Italian.json"
+                    }
     } );
 
         $('#myTableRif').DataTable( {
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+            "language":{
+                        url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Italian.json"
+                    }
         } );
 });
 </script>
