@@ -13,6 +13,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Logout extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Logout.class);
        
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

@@ -4,6 +4,8 @@ import it.univaq.ingweb.framework.result.FailureResult;
 import it.univaq.ingweb.framework.result.StreamResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.framework.security.SecurityLayerException;
+import org.apache.log4j.Logger;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +18,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class Download extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Download.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

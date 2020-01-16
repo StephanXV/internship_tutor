@@ -15,7 +15,6 @@
 */
 package it.univaq.ingweb.framework.result;
 
-import it.univaq.ingweb.internshiptutor.controller.InternshipTutorBaseController;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -31,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FailureResult {
     
     //logger
-    final static Logger logger = Logger.getLogger(InternshipTutorBaseController.class);
+    final static Logger logger = Logger.getLogger(FailureResult.class);
     
     protected ServletContext context;
     private final TemplateResult template;
@@ -43,14 +42,17 @@ public class FailureResult {
     
     // passo 1: se è stato settato l'attributo 'exception'
     public void activate(Exception exception, HttpServletRequest request, HttpServletResponse response) {
-        String message;
+        String message = "Errore sconosciuto, impossibile completare la richiesta";
+        /*String eccezione;
         if (exception != null && exception.getMessage() != null) {
-            message = "Errore sconosciuto";
+            eccezione = exception.getMessage();
         } else if (exception != null) {
-            message = "Errore sconosciuto";
+            eccezione = exception.getClass().getName();
         } else {
-            message = "Errore sconosciuto";
+            eccezione = "Unknown Error";
         }
+        logger.error("Failure Exception: " + eccezione);  */
+
         // chiama il passo 2 settando come message l'errore di eccezione
         activate(message, request, response);
     }

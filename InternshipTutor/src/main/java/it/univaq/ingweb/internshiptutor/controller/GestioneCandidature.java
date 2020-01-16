@@ -10,6 +10,8 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Azienda;
 import it.univaq.ingweb.internshiptutor.data.model.Candidatura;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,6 +26,9 @@ import javax.xml.crypto.Data;
  * @author Stefano Florio
  */
 public class GestioneCandidature extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(GestioneCandidature.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

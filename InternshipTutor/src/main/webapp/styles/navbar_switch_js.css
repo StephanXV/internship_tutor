@@ -1,0 +1,26 @@
+.navbar-expand-lg:hover .collapseJS{
+    display: block;
+}
+
+.dropdown-nav-noJS{
+    pointer-events: none;
+}
+
+.logout-nav{
+    margin-left: 6px;
+}
+
+.dropdown-nav-JS {
+    display: none;
+}
+
+@media (max-width: 990px) {
+    .divider_menu{
+        display: none !important;
+    }
+
+    .logout-nav{
+        float: left!important;
+        margin-left: 0px!important;
+    }
+}

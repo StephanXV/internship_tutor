@@ -307,10 +307,9 @@
         <div class="row my-2">
             <div class="col-md-3">
                 
-                <a style="text-decoration: none;" target="_blank" href="docs?tipo=1&st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}" data-toggle="tooltip" data-placement="right" title="Scarica Documento">
-                    <button type="button" class="btn btn-primary text-white">
-                        <i class="fa fa-file-download"></i>&nbsp;Candidatura
-                    </button>
+                <a class="btn btn-primary text-white" style="text-decoration: none;" target="_blank" href="docs?tipo=1&st=${candidatura.studente.utente.id}&ot=${candidatura.offertaTirocinio.id}" data-toggle="tooltip" data-placement="right" title="Scarica Documento">
+                    <i class="fa fa-file-download"></i>
+                    <span>Candidatura</span>
                 </a>
             </div>
             
@@ -332,10 +331,8 @@
                 </button>
 
                 <noscript>
-                    <a style="text-decoration: none;" target="_blank" href="gestione_candidati?convalida=no&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}" data-toggle="tooltip" data-placement="right" title="Respingi Richiesta">
-                        <button type="button" class="btn bg-danger text-white">
-                            Rifiuta richiesta
-                        </button>
+                    <a class="btn bg-danger text-white" style="text-decoration: none;" target="_blank" href="gestione_candidati?convalida=no&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}" data-toggle="tooltip" data-placement="right" title="Respingi Richiesta">
+                        Rifiuta richiesta
                     </a>
                 </noscript>
                 
@@ -355,8 +352,8 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                <a href="gestione_candidati?convalida=no&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}">
-                                    <button type="button" class="btn bg-danger text-white">S&iacute;</button>
+                                <a class="btn bg-danger text-white" href="gestione_candidati?convalida=no&ot=${candidatura.offertaTirocinio.id}&st=${candidatura.studente.utente.id}">
+                                    S&iacute;
                                 </a>
                             </div>
                         </div>

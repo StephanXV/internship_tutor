@@ -10,6 +10,8 @@ import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.OffertaTirocinio;
 import it.univaq.ingweb.internshiptutor.data.model.Resoconto;
 import it.univaq.ingweb.internshiptutor.data.model.Studente;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +22,9 @@ import javax.servlet.http.HttpSession;
  * @author Stefano Florio
  */
 public class CompilaResoconto extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(CompilaResoconto.class);
     
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {

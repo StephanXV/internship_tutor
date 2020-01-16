@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.sun.mail.smtp.SMTPTransport;
+import org.apache.log4j.Logger;
+
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -36,6 +38,9 @@ import java.util.Date;
 
 //soggetto a filtro
 public class RichiestaTirocinio extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(RichiestaTirocinio.class);
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) {

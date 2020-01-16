@@ -7,6 +7,7 @@ import it.univaq.ingweb.framework.result.TemplateResult;
 import it.univaq.ingweb.framework.security.SecurityLayer;
 import it.univaq.ingweb.internshiptutor.data.dao.InternshipTutorDataLayer;
 import it.univaq.ingweb.internshiptutor.data.model.Utente;
+import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,9 @@ import javax.servlet.http.HttpSession;
  * @author Enrico Monte
  */
 public class Login extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(Login.class);
     
     BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
     
@@ -26,7 +30,6 @@ public class Login extends InternshipTutorBaseController {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         } else if (request.getAttribute("message") != null) {
-            
             (new FailureResult(getServletContext())).activate((String) request.getAttribute("message"), request, response);
         } else if (request.getAttribute("alert_msg") != null) {
             request.setAttribute("referrer", "login.ftl.html");

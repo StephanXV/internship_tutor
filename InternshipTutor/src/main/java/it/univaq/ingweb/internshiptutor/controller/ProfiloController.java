@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 /**
@@ -24,6 +26,9 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
  * @author Enrico Monte
  */
 public class ProfiloController extends InternshipTutorBaseController {
+
+    //logger
+    final static Logger logger = Logger.getLogger(ProfiloController.class);
         
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
