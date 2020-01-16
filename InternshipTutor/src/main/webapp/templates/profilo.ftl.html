@@ -1,5 +1,5 @@
 <#if MSG?has_content> <!-- check if content exist and is not empty -->
-<div class="container" xmlns="http://java.sun.com/jsf/html">
+<div class="container">
     <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
         <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
         <#outputformat "plainText">${MSG}</#outputformat>
@@ -15,7 +15,7 @@
 <div class="card text-center shadow p-3 mb-5 bg-white rounded">
     <div class="card-body">
         <!-- if no foto -->
-        <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px">
+        <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px" alt="">
 
         <h2 class="text-center" style="margin-top: 15px">
             ${studente.nome} ${studente.cognome}
@@ -152,13 +152,13 @@
                                 <select id="handicap" class="form-control" name="handicap" required>
                                     
                                     <#if studente.handicap>
-                                    <option class="hidden" value="" disabled selected>Portatore di handicap</option>
-                                    <option name="handicap" selected value="true">Si</option>
-                                    <option name="handicap" value="false">No</option>
+                                    <option class="hidden" value="" disabled>Portatore di handicap</option>
+                                    <option selected value="true">Si</option>
+                                    <option value="false">No</option>
                                     <#else>
-                                    <option class="hidden" value="" disabled selected>Portatore di handicap</option>
-                                    <option name="handicap" value="true">Si</option>
-                                    <option name="handicap" selected value="false">No</option>
+                                    <option class="hidden" value="" disabled>Portatore di handicap</option>
+                                    <option value="true">Si</option>
+                                    <option selected value="false">No</option>
                                     </#if>
                                  
                                 </select>
@@ -385,7 +385,7 @@
 <div class="card text-center shadow p-3 mb-5 bg-white rounded">
     <div class="card-body">
         <!-- if no foto -->
-        <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px">
+        <img src="https://www.w3schools.com/howto/img_avatar.png" class="rounded-circle" style="height: 250px; width: 250px" alt="">
 
         <h2 class="text-center" style="margin-top: 30px">
             ${studente.nome} ${studente.cognome}

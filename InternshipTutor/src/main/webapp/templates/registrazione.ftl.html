@@ -1,5 +1,5 @@
 <#if MSG?has_content> <!-- check if content exist and is not empty -->
-<div class="container" xmlns="http://java.sun.com/jsf/html">
+<div class="container" >
     <div class="alert alert-${alert} alert-dismissible } fade show" role="alert">
         <i class="${ICON}"></i>&nbsp;&nbsp;&nbsp;
         <#outputformat "plainText">${MSG}</#outputformat>
@@ -196,8 +196,8 @@
                                 <div class="form-group">
                                     <select class="form-control" name="handicap" required>
                                         <option class="hidden" value="" disabled selected>Portatore di handicap</option>
-                                        <option name="handicap" value="true">Si</option>
-                                        <option name="handicap" value="false">No</option>
+                                        <option value="true">Si</option>
+                                        <option value="false">No</option>
                                     </select>
                                 </div>
                                 <input name="submitStudente" value="Registrati" class="btnRegister" type="submit"/>
