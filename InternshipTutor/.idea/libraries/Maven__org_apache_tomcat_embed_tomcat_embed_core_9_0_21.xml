@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.apache.tomcat.embed:tomcat-embed-core:9.0.21">
     <CLASSES>
-      <root url="jar://$APPLICATION_HOME_DIR$/bin/C:/Users/EnricoMonte/Dati/apache-maven-3.6.2/org/apache/tomcat/embed/tomcat-embed-core/9.0.21/tomcat-embed-core-9.0.21.jar!/" />
+      <root url="jar://$USER_HOME$/Dati/apache-maven-3.6.2/org/apache/tomcat/embed/tomcat-embed-core/9.0.21/tomcat-embed-core-9.0.21.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$APPLICATION_HOME_DIR$/bin/C:/Users/EnricoMonte/Dati/apache-maven-3.6.2/org/apache/tomcat/embed/tomcat-embed-core/9.0.21/tomcat-embed-core-9.0.21-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/Dati/apache-maven-3.6.2/org/apache/tomcat/embed/tomcat-embed-core/9.0.21/tomcat-embed-core-9.0.21-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$APPLICATION_HOME_DIR$/bin/C:/Users/EnricoMonte/Dati/apache-maven-3.6.2/org/apache/tomcat/embed/tomcat-embed-core/9.0.21/tomcat-embed-core-9.0.21-sources.jar!/" />
+      <root url="jar://$USER_HOME$/Dati/apache-maven-3.6.2/org/apache/tomcat/embed/tomcat-embed-core/9.0.21/tomcat-embed-core-9.0.21-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

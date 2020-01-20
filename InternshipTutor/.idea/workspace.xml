@@ -22,6 +22,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_jquery_3_0_0.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_webjars_popper_js_1_14_3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/templates/home_studente.ftl.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -316,6 +317,7 @@
       <workItem from="1576483924600" duration="13436000" />
       <workItem from="1576754909825" duration="6945000" />
       <workItem from="1579195108544" duration="570000" />
+      <workItem from="1579510557768" duration="2216000" />
     </task>
     <servers />
   </component>
